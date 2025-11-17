@@ -958,14 +958,14 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ## Phase 15: Export System
 
 ### 15.1 Figma Export
-- [ ] Research Figma API/plugin architecture
+- [x] Research Figma API/plugin architecture
 - [ ] Create Figma export service
-- [ ] Convert DSL to Figma JSON format
-- [ ] Map components to Figma elements
+- [x] Convert DSL to Figma JSON format
+- [x] Map components to Figma elements
 - [ ] Convert images to Figma images
-- [ ] Preserve palette in Figma
+- [x] Preserve palette in Figma
 - [ ] Preserve layout structure
-- [ ] Create Figma frames for screens
+- [x] Create Figma frames for screens
 - [ ] Implement auto-layout compatibility
 - [ ] Add Figma export UI
 - [ ] Handle export errors
@@ -980,16 +980,16 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ---
 
 ### 15.2 Cursor Export
-- [ ] Create Cursor export format
-- [ ] Export DSL as JSON
-- [ ] Export React components
+- [x] Create Cursor export format
+- [x] Export DSL as JSON
+- [x] Export React components
 - [ ] Export assets (images)
-- [ ] Create project structure
-- [ ] Generate Cursor-compatible files
-- [ ] Add export metadata
+- [x] Create project structure
+- [x] Generate Cursor-compatible files
+- [x] Add export metadata
 - [ ] Create export bundle (zip)
 - [ ] Add Cursor export UI
-- [ ] Document export format
+- [x] Document export format
 
 **Technical Notes:**
 - Cursor export should enable building real apps

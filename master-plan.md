@@ -193,7 +193,7 @@ Edited images become **new entries** in the image library.
 
 ---
 
-# 9. Layout Pattern System
+# 9. Layout Pattern System ✅
 
 FlowRunner uses:
 
