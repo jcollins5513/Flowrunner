@@ -1,0 +1,38 @@
+{
+  "family": "PRICING_TABLE",
+  "variant": 3,
+  "name": "Four Column Pricing",
+  "description": "Four-column pricing table for multiple tier options.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "repeat(4, 1fr)",
+    "positions": {
+      "title": { "x": 0, "y": 0, "width": 4, "height": 1 },
+      "subtitle": { "x": 0, "y": 1, "width": 4, "height": 1 },
+      "text": { "x": 0, "y": 2, "width": 4, "height": 1 },
+      "button": { "x": 0, "y": 3, "width": 4, "height": 1 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title"],
+    "optional": ["subtitle", "text", "button"]
+  },
+  "spacing": {
+    "padding": 48,
+    "gap": 20
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": { "gridTemplate": "1fr", "padding": 24, "gap": 12 },
+      "tablet": { "gridTemplate": "repeat(2, 1fr)", "padding": 36, "gap": 16 },
+      "desktop": { "gridTemplate": "repeat(4, 1fr)", "padding": 48, "gap": 20 }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "top",
+      "size": "contain"
+    }
+  }
+}
+

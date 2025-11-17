@@ -1,3 +1,8 @@
+// API route to serve pattern JSON files
+import { NextResponse } from 'next/server'
+import { readFileSync } from 'fs'
+import { join } from 'path'
+
 export async function GET(
   request: Request,
   { params }: { params: { family: string; variant: string } }
@@ -30,8 +35,4 @@ export async function GET(
     )
   }
 }
-// API route to serve pattern JSON files
-import { NextResponse } from 'next/server'
-import { readFileSync } from 'fs'
-import { join } from 'path'
 

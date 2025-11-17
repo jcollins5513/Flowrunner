@@ -104,6 +104,21 @@ export const ScreenRenderer: React.FC<ScreenRendererProps> = ({
 
   const computeSlotStyle = (position: { x: number; y: number; width: number; height?: number }) => {
     if (pattern.layout.structure === 'grid') {
+      // Check if we're on mobile with single column layout
+      const isSingleColumn = layoutConfig.gridTemplate === '1fr' || layoutConfig.gridTemplate?.match(/^1fr\s*$/)
+      
+      if (isSingleColumn) {
+        // Normalize positions for single column: all components at x:0, stack vertically
+        // Components originally on the right (x > 0) should stack after left column components
+        // Use a large multiplier to ensure right column items come after left column
+        const normalizedY = position.x === 0 ? position.y : position.y + (position.x * 1000)
+        return {
+          gridColumn: '1 / 2',
+          gridRow: `${normalizedY + 1} / ${normalizedY + (position.height || 1) + 1}`,
+        }
+      }
+      
+      // Multi-column layout: use original positions
       return {
         gridColumn: `${position.x + 1} / ${position.x + position.width + 1}`,
         gridRow: `${position.y + 1} / ${position.y + (position.height || 1) + 1}`,
@@ -142,6 +157,7 @@ export const ScreenRenderer: React.FC<ScreenRendererProps> = ({
           display: pattern.layout.structure === 'grid' ? 'grid' : 'flex',
           gridTemplateColumns:
             pattern.layout.structure === 'grid' ? layoutConfig.gridTemplate : undefined,
+          gridAutoRows: pattern.layout.structure === 'grid' ? 'min-content' : undefined,
           flexDirection: pattern.layout.structure === 'flex' ? pattern.layout.flexDirection : undefined,
           padding: `${layoutConfig.padding}px`,
           gap: `${layoutConfig.gap}px`,

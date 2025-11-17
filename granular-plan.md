@@ -155,8 +155,8 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
   - [x] Use cases
   - [x] Component slot definitions
 - [x] Publish registry/constants for DSL + renderer (non user-extensible)
-- [ ] Document taxonomy for AI + editor UX + QA playbook
-- [ ] **Testing:** add snapshot/unit tests to ensure metadata exports stay stable and catch accidental renames/removals.
+- [x] Document taxonomy for AI + editor UX + QA playbook
+- [x] **Testing:** add snapshot/unit tests to ensure metadata exports stay stable and catch accidental renames/removals.
 
 **Technical Notes:**
 - Families are the canonical contract between DSL, renderer, AI planner, and validation.
@@ -173,9 +173,16 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
   - [x] FEAT_IMAGE_TEXT_RIGHT (5 variants)
   - [x] CTA_SPLIT_SCREEN (5 variants)
   - [x] HERO_CENTER_TEXT (5 variants)
-- [ ] Expand remaining families after renderer QA
-  - [ ] Demo Device, Action Form, Product Detail, Dashboard, etc.
-  - [ ] Goal: ≥12 families × 5 variants once renderer parity verified
+- [x] Expand remaining families after renderer QA
+  - [x] DEMO_DEVICE_FULLBLEED (5 variants)
+  - [x] ACT_FORM_MINIMAL (5 variants)
+  - [x] DASHBOARD_OVERVIEW (5 variants)
+  - [x] PRODUCT_DETAIL (5 variants)
+  - [x] FEAT_IMAGE_TEXT_LEFT (5 variants)
+  - [x] NEWSLETTER_SIGNUP (5 variants)
+  - [x] PRICING_TABLE (5 variants)
+  - [x] TESTIMONIAL_CARD_GRID (5 variants)
+  - [x] Goal: ≥12 families × 5 variants once renderer parity verified (✅ 12 families × 5 variants = 60 patterns)
 - [ ] Generate preview metadata (rendered thumbnails, tags) for UI
 - [ ] Build automated pattern smoke tests:
   - [ ] Validate every JSON against schema + validator.

@@ -1,0 +1,39 @@
+{
+  "family": "NEWSLETTER_SIGNUP",
+  "variant": 5,
+  "name": "Banner Newsletter Signup",
+  "description": "Wide banner-style newsletter signup with text and form side by side.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "2fr 3fr",
+    "positions": {
+      "title": { "x": 0, "y": 0, "width": 1, "height": 1 },
+      "subtitle": { "x": 0, "y": 1, "width": 1, "height": 1 },
+      "text": { "x": 0, "y": 2, "width": 1, "height": 1 },
+      "form": { "x": 1, "y": 0, "width": 1, "height": 1 },
+      "button": { "x": 1, "y": 1, "width": 1, "height": 1 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title", "form"],
+    "optional": ["subtitle", "button", "text"]
+  },
+  "spacing": {
+    "padding": 40,
+    "gap": 24
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": { "gridTemplate": "1fr", "padding": 24, "gap": 16 },
+      "tablet": { "gridTemplate": "2fr 3fr", "padding": 32, "gap": 20 },
+      "desktop": { "gridTemplate": "2fr 3fr", "padding": 40, "gap": 24 }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "background",
+      "size": "cover"
+    }
+  }
+}
+

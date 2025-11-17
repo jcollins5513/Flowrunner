@@ -1,0 +1,41 @@
+{
+  "family": "TESTIMONIAL_CARD_GRID",
+  "variant": 5,
+  "name": "Asymmetric Testimonials",
+  "description": "Asymmetric grid with featured testimonial and supporting testimonials.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "2fr 1fr",
+    "positions": {
+      "title": { "x": 0, "y": 0, "width": 2, "height": 1 },
+      "text": { "x": 0, "y": 1, "width": 2, "height": 1 },
+      "image": { "x": 0, "y": 2, "width": 1, "height": 2 },
+      "text": { "x": 1, "y": 2, "width": 1, "height": 1 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title"],
+    "optional": ["text", "image"]
+  },
+  "spacing": {
+    "padding": 48,
+    "gap": 24
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": { "gridTemplate": "1fr", "padding": 24, "gap": 16 },
+      "tablet": { "gridTemplate": "1fr 1fr", "padding": 36, "gap": 20 },
+      "desktop": { "gridTemplate": "2fr 1fr", "padding": 48, "gap": 24 }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "top",
+      "size": "contain"
+    },
+    "supporting": [
+      { "position": "left", "size": "large" }
+    ]
+  }
+}
+

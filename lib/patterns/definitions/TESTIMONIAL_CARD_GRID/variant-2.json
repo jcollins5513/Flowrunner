@@ -1,0 +1,40 @@
+{
+  "family": "TESTIMONIAL_CARD_GRID",
+  "variant": 2,
+  "name": "Two Column Testimonials",
+  "description": "Two-column grid with larger testimonial cards for emphasis.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "1fr 1fr",
+    "positions": {
+      "title": { "x": 0, "y": 0, "width": 2, "height": 1 },
+      "text": { "x": 0, "y": 1, "width": 2, "height": 1 },
+      "image": { "x": 0, "y": 2, "width": 2, "height": 2 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title"],
+    "optional": ["text", "image"]
+  },
+  "spacing": {
+    "padding": 48,
+    "gap": 32
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": { "gridTemplate": "1fr", "padding": 24, "gap": 16 },
+      "tablet": { "gridTemplate": "1fr 1fr", "padding": 36, "gap": 24 },
+      "desktop": { "gridTemplate": "1fr 1fr", "padding": 48, "gap": 32 }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "top",
+      "size": "contain"
+    },
+    "supporting": [
+      { "position": "center", "size": "medium" }
+    ]
+  }
+}
+

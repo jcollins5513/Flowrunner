@@ -1,0 +1,38 @@
+{
+  "family": "NEWSLETTER_SIGNUP",
+  "variant": 3,
+  "name": "Compact Inline Form",
+  "description": "Compact newsletter signup with inline form and minimal spacing.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "1fr",
+    "positions": {
+      "title": { "x": 0, "y": 0, "width": 1, "height": 1 },
+      "subtitle": { "x": 0, "y": 1, "width": 1, "height": 1 },
+      "form": { "x": 0, "y": 2, "width": 1, "height": 1 },
+      "button": { "x": 0, "y": 3, "width": 1, "height": 1 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title", "form"],
+    "optional": ["subtitle", "button", "text"]
+  },
+  "spacing": {
+    "padding": 32,
+    "gap": 12
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": { "padding": 20, "gap": 10 },
+      "tablet": { "padding": 24, "gap": 11 },
+      "desktop": { "padding": 32, "gap": 12 }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "top",
+      "size": "contain"
+    }
+  }
+}
+

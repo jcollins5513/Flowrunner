@@ -1,0 +1,40 @@
+{
+  "family": "NEWSLETTER_SIGNUP",
+  "variant": 4,
+  "name": "Card Newsletter Signup",
+  "description": "Newsletter signup presented in a centered card layout with background image.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "1fr",
+    "positions": {
+      "hero_image": { "x": 0, "y": 0, "width": 1, "height": 2 },
+      "title": { "x": 0, "y": 2, "width": 1, "height": 1 },
+      "subtitle": { "x": 0, "y": 3, "width": 1, "height": 1 },
+      "text": { "x": 0, "y": 4, "width": 1, "height": 1 },
+      "form": { "x": 0, "y": 5, "width": 1, "height": 1 },
+      "button": { "x": 0, "y": 6, "width": 1, "height": 1 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title", "form"],
+    "optional": ["subtitle", "button", "text"]
+  },
+  "spacing": {
+    "padding": 48,
+    "gap": 20
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": { "padding": 24, "gap": 14 },
+      "tablet": { "padding": 36, "gap": 16 },
+      "desktop": { "padding": 48, "gap": 20 }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "top",
+      "size": "full"
+    }
+  }
+}
+

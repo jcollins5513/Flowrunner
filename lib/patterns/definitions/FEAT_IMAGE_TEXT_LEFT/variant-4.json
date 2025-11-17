@@ -1,0 +1,51 @@
+{
+  "family": "FEAT_IMAGE_TEXT_LEFT",
+  "variant": 4,
+  "name": "Text Left Image Right - Spacious",
+  "description": "Spacious split layout with generous padding and gaps for premium feel.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "1fr 1fr",
+    "positions": {
+      "title": { "x": 0, "y": 0, "width": 1, "height": 1 },
+      "subtitle": { "x": 0, "y": 1, "width": 1, "height": 1 },
+      "text": { "x": 0, "y": 2, "width": 1, "height": 1 },
+      "button": { "x": 0, "y": 3, "width": 1, "height": 1 },
+      "hero_image": { "x": 1, "y": 0, "width": 1, "height": 3 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title", "subtitle"],
+    "optional": ["text", "button", "image"]
+  },
+  "spacing": {
+    "padding": 48,
+    "gap": 32
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": {
+        "gridTemplate": "1fr",
+        "padding": 24,
+        "gap": 20
+      },
+      "tablet": {
+        "gridTemplate": "1fr 1fr",
+        "padding": 36,
+        "gap": 24
+      },
+      "desktop": {
+        "gridTemplate": "1fr 1fr",
+        "padding": 48,
+        "gap": 32
+      }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "right",
+      "size": "half"
+    }
+  }
+}
+

@@ -1,0 +1,38 @@
+{
+  "family": "PRICING_TABLE",
+  "variant": 2,
+  "name": "Two Column Pricing",
+  "description": "Two-column pricing table with prominent featured plan on one side.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "1fr 1fr",
+    "positions": {
+      "title": { "x": 0, "y": 0, "width": 2, "height": 1 },
+      "subtitle": { "x": 0, "y": 1, "width": 2, "height": 1 },
+      "text": { "x": 0, "y": 2, "width": 2, "height": 1 },
+      "button": { "x": 0, "y": 3, "width": 2, "height": 1 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title"],
+    "optional": ["subtitle", "text", "button"]
+  },
+  "spacing": {
+    "padding": 48,
+    "gap": 32
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": { "gridTemplate": "1fr", "padding": 24, "gap": 16 },
+      "tablet": { "gridTemplate": "1fr 1fr", "padding": 36, "gap": 24 },
+      "desktop": { "gridTemplate": "1fr 1fr", "padding": 48, "gap": 32 }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "top",
+      "size": "contain"
+    }
+  }
+}
+

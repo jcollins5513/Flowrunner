@@ -1,0 +1,51 @@
+{
+  "family": "FEAT_IMAGE_TEXT_LEFT",
+  "variant": 3,
+  "name": "Text Left Image Right - Compact",
+  "description": "Compact split layout with reduced spacing for dense content.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "1fr 1fr",
+    "positions": {
+      "title": { "x": 0, "y": 0, "width": 1, "height": 1 },
+      "subtitle": { "x": 0, "y": 1, "width": 1, "height": 1 },
+      "text": { "x": 0, "y": 2, "width": 1, "height": 1 },
+      "button": { "x": 0, "y": 3, "width": 1, "height": 1 },
+      "hero_image": { "x": 1, "y": 0, "width": 1, "height": 3 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title", "subtitle"],
+    "optional": ["text", "button", "image"]
+  },
+  "spacing": {
+    "padding": 16,
+    "gap": 12
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": {
+        "gridTemplate": "1fr",
+        "padding": 12,
+        "gap": 8
+      },
+      "tablet": {
+        "gridTemplate": "1fr 1fr",
+        "padding": 14,
+        "gap": 10
+      },
+      "desktop": {
+        "gridTemplate": "1fr 1fr",
+        "padding": 16,
+        "gap": 12
+      }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "right",
+      "size": "half"
+    }
+  }
+}
+
