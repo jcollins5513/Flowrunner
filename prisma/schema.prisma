@@ -1,0 +1,113 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String?  @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  flows Flow[]
+  images Image[]
+}
+
+model Flow {
+  id          String   @id @default(cuid())
+  userId      String?
+  name        String
+  description String?
+  domain      String?  // E-commerce, SaaS, Mobile App, etc.
+  theme       String?
+  style       String?
+  isPublic    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user      User?     @relation(fields: [userId], references: [id])
+  screens   Screen[]
+  revisions Revision[]
+
+  @@index([userId])
+  @@index([isPublic])
+}
+
+model Screen {
+  id            String   @id @default(cuid())
+  flowId        String
+  revisionId    String?
+  heroImageId   String?
+  palette       String?  // JSON string
+  vibe          String?
+  patternFamily String?
+  patternVariant Int?
+  components    String?  // JSON string
+  navigation    String?  // JSON string
+  animations    String?  // JSON string
+  metadata      String?  // JSON string
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  flow      Flow       @relation(fields: [flowId], references: [id], onDelete: Cascade)
+  heroImage Image?     @relation("HeroImage", fields: [heroImageId], references: [id])
+  revisions Revision[]
+
+  @@index([flowId])
+  @@index([heroImageId])
+}
+
+model Image {
+  id                    String   @id @default(cuid())
+  userId                String?
+  url                   String
+  prompt                String?
+  seed                  Int?
+  aspectRatio           String?
+  style                 String?  // 3D, clay, vector, neon, editorial, etc.
+  extractedPalette      String?  // JSON string
+  vibe                  String?
+  patternCompatibilityTags String? // JSON array string
+  domain                String?
+  isPublic              Boolean  @default(false)
+  isFavorite            Boolean  @default(false)
+  usageCount            Int      @default(0)
+  parentImageId         String?  // For edited versions
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  user         User?     @relation(fields: [userId], references: [id])
+  parentImage  Image?    @relation("ImageVersions", fields: [parentImageId], references: [id])
+  childImages  Image[]   @relation("ImageVersions")
+  heroScreens  Screen[]  @relation("HeroImage")
+
+  @@index([userId])
+  @@index([isPublic])
+  @@index([style])
+  @@index([domain])
+}
+
+model Revision {
+  id            String   @id @default(cuid())
+  flowId        String
+  screenId      String?
+  dslSnapshot   String   // JSON string
+  version       Int
+  changeType    String?  // generation, edit, etc.
+  createdAt     DateTime @default(now())
+
+  flow   Flow    @relation(fields: [flowId], references: [id], onDelete: Cascade)
+  screen Screen? @relation(fields: [screenId], references: [id], onDelete: Cascade)
+
+  @@index([flowId])
+  @@index([screenId])
+}
+

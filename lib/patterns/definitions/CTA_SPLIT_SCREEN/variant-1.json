@@ -1,0 +1,51 @@
+{
+  "family": "CTA_SPLIT_SCREEN",
+  "variant": 1,
+  "name": "Split Screen - 50/50",
+  "description": "Equal split screen with image on one side and CTA content on the other.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "1fr 1fr",
+    "positions": {
+      "hero_image": { "x": 0, "y": 0, "width": 1, "height": 4 },
+      "title": { "x": 1, "y": 0, "width": 1, "height": 1 },
+      "subtitle": { "x": 1, "y": 1, "width": 1, "height": 1 },
+      "text": { "x": 1, "y": 2, "width": 1, "height": 1 },
+      "button": { "x": 1, "y": 3, "width": 1, "height": 1 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title", "button"],
+    "optional": ["subtitle", "text", "image"]
+  },
+  "spacing": {
+    "padding": 0,
+    "gap": 0
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": {
+        "gridTemplate": "1fr",
+        "padding": 0,
+        "gap": 0
+      },
+      "tablet": {
+        "gridTemplate": "1fr 1fr",
+        "padding": 0,
+        "gap": 0
+      },
+      "desktop": {
+        "gridTemplate": "1fr 1fr",
+        "padding": 0,
+        "gap": 0
+      }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "left",
+      "size": "half"
+    }
+  }
+}
+

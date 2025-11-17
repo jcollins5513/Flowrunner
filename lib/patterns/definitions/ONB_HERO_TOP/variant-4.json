@@ -1,0 +1,47 @@
+{
+  "family": "ONB_HERO_TOP",
+  "variant": 4,
+  "name": "Hero Top - Compact",
+  "description": "Compact hero top layout with reduced spacing for dense content.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "1fr",
+    "positions": {
+      "hero_image": { "x": 0, "y": 0, "width": 1, "height": 1 },
+      "title": { "x": 0, "y": 1, "width": 1, "height": 1 },
+      "subtitle": { "x": 0, "y": 2, "width": 1, "height": 1 },
+      "button": { "x": 0, "y": 3, "width": 1, "height": 1 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title", "subtitle", "button"],
+    "optional": ["text"]
+  },
+  "spacing": {
+    "padding": 16,
+    "gap": 12
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": {
+        "padding": 12,
+        "gap": 8
+      },
+      "tablet": {
+        "padding": 14,
+        "gap": 10
+      },
+      "desktop": {
+        "padding": 16,
+        "gap": 12
+      }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "top",
+      "size": "full"
+    }
+  }
+}
+
