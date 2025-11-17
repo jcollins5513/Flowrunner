@@ -113,7 +113,9 @@ function componentToFigmaNode(component: Component, palette: ScreenDSL['palette'
         ],
       }
     case 'form': {
-      const fields = component.props?.fields ?? []
+      const fields = Array.isArray(component.props?.fields) 
+        ? (component.props.fields as Array<Record<string, string>>)
+        : []
       return {
         id: `form-${component.content}`,
         type: 'FRAME',

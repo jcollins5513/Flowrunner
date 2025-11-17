@@ -1,7 +1,13 @@
-// Simple form renderer for DSL form components
+// Form component renderer
+// Uses shadcn/ui Input, Label, and Button components from component library
 'use client'
 
 import React from 'react'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { cn } from '@/lib/utils'
 
 interface FormField {
   id: string
@@ -26,29 +32,31 @@ export const Form: React.FC<FormProps> = ({
   style,
 }) => {
   return (
-    <form
-      className={`flex flex-col gap-4 bg-white/70 backdrop-blur rounded-xl p-6 shadow-sm ${className}`}
-      style={style}
-      onSubmit={(event) => event.preventDefault()}
-    >
-      <div className="text-lg font-semibold text-gray-900">{content}</div>
-      {fields.map((field) => (
-        <label key={field.id} className="flex flex-col gap-1 text-sm text-gray-700">
-          {field.label}
-          <input
-            type={field.type ?? 'text'}
-            placeholder={field.placeholder}
-            className="rounded-lg border border-gray-200 px-3 py-2 focus:border-gray-400 focus:outline-none"
-          />
-        </label>
-      ))}
-      <button
-        type="submit"
-        className="mt-2 rounded-lg bg-black px-4 py-2 text-white hover:bg-gray-800 transition-colors"
-      >
-        {submitLabel}
-      </button>
-    </form>
+    <Card className={cn('w-full', className)} style={style}>
+      <CardHeader>
+        <CardTitle>{content}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form
+          className="flex flex-col gap-4"
+          onSubmit={(event) => event.preventDefault()}
+        >
+          {fields.map((field) => (
+            <div key={field.id} className="flex flex-col gap-2">
+              <Label htmlFor={field.id}>{field.label}</Label>
+              <Input
+                id={field.id}
+                type={field.type ?? 'text'}
+                placeholder={field.placeholder}
+              />
+            </div>
+          ))}
+          <Button type="submit" className="mt-2">
+            {submitLabel}
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
   )
 }
 

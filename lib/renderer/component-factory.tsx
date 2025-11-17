@@ -28,15 +28,21 @@ export function renderComponent({
       return <Title key={component.content} content={component.content} {...commonProps} />
     case 'subtitle':
       return <Subtitle key={component.content} content={component.content} {...commonProps} />
-    case 'button':
+    case 'button': {
+      const buttonVariant = component.props?.variant as 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link' | undefined
+      const buttonSize = component.props?.size as 'default' | 'sm' | 'lg' | 'icon' | undefined
+      
       return (
         <Button
           key={component.content}
           content={component.content}
           onClick={onClick}
+          variant={buttonVariant}
+          size={buttonSize}
           {...commonProps}
         />
       )
+    }
     case 'form': {
       const fields = Array.isArray(component.props?.fields)
         ? (component.props?.fields as Array<Record<string, string>>).map((field, index) => ({
@@ -65,11 +71,14 @@ export function renderComponent({
       return <Text key={component.content} content={component.content} {...commonProps} />
     case 'image':
       if (typeof component.props?.url === 'string') {
+        const imageId = typeof component.props?.id === 'string' 
+          ? component.props.id 
+          : component.content
         return (
           <div key={component.content} className={className} style={{ ...style, minHeight: 200 }}>
             <HeroImage
               image={{
-                id: component.props?.id ?? component.content,
+                id: imageId,
                 url: component.props.url,
               }}
             />

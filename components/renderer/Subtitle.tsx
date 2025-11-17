@@ -1,5 +1,7 @@
 // Subtitle component renderer
+// Custom component with shadcn/ui styling system
 import React from 'react'
+import { cn } from '@/lib/utils'
 
 export interface SubtitleProps {
   content: string
@@ -10,7 +12,10 @@ export interface SubtitleProps {
 export const Subtitle: React.FC<SubtitleProps> = ({ content, className = '', style }) => {
   return (
     <h2
-      className={`text-2xl font-semibold ${className}`}
+      className={cn(
+        'text-2xl font-semibold leading-snug text-foreground',
+        className
+      )}
       style={style}
     >
       {content}

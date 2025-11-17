@@ -1,5 +1,7 @@
 // Text component renderer
+// Custom component with shadcn/ui styling system
 import React from 'react'
+import { cn } from '@/lib/utils'
 
 export interface TextProps {
   content: string
@@ -10,7 +12,10 @@ export interface TextProps {
 export const Text: React.FC<TextProps> = ({ content, className = '', style }) => {
   return (
     <p
-      className={`text-base leading-relaxed ${className}`}
+      className={cn(
+        'text-base leading-relaxed text-muted-foreground',
+        className
+      )}
       style={style}
     >
       {content}

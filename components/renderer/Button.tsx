@@ -1,5 +1,8 @@
 // Button component renderer
+// Uses shadcn/ui Button component from component library
 import React from 'react'
+import { Button as UIButton, type ButtonProps as UIButtonProps } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 export interface ButtonProps {
   content: string
@@ -7,6 +10,8 @@ export interface ButtonProps {
   className?: string
   style?: React.CSSProperties
   type?: 'button' | 'submit' | 'reset'
+  variant?: UIButtonProps['variant']
+  size?: UIButtonProps['size']
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -15,16 +20,20 @@ export const Button: React.FC<ButtonProps> = ({
   className = '',
   style,
   type = 'button',
+  variant,
+  size,
 }) => {
   return (
-    <button
+    <UIButton
       type={type}
       onClick={onClick}
-      className={`px-6 py-3 rounded-lg font-medium transition-colors ${className}`}
+      variant={variant}
+      size={size}
+      className={cn(className)}
       style={style}
     >
       {content}
-    </button>
+    </UIButton>
   )
 }
 
