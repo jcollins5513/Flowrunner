@@ -147,57 +147,62 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ## Phase 3: Pattern System
 
 ### 3.1 Pattern Family Definitions
-- [ ] Define 12 pattern families as TypeScript enums
-  - [ ] ONB_HERO_TOP (Onboarding Hero Top)
-  - [ ] FEAT_IMAGE_TEXT_RIGHT (Feature Image Text Right)
-  - [ ] DEMO_DEVICE_FULLBLEED (Demo Device Full Bleed)
-  - [ ] ACT_FORM_MINIMAL (Action Form Minimal)
-  - [ ] [8 more pattern families to define]
-- [ ] Create pattern family metadata
-  - [ ] Display name
-  - [ ] Description
-  - [ ] Use cases
-  - [ ] Component slots definition
-- [ ] Create pattern family registry/constants file
+- [x] Define fixed pattern family registry (40+ families across commons + domain-specific)
+  - [x] ONB_HERO_TOP, FEAT_IMAGE_TEXT_RIGHT, DEMO_DEVICE_FULLBLEED, ACT_FORM_MINIMAL, etc.
+- [x] Create pattern family metadata
+  - [x] Display name
+  - [x] Description
+  - [x] Use cases
+  - [x] Component slot definitions
+- [x] Publish registry/constants for DSL + renderer (non user-extensible)
+- [ ] Document taxonomy for AI + editor UX + QA playbook
+- [ ] **Testing:** add snapshot/unit tests to ensure metadata exports stay stable and catch accidental renames/removals.
 
 **Technical Notes:**
-- Pattern families must be fixed and not user-extensible
-- Each family should have clear documentation
+- Families are the canonical contract between DSL, renderer, AI planner, and validation.
+- Metadata feeds pattern selection UI, compatibility scoring, and docs.
 
 ---
 
 ### 3.2 Pattern Variant System
-- [ ] Define variant structure (1-5 variants per family)
-- [ ] Create JSON pattern definition format
-  - [ ] Layout structure (grid/flex positions)
-  - [ ] Component slots (required/optional)
-  - [ ] Spacing rules
-  - [ ] Responsive breakpoints
-  - [ ] Image placement rules
-- [ ] Implement pattern contract validator
-- [ ] Create pattern definition files for each variant
-  - [ ] 12 families × 5 variants = 60 pattern definitions
-- [ ] Create pattern loader utility
-- [ ] Add pattern metadata (name, description, preview)
+- [x] Define JSON pattern format (layout positions, spacing, responsive, image placement)
+- [x] Implement pattern contract validator + compatibility checker
+- [x] Build loader + API delivery (`/api/patterns/[family]/variant-[variant]`)
+- [x] Author baseline pattern sets for renderer validation
+  - [x] ONB_HERO_TOP (5 variants)
+  - [x] FEAT_IMAGE_TEXT_RIGHT (5 variants)
+  - [x] CTA_SPLIT_SCREEN (5 variants)
+  - [x] HERO_CENTER_TEXT (5 variants)
+- [ ] Expand remaining families after renderer QA
+  - [ ] Demo Device, Action Form, Product Detail, Dashboard, etc.
+  - [ ] Goal: ≥12 families × 5 variants once renderer parity verified
+- [ ] Generate preview metadata (rendered thumbnails, tags) for UI
+- [ ] Build automated pattern smoke tests:
+  - [ ] Validate every JSON against schema + validator.
+  - [ ] Renderer regression suite (mount DSL fixture per variant, screenshot diff in CI before scaling to 200+ patterns).
 
-**Technical Notes:**
-- Pattern definitions must be deterministic
-- Use JSON schema for pattern contract validation
-- Patterns should define exact component positions
+**Execution Flow (new approach):**
+1. Ship a minimal deterministic set (4 families) to unblock renderer.
+2. Validate rendering + DSL pipeline end-to-end.
+3. Iterate on spacing/responsiveness with real screens + gather feedback.
+4. Scale to full library with tooling once renderer + tests are green.
 
 ---
 
 ### 3.3 Pattern Validation
-- [ ] Create Zod schema for pattern definitions
-- [ ] Validate pattern JSON files on load
-- [ ] Validate DSL against selected pattern contract
-- [ ] Create pattern compatibility checker
-- [ ] Add error messages for invalid patterns
-- [ ] Write tests for pattern validation
+- [x] Create Zod schema for pattern definitions (layout, spacing, responsive)
+- [x] Validate pattern JSON files on load/ingest
+- [x] Validate DSL against pattern contract (required slots, image rules)
+- [x] Create pattern compatibility checker (vibe/style/palette heuristics)
+- [x] Write tests for validation + compatibility
+- [x] Add error messaging for invalid patterns
+- [ ] Integrate validation into DSL persistence + renderer blocking paths
+- [ ] Add telemetry for pattern load/validation failures
+- [ ] Add regression suite: iterate through every pattern, render canonical DSL, assert slot coverage + screenshot diff threshold.
 
 **Technical Notes:**
-- Pattern validation must run before DSL assembly
-- Ensure patterns enforce layout rules strictly
+- Validation runs before rendering and before assembling DSL in the flow engine.
+- Compatibility scoring helps AI choose families that fit image/vibe constraints.
 
 ---
 
@@ -221,6 +226,7 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 - Use structured output from LLM for consistent parsing
 - Fallback to defaults if extraction fails
 - Consider prompt engineering for better results
+- [ ] Testing: record representative prompts/responses (VCR) and assert parser output shape so downstream stages don’t regress.
 
 ---
 
@@ -281,6 +287,7 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 - Palette extraction must be deterministic
 - Consider color accessibility (WCAG contrast ratios)
 - Support manual palette override
+- [ ] Testing: fixture images with known palettes; ensure extraction matches expectations and passes contrast checks.
 
 ---
 
@@ -471,6 +478,7 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 - Use same LLM provider as prompt interpreter
 - Text should match screen context and flow theme
 - Support multiple languages (future)
+- [ ] Testing: snapshot DSL text fields for deterministic fixtures; enforce length constraints in unit tests.
 
 ---
 
@@ -493,6 +501,7 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 - DSL assembly must follow deterministic pipeline
 - All fields must be validated before proceeding
 - Support partial DSL updates for editing
+- [ ] Testing: integration tests from prompt → image → pattern → renderer to ensure round-trip before releasing new stages.
 
 ---
 
@@ -517,19 +526,17 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ## Phase 9: React Renderer
 
 ### 9.1 Renderer Core
-- [ ] Create React renderer component
-- [ ] Implement DSL-to-React transformer
-- [ ] Create base screen container component
-- [ ] Implement pattern-based layout renderer
-- [ ] Create component type renderers
-  - [ ] Title component
-  - [ ] Subtitle component
-  - [ ] Button component
-  - [ ] Form components
-  - [ ] Image components
-- [ ] Implement responsive layout system
-- [ ] Add error boundaries
-- [ ] Create renderer utilities
+- [x] Create React renderer shell (`ScreenRenderer`)
+- [x] Implement DSL-to-React transformer for core components (title/subtitle/button/text/image)
+- [ ] Implement remaining component renderers (forms, supporting images, navigation affordances)
+- [ ] Implement responsive layout system (respect pattern breakpoints)
+- [ ] Add error boundaries + telemetry
+- [ ] Create renderer utilities (palette/vibe styling extensions, hooks)
+- [ ] Build `RendererPreview` internal tool to inspect pattern variants quickly
+- [ ] Testing:
+  - [ ] Jest/unit tests for component factory + palette/vibe utilities
+  - [ ] Playwright visual regression per pattern family (CI gate)
+  - [ ] Storybook/Chromatic coverage for manual QA across devices
 
 **Technical Notes:**
 - Renderer must match DSL exactly
@@ -539,16 +546,13 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ---
 
 ### 9.2 Pattern Layout Renderer
-- [ ] Create pattern layout component
-- [ ] Load pattern definition for screen
-- [ ] Apply pattern layout rules
-- [ ] Position components according to pattern
-- [ ] Handle responsive breakpoints
-- [ ] Apply spacing from pattern definition
-- [ ] Render hero image in correct position
-- [ ] Render supporting images
-- [ ] Handle pattern variants correctly
-- [ ] Add layout debugging mode
+- [x] Create pattern layout scaffolding + API loader
+- [x] Apply pattern layout rules for grid; [ ] extend to flex patterns
+- [ ] Handle responsive breakpoints (CSS + pattern config)
+- [ ] Apply spacing + hero/supporting image placement precisely
+- [ ] Render supporting images, overlays, animations
+- [ ] Add layout debugging overlay (slot outlines, names)
+- [ ] Testing: mount each pattern in CI, compare DOM structure + bounding boxes/screenshot diff.
 
 **Technical Notes:**
 - Layout must be pixel-perfect to pattern definition
@@ -558,15 +562,14 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ---
 
 ### 9.3 Styling System
-- [ ] Create theme provider
-- [ ] Apply palette to components
-- [ ] Implement vibe-based styling
-- [ ] Create styled component library
-- [ ] Apply animations from DSL
-- [ ] Implement CSS-in-JS or Tailwind setup
-- [ ] Add dark mode support (optional)
-- [ ] Ensure accessibility (contrast, focus states)
+- [x] Initial palette/vibe utility
+- [ ] Build theme provider hooking palette + typography tokens
+- [ ] Apply palette to components (foreground/background/accent)
+- [ ] Implement vibe-informed typography + spacing adjustments
+- [ ] Create animation helpers for DSL `animations`
+- [ ] Ensure accessibility (contrast tests, focus states)
 - [ ] Create style utilities
+- [ ] Testing: automated contrast checker + story-level visual tests; add CI job verifying WCAG thresholds.
 
 **Technical Notes:**
 - Styling must respect extracted palette
@@ -576,7 +579,7 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ---
 
 ### 9.4 Image Rendering
-- [ ] Create optimized image component
+- [x] Create optimized hero image component (Next/Image)
 - [ ] Implement lazy loading
 - [ ] Add image placeholder/skeleton
 - [ ] Handle image loading errors
@@ -588,6 +591,7 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 - Use optimized image formats (WebP)
 - Implement proper loading states
 - Handle broken image URLs gracefully
+- [ ] Testing: verify Next/Image remote patterns cover AI domains; add fixtures for fallback logic.
 
 ---
 
@@ -607,6 +611,7 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 **Technical Notes:**
 - Flow engine coordinates all screens in a flow
 - Maintain flow-level consistency across screens
+- [ ] Testing: unit tests for flow-state mutations; integration tests using renderer mock to ensure DSL consistency.
 
 ---
 
@@ -623,6 +628,7 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 **Technical Notes:**
 - Screen sequence must maintain navigation integrity
 - Handle edge cases (first/last screen)
+- [ ] Testing: automated tests verifying navigation graph updates + pattern compatibility after reordering/removal.
 
 ---
 
@@ -655,6 +661,7 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 **Technical Notes:**
 - Editing should feel instant and responsive
 - Support undo/redo for all edit types
+- [ ] Testing: Playwright flows covering edit → render → export, ensuring validation errors block invalid states.
 
 ---
 
@@ -771,6 +778,7 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 **Technical Notes:**
 - Click detection must be accurate
 - Support both explicit and inferred navigation
+- [ ] Testing: E2E verifying “select button → generate next screen” round-trip pipeline.
 
 ---
 
@@ -967,6 +975,7 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 - Figma API may require plugin or file API
 - Ensure exported files are usable in Figma
 - Preserve as much metadata as possible
+- [ ] Testing: snapshot exported JSON; manual import smoke test in CI.
 
 ---
 
@@ -985,6 +994,7 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 **Technical Notes:**
 - Cursor export should enable building real apps
 - Include all necessary files and dependencies
+- [ ] Testing: run exported bundle through Cursor CLI/test harness.
 
 ---
 
@@ -1239,8 +1249,9 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 **Phase 16: Integration** (Final phase)
 - Connects all systems together
 
-**Phase 17: Validation** (Ongoing)
-- Should be checked throughout development
+**Phase 17: Validation & Testing** (Ongoing)
+- Layer regression, schema, and visual tests into every phase.
+- CI gate should include: pattern schema tests, renderer visual diff, flow/editor E2E after major milestones.
 
 ---
 

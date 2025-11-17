@@ -5,6 +5,8 @@ import { Title } from '@/components/renderer/Title'
 import { Subtitle } from '@/components/renderer/Subtitle'
 import { Button } from '@/components/renderer/Button'
 import { Text } from '@/components/renderer/Text'
+import { Form } from '@/components/renderer/Form'
+import { HeroImage } from '@/components/renderer/HeroImage'
 
 export interface ComponentRendererProps {
   component: Component
@@ -35,20 +37,48 @@ export function renderComponent({
           {...commonProps}
         />
       )
+    case 'form': {
+      const fields = Array.isArray(component.props?.fields)
+        ? (component.props?.fields as Array<Record<string, string>>).map((field, index) => ({
+            id: field.id ?? `field-${index}`,
+            label: field.label ?? `Field ${index + 1}`,
+            placeholder: field.placeholder,
+            type: field.type,
+          }))
+        : []
+
+      return (
+        <Form
+          key={component.content}
+          content={component.content}
+          fields={fields}
+          submitLabel={
+            typeof component.props?.submitLabel === 'string'
+              ? (component.props?.submitLabel as string)
+              : 'Submit'
+          }
+          {...commonProps}
+        />
+      )
+    }
     case 'text':
       return <Text key={component.content} content={component.content} {...commonProps} />
-    case 'form':
-      // Form component will be implemented later
-      return (
-        <div key="form" className={className} style={style}>
-          Form: {component.content}
-        </div>
-      )
     case 'image':
-      // Image component will be handled separately
+      if (typeof component.props?.url === 'string') {
+        return (
+          <div key={component.content} className={className} style={{ ...style, minHeight: 200 }}>
+            <HeroImage
+              image={{
+                id: component.props?.id ?? component.content,
+                url: component.props.url,
+              }}
+            />
+          </div>
+        )
+      }
       return (
-        <div key="image" className={className} style={style}>
-          Image: {component.content}
+        <div key={component.content} className={className} style={style}>
+          {component.content}
         </div>
       )
     default:
