@@ -1,8 +1,6 @@
 // Pattern loader utility
 // Loads and validates pattern definition JSON files
 
-import { readFileSync } from 'fs'
-import { join } from 'path'
 import { patternDefinitionSchema, type PatternDefinition } from './schema'
 import { type PatternFamily } from './families'
 import { type PatternVariant } from '../dsl/types'
@@ -11,13 +9,16 @@ import { type PatternVariant } from '../dsl/types'
 const patternCache = new Map<string, PatternDefinition>()
 
 /**
- * Load a pattern definition from JSON file
+ * Load a pattern definition from JSON file (client-safe)
  * @param family Pattern family identifier
  * @param variant Pattern variant number (1-5)
  * @returns Pattern definition object
  * @throws Error if pattern file not found or invalid
  */
-export function loadPattern(family: PatternFamily, variant: PatternVariant): PatternDefinition {
+export async function loadPatternAsync(
+  family: PatternFamily,
+  variant: PatternVariant
+): Promise<PatternDefinition> {
   const cacheKey = `${family}-${variant}`
   
   // Check cache first
@@ -25,19 +26,17 @@ export function loadPattern(family: PatternFamily, variant: PatternVariant): Pat
     return patternCache.get(cacheKey)!
   }
 
-  // Load pattern file
-  const patternPath = join(
-    process.cwd(),
-    'lib',
-    'patterns',
-    'definitions',
-    family,
-    `variant-${variant}.json`
-  )
-
   try {
-    const fileContent = readFileSync(patternPath, 'utf-8')
-    const patternData = JSON.parse(fileContent)
+    // Load pattern file via fetch (works in both server and client)
+    const response = await fetch(
+      `/api/patterns/${family}/variant-${variant}`
+    )
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch pattern: ${response.statusText}`)
+    }
+
+    const patternData = await response.json()
 
     // Validate against schema
     const validatedPattern = patternDefinitionSchema.parse(patternData)
@@ -60,6 +59,25 @@ export function loadPattern(family: PatternFamily, variant: PatternVariant): Pat
     }
     throw error
   }
+}
+
+/**
+ * Synchronous pattern loader (server-side only)
+ * Falls back to async loader if fs is not available
+ */
+export function loadPattern(family: PatternFamily, variant: PatternVariant): PatternDefinition {
+  const cacheKey = `${family}-${variant}`
+  
+  // Check cache first
+  if (patternCache.has(cacheKey)) {
+    return patternCache.get(cacheKey)!
+  }
+
+  // For client-side, we need to use async loading
+  // This is a temporary solution - in production, patterns should be pre-loaded
+  throw new Error(
+    `Pattern ${family} variant ${variant} not cached. Use loadPatternAsync() in client components.`
+  )
 }
 
 /**

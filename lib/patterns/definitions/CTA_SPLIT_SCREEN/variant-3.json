@@ -1,0 +1,51 @@
+{
+  "family": "CTA_SPLIT_SCREEN",
+  "variant": 3,
+  "name": "Split Screen - Wide Image",
+  "description": "Split screen with wider image section (70/30 split) for visual emphasis.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "7fr 3fr",
+    "positions": {
+      "hero_image": { "x": 0, "y": 0, "width": 1, "height": 4 },
+      "title": { "x": 1, "y": 0, "width": 1, "height": 1 },
+      "subtitle": { "x": 1, "y": 1, "width": 1, "height": 1 },
+      "text": { "x": 1, "y": 2, "width": 1, "height": 1 },
+      "button": { "x": 1, "y": 3, "width": 1, "height": 1 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title", "button"],
+    "optional": ["subtitle", "text", "image"]
+  },
+  "spacing": {
+    "padding": 0,
+    "gap": 0
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": {
+        "gridTemplate": "1fr",
+        "padding": 0,
+        "gap": 0
+      },
+      "tablet": {
+        "gridTemplate": "7fr 3fr",
+        "padding": 0,
+        "gap": 0
+      },
+      "desktop": {
+        "gridTemplate": "7fr 3fr",
+        "padding": 0,
+        "gap": 0
+      }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "left",
+      "size": "wide"
+    }
+  }
+}
+

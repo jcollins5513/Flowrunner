@@ -1,0 +1,51 @@
+{
+  "family": "FEAT_IMAGE_TEXT_RIGHT",
+  "variant": 5,
+  "name": "Image Left Text Right - Narrow Image",
+  "description": "Split layout with narrower image section (40/60 split) and wider text area.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "2fr 3fr",
+    "positions": {
+      "hero_image": { "x": 0, "y": 0, "width": 1, "height": 3 },
+      "title": { "x": 1, "y": 0, "width": 1, "height": 1 },
+      "subtitle": { "x": 1, "y": 1, "width": 1, "height": 1 },
+      "text": { "x": 1, "y": 2, "width": 1, "height": 1 },
+      "button": { "x": 1, "y": 3, "width": 1, "height": 1 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title", "subtitle"],
+    "optional": ["text", "button", "image"]
+  },
+  "spacing": {
+    "padding": 32,
+    "gap": 24
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": {
+        "gridTemplate": "1fr",
+        "padding": 20,
+        "gap": 16
+      },
+      "tablet": {
+        "gridTemplate": "2fr 3fr",
+        "padding": 24,
+        "gap": 20
+      },
+      "desktop": {
+        "gridTemplate": "2fr 3fr",
+        "padding": 32,
+        "gap": 24
+      }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "left",
+      "size": "narrow"
+    }
+  }
+}
+

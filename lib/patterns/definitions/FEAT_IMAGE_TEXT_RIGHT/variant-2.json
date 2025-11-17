@@ -1,0 +1,51 @@
+{
+  "family": "FEAT_IMAGE_TEXT_RIGHT",
+  "variant": 2,
+  "name": "Image Left Text Right - Wide Image",
+  "description": "Split layout with wider image section (60/40 split) and text on right.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "3fr 2fr",
+    "positions": {
+      "hero_image": { "x": 0, "y": 0, "width": 1, "height": 3 },
+      "title": { "x": 1, "y": 0, "width": 1, "height": 1 },
+      "subtitle": { "x": 1, "y": 1, "width": 1, "height": 1 },
+      "text": { "x": 1, "y": 2, "width": 1, "height": 1 },
+      "button": { "x": 1, "y": 3, "width": 1, "height": 1 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title", "subtitle"],
+    "optional": ["text", "button", "image"]
+  },
+  "spacing": {
+    "padding": 24,
+    "gap": 20
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": {
+        "gridTemplate": "1fr",
+        "padding": 16,
+        "gap": 12
+      },
+      "tablet": {
+        "gridTemplate": "3fr 2fr",
+        "padding": 20,
+        "gap": 16
+      },
+      "desktop": {
+        "gridTemplate": "3fr 2fr",
+        "padding": 24,
+        "gap": 20
+      }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "left",
+      "size": "wide"
+    }
+  }
+}
+

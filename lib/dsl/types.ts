@@ -56,7 +56,12 @@ export type Vibe =
   | 'minimal'
   | 'modern'
   | 'retro'
-  // ... more vibes to be defined
+  | 'elegant'
+  | 'energetic'
+  | 'calm'
+  | 'tech'
+  | 'creative'
+  | 'corporate'
 
 export interface Palette {
   primary: string
