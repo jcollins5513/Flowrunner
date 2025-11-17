@@ -1,0 +1,38 @@
+{
+  "family": "DEMO_DEVICE_FULLBLEED",
+  "variant": 3,
+  "name": "Device Showcase - Split Stack",
+  "description": "Stacked layout with device above and two-column detail grid below.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "repeat(2, 1fr)",
+    "positions": {
+      "hero_image": { "x": 0, "y": 0, "width": 2, "height": 2 },
+      "title": { "x": 0, "y": 2, "width": 1, "height": 1 },
+      "subtitle": { "x": 1, "y": 2, "width": 1, "height": 1 },
+      "text": { "x": 0, "y": 3, "width": 1, "height": 1 },
+      "button": { "x": 1, "y": 3, "width": 1, "height": 1 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title", "subtitle"],
+    "optional": ["text", "button"]
+  },
+  "spacing": {
+    "padding": 32,
+    "gap": 20
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": { "gridTemplate": "1fr", "padding": 18, "gap": 12 },
+      "tablet": { "gridTemplate": "1fr 1fr", "padding": 24, "gap": 16 }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "top",
+      "size": "full"
+    }
+  }
+}
+

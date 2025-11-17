@@ -1,0 +1,38 @@
+{
+  "family": "DASHBOARD_OVERVIEW",
+  "variant": 3,
+  "name": "Overview with Timeline",
+  "description": "Headline row with timeline chart and two stat cards underneath.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "repeat(2, 1fr)",
+    "positions": {
+      "title": { "x": 0, "y": 0, "width": 2, "height": 1 },
+      "subtitle": { "x": 0, "y": 1, "width": 2, "height": 1 },
+      "image": { "x": 0, "y": 2, "width": 2, "height": 2 },
+      "text": { "x": 0, "y": 4, "width": 1, "height": 1 },
+      "button": { "x": 1, "y": 4, "width": 1, "height": 1 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title"],
+    "optional": ["subtitle", "text", "button", "image"]
+  },
+  "spacing": {
+    "padding": 32,
+    "gap": 18
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": { "gridTemplate": "1fr", "padding": 16, "gap": 12 },
+      "tablet": { "gridTemplate": "1fr 1fr", "padding": 24, "gap": 14 }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "top",
+      "size": "cover"
+    }
+  }
+}
+

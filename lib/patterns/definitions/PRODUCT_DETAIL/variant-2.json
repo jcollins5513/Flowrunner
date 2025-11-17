@@ -1,0 +1,42 @@
+{
+  "family": "PRODUCT_DETAIL",
+  "variant": 2,
+  "name": "Carousel Top",
+  "description": "Wide hero carousel on top, condensed details panel below.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "1fr",
+    "positions": {
+      "hero_image": { "x": 0, "y": 0, "width": 1, "height": 2 },
+      "title": { "x": 0, "y": 2, "width": 1, "height": 1 },
+      "subtitle": { "x": 0, "y": 3, "width": 1, "height": 1 },
+      "text": { "x": 0, "y": 4, "width": 1, "height": 1 },
+      "button": { "x": 0, "y": 5, "width": 1, "height": 1 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title"],
+    "optional": ["subtitle", "text", "button", "image"]
+  },
+  "spacing": {
+    "padding": 32,
+    "gap": 16
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": { "padding": 16, "gap": 12 },
+      "tablet": { "padding": 24, "gap": 14 }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "top",
+      "size": "full"
+    },
+    "supporting": [
+      { "position": "bottom-left", "size": "thumbnail" },
+      { "position": "bottom-right", "size": "thumbnail" }
+    ]
+  }
+}
+

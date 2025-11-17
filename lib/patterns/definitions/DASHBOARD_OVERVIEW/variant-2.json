@@ -1,0 +1,38 @@
+{
+  "family": "DASHBOARD_OVERVIEW",
+  "variant": 2,
+  "name": "Sidebar Metrics",
+  "description": "Navigation sidebar on the left with KPI cards and charts on the right.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "0.8fr 2.2fr",
+    "positions": {
+      "image": { "x": 0, "y": 0, "width": 1, "height": 5 },
+      "title": { "x": 1, "y": 0, "width": 1, "height": 1 },
+      "subtitle": { "x": 1, "y": 1, "width": 1, "height": 1 },
+      "text": { "x": 1, "y": 2, "width": 1, "height": 1 },
+      "button": { "x": 1, "y": 3, "width": 1, "height": 1 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title"],
+    "optional": ["subtitle", "text", "button", "image"]
+  },
+  "spacing": {
+    "padding": 36,
+    "gap": 24
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": { "gridTemplate": "1fr", "padding": 18, "gap": 12 },
+      "tablet": { "gridTemplate": "1fr 1fr", "padding": 28, "gap": 16 }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "left",
+      "size": "contain"
+    }
+  }
+}
+

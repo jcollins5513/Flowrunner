@@ -1,0 +1,38 @@
+{
+  "family": "ACT_FORM_MINIMAL",
+  "variant": 3,
+  "name": "Two-Step Wizard",
+  "description": "Form with step indicator and side panel for context.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "1.2fr 0.8fr",
+    "positions": {
+      "title": { "x": 0, "y": 0, "width": 1, "height": 1 },
+      "subtitle": { "x": 0, "y": 1, "width": 1, "height": 1 },
+      "form": { "x": 0, "y": 2, "width": 1, "height": 2 },
+      "button": { "x": 0, "y": 4, "width": 1, "height": 1 },
+      "text": { "x": 1, "y": 0, "width": 1, "height": 3 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title", "form"],
+    "optional": ["subtitle", "text", "button"]
+  },
+  "spacing": {
+    "padding": 40,
+    "gap": 24
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": { "gridTemplate": "1fr", "padding": 20, "gap": 14 },
+      "tablet": { "gridTemplate": "1fr 1fr", "padding": 28, "gap": 18 }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "top",
+      "size": "contain"
+    }
+  }
+}
+

@@ -1,0 +1,38 @@
+{
+  "family": "DEMO_DEVICE_FULLBLEED",
+  "variant": 2,
+  "name": "Device Showcase - Offset",
+  "description": "Device mockup offset to the right with text column on the left.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "2fr 3fr",
+    "positions": {
+      "hero_image": { "x": 1, "y": 0, "width": 1, "height": 4 },
+      "title": { "x": 0, "y": 0, "width": 1, "height": 1 },
+      "subtitle": { "x": 0, "y": 1, "width": 1, "height": 1 },
+      "text": { "x": 0, "y": 2, "width": 1, "height": 1 },
+      "button": { "x": 0, "y": 3, "width": 1, "height": 1 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title", "button"],
+    "optional": ["subtitle", "text"]
+  },
+  "spacing": {
+    "padding": 40,
+    "gap": 24
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": { "gridTemplate": "1fr", "padding": 20, "gap": 16 },
+      "tablet": { "gridTemplate": "1fr 1fr", "padding": 28, "gap": 20 }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "right",
+      "size": "wide"
+    }
+  }
+}
+

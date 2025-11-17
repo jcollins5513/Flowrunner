@@ -1,0 +1,38 @@
+{
+  "family": "DASHBOARD_OVERVIEW",
+  "variant": 1,
+  "name": "Stats Grid",
+  "description": "Hero metric row with three columns of cards underneath.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "repeat(3, 1fr)",
+    "positions": {
+      "title": { "x": 0, "y": 0, "width": 3, "height": 1 },
+      "subtitle": { "x": 0, "y": 1, "width": 3, "height": 1 },
+      "text": { "x": 0, "y": 2, "width": 3, "height": 1 },
+      "image": { "x": 0, "y": 3, "width": 3, "height": 2 },
+      "button": { "x": 2, "y": 5, "width": 1, "height": 1 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title"],
+    "optional": ["subtitle", "text", "button", "image"]
+  },
+  "spacing": {
+    "padding": 32,
+    "gap": 20
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": { "gridTemplate": "1fr", "padding": 16, "gap": 12 },
+      "tablet": { "gridTemplate": "repeat(2, 1fr)", "padding": 24, "gap": 16 }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "top",
+      "size": "cover"
+    }
+  }
+}
+

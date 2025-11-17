@@ -1,0 +1,38 @@
+{
+  "family": "ACT_FORM_MINIMAL",
+  "variant": 5,
+  "name": "Form with Supporting Stats",
+  "description": "Form on the right with supporting metrics/cards on the left.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "3fr 2fr",
+    "positions": {
+      "title": { "x": 0, "y": 0, "width": 1, "height": 1 },
+      "subtitle": { "x": 0, "y": 1, "width": 1, "height": 1 },
+      "text": { "x": 0, "y": 2, "width": 1, "height": 1 },
+      "form": { "x": 1, "y": 0, "width": 1, "height": 2 },
+      "button": { "x": 1, "y": 2, "width": 1, "height": 1 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title", "form"],
+    "optional": ["subtitle", "text", "button"]
+  },
+  "spacing": {
+    "padding": 48,
+    "gap": 32
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": { "gridTemplate": "1fr", "padding": 24, "gap": 16 },
+      "tablet": { "gridTemplate": "1fr 1fr", "padding": 32, "gap": 20 }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "left",
+      "size": "contain"
+    }
+  }
+}
+

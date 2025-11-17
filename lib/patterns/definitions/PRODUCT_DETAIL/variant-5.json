@@ -1,0 +1,41 @@
+{
+  "family": "PRODUCT_DETAIL",
+  "variant": 5,
+  "name": "Storytelling Stack",
+  "description": "Hero image paired with multi-step narrative blocks and CTA.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "1fr 1fr",
+    "positions": {
+      "hero_image": { "x": 0, "y": 0, "width": 1, "height": 3 },
+      "title": { "x": 1, "y": 0, "width": 1, "height": 1 },
+      "subtitle": { "x": 1, "y": 1, "width": 1, "height": 1 },
+      "text": { "x": 1, "y": 2, "width": 1, "height": 1 },
+      "button": { "x": 1, "y": 3, "width": 1, "height": 1 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title"],
+    "optional": ["subtitle", "text", "button", "image"]
+  },
+  "spacing": {
+    "padding": 48,
+    "gap": 28
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": { "gridTemplate": "1fr", "padding": 20, "gap": 16 },
+      "tablet": { "gridTemplate": "1fr 1fr", "padding": 32, "gap": 20 }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "left",
+      "size": "cover"
+    },
+    "supporting": [
+      { "position": "bottom", "size": "thumbnail" }
+    ]
+  }
+}
+

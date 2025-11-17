@@ -1,0 +1,41 @@
+{
+  "family": "PRODUCT_DETAIL",
+  "variant": 1,
+  "name": "Hero Gallery Left",
+  "description": "Large product image left, details and CTA stack on the right.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "3fr 2fr",
+    "positions": {
+      "hero_image": { "x": 0, "y": 0, "width": 1, "height": 4 },
+      "title": { "x": 1, "y": 0, "width": 1, "height": 1 },
+      "subtitle": { "x": 1, "y": 1, "width": 1, "height": 1 },
+      "text": { "x": 1, "y": 2, "width": 1, "height": 1 },
+      "button": { "x": 1, "y": 3, "width": 1, "height": 1 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title"],
+    "optional": ["subtitle", "text", "button", "image"]
+  },
+  "spacing": {
+    "padding": 48,
+    "gap": 24
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": { "gridTemplate": "1fr", "padding": 20, "gap": 16 },
+      "tablet": { "gridTemplate": "1fr 1fr", "padding": 32, "gap": 20 }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "left",
+      "size": "cover"
+    },
+    "supporting": [
+      { "position": "bottom", "size": "thumbnail" }
+    ]
+  }
+}
+

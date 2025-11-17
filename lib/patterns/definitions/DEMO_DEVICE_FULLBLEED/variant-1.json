@@ -1,0 +1,38 @@
+{
+  "family": "DEMO_DEVICE_FULLBLEED",
+  "variant": 1,
+  "name": "Device Showcase - Centered",
+  "description": "Full-bleed device mockup centered with text overlay below.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "1fr",
+    "positions": {
+      "hero_image": { "x": 0, "y": 0, "width": 1, "height": 2 },
+      "title": { "x": 0, "y": 2, "width": 1, "height": 1 },
+      "subtitle": { "x": 0, "y": 3, "width": 1, "height": 1 },
+      "text": { "x": 0, "y": 4, "width": 1, "height": 1 },
+      "button": { "x": 0, "y": 5, "width": 1, "height": 1 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title", "button"],
+    "optional": ["subtitle", "text"]
+  },
+  "spacing": {
+    "padding": 32,
+    "gap": 16
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": { "padding": 20, "gap": 12 },
+      "tablet": { "padding": 28, "gap": 14 }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "center",
+      "size": "full"
+    }
+  }
+}
+

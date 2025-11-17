@@ -1,0 +1,42 @@
+{
+  "family": "PRODUCT_DETAIL",
+  "variant": 4,
+  "name": "Gallery Rail",
+  "description": "Vertical thumbnail rail with hero image and detail stack.",
+  "layout": {
+    "structure": "grid",
+    "gridTemplate": "0.6fr 2.2fr 1.2fr",
+    "positions": {
+      "hero_image": { "x": 1, "y": 0, "width": 1, "height": 4 },
+      "title": { "x": 2, "y": 0, "width": 1, "height": 1 },
+      "subtitle": { "x": 2, "y": 1, "width": 1, "height": 1 },
+      "text": { "x": 2, "y": 2, "width": 1, "height": 1 },
+      "button": { "x": 2, "y": 3, "width": 1, "height": 1 },
+      "image": { "x": 0, "y": 0, "width": 1, "height": 4 }
+    }
+  },
+  "componentSlots": {
+    "required": ["title"],
+    "optional": ["subtitle", "text", "button", "image"]
+  },
+  "spacing": {
+    "padding": 40,
+    "gap": 24
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": { "gridTemplate": "1fr", "padding": 18, "gap": 12 },
+      "tablet": { "gridTemplate": "1fr 1fr", "padding": 28, "gap": 18 }
+    }
+  },
+  "imagePlacement": {
+    "hero": {
+      "position": "center",
+      "size": "cover"
+    },
+    "supporting": [
+      { "position": "left", "size": "thumbnail" }
+    ]
+  }
+}
+
