@@ -1,5 +1,14 @@
 import { defineConfig } from '@playwright/test'
 
+const snapshotProjects = process.env.SNAPSHOTS
+  ? [
+      {
+        name: 'snapshots',
+        testMatch: /export-snapshots\.spec\.ts/,
+      },
+    ]
+  : []
+
 export default defineConfig({
   testDir: './tests/e2e',
   timeout: 60_000,
@@ -15,6 +24,13 @@ export default defineConfig({
     viewport: { width: 1280, height: 720 },
     ignoreHTTPSErrors: true,
   },
+  projects: [
+    {
+      name: 'default',
+      testIgnore: /export-snapshots\.spec\.ts/,
+    },
+    ...snapshotProjects,
+  ],
   webServer: {
     command: 'npm run dev',
     url: 'http://127.0.0.1:3000',

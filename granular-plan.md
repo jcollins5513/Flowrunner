@@ -966,12 +966,12 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 
 ### 15.1 Figma Export
 - [x] Research Figma API/plugin architecture
-- [ ] Create Figma export service
+- [x] Create Figma export service
 - [x] Convert DSL to Figma JSON format
 - [x] Map components to Figma elements
-- [ ] Convert images to Figma images
+- [x] Convert images to Figma images
 - [x] Preserve palette in Figma
-- [ ] Preserve layout structure
+- [x] Preserve layout structure
 - [x] Create Figma frames for screens
 - [ ] Implement auto-layout compatibility
 - [ ] Add Figma export UI
@@ -990,11 +990,11 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 - [x] Create Cursor export format
 - [x] Export DSL as JSON
 - [x] Export React components
-- [ ] Export assets (images)
+- [x] Export assets (images)
 - [x] Create project structure
 - [x] Generate Cursor-compatible files
 - [x] Add export metadata
-- [ ] Create export bundle (zip)
+- [x] Create export bundle (zip)
 - [ ] Add Cursor export UI
 - [x] Document export format
 
