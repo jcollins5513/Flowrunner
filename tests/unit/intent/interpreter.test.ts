@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { IntentInterpreter, IntentProvider, IntentProviderInput } from '../interpreter'
-import { MockIntentProvider } from '../providers/mock'
+import {
+  IntentInterpreter,
+  IntentInterpreterEvent,
+  IntentProvider,
+  IntentProviderInput,
+} from '@/lib/ai/intent/interpreter'
+import { MockIntentProvider } from '@/lib/ai/intent/providers/mock'
 
 class CountingProvider implements IntentProvider {
   public name = 'counting-provider'
@@ -62,5 +67,28 @@ describe('IntentInterpreter', () => {
 
     const cached = await interpreter.interpret('Generate a fintech splash hero with neon vibes')
     expect(cached).toBe(fallback)
+  })
+
+  it('emits telemetry events for success, caching, and failure', async () => {
+    const successEvents: IntentInterpreterEvent[] = []
+    const interpreter = new IntentInterpreter(new MockIntentProvider(), {
+      onEvent: (event) => successEvents.push(event),
+    })
+
+    await interpreter.interpret('Create an energetic marketing hero with neon gradients')
+    await interpreter.interpret('Create an energetic marketing hero with neon gradients')
+
+    expect(successEvents.some((event) => event.type === 'provider_success')).toBe(true)
+    expect(successEvents.some((event) => event.type === 'cache_hit')).toBe(true)
+
+    const failureEvents: IntentInterpreterEvent[] = []
+    const failingInterpreter = new IntentInterpreter(new FailingProvider(), {
+      onEvent: (event) => failureEvents.push(event),
+    })
+
+    await failingInterpreter.interpret('Trigger fallback scenario for telemetry validation')
+
+    expect(failureEvents.some((event) => event.type === 'provider_failure')).toBe(true)
+    expect(failureEvents.some((event) => event.type === 'fallback_applied')).toBe(true)
   })
 })

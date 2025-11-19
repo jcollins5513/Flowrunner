@@ -8,7 +8,7 @@ export interface MockIntentProviderOptions {
 }
 
 const keywordMap: Record<Intent['domain'], string[]> = {
-  ecommerce: ['shop', 'store', 'checkout', 'cart', 'retail'],
+  ecommerce: ['shop', 'store', 'checkout', 'cart', 'retail', 'ecommerce'],
   saas: ['dashboard', 'metrics', 'subscription', 'onboarding', 'saas'],
   mobile_app: ['mobile', 'app', 'gesture', 'ios', 'android'],
   marketing: ['campaign', 'landing', 'promo', 'hero'],

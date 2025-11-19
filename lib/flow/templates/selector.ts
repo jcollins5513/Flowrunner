@@ -13,6 +13,7 @@ export interface ScreenGenerationPlan {
     styleCues: Intent['styleCues']
     colorMood: Intent['colorMood']
     contentFocus?: string
+    customFields?: Record<string, string>
   }
   heroPlan: {
     vibe: string
@@ -20,6 +21,18 @@ export interface ScreenGenerationPlan {
     imagePrompt: string
     aspectRatio: string
   }
+}
+
+type ScreenOverrideConfig = {
+  patternVariant?: FlowTemplateScreen['pattern']['variant']
+  intentHints?: FlowTemplateScreen['intentHints']
+  heroDefaults?: FlowTemplateScreen['heroDefaults']
+}
+
+export interface TemplateCustomizationOptions {
+  screenOrder?: string[]
+  screenOverrides?: Record<string, ScreenOverrideConfig>
+  fieldValues?: Record<string, string>
 }
 
 const DOMAIN_FALLBACKS: Record<Intent['domain'], FlowTemplate['domain'][]> = {
@@ -94,32 +107,121 @@ const resolveHeroPrompt = (screen: FlowTemplateScreen, intent: Intent): string =
 
 const resolveHeroAspectRatio = (screen: FlowTemplateScreen): string => screen.heroDefaults?.aspectRatio ?? '16:9'
 
+const orderScreens = (screens: FlowTemplateScreen[], preferredOrder?: string[]): FlowTemplateScreen[] => {
+  if (!preferredOrder?.length) {
+    return screens
+  }
+
+  const orderMap = new Map(preferredOrder.map((id, index) => [id, index]))
+  const defaultWeightStart = preferredOrder.length
+
+  return [...screens]
+    .map((screen, index) => ({
+      screen,
+      weight: orderMap.has(screen.id) ? (orderMap.get(screen.id) as number) : defaultWeightStart + index,
+    }))
+    .sort((a, b) => a.weight - b.weight)
+    .map((entry) => entry.screen)
+}
+
+const mergeIntentHints = (
+  base: FlowTemplateScreen['intentHints'],
+  override?: FlowTemplateScreen['intentHints']
+): FlowTemplateScreen['intentHints'] => (override ? { ...(base ?? {}), ...override } : base)
+
+const mergeHeroDefaults = (
+  base: FlowTemplateScreen['heroDefaults'],
+  override?: FlowTemplateScreen['heroDefaults']
+): FlowTemplateScreen['heroDefaults'] => (override ? { ...(base ?? {}), ...override } : base)
+
+const applyScreenOverrides = (
+  screen: FlowTemplateScreen,
+  override?: ScreenOverrideConfig
+): FlowTemplateScreen => {
+  if (!override) return screen
+  return {
+    ...screen,
+    pattern: {
+      ...screen.pattern,
+      variant: override.patternVariant ?? screen.pattern.variant,
+    },
+    intentHints: mergeIntentHints(screen.intentHints, override.intentHints ?? undefined),
+    heroDefaults: mergeHeroDefaults(screen.heroDefaults, override.heroDefaults ?? undefined),
+  }
+}
+
+const getScreenOverride = (
+  template: FlowTemplate,
+  options: TemplateCustomizationOptions,
+  screenId: string
+): ScreenOverrideConfig | undefined =>
+  options.screenOverrides?.[screenId] ?? template.customization?.screenOverrides?.[screenId]
+
+const resolveTemplateFieldValues = (
+  template: FlowTemplate,
+  overrides?: Record<string, string>
+): Record<string, string> | undefined => {
+  const definitions = template.customization?.fields ?? []
+  if (!definitions.length && !overrides) {
+    return undefined
+  }
+
+  const resolved: Record<string, string> = {}
+  definitions.forEach((field) => {
+    const value = overrides?.[field.id] ?? field.defaultValue
+    if (value) {
+      resolved[field.id] = value
+    }
+  })
+
+  if (overrides) {
+    Object.entries(overrides).forEach(([key, value]) => {
+      if (value) {
+        resolved[key] = value
+      }
+    })
+  }
+
+  return Object.keys(resolved).length ? resolved : undefined
+}
+
 export const mapTemplateToScreenSequence = (
   template: FlowTemplate,
-  intent: Intent
-): ScreenGenerationPlan[] =>
-  template.screens.map((screen, index) => {
-    const tone = resolveTone(screen, intent)
-    const colorMood = resolveColorMood(screen, intent)
-    const styleCues = resolveStyleCues(screen, intent)
+  intent: Intent,
+  customizationOptions: TemplateCustomizationOptions = {}
+): ScreenGenerationPlan[] => {
+  const orderedScreens = orderScreens(
+    template.screens,
+    customizationOptions.screenOrder ?? template.customization?.screenOrder
+  )
+  const resolvedFieldValues = resolveTemplateFieldValues(template, customizationOptions.fieldValues)
+
+  return orderedScreens.map((screen, index) => {
+    const override = getScreenOverride(template, customizationOptions, screen.id)
+    const resolvedScreen = applyScreenOverrides(screen, override)
+    const tone = resolveTone(resolvedScreen, intent)
+    const colorMood = resolveColorMood(resolvedScreen, intent)
+    const styleCues = resolveStyleCues(resolvedScreen, intent)
 
     return {
       order: index,
       templateId: template.id,
-      screenId: screen.id,
-      name: screen.name,
-      pattern: screen.pattern,
+      screenId: resolvedScreen.id,
+      name: resolvedScreen.name,
+      pattern: resolvedScreen.pattern,
       textPlan: {
         tone,
         styleCues,
         colorMood,
-        contentFocus: screen.intentHints?.contentFocus,
+        contentFocus: resolvedScreen.intentHints?.contentFocus,
+        customFields: resolvedFieldValues,
       },
       heroPlan: {
-        vibe: screen.heroDefaults?.vibe ?? `${screen.name} hero image`,
-        colorMood: screen.heroDefaults?.colorMood ?? colorMood,
-        imagePrompt: resolveHeroPrompt(screen, intent),
-        aspectRatio: resolveHeroAspectRatio(screen),
+        vibe: resolvedScreen.heroDefaults?.vibe ?? `${resolvedScreen.name} hero image`,
+        colorMood: resolvedScreen.heroDefaults?.colorMood ?? colorMood,
+        imagePrompt: resolveHeroPrompt(resolvedScreen, intent),
+        aspectRatio: resolveHeroAspectRatio(resolvedScreen),
       },
     }
   })
+}

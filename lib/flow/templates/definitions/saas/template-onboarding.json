@@ -7,6 +7,31 @@
     "estimatedScreens": 3,
     "version": "1.0.0"
   },
+  "customization": {
+    "screenOrder": ["welcome-hero", "product-tour", "pricing-close"],
+    "fields": [
+      {
+        "id": "hero_cta_label",
+        "label": "Hero CTA Label",
+        "type": "string",
+        "description": "Primary CTA copy for the hero buttons",
+        "defaultValue": "Start free trial"
+      },
+      {
+        "id": "accent_color",
+        "label": "Accent Color Mood",
+        "type": "enum",
+        "description": "Applies to hero color mood suggestions",
+        "options": ["warm", "cool", "muted", "neon"],
+        "defaultValue": "warm"
+      }
+    ],
+    "screenOverrides": {
+      "pricing-close": {
+        "patternVariant": 5
+      }
+    }
+  },
   "screens": [
     {
       "id": "welcome-hero",

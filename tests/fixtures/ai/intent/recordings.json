@@ -1,0 +1,44 @@
+[
+  {
+    "prompt": "Design a luxurious ecommerce hero focused on handcrafted ceramics",
+    "normalizedPrompt": "design a luxurious ecommerce hero focused on handcrafted ceramics",
+    "providerResult": {
+      "domain": "ecommerce",
+      "styleCues": ["luxury", "minimal"],
+      "visualTheme": "photographic",
+      "tone": "bold",
+      "colorMood": "warm",
+      "confidence": {
+        "domain": 0.92,
+        "style": 0.81,
+        "theme": 0.77,
+        "tone": 0.68,
+        "color": 0.73
+      },
+      "metadata": {
+        "recordingId": "luxury-ceramics"
+      }
+    }
+  },
+  {
+    "prompt": "Compose an onboarding hero for a calm wellness SaaS dashboard",
+    "normalizedPrompt": "compose an onboarding hero for a calm wellness saas dashboard",
+    "providerResult": {
+      "domain": "saas",
+      "styleCues": ["minimal", "modern"],
+      "visualTheme": "illustrated",
+      "tone": "calm",
+      "colorMood": "muted",
+      "confidence": {
+        "domain": 0.88,
+        "style": 0.74,
+        "theme": 0.69,
+        "tone": 0.85,
+        "color": 0.66
+      },
+      "metadata": {
+        "recordingId": "wellness-onboarding"
+      }
+    }
+  }
+]

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { getTemplateById, listTemplates } from '../loader'
-import { flowTemplateSchema } from '../schema'
-import ecommerceStorefront from '../definitions/ecommerce/template-storefront.json'
+import { getTemplateById, listTemplates } from '@/lib/flow/templates/loader'
+import { flowTemplateSchema } from '@/lib/flow/templates/schema'
+import ecommerceStorefront from '@/lib/flow/templates/definitions/ecommerce/template-storefront.json'
 
 describe('flow template loader', () => {
   it('validates raw JSON definitions against the schema', () => {
@@ -12,7 +12,7 @@ describe('flow template loader', () => {
 
   it('lists all templates with defensive copies', () => {
     const templates = listTemplates()
-    expect(templates.length).toBeGreaterThanOrEqual(3)
+    expect(templates.length).toBeGreaterThanOrEqual(4)
 
     const template = templates[0]
     const firstScreenName = template.screens[0]?.name

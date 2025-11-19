@@ -1,0 +1,77 @@
+{
+  "id": "finance-fintech-growth-v1",
+  "domain": "finance",
+  "name": "Fintech Growth Funnel",
+  "description": "Finance-focused onboarding journey that pairs trust-building hero content with data visualizations and a regulated CTA.",
+  "metadata": {
+    "estimatedScreens": 3,
+    "version": "1.0.0"
+  },
+  "screens": [
+    {
+      "id": "trust-hero",
+      "name": "Trust Anchor Hero",
+      "description": "Centered hero layout focused on credibility messaging and compliance badges.",
+      "pattern": {
+        "family": "HERO_CENTER_TEXT",
+        "variant": 2
+      },
+      "intentHints": {
+        "tone": "professional",
+        "styleCues": ["modern", "minimal"],
+        "colorMood": "cool",
+        "visualTheme": "photographic",
+        "contentFocus": "Highlight FDIC insurance, security, and onboarding CTA"
+      },
+      "heroDefaults": {
+        "vibe": "Premium photo of users reviewing finances on devices in a sunlight office",
+        "colorMood": "cool",
+        "imagePrompt": "Editorial photograph of a diverse finance team analyzing data on tablets with natural light",
+        "aspectRatio": "16:9"
+      }
+    },
+    {
+      "id": "portfolio-overview",
+      "name": "Portfolio Overview",
+      "description": "Dashboard screen showcasing performance metrics and projections.",
+      "pattern": {
+        "family": "DASHBOARD_OVERVIEW",
+        "variant": 5
+      },
+      "intentHints": {
+        "tone": "professional",
+        "styleCues": ["modern"],
+        "colorMood": "muted",
+        "visualTheme": "3d",
+        "contentFocus": "Surface key KPIs with annotations"
+      },
+      "heroDefaults": {
+        "vibe": "3D render of layered charts with gold accents",
+        "colorMood": "muted",
+        "imagePrompt": "3D finance dashboard floating with line charts, candlesticks, and gold highlights",
+        "aspectRatio": "16:10"
+      }
+    },
+    {
+      "id": "secure-cta",
+      "name": "Secure CTA",
+      "description": "Regulatory-friendly split CTA encouraging account creation with security assurances.",
+      "pattern": {
+        "family": "CTA_SPLIT_SCREEN",
+        "variant": 4
+      },
+      "intentHints": {
+        "tone": "calm",
+        "styleCues": ["minimal"],
+        "colorMood": "warm",
+        "contentFocus": "Reinforce security and invite users to open an account"
+      },
+      "heroDefaults": {
+        "vibe": "Soft illustration of secure vault imagery blended with app UI",
+        "colorMood": "warm",
+        "imagePrompt": "Illustrated lockbox with fintech UI cards glowing around it",
+        "aspectRatio": "4:3"
+      }
+    }
+  ]
+}

@@ -216,7 +216,7 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ## Phase 4: Prompt Interpreter System
 
 ### 4.1 Intent Extraction
-- [ ] Set up AI/LLM integration (OpenAI/Anthropic)
+- [x] Set up AI/LLM integration (OpenAI/Anthropic)
 - [x] Create prompt interpreter service
 - [x] Implement domain extraction
   - [x] E-commerce, SaaS, Mobile App, etc.
@@ -233,7 +233,7 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 - Use structured output from LLM for consistent parsing
 - Fallback to defaults if extraction fails
 - Consider prompt engineering for better results
-- [ ] Testing: record representative prompts/responses (VCR) and assert parser output shape so downstream stages don’t regress.
+- [x] Testing: record representative prompts/responses (VCR) and assert parser output shape so downstream stages don’t regress.
 
 ---
 
@@ -243,10 +243,10 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
   - [x] E-commerce flow template
   - [x] SaaS onboarding template
   - [x] Mobile app template
-  - [ ] [Additional domain templates]
+  - [x] [Additional domain templates]
 - [x] Implement template selector (Domain → Template)
 - [x] Create template-to-screen-sequence mapper
-- [ ] Add template customization options
+- [x] Add template customization options
 - [x] Store templates as JSON files
 - [x] Create template loader utility
 

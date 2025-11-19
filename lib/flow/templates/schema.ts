@@ -11,6 +11,15 @@ const colorMoodEnum = z.enum(INTENT_CONSTANTS.COLOR_MOODS as [string, ...string[
 const domainEnum = z.enum(INTENT_CONSTANTS.DOMAINS as [string, ...string[]])
 const visualThemeEnum = z.enum(INTENT_CONSTANTS.VISUAL_THEMES as [string, ...string[]])
 
+const templateFieldSchema = z.object({
+  id: z.string().min(1),
+  label: z.string().min(1),
+  type: z.union([z.literal('string'), z.literal('enum')]),
+  description: z.string().optional(),
+  options: z.array(z.string()).optional(),
+  defaultValue: z.string().optional(),
+})
+
 export const templateIntentHintsSchema = z
   .object({
     tone: toneEnum.optional(),
@@ -43,6 +52,20 @@ export const flowTemplateScreenSchema = z.object({
   heroDefaults: templateHeroDefaultsSchema,
 })
 
+const screenOverrideSchema = z.object({
+  patternVariant: patternVariantEnum.optional(),
+  intentHints: templateIntentHintsSchema,
+  heroDefaults: templateHeroDefaultsSchema,
+})
+
+const templateCustomizationSchema = z
+  .object({
+    screenOrder: z.array(z.string()).optional(),
+    screenOverrides: z.record(z.string(), screenOverrideSchema).optional(),
+    fields: z.array(templateFieldSchema).optional(),
+  })
+  .optional()
+
 export const flowTemplateSchema = z.object({
   id: z.string().min(1),
   domain: domainEnum,
@@ -55,7 +78,10 @@ export const flowTemplateSchema = z.object({
     })
     .default({}),
   screens: z.array(flowTemplateScreenSchema).min(1),
+  customization: templateCustomizationSchema,
 })
 
 export type FlowTemplate = z.infer<typeof flowTemplateSchema>
 export type FlowTemplateScreen = z.infer<typeof flowTemplateScreenSchema>
+export type FlowTemplateCustomization = z.infer<typeof templateCustomizationSchema>
+export type FlowTemplateFieldDefinition = z.infer<typeof templateFieldSchema>

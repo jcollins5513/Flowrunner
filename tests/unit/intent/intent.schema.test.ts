@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { intentSchema, INTENT_CONSTANTS } from '../intent.schema'
+import { intentSchema, INTENT_CONSTANTS } from '@/lib/ai/intent/intent.schema'
 
 describe('intentSchema', () => {
   const basePayload = {

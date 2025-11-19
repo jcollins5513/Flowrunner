@@ -56,11 +56,13 @@ const fallbackSchema = z.object({
   reason: z.string().optional(),
 })
 
-const metadataSchema = z.object({
-  provider: z.string().optional(),
-  model: z.string().optional(),
-  responseId: z.string().optional(),
-})
+const metadataSchema = z
+  .object({
+    provider: z.string().optional(),
+    model: z.string().optional(),
+    responseId: z.string().optional(),
+  })
+  .catchall(z.string())
 
 export const intentSchema = z.object({
   rawPrompt: z.string().min(1),

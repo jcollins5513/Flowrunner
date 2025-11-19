@@ -17,11 +17,28 @@ Phase 4 introduces a deterministic prompt interpreter that converts raw prompts 
 - Throwing from `generateIntent` triggers the fallback intent (defaults + recorded reason).
 - Inject custom providers via `new IntentInterpreter(yourProvider)` or pass `{ interpreter }` into `runPromptToTemplatePipeline`.
 
+### OpenAI Provider
+
+- `providers/openai.ts` wraps the official OpenAI SDK for structured intent extraction.
+- Configurable via `OPENAI_API_KEY`, optional `OPENAI_INTENT_MODEL`, `temperature`, and `topP`.
+- Responses use JSON-mode chat completions constrained to FlowRunner enums; the provider sanitizes outputs before handing them to the interpreter.
+- Ideal for production; swap in Anthropic or other LLMs by following the same interface.
+
+### Telemetry & Observability
+
+- Pass `onEvent` into `IntentInterpreter` to observe `cache_hit`, `cache_miss`, `cache_store`, `provider_success`, `provider_failure`, and `fallback_applied` events.
+- Events include prompt hash, locale, provider name, duration, and error reason when relevant—pipe them into tracing/logging to debug LLM behavior.
+
 ## Caching & Normalization
 
 - Prompts are normalized (trim + lowercase + whitespace collapse) before caching.
 - Cache key = `normalizedPrompt|locale`. Pass `forceRefresh: true` to bypass.
 - Provide your own cache map through the interpreter constructor to plug into Redis/In-memory stores later.
+
+### Recorded Fixtures
+
+- `tests/unit/intent/interpreter.recordings.test.ts` replays fixtures from `tests/fixtures/ai/intent/recordings.json` to ensure interpreter output remains stable without hitting a live LLM.
+- Add new recordings whenever you tweak prompt engineering so downstream systems have regression coverage.
 
 ## Extending Templates
 
