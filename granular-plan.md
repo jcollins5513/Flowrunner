@@ -203,7 +203,7 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 - [x] Create pattern compatibility checker (vibe/style/palette heuristics)
 - [x] Write tests for validation + compatibility
 - [x] Add error messaging for invalid patterns
-- [ ] Integrate validation into DSL persistence + renderer blocking paths
+- [x] Integrate validation into DSL persistence + renderer blocking paths
 - [ ] Add telemetry for pattern load/validation failures
 - [ ] Add regression suite: iterate through every pattern, render canonical DSL, assert slot coverage + screenshot diff threshold.
 

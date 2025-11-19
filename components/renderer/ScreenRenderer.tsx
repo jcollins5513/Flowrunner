@@ -1,5 +1,6 @@
 // Main screen renderer component
 // Renders a complete screen from DSL using pattern definitions
+// Blocks rendering if DSL is invalid
 
 'use client'
 
@@ -11,11 +12,14 @@ import { renderComponent } from '@/lib/renderer/component-factory'
 import { HeroImage } from './HeroImage'
 import { applyPaletteStyles, applyVibeStyles } from '@/lib/renderer/styling'
 import { useResponsiveBreakpoint, type Breakpoint } from '@/lib/renderer/hooks'
+import { validateScreenDSL } from '@/lib/dsl/validator'
+import { validateDSLAgainstPattern } from '@/lib/patterns/validator'
 
 export interface ScreenRendererProps {
   dsl: ScreenDSL
   className?: string
   onComponentClick?: (componentType: string, component: ScreenDSL['components'][0]) => void
+  skipValidation?: boolean // Only use for development/debugging
 }
 
 const BREAKPOINT_ORDER: Breakpoint[] = ['mobile', 'tablet', 'desktop']
@@ -24,18 +28,48 @@ export const ScreenRenderer: React.FC<ScreenRendererProps> = ({
   dsl,
   className = '',
   onComponentClick,
+  skipValidation = false,
 }) => {
   const [pattern, setPattern] = useState<PatternDefinition | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [validationError, setValidationError] = useState<string | null>(null)
   const breakpoint = useResponsiveBreakpoint()
 
+  // Validate DSL before rendering
   useEffect(() => {
+    if (skipValidation) return
+
+    // Schema validation
+    const schemaResult = validateScreenDSL(dsl)
+    if (!schemaResult.success) {
+      setValidationError(`DSL Schema Error: ${schemaResult.formattedErrors?.join(', ') || schemaResult.error?.message}`)
+      return
+    }
+
+    // Pattern validation will happen after pattern loads
+  }, [dsl, skipValidation])
+
+  useEffect(() => {
+    if (validationError) return // Don't load pattern if schema validation failed
+
     loadPatternAsync(dsl.pattern_family, dsl.pattern_variant)
-      .then(setPattern)
+      .then((loadedPattern) => {
+        setPattern(loadedPattern)
+
+        // Validate DSL against pattern
+        if (!skipValidation) {
+          const patternResult = validateDSLAgainstPattern(dsl, loadedPattern)
+          if (!patternResult.valid) {
+            setValidationError(
+              `Pattern Validation Error: ${patternResult.errors.map((e) => `${e.field}: ${e.message}`).join(', ')}`
+            )
+          }
+        }
+      })
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
-  }, [dsl.pattern_family, dsl.pattern_variant])
+  }, [dsl, skipValidation, validationError])
 
   useEffect(() => {
     if (error) {
@@ -85,6 +119,17 @@ export const ScreenRenderer: React.FC<ScreenRendererProps> = ({
 
   if (loading) {
     return <div className="p-8">Loading pattern...</div>
+  }
+
+  // Block rendering if validation failed
+  if (validationError) {
+    return (
+      <div className="p-8 text-red-600 border border-red-300 rounded-lg bg-red-50">
+        <h3 className="font-bold mb-2">DSL Validation Failed</h3>
+        <p className="text-sm">{validationError}</p>
+        <p className="text-xs mt-2 text-gray-600">Rendering blocked to prevent invalid UI output.</p>
+      </div>
+    )
   }
 
   if (error || !pattern) {
