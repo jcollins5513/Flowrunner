@@ -1,11 +1,13 @@
 // Pattern validation utilities
 // Validates DSL against pattern contracts
 
-import { type ScreenDSL } from '../dsl/types'
+import { type ScreenDSL, type PatternFamily, type PatternVariant } from '../dsl/types'
 import { type PatternDefinition } from './schema'
 import { loadPattern } from './loader'
-import { type PatternFamily } from './families'
-import { type PatternVariant } from '../dsl/types'
+import {
+  recordPatternValidationFailure,
+  recordPatternValidationSuccess,
+} from '../telemetry/patterns'
 
 export interface ValidationError {
   field: string
@@ -121,11 +123,19 @@ function validateImagePlacement(
  * @param pattern Pattern definition to validate against
  * @returns Validation result with errors if any
  */
+function getTimestamp(): number {
+  if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
+    return performance.now()
+  }
+  return Date.now()
+}
+
 export function validateDSLAgainstPattern(
   dsl: ScreenDSL,
   pattern: PatternDefinition
 ): ValidationResult {
   const errors: ValidationError[] = []
+  const start = getTimestamp()
 
   // Verify pattern family and variant match
   if (dsl.pattern_family !== pattern.family) {
@@ -153,8 +163,23 @@ export function validateDSLAgainstPattern(
   // Validate image placement
   errors.push(...validateImagePlacement(dsl, pattern))
 
+  const valid = errors.length === 0
+
+  if (valid) {
+    recordPatternValidationSuccess(pattern.family as PatternFamily, pattern.variant as PatternVariant, getTimestamp() - start)
+  } else {
+    recordPatternValidationFailure(
+      pattern.family as PatternFamily,
+      pattern.variant as PatternVariant,
+      getTimestamp() - start,
+      errors
+        .map((error) => `${error.code}: ${error.message}`)
+        .join('; ')
+    )
+  }
+
   return {
-    valid: errors.length === 0,
+    valid,
     errors,
   }
 }

@@ -1,0 +1,1707 @@
+[
+  {
+    "family": "ONB_HERO_TOP",
+    "variant": 1,
+    "displayName": "Onboarding Hero Top",
+    "description": "Hero section with hero image at the top and onboarding copy stacks underneath.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/onb_hero_top-variant-1.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "User onboarding",
+      "Welcome screens",
+      "Product introductions"
+    ],
+    "requiredSlots": [
+      "title",
+      "subtitle",
+      "button"
+    ],
+    "optionalSlots": [
+      "text"
+    ]
+  },
+  {
+    "family": "ONB_HERO_TOP",
+    "variant": 2,
+    "displayName": "Onboarding Hero Top",
+    "description": "Hero section with hero image at the top and onboarding copy stacks underneath.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/onb_hero_top-variant-2.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "User onboarding",
+      "Welcome screens",
+      "Product introductions"
+    ],
+    "requiredSlots": [
+      "title",
+      "subtitle",
+      "button"
+    ],
+    "optionalSlots": [
+      "text"
+    ]
+  },
+  {
+    "family": "ONB_HERO_TOP",
+    "variant": 3,
+    "displayName": "Onboarding Hero Top",
+    "description": "Hero section with hero image at the top and onboarding copy stacks underneath.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/onb_hero_top-variant-3.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "User onboarding",
+      "Welcome screens",
+      "Product introductions"
+    ],
+    "requiredSlots": [
+      "title",
+      "subtitle",
+      "button"
+    ],
+    "optionalSlots": [
+      "text"
+    ]
+  },
+  {
+    "family": "ONB_HERO_TOP",
+    "variant": 4,
+    "displayName": "Onboarding Hero Top",
+    "description": "Hero section with hero image at the top and onboarding copy stacks underneath.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/onb_hero_top-variant-4.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "User onboarding",
+      "Welcome screens",
+      "Product introductions"
+    ],
+    "requiredSlots": [
+      "title",
+      "subtitle",
+      "button"
+    ],
+    "optionalSlots": [
+      "text"
+    ]
+  },
+  {
+    "family": "ONB_HERO_TOP",
+    "variant": 5,
+    "displayName": "Onboarding Hero Top",
+    "description": "Hero section with hero image at the top and onboarding copy stacks underneath.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/onb_hero_top-variant-5.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "User onboarding",
+      "Welcome screens",
+      "Product introductions"
+    ],
+    "requiredSlots": [
+      "title",
+      "subtitle",
+      "button"
+    ],
+    "optionalSlots": [
+      "text"
+    ]
+  },
+  {
+    "family": "FEAT_IMAGE_TEXT_RIGHT",
+    "variant": 1,
+    "displayName": "Feature Image Text Right",
+    "description": "Two-column feature layout with image leading and copy on the right.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/feat_image_text_right-variant-1.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Feature highlights",
+      "Product storytelling",
+      "Launch updates"
+    ],
+    "requiredSlots": [
+      "title",
+      "subtitle"
+    ],
+    "optionalSlots": [
+      "text",
+      "button",
+      "image"
+    ]
+  },
+  {
+    "family": "FEAT_IMAGE_TEXT_RIGHT",
+    "variant": 2,
+    "displayName": "Feature Image Text Right",
+    "description": "Two-column feature layout with image leading and copy on the right.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/feat_image_text_right-variant-2.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Feature highlights",
+      "Product storytelling",
+      "Launch updates"
+    ],
+    "requiredSlots": [
+      "title",
+      "subtitle"
+    ],
+    "optionalSlots": [
+      "text",
+      "button",
+      "image"
+    ]
+  },
+  {
+    "family": "FEAT_IMAGE_TEXT_RIGHT",
+    "variant": 3,
+    "displayName": "Feature Image Text Right",
+    "description": "Two-column feature layout with image leading and copy on the right.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/feat_image_text_right-variant-3.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Feature highlights",
+      "Product storytelling",
+      "Launch updates"
+    ],
+    "requiredSlots": [
+      "title",
+      "subtitle"
+    ],
+    "optionalSlots": [
+      "text",
+      "button",
+      "image"
+    ]
+  },
+  {
+    "family": "FEAT_IMAGE_TEXT_RIGHT",
+    "variant": 4,
+    "displayName": "Feature Image Text Right",
+    "description": "Two-column feature layout with image leading and copy on the right.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/feat_image_text_right-variant-4.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Feature highlights",
+      "Product storytelling",
+      "Launch updates"
+    ],
+    "requiredSlots": [
+      "title",
+      "subtitle"
+    ],
+    "optionalSlots": [
+      "text",
+      "button",
+      "image"
+    ]
+  },
+  {
+    "family": "FEAT_IMAGE_TEXT_RIGHT",
+    "variant": 5,
+    "displayName": "Feature Image Text Right",
+    "description": "Two-column feature layout with image leading and copy on the right.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/feat_image_text_right-variant-5.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Feature highlights",
+      "Product storytelling",
+      "Launch updates"
+    ],
+    "requiredSlots": [
+      "title",
+      "subtitle"
+    ],
+    "optionalSlots": [
+      "text",
+      "button",
+      "image"
+    ]
+  },
+  {
+    "family": "FEAT_IMAGE_TEXT_LEFT",
+    "variant": 1,
+    "displayName": "Feature Image Text Left",
+    "description": "Mirrored feature layout with copy leading and image on the right.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/feat_image_text_left-variant-1.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Feature highlights",
+      "Case studies",
+      "Content sections"
+    ],
+    "requiredSlots": [
+      "title",
+      "subtitle"
+    ],
+    "optionalSlots": [
+      "text",
+      "button",
+      "image"
+    ]
+  },
+  {
+    "family": "FEAT_IMAGE_TEXT_LEFT",
+    "variant": 2,
+    "displayName": "Feature Image Text Left",
+    "description": "Mirrored feature layout with copy leading and image on the right.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/feat_image_text_left-variant-2.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Feature highlights",
+      "Case studies",
+      "Content sections"
+    ],
+    "requiredSlots": [
+      "title",
+      "subtitle"
+    ],
+    "optionalSlots": [
+      "text",
+      "button",
+      "image"
+    ]
+  },
+  {
+    "family": "FEAT_IMAGE_TEXT_LEFT",
+    "variant": 3,
+    "displayName": "Feature Image Text Left",
+    "description": "Mirrored feature layout with copy leading and image on the right.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/feat_image_text_left-variant-3.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Feature highlights",
+      "Case studies",
+      "Content sections"
+    ],
+    "requiredSlots": [
+      "title",
+      "subtitle"
+    ],
+    "optionalSlots": [
+      "text",
+      "button",
+      "image"
+    ]
+  },
+  {
+    "family": "FEAT_IMAGE_TEXT_LEFT",
+    "variant": 4,
+    "displayName": "Feature Image Text Left",
+    "description": "Mirrored feature layout with copy leading and image on the right.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/feat_image_text_left-variant-4.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Feature highlights",
+      "Case studies",
+      "Content sections"
+    ],
+    "requiredSlots": [
+      "title",
+      "subtitle"
+    ],
+    "optionalSlots": [
+      "text",
+      "button",
+      "image"
+    ]
+  },
+  {
+    "family": "FEAT_IMAGE_TEXT_LEFT",
+    "variant": 5,
+    "displayName": "Feature Image Text Left",
+    "description": "Mirrored feature layout with copy leading and image on the right.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/feat_image_text_left-variant-5.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Feature highlights",
+      "Case studies",
+      "Content sections"
+    ],
+    "requiredSlots": [
+      "title",
+      "subtitle"
+    ],
+    "optionalSlots": [
+      "text",
+      "button",
+      "image"
+    ]
+  },
+  {
+    "family": "CTA_SPLIT_SCREEN",
+    "variant": 1,
+    "displayName": "CTA Split Screen",
+    "description": "Split-screen call-to-action with hero art supporting persuasive copy.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/cta_split_screen-variant-1.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Conversion targets",
+      "Product launches",
+      "Campaign CTAs"
+    ],
+    "requiredSlots": [
+      "title",
+      "button"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "image"
+    ]
+  },
+  {
+    "family": "CTA_SPLIT_SCREEN",
+    "variant": 2,
+    "displayName": "CTA Split Screen",
+    "description": "Split-screen call-to-action with hero art supporting persuasive copy.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/cta_split_screen-variant-2.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Conversion targets",
+      "Product launches",
+      "Campaign CTAs"
+    ],
+    "requiredSlots": [
+      "title",
+      "button"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "image"
+    ]
+  },
+  {
+    "family": "CTA_SPLIT_SCREEN",
+    "variant": 3,
+    "displayName": "CTA Split Screen",
+    "description": "Split-screen call-to-action with hero art supporting persuasive copy.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/cta_split_screen-variant-3.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Conversion targets",
+      "Product launches",
+      "Campaign CTAs"
+    ],
+    "requiredSlots": [
+      "title",
+      "button"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "image"
+    ]
+  },
+  {
+    "family": "CTA_SPLIT_SCREEN",
+    "variant": 4,
+    "displayName": "CTA Split Screen",
+    "description": "Split-screen call-to-action with hero art supporting persuasive copy.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/cta_split_screen-variant-4.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Conversion targets",
+      "Product launches",
+      "Campaign CTAs"
+    ],
+    "requiredSlots": [
+      "title",
+      "button"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "image"
+    ]
+  },
+  {
+    "family": "CTA_SPLIT_SCREEN",
+    "variant": 5,
+    "displayName": "CTA Split Screen",
+    "description": "Split-screen call-to-action with hero art supporting persuasive copy.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/cta_split_screen-variant-5.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Conversion targets",
+      "Product launches",
+      "Campaign CTAs"
+    ],
+    "requiredSlots": [
+      "title",
+      "button"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "image"
+    ]
+  },
+  {
+    "family": "HERO_CENTER_TEXT",
+    "variant": 1,
+    "displayName": "Hero Center Text",
+    "description": "Full-width hero surface with centered typography and backdrop image.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/hero_center_text-variant-1.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Landing hero",
+      "Event splash",
+      "Premium announcements"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "button",
+      "text"
+    ]
+  },
+  {
+    "family": "HERO_CENTER_TEXT",
+    "variant": 2,
+    "displayName": "Hero Center Text",
+    "description": "Full-width hero surface with centered typography and backdrop image.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/hero_center_text-variant-2.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Landing hero",
+      "Event splash",
+      "Premium announcements"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "button",
+      "text"
+    ]
+  },
+  {
+    "family": "HERO_CENTER_TEXT",
+    "variant": 3,
+    "displayName": "Hero Center Text",
+    "description": "Full-width hero surface with centered typography and backdrop image.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/hero_center_text-variant-3.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Landing hero",
+      "Event splash",
+      "Premium announcements"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "button",
+      "text"
+    ]
+  },
+  {
+    "family": "HERO_CENTER_TEXT",
+    "variant": 4,
+    "displayName": "Hero Center Text",
+    "description": "Full-width hero surface with centered typography and backdrop image.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/hero_center_text-variant-4.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Landing hero",
+      "Event splash",
+      "Premium announcements"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "button",
+      "text"
+    ]
+  },
+  {
+    "family": "HERO_CENTER_TEXT",
+    "variant": 5,
+    "displayName": "Hero Center Text",
+    "description": "Full-width hero surface with centered typography and backdrop image.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/hero_center_text-variant-5.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Landing hero",
+      "Event splash",
+      "Premium announcements"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "button",
+      "text"
+    ]
+  },
+  {
+    "family": "NEWSLETTER_SIGNUP",
+    "variant": 1,
+    "displayName": "Newsletter Signup",
+    "description": "Email capture form with concise framing content and CTA controls.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/newsletter_signup-variant-1.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Newsletter capture",
+      "Beta waitlists",
+      "Lead generation"
+    ],
+    "requiredSlots": [
+      "title",
+      "form"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "button",
+      "text"
+    ]
+  },
+  {
+    "family": "NEWSLETTER_SIGNUP",
+    "variant": 2,
+    "displayName": "Newsletter Signup",
+    "description": "Email capture form with concise framing content and CTA controls.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/newsletter_signup-variant-2.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Newsletter capture",
+      "Beta waitlists",
+      "Lead generation"
+    ],
+    "requiredSlots": [
+      "title",
+      "form"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "button",
+      "text"
+    ]
+  },
+  {
+    "family": "NEWSLETTER_SIGNUP",
+    "variant": 3,
+    "displayName": "Newsletter Signup",
+    "description": "Email capture form with concise framing content and CTA controls.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/newsletter_signup-variant-3.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Newsletter capture",
+      "Beta waitlists",
+      "Lead generation"
+    ],
+    "requiredSlots": [
+      "title",
+      "form"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "button",
+      "text"
+    ]
+  },
+  {
+    "family": "NEWSLETTER_SIGNUP",
+    "variant": 4,
+    "displayName": "Newsletter Signup",
+    "description": "Email capture form with concise framing content and CTA controls.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/newsletter_signup-variant-4.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Newsletter capture",
+      "Beta waitlists",
+      "Lead generation"
+    ],
+    "requiredSlots": [
+      "title",
+      "form"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "button",
+      "text"
+    ]
+  },
+  {
+    "family": "NEWSLETTER_SIGNUP",
+    "variant": 5,
+    "displayName": "Newsletter Signup",
+    "description": "Email capture form with concise framing content and CTA controls.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/newsletter_signup-variant-5.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Newsletter capture",
+      "Beta waitlists",
+      "Lead generation"
+    ],
+    "requiredSlots": [
+      "title",
+      "form"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "button",
+      "text"
+    ]
+  },
+  {
+    "family": "PRICING_TABLE",
+    "variant": 1,
+    "displayName": "Pricing Table",
+    "description": "Multi-column pricing layout with tier comparisons and CTAs.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/pricing_table-variant-1.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Pricing pages",
+      "Plan comparisons",
+      "Upgrade prompts"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "button"
+    ]
+  },
+  {
+    "family": "PRICING_TABLE",
+    "variant": 2,
+    "displayName": "Pricing Table",
+    "description": "Multi-column pricing layout with tier comparisons and CTAs.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/pricing_table-variant-2.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Pricing pages",
+      "Plan comparisons",
+      "Upgrade prompts"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "button"
+    ]
+  },
+  {
+    "family": "PRICING_TABLE",
+    "variant": 3,
+    "displayName": "Pricing Table",
+    "description": "Multi-column pricing layout with tier comparisons and CTAs.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/pricing_table-variant-3.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Pricing pages",
+      "Plan comparisons",
+      "Upgrade prompts"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "button"
+    ]
+  },
+  {
+    "family": "PRICING_TABLE",
+    "variant": 4,
+    "displayName": "Pricing Table",
+    "description": "Multi-column pricing layout with tier comparisons and CTAs.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/pricing_table-variant-4.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Pricing pages",
+      "Plan comparisons",
+      "Upgrade prompts"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "button"
+    ]
+  },
+  {
+    "family": "PRICING_TABLE",
+    "variant": 5,
+    "displayName": "Pricing Table",
+    "description": "Multi-column pricing layout with tier comparisons and CTAs.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/pricing_table-variant-5.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Pricing pages",
+      "Plan comparisons",
+      "Upgrade prompts"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "button"
+    ]
+  },
+  {
+    "family": "TESTIMONIAL_CARD_GRID",
+    "variant": 1,
+    "displayName": "Testimonial Card Grid",
+    "description": "Grid of testimonial cards for social proof and customer stories.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/testimonial_card_grid-variant-1.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Testimonials",
+      "Customer showcases",
+      "Review highlights"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "family": "TESTIMONIAL_CARD_GRID",
+    "variant": 2,
+    "displayName": "Testimonial Card Grid",
+    "description": "Grid of testimonial cards for social proof and customer stories.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/testimonial_card_grid-variant-2.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Testimonials",
+      "Customer showcases",
+      "Review highlights"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "family": "TESTIMONIAL_CARD_GRID",
+    "variant": 3,
+    "displayName": "Testimonial Card Grid",
+    "description": "Grid of testimonial cards for social proof and customer stories.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/testimonial_card_grid-variant-3.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Testimonials",
+      "Customer showcases",
+      "Review highlights"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "family": "TESTIMONIAL_CARD_GRID",
+    "variant": 4,
+    "displayName": "Testimonial Card Grid",
+    "description": "Grid of testimonial cards for social proof and customer stories.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/testimonial_card_grid-variant-4.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Testimonials",
+      "Customer showcases",
+      "Review highlights"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "family": "TESTIMONIAL_CARD_GRID",
+    "variant": 5,
+    "displayName": "Testimonial Card Grid",
+    "description": "Grid of testimonial cards for social proof and customer stories.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/testimonial_card_grid-variant-5.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Testimonials",
+      "Customer showcases",
+      "Review highlights"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "family": "DEMO_DEVICE_FULLBLEED",
+    "variant": 1,
+    "displayName": "Demo Device Full Bleed",
+    "description": "Full-bleed device mockup hero to showcase product UI snapshots.",
+    "domain": "mobile",
+    "thumbnail": "/pattern-previews/demo_device_fullbleed-variant-1.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "App demos",
+      "Device mockups",
+      "Experience overviews"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "button"
+    ]
+  },
+  {
+    "family": "DEMO_DEVICE_FULLBLEED",
+    "variant": 2,
+    "displayName": "Demo Device Full Bleed",
+    "description": "Full-bleed device mockup hero to showcase product UI snapshots.",
+    "domain": "mobile",
+    "thumbnail": "/pattern-previews/demo_device_fullbleed-variant-2.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "App demos",
+      "Device mockups",
+      "Experience overviews"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "button"
+    ]
+  },
+  {
+    "family": "DEMO_DEVICE_FULLBLEED",
+    "variant": 3,
+    "displayName": "Demo Device Full Bleed",
+    "description": "Full-bleed device mockup hero to showcase product UI snapshots.",
+    "domain": "mobile",
+    "thumbnail": "/pattern-previews/demo_device_fullbleed-variant-3.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "App demos",
+      "Device mockups",
+      "Experience overviews"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "button"
+    ]
+  },
+  {
+    "family": "DEMO_DEVICE_FULLBLEED",
+    "variant": 4,
+    "displayName": "Demo Device Full Bleed",
+    "description": "Full-bleed device mockup hero to showcase product UI snapshots.",
+    "domain": "mobile",
+    "thumbnail": "/pattern-previews/demo_device_fullbleed-variant-4.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "App demos",
+      "Device mockups",
+      "Experience overviews"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "button"
+    ]
+  },
+  {
+    "family": "DEMO_DEVICE_FULLBLEED",
+    "variant": 5,
+    "displayName": "Demo Device Full Bleed",
+    "description": "Full-bleed device mockup hero to showcase product UI snapshots.",
+    "domain": "mobile",
+    "thumbnail": "/pattern-previews/demo_device_fullbleed-variant-5.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "App demos",
+      "Device mockups",
+      "Experience overviews"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "button"
+    ]
+  },
+  {
+    "family": "ACT_FORM_MINIMAL",
+    "variant": 1,
+    "displayName": "Action Form Minimal",
+    "description": "Minimal form-first layout for focused user actions.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/act_form_minimal-variant-1.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Signup/login",
+      "Simple forms",
+      "Waitlist capture"
+    ],
+    "requiredSlots": [
+      "title",
+      "form"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "button",
+      "text"
+    ]
+  },
+  {
+    "family": "ACT_FORM_MINIMAL",
+    "variant": 2,
+    "displayName": "Action Form Minimal",
+    "description": "Minimal form-first layout for focused user actions.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/act_form_minimal-variant-2.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Signup/login",
+      "Simple forms",
+      "Waitlist capture"
+    ],
+    "requiredSlots": [
+      "title",
+      "form"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "button",
+      "text"
+    ]
+  },
+  {
+    "family": "ACT_FORM_MINIMAL",
+    "variant": 3,
+    "displayName": "Action Form Minimal",
+    "description": "Minimal form-first layout for focused user actions.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/act_form_minimal-variant-3.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Signup/login",
+      "Simple forms",
+      "Waitlist capture"
+    ],
+    "requiredSlots": [
+      "title",
+      "form"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "button",
+      "text"
+    ]
+  },
+  {
+    "family": "ACT_FORM_MINIMAL",
+    "variant": 4,
+    "displayName": "Action Form Minimal",
+    "description": "Minimal form-first layout for focused user actions.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/act_form_minimal-variant-4.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Signup/login",
+      "Simple forms",
+      "Waitlist capture"
+    ],
+    "requiredSlots": [
+      "title",
+      "form"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "button",
+      "text"
+    ]
+  },
+  {
+    "family": "ACT_FORM_MINIMAL",
+    "variant": 5,
+    "displayName": "Action Form Minimal",
+    "description": "Minimal form-first layout for focused user actions.",
+    "domain": "common",
+    "thumbnail": "/pattern-previews/act_form_minimal-variant-5.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Signup/login",
+      "Simple forms",
+      "Waitlist capture"
+    ],
+    "requiredSlots": [
+      "title",
+      "form"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "button",
+      "text"
+    ]
+  },
+  {
+    "family": "DASHBOARD_OVERVIEW",
+    "variant": 1,
+    "displayName": "Dashboard Overview",
+    "description": "Modular dashboard grid for KPIs, charts, and product telemetry.",
+    "domain": "saas",
+    "thumbnail": "/pattern-previews/dashboard_overview-variant-1.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Product dashboards",
+      "Analytics hubs",
+      "SaaS overview screens"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "image"
+    ]
+  },
+  {
+    "family": "DASHBOARD_OVERVIEW",
+    "variant": 2,
+    "displayName": "Dashboard Overview",
+    "description": "Modular dashboard grid for KPIs, charts, and product telemetry.",
+    "domain": "saas",
+    "thumbnail": "/pattern-previews/dashboard_overview-variant-2.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Product dashboards",
+      "Analytics hubs",
+      "SaaS overview screens"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "image"
+    ]
+  },
+  {
+    "family": "DASHBOARD_OVERVIEW",
+    "variant": 3,
+    "displayName": "Dashboard Overview",
+    "description": "Modular dashboard grid for KPIs, charts, and product telemetry.",
+    "domain": "saas",
+    "thumbnail": "/pattern-previews/dashboard_overview-variant-3.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Product dashboards",
+      "Analytics hubs",
+      "SaaS overview screens"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "image"
+    ]
+  },
+  {
+    "family": "DASHBOARD_OVERVIEW",
+    "variant": 4,
+    "displayName": "Dashboard Overview",
+    "description": "Modular dashboard grid for KPIs, charts, and product telemetry.",
+    "domain": "saas",
+    "thumbnail": "/pattern-previews/dashboard_overview-variant-4.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Product dashboards",
+      "Analytics hubs",
+      "SaaS overview screens"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "image"
+    ]
+  },
+  {
+    "family": "DASHBOARD_OVERVIEW",
+    "variant": 5,
+    "displayName": "Dashboard Overview",
+    "description": "Modular dashboard grid for KPIs, charts, and product telemetry.",
+    "domain": "saas",
+    "thumbnail": "/pattern-previews/dashboard_overview-variant-5.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Product dashboards",
+      "Analytics hubs",
+      "SaaS overview screens"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "image"
+    ]
+  },
+  {
+    "family": "PRODUCT_DETAIL",
+    "variant": 1,
+    "displayName": "Product Detail",
+    "description": "E-commerce product detail canvas with imagery, copy, and CTAs.",
+    "domain": "ecommerce",
+    "thumbnail": "/pattern-previews/product_detail-variant-1.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Product detail pages",
+      "Merch highlights",
+      "Marketplace listings"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "button",
+      "image"
+    ]
+  },
+  {
+    "family": "PRODUCT_DETAIL",
+    "variant": 2,
+    "displayName": "Product Detail",
+    "description": "E-commerce product detail canvas with imagery, copy, and CTAs.",
+    "domain": "ecommerce",
+    "thumbnail": "/pattern-previews/product_detail-variant-2.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Product detail pages",
+      "Merch highlights",
+      "Marketplace listings"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "button",
+      "image"
+    ]
+  },
+  {
+    "family": "PRODUCT_DETAIL",
+    "variant": 3,
+    "displayName": "Product Detail",
+    "description": "E-commerce product detail canvas with imagery, copy, and CTAs.",
+    "domain": "ecommerce",
+    "thumbnail": "/pattern-previews/product_detail-variant-3.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Product detail pages",
+      "Merch highlights",
+      "Marketplace listings"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "button",
+      "image"
+    ]
+  },
+  {
+    "family": "PRODUCT_DETAIL",
+    "variant": 4,
+    "displayName": "Product Detail",
+    "description": "E-commerce product detail canvas with imagery, copy, and CTAs.",
+    "domain": "ecommerce",
+    "thumbnail": "/pattern-previews/product_detail-variant-4.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Product detail pages",
+      "Merch highlights",
+      "Marketplace listings"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "button",
+      "image"
+    ]
+  },
+  {
+    "family": "PRODUCT_DETAIL",
+    "variant": 5,
+    "displayName": "Product Detail",
+    "description": "E-commerce product detail canvas with imagery, copy, and CTAs.",
+    "domain": "ecommerce",
+    "thumbnail": "/pattern-previews/product_detail-variant-5.jpg",
+    "palette": {
+      "primary": "#0f172a",
+      "secondary": "#475569",
+      "accent": "#2563eb",
+      "background": "#f8fafc"
+    },
+    "vibe": "modern",
+    "tags": [
+      "Product detail pages",
+      "Merch highlights",
+      "Marketplace listings"
+    ],
+    "requiredSlots": [
+      "title"
+    ],
+    "optionalSlots": [
+      "subtitle",
+      "text",
+      "button",
+      "image"
+    ]
+  }
+]

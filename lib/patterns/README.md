@@ -108,6 +108,19 @@ const compatibility = calculateCompatibility(heroImage, palette, pattern)
 - DASHBOARD_OVERVIEW (SaaS telemetry)
 - PRODUCT_DETAIL (e-commerce detail page)
 
+## Preview Assets
+
+- Metadata lives in `lib/patterns/previews.json` and is exported via `lib/patterns/previews.ts`.
+- Thumbnail images are stored in `public/pattern-previews/`.
+- Run `npm run patterns:previews` to regenerate assets. The command will launch a temporary Next dev server (unless `PATTERN_PREVIEW_BASE_URL` is provided), iterate all 60 pattern variants, render `/renderer-preview` via Playwright, and capture fresh screenshots + metadata.
+- Use `PATTERN_PREVIEW_BASE_URL` if you already have a dev server running (e.g., `http://127.0.0.1:3000/renderer-preview`).
+
+## Telemetry & Health
+
+- Loader/validator operations emit structured telemetry to `lib/telemetry/patterns.ts`. Aggregates include load/validation success + failure counts, recency, and durations per pattern/variant.
+- Access current stats via `GET /api/patterns/health`. The endpoint returns totals, per-pattern counters, and a rolling list of the most recent 50 events.
+- Use the health endpoint in monitoring dashboards or automated smoke tests to catch failing pattern deployments early.
+
 ## Creating New Patterns
 
 1. Create directory: `lib/patterns/definitions/{FAMILY_NAME}/`

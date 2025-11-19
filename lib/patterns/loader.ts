@@ -4,9 +4,20 @@
 import { patternDefinitionSchema, type PatternDefinition } from './schema'
 import { type PatternFamily } from './families'
 import { type PatternVariant } from '../dsl/types'
+import {
+  recordPatternLoadFailure,
+  recordPatternLoadSuccess,
+} from '../telemetry/patterns'
 
 // Cache for loaded patterns
 const patternCache = new Map<string, PatternDefinition>()
+
+function getTimestamp(): number {
+  if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
+    return performance.now()
+  }
+  return Date.now()
+}
 
 /**
  * Load a pattern definition from JSON file (client-safe)
@@ -20,9 +31,11 @@ export async function loadPatternAsync(
   variant: PatternVariant
 ): Promise<PatternDefinition> {
   const cacheKey = `${family}-${variant}`
+  const start = getTimestamp()
   
   // Check cache first
   if (patternCache.has(cacheKey)) {
+    recordPatternLoadSuccess(family, variant, getTimestamp() - start)
     return patternCache.get(cacheKey)!
   }
 
@@ -43,17 +56,33 @@ export async function loadPatternAsync(
 
     // Verify family and variant match
     if (validatedPattern.family !== family) {
+      recordPatternLoadFailure(
+        family,
+        variant,
+        getTimestamp() - start,
+        `Pattern family mismatch: expected ${family}, got ${validatedPattern.family}`
+      )
       throw new Error(`Pattern family mismatch: expected ${family}, got ${validatedPattern.family}`)
     }
     if (validatedPattern.variant !== variant) {
+      recordPatternLoadFailure(
+        family,
+        variant,
+        getTimestamp() - start,
+        `Pattern variant mismatch: expected ${variant}, got ${validatedPattern.variant}`
+      )
       throw new Error(`Pattern variant mismatch: expected ${variant}, got ${validatedPattern.variant}`)
     }
 
     // Cache the pattern
     patternCache.set(cacheKey, validatedPattern)
 
+    recordPatternLoadSuccess(family, variant, getTimestamp() - start)
     return validatedPattern
   } catch (error) {
+    const duration = getTimestamp() - start
+    const message = error instanceof Error ? error.message : 'Unknown pattern load error'
+    recordPatternLoadFailure(family, variant, duration, message)
     if (error instanceof Error) {
       throw new Error(`Failed to load pattern ${family} variant ${variant}: ${error.message}`)
     }
@@ -75,6 +104,12 @@ export function loadPattern(family: PatternFamily, variant: PatternVariant): Pat
 
   // For client-side, we need to use async loading
   // This is a temporary solution - in production, patterns should be pre-loaded
+  recordPatternLoadFailure(
+    family,
+    variant,
+    0,
+    `Pattern ${family} variant ${variant} not cached. Use loadPatternAsync() in client components.`
+  )
   throw new Error(
     `Pattern ${family} variant ${variant} not cached. Use loadPatternAsync() in client components.`
   )

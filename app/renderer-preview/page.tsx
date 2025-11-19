@@ -3,72 +3,11 @@
 import { useEffect, useMemo, useState } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { ScreenRenderer } from '@/components/renderer/ScreenRenderer'
-import { type Palette, type PatternFamily, type ScreenDSL, type Vibe } from '@/lib/dsl/types'
+import { type PatternFamily, type Vibe } from '@/lib/dsl/types'
 import { ALL_PATTERN_FAMILIES } from '@/lib/patterns/families'
+import { createPatternFixtureDSL, PREVIEW_PALETTES, PREVIEW_VIBES } from '@/lib/patterns/fixtures'
 
 const VARIANTS: Array<1 | 2 | 3 | 4 | 5> = [1, 2, 3, 4, 5]
-
-const PALETTE_POOL: Palette[] = [
-  { primary: '#0f172a', secondary: '#475569', accent: '#2563eb', background: '#f8fafc' },
-  { primary: '#111827', secondary: '#6b7280', accent: '#0ea5e9', background: '#fdf4ff' },
-  { primary: '#1c1917', secondary: '#57534e', accent: '#f97316', background: '#fff7ed' },
-  { primary: '#0b1a2a', secondary: '#64748b', accent: '#22d3ee', background: '#0f172a' },
-]
-
-const VIBES: Vibe[] = ['modern', 'professional', 'bold', 'minimal', 'creative']
-
-function createMockDSL({
-  family,
-  variant,
-  palette,
-  vibe,
-}: {
-  family: PatternFamily
-  variant: 1 | 2 | 3 | 4 | 5
-  palette: Palette
-  vibe: Vibe
-}): ScreenDSL {
-  return {
-    hero_image: {
-      id: `${family}-hero`,
-      url: 'https://images.unsplash.com/photo-1557682224-5b8590cd9ec5?w=1200&h=800&fit=crop',
-    },
-    supporting_images: [
-      {
-        id: `${family}-support-1`,
-        url: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=600&h=400&fit=crop',
-      },
-      {
-        id: `${family}-support-2`,
-        url: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600&h=400&fit=crop',
-      },
-    ],
-    palette,
-    vibe,
-    pattern_family: family,
-    pattern_variant: variant,
-    components: [
-      { type: 'title', content: 'Welcome to FlowRunner' },
-      { type: 'subtitle', content: 'AI-guided, image-first screen design' },
-      {
-        type: 'text',
-        content: 'Generate hero images, layouts, and navigation-aware flows in minutes.',
-      },
-      {
-        type: 'form',
-        content: 'Join the beta',
-        props: {
-          fields: [
-            { id: 'name', label: 'Name', placeholder: 'Jane Doe' },
-            { id: 'email', label: 'Email', placeholder: 'you@example.com', type: 'email' },
-          ],
-          submitLabel: 'Request access',
-        },
-      },
-      { type: 'button', content: 'Generate Next Screen' },
-    ],
-  }
-}
 
 function parseFamily(value: string | null): PatternFamily {
   return (value && ALL_PATTERN_FAMILIES.includes(value as PatternFamily)
@@ -84,11 +23,11 @@ function parseVariant(value: string | null): 1 | 2 | 3 | 4 | 5 {
 function parsePaletteIndex(value: string | null): number {
   const num = Number(value)
   if (Number.isNaN(num)) return 0
-  return Math.min(Math.max(num, 0), PALETTE_POOL.length - 1)
+  return Math.min(Math.max(num, 0), PREVIEW_PALETTES.length - 1)
 }
 
 function parseVibe(value: string | null): Vibe {
-  return (value && VIBES.includes(value as Vibe) ? value : VIBES[0]) as Vibe
+  return (value && PREVIEW_VIBES.includes(value as Vibe) ? value : PREVIEW_VIBES[0]) as Vibe
 }
 
 export default function RendererPreviewPage() {
@@ -112,10 +51,8 @@ export default function RendererPreviewPage() {
 
   const dsl = useMemo(
     () =>
-      createMockDSL({
-        family,
-        variant,
-        palette: PALETTE_POOL[paletteIndex] ?? PALETTE_POOL[0],
+      createPatternFixtureDSL(family, variant, {
+        paletteOverride: PREVIEW_PALETTES[paletteIndex] ?? PREVIEW_PALETTES[0],
         vibe,
       }),
     [family, variant, paletteIndex, vibe]
@@ -162,7 +99,7 @@ export default function RendererPreviewPage() {
             value={paletteIndex}
             onChange={(event) => setPaletteIndex(Number(event.target.value))}
           >
-            {PALETTE_POOL.map((palette, index) => (
+            {PREVIEW_PALETTES.map((palette, index) => (
               <option key={palette.primary} value={index}>
                 Palette {index + 1}
               </option>
@@ -177,7 +114,7 @@ export default function RendererPreviewPage() {
             value={vibe}
             onChange={(event) => setVibe(event.target.value as Vibe)}
           >
-            {VIBES.map((option) => (
+            {PREVIEW_VIBES.map((option) => (
               <option key={option} value={option}>
                 {option}
               </option>

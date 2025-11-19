@@ -1,7 +1,7 @@
 // DSL TypeScript types
 // This file will contain all DSL type definitions
 
-export type PatternFamily =
+export type PatternFamily = 
   | 'ONB_HERO_TOP'
   | 'FEAT_IMAGE_TEXT_RIGHT'
   | 'FEAT_IMAGE_TEXT_LEFT'

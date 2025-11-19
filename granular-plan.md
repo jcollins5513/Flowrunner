@@ -183,10 +183,10 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
   - [x] PRICING_TABLE (5 variants)
   - [x] TESTIMONIAL_CARD_GRID (5 variants)
   - [x] Goal: ≥12 families × 5 variants once renderer parity verified (✅ 12 families × 5 variants = 60 patterns)
-- [ ] Generate preview metadata (rendered thumbnails, tags) for UI
-- [ ] Build automated pattern smoke tests:
-  - [ ] Validate every JSON against schema + validator.
-  - [ ] Renderer regression suite (mount DSL fixture per variant, screenshot diff in CI before scaling to 200+ patterns).
+- [x] Generate preview metadata (rendered thumbnails, tags) for UI
+- [x] Build automated pattern smoke tests:
+  - [x] Validate every JSON against schema + validator.
+  - [x] Renderer regression suite (mount DSL fixture per variant, screenshot diff in CI before scaling to 200+ patterns).
 
 **Execution Flow (new approach):**
 1. Ship a minimal deterministic set (4 families) to unblock renderer.
@@ -204,8 +204,8 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 - [x] Write tests for validation + compatibility
 - [x] Add error messaging for invalid patterns
 - [x] Integrate validation into DSL persistence + renderer blocking paths
-- [ ] Add telemetry for pattern load/validation failures
-- [ ] Add regression suite: iterate through every pattern, render canonical DSL, assert slot coverage + screenshot diff threshold.
+- [x] Add telemetry for pattern load/validation failures
+- [x] Add regression suite: iterate through every pattern, render canonical DSL, assert slot coverage + screenshot diff threshold.
 
 **Technical Notes:**
 - Validation runs before rendering and before assembling DSL in the flow engine.
