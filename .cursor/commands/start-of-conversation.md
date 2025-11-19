@@ -4,36 +4,43 @@ Continue work on **FlowRunner** — the AI-driven visual UI flow generator.
 
 ## Current Status
 
-✅ Phase 3 Pattern System is fully complete:
-- 12 families × 5 variants finalized with JSON definitions.
-- Preview metadata + thumbnails live (`lib/patterns/previews.json`, `public/pattern-previews/`).
-- Automated coverage:
-  - Vitest smoke suite validates all 60 definitions against fixtures.
-  - Playwright snapshots cover every family/variant.
-- Telemetry + health endpoint (`lib/telemetry/patterns.ts`, `GET /api/patterns/health`) monitor load/validation parity.
+✅ Phase 4 Prompt Interpreter System is complete:
+- Intent extraction with OpenAI provider + mock provider + caching
+- Flow template system with 4 domain templates (E-commerce, SaaS, Mobile, Finance)
+- Template customization hooks + selector/mapper utilities
+- VCR-style test fixtures for interpreter outputs
+
+✅ Phase 5.1 & 5.2 Image Generation System is complete:
+- OpenAI/DALL-E 3 provider with retry logic, timeout handling, and prompt enhancement
+- Image generation service with progress callbacks
+- Job queue system with deduplication, concurrency limits, and polling
+- Palette extraction using `node-vibrant` with WCAG contrast validation
+- Full orchestrator wiring generation → palette extraction
 
 ## Next Steps
 
-Move into **Phase 4: Prompt Interpreter System** per `granular-plan.md` (sections 4.1 & 4.2).
+Move into **Phase 5.3: Vibe Inference** per `granular-plan.md` (section 5.3).
 
 ### Priority Tasks
-1. **Intent Extraction (4.1)**
-   - Scaffold AI/LLM service wrapper (start with mocked provider + interface for OpenAI/Anthropic).
-   - Define `Intent` object (domain, style cues, visual theme, tone, color mood) with Zod schema + TS types.
-   - Implement structured parsing + fallbacks, including error handling and caching hooks.
-2. **Flow Template System (4.2)**
-   - Draft template schema + JSON loaders for domain-specific flows (E-commerce, SaaS onboarding, Mobile app).
-   - Implement Domain → Template selector and template-to-screen-sequence mapper.
-   - Plan customization hooks + persistence for templates.
+1. **Vibe Inference Service (5.3)**
+   - Create vibe inference service that analyzes image characteristics (color saturation, composition style, visual weight, mood indicators)
+   - Map image analysis to vibe descriptors (Playful, Professional, Bold, Minimal, etc.)
+   - Store vibe in image metadata
+   - Allow manual vibe override
+   - Create vibe-to-pattern compatibility mapping
+   - Add Vitest coverage with fixture images
 
 ### Suggested Files / Locations
-- `lib/ai/intent/` (new) for interpreter service + schema + tests.
-- `lib/flow/templates/` (new) for template definitions & loader utilities.
-- Update `granular-plan.md` once 4.1/4.2 milestones are complete.
+- `lib/images/vibe/` (new) for vibe inference service + schema + tests
+- Integrate with existing `lib/images/orchestrator.ts` to add vibe extraction after palette
+- Update `granular-plan.md` once 5.3 milestone is complete
 
 ### Principles / Constraints
-- Keep pipeline deterministic: Prompt → Intent → Template → Screens → Pattern → Variant → Image → Palette → DSL → Validate → Persist → Render.
-- All schemas require Zod validation + Vitest coverage.
-- Design services so future LLM providers or caching layers can be swapped without touching downstream stages.
+- Keep pipeline deterministic: Prompt → Intent → Template → Screens → Pattern → Variant → Image → Palette → **Vibe** → DSL → Validate → Persist → Render
+- Vibe inference can use LLM or rule-based system (start with rule-based, add LLM option later)
+- Vibe helps determine compatible patterns
+- All schemas require Zod validation + Vitest coverage
 
-Start by outlining the Intent schema + interpreter interfaces, then stub the flow template loader so Prompt → Template selection can be exercised end-to-end with fixtures.
+Start by designing the vibe inference schema and rule-based analyzer, then integrate it into the image orchestrator so the full image generation pipeline (image → palette → vibe) can be exercised end-to-end.
+
+--- End Command ---

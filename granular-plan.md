@@ -259,18 +259,18 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ## Phase 5: Image Generation System
 
 ### 5.1 AI Image Generation Integration
-- [ ] Set up image generation API (DALL-E/Midjourney/Stable Diffusion)
-- [ ] Create image generation service
-- [ ] Implement hero image generation
-  - [ ] Accept prompt, style, aspect ratio
-  - [ ] Return image URL and metadata
-- [ ] Implement style parameter mapping
-  - [ ] 3D, clay, vector, neon, editorial styles
-- [ ] Implement aspect ratio handling
-- [ ] Add seed support for reproducibility
-- [ ] Implement retry logic for API failures
-- [ ] Add rate limiting and quota management
-- [ ] Create image generation queue system
+- [x] Set up image generation API (DALL-E/Midjourney/Stable Diffusion)
+- [x] Create image generation service
+- [x] Implement hero image generation
+  - [x] Accept prompt, style, aspect ratio
+  - [x] Return image URL and metadata
+- [x] Implement style parameter mapping
+  - [x] 3D, clay, vector, neon, editorial styles
+- [x] Implement aspect ratio handling
+- [x] Add seed support for reproducibility
+- [x] Implement retry logic for API failures
+- [x] Add rate limiting and quota management
+- [x] Create image generation queue system
 
 **Technical Notes:**
 - Choose image generation API based on quality/cost
@@ -280,21 +280,21 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ---
 
 ### 5.2 Palette Extraction
-- [ ] Integrate color extraction library (color-thief/vibrant.js)
-- [ ] Create palette extraction service
-- [ ] Extract primary color from hero image
-- [ ] Extract secondary colors
-- [ ] Extract accent colors
-- [ ] Extract background color
-- [ ] Create palette harmonization algorithm
-- [ ] Store extracted palette in image metadata
-- [ ] Add palette validation (ensure contrast, accessibility)
+- [x] Integrate color extraction library (color-thief/vibrant.js)
+- [x] Create palette extraction service
+- [x] Extract primary color from hero image
+- [x] Extract secondary colors
+- [x] Extract accent colors
+- [x] Extract background color
+- [x] Create palette harmonization algorithm
+- [x] Store extracted palette in image metadata
+- [x] Add palette validation (ensure contrast, accessibility)
 
 **Technical Notes:**
 - Palette extraction must be deterministic
 - Consider color accessibility (WCAG contrast ratios)
 - Support manual palette override
-- [ ] Testing: fixture images with known palettes; ensure extraction matches expectations and passes contrast checks.
+- [x] Testing: fixture images with known palettes; ensure extraction matches expectations and passes contrast checks.
 
 ---
 

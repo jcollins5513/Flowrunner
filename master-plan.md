@@ -65,7 +65,7 @@ FlowRunner must:
 
 FlowRunner is composed of five major systems:
 
-## 3.1 Prompt Interpreter
+## 3.1 Prompt Interpreter ✅
 Extracts:
 - Domain
 - Style cues
@@ -74,7 +74,7 @@ Extracts:
 - Color mood
 - User intent
 
-## 3.2 Flow Composer
+## 3.2 Flow Composer ✅
 Builds multi-screen flows using fixed templates.
 
 ## 3.3 Image System
@@ -82,7 +82,7 @@ Generates all hero and supporting images.
 Includes:
 - Reusable image library
 - Metadata tagging
-- Palette extraction
+- ✅ Palette extraction
 - Vibe inference
 - Nano-Banana editing
 
@@ -98,13 +98,13 @@ Renders screens from DSL exactly and predictably.
 
 FlowRunner uses a strict pipeline to ensure consistent outputs.
 
-1. **Prompt Intake → Intent Object**
-2. **Domain → Flow Template**
-3. **Template → Screen Sequence**
+1. **Prompt Intake → Intent Object** ✅
+2. **Domain → Flow Template** ✅
+3. **Template → Screen Sequence** ✅
 4. **Screen → Pattern Family**
 5. **Pattern → Variant (5 per family)**
-6. **Generate Hero Image**
-7. **Extract Palette & Vibe**
+6. **Generate Hero Image** ✅
+7. **Extract Palette & Vibe** ✅ (Palette complete, Vibe pending)
 8. **Fill Components with Creative Text**
 9. **Assemble DSL**
 10. **Validate via Zod**
@@ -328,8 +328,10 @@ Palette & vibe data
 16. What Cursor Must Build
 Cursor must build:
 - ✅ DSL schemas (Complete: Types + Zod validation + tests)
-- Pattern contract system
+- ✅ Pattern contract system (Complete: 12 families × 5 variants, validation, telemetry)
 - ✅ Image metadata system (Database schema complete)
+- ✅ Prompt Interpreter System (Phase 4: Intent extraction + Flow templates)
+- ✅ Image Generation System (Phase 5.1/5.2: DALL-E integration + Palette extraction)
 - Full flow-engine
 - Renderer
 - Editing layer
