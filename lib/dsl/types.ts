@@ -1,51 +1,19 @@
 // DSL TypeScript types
 // This file will contain all DSL type definitions
 
-export type PatternFamily = 
-  // Common UI Patterns
+export type PatternFamily =
   | 'ONB_HERO_TOP'
   | 'FEAT_IMAGE_TEXT_RIGHT'
-  | 'DEMO_DEVICE_FULLBLEED'
-  | 'ACT_FORM_MINIMAL'
+  | 'FEAT_IMAGE_TEXT_LEFT'
   | 'CTA_SPLIT_SCREEN'
   | 'HERO_CENTER_TEXT'
-  | 'FEAT_IMAGE_TEXT_LEFT'
-  | 'FEAT_IMAGE_TEXT_CENTER'
-  | 'TESTIMONIAL_CARD_GRID'
-  | 'PRICING_TABLE'
-  | 'ABOUT_TEAM_GRID'
-  | 'BLOG_HERO_CENTER'
-  | 'PRODUCT_SHOWCASE'
-  | 'FOOTER_MULTI_COLUMN'
-  | 'NAV_HEADER_STICKY'
-  | 'STATS_COUNTER_ROW'
-  | 'LOGO_CLOUD_BANNER'
-  | 'FAQ_ACCORDION'
-  | 'GALLERY_GRID'
-  | 'TIMELINE_VERTICAL'
-  | 'COMPARISON_TABLE'
   | 'NEWSLETTER_SIGNUP'
-  | 'CONTACT_FORM'
-  | 'MAP_EMBED'
-  // E-commerce Domain
-  | 'PRODUCT_DETAIL'
-  | 'CART_SUMMARY'
-  | 'CHECKOUT_STEPS'
-  | 'ORDER_CONFIRMATION'
-  | 'PRODUCT_GRID'
-  | 'CATEGORY_FILTER'
-  // SaaS Domain
+  | 'PRICING_TABLE'
+  | 'TESTIMONIAL_CARD_GRID'
+  | 'DEMO_DEVICE_FULLBLEED'
+  | 'ACT_FORM_MINIMAL'
   | 'DASHBOARD_OVERVIEW'
-  | 'DASHBOARD_SIDEBAR'
-  | 'ONB_STEP_WIZARD'
-  | 'FEAT_COMPARISON'
-  | 'PRICING_TIERED'
-  | 'INTEGRATION_LIST'
-  // Mobile App Domain
-  | 'SPLASH_SCREEN'
-  | 'ONB_SWIPE_CARDS'
-  | 'SETTINGS_LIST'
-  | 'PROFILE_HEADER'
+  | 'PRODUCT_DETAIL'
 
 export type PatternVariant = 1 | 2 | 3 | 4 | 5
 

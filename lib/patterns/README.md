@@ -4,9 +4,9 @@ The pattern system defines layout structures, component slots, and validation ru
 
 ## Structure
 
-- **Pattern Families**: 40+ families covering common UI patterns and domain-specific layouts
-- **Pattern Variants**: Each family has 5 variants with distinct layouts
-- **Total Patterns**: 200+ pattern definitions (40+ families × 5 variants)
+- **Pattern Families**: 12 canonical families covering the FlowRunner pattern taxonomy
+- **Pattern Variants**: Each family has 5 deterministic variants
+- **Total Patterns**: 60 pattern definitions (12 families × 5 variants)
 
 ## Files
 
@@ -92,22 +92,21 @@ const compatibility = calculateCompatibility(heroImage, palette, pattern)
 
 ## Pattern Families
 
-### Common UI Patterns (24 families)
-- ONB_HERO_TOP, FEAT_IMAGE_TEXT_RIGHT, DEMO_DEVICE_FULLBLEED, ACT_FORM_MINIMAL
-- CTA_SPLIT_SCREEN, HERO_CENTER_TEXT, FEAT_IMAGE_TEXT_LEFT, FEAT_IMAGE_TEXT_CENTER
-- TESTIMONIAL_CARD_GRID, PRICING_TABLE, ABOUT_TEAM_GRID, BLOG_HERO_CENTER
-- PRODUCT_SHOWCASE, FOOTER_MULTI_COLUMN, NAV_HEADER_STICKY, STATS_COUNTER_ROW
-- LOGO_CLOUD_BANNER, FAQ_ACCORDION, GALLERY_GRID, TIMELINE_VERTICAL
-- COMPARISON_TABLE, NEWSLETTER_SIGNUP, CONTACT_FORM, MAP_EMBED
+### Common UI Patterns (8 families)
+- ONB_HERO_TOP
+- FEAT_IMAGE_TEXT_RIGHT
+- FEAT_IMAGE_TEXT_LEFT
+- CTA_SPLIT_SCREEN
+- HERO_CENTER_TEXT
+- NEWSLETTER_SIGNUP
+- PRICING_TABLE
+- TESTIMONIAL_CARD_GRID
 
-### E-commerce Domain (6 families)
-- PRODUCT_DETAIL, CART_SUMMARY, CHECKOUT_STEPS, ORDER_CONFIRMATION, PRODUCT_GRID, CATEGORY_FILTER
-
-### SaaS Domain (6 families)
-- DASHBOARD_OVERVIEW, DASHBOARD_SIDEBAR, ONB_STEP_WIZARD, FEAT_COMPARISON, PRICING_TIERED, INTEGRATION_LIST
-
-### Mobile App Domain (4 families)
-- SPLASH_SCREEN, ONB_SWIPE_CARDS, SETTINGS_LIST, PROFILE_HEADER
+### Domain-Specific Patterns (4 families)
+- DEMO_DEVICE_FULLBLEED (mobile emphasis)
+- ACT_FORM_MINIMAL (action-first surfaces)
+- DASHBOARD_OVERVIEW (SaaS telemetry)
+- PRODUCT_DETAIL (e-commerce detail page)
 
 ## Creating New Patterns
 

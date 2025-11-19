@@ -140,9 +140,8 @@ describe('Pattern Metadata Exports', () => {
     })
 
     it('should maintain pattern family count', () => {
-      // Currently we have 12 families defined with JSON variants
-      // This test ensures we don't accidentally remove families
-      expect(ALL_PATTERN_FAMILIES.length).toBeGreaterThanOrEqual(12)
+      // We maintain 12 canonical families in the registry
+      expect(ALL_PATTERN_FAMILIES.length).toBe(12)
     })
   })
 
@@ -210,12 +209,11 @@ describe('Pattern Metadata Exports', () => {
           'NEWSLETTER_SIGNUP',
           'PRICING_TABLE',
           'TESTIMONIAL_CARD_GRID',
-          'DEMO_DEVICE_FULLBLEED',
           'ACT_FORM_MINIMAL',
         ],
         [PATTERN_DOMAINS.ECOMMERCE]: ['PRODUCT_DETAIL'],
         [PATTERN_DOMAINS.SAAS]: ['DASHBOARD_OVERVIEW'],
-        [PATTERN_DOMAINS.MOBILE]: [],
+        [PATTERN_DOMAINS.MOBILE]: ['DEMO_DEVICE_FULLBLEED'],
       }
 
       for (const [domain, expectedFamilies] of Object.entries(domainMapping)) {
