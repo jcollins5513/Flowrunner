@@ -1,0 +1,76 @@
+{
+  "id": "mobile-app-intro-v1",
+  "domain": "mobile_app",
+  "name": "Mobile App Intro Flow",
+  "description": "Compact mobile-first flow that pairs centered hero messaging with device demos and a lightweight signup.",
+  "metadata": {
+    "estimatedScreens": 3,
+    "version": "1.0.0"
+  },
+  "screens": [
+    {
+      "id": "centerpiece-hero",
+      "name": "Centered Value Prop",
+      "description": "Centered hero layout optimized for short, bold messaging and hero image.",
+      "pattern": {
+        "family": "HERO_CENTER_TEXT",
+        "variant": 4
+      },
+      "intentHints": {
+        "tone": "bold",
+        "styleCues": ["modern"],
+        "colorMood": "neon",
+        "visualTheme": "3d",
+        "contentFocus": "State the core value prop for the mobile experience"
+      },
+      "heroDefaults": {
+        "vibe": "3D render of floating mobile device with neon glows",
+        "colorMood": "neon",
+        "imagePrompt": "3D neon-lit smartphone floating over a dark gradient with UI holograms",
+        "aspectRatio": "9:16"
+      }
+    },
+    {
+      "id": "device-demo",
+      "name": "Device Feature Demo",
+      "description": "Full-bleed device showcase for storytelling screens.",
+      "pattern": {
+        "family": "DEMO_DEVICE_FULLBLEED",
+        "variant": 5
+      },
+      "intentHints": {
+        "tone": "energetic",
+        "styleCues": ["futuristic", "modern"],
+        "colorMood": "cool",
+        "contentFocus": "Walk through key in-app interactions"
+      },
+      "heroDefaults": {
+        "vibe": "Cinematic close-up of the app running on hardware",
+        "colorMood": "cool",
+        "imagePrompt": "High-detail device macro shot with UI glowing softly",
+        "aspectRatio": "16:9"
+      }
+    },
+    {
+      "id": "signup-footer",
+      "name": "Signup CTA",
+      "description": "Minimal action form that completes the flow with waitlist or download CTA.",
+      "pattern": {
+        "family": "ACT_FORM_MINIMAL",
+        "variant": 2
+      },
+      "intentHints": {
+        "tone": "professional",
+        "styleCues": ["minimal"],
+        "colorMood": "muted",
+        "contentFocus": "Offer download links or capture email for beta list"
+      },
+      "heroDefaults": {
+        "vibe": "Soft gradient background with subtle abstract shapes",
+        "colorMood": "muted",
+        "imagePrompt": "Minimal abstract background with soft gradients and grain",
+        "aspectRatio": "4:3"
+      }
+    }
+  ]
+}

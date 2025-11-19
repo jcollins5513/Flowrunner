@@ -1,64 +1,39 @@
-# 🟢 Start of Conversation — FlowRunner Development
+# Next Conversation Prompt
 
-I am continuing work on FlowRunner, an AI-driven visual UI flow generator.
+Continue work on **FlowRunner** — the AI-driven visual UI flow generator.
 
 ## Current Status
 
-**Completed:**
-- ✅ Phase 1: Foundation & Setup (Project initialization, database setup)
-- ✅ Phase 2.1: DSL Schema Definition (TypeScript types + Zod validation + tests)
-- ✅ Phase 2.2: Database models complete (Flow, Screen, Image, Revision entities)
-- ✅ Phase 2.3: Image metadata model schema complete
+✅ Phase 3 Pattern System is fully complete:
+- 12 families × 5 variants finalized with JSON definitions.
+- Preview metadata + thumbnails live (`lib/patterns/previews.json`, `public/pattern-previews/`).
+- Automated coverage:
+  - Vitest smoke suite validates all 60 definitions against fixtures.
+  - Playwright snapshots cover every family/variant.
+- Telemetry + health endpoint (`lib/telemetry/patterns.ts`, `GET /api/patterns/health`) monitor load/validation parity.
 
-**Next Priority: Phase 3 — Pattern System**
+## Next Steps
 
-## Current Task
+Move into **Phase 4: Prompt Interpreter System** per `granular-plan.md` (sections 4.1 & 4.2).
 
-Begin **Phase 3: Pattern System** from `granular-plan.md`.
+### Priority Tasks
+1. **Intent Extraction (4.1)**
+   - Scaffold AI/LLM service wrapper (start with mocked provider + interface for OpenAI/Anthropic).
+   - Define `Intent` object (domain, style cues, visual theme, tone, color mood) with Zod schema + TS types.
+   - Implement structured parsing + fallbacks, including error handling and caching hooks.
+2. **Flow Template System (4.2)**
+   - Draft template schema + JSON loaders for domain-specific flows (E-commerce, SaaS onboarding, Mobile app).
+   - Implement Domain → Template selector and template-to-screen-sequence mapper.
+   - Plan customization hooks + persistence for templates.
 
-**What needs to be done:**
-1. **Phase 3.1: Pattern Family Definitions**
-   - Define 12 pattern families as TypeScript enums
-   - Currently 4 are defined in DSL types (ONB_HERO_TOP, FEAT_IMAGE_TEXT_RIGHT, DEMO_DEVICE_FULLBLEED, ACT_FORM_MINIMAL)
-   - Need to define the remaining 8 pattern families
-   - Create pattern family metadata (display name, description, use cases, component slots)
-   - Create pattern family registry/constants file
+### Suggested Files / Locations
+- `lib/ai/intent/` (new) for interpreter service + schema + tests.
+- `lib/flow/templates/` (new) for template definitions & loader utilities.
+- Update `granular-plan.md` once 4.1/4.2 milestones are complete.
 
-2. **Phase 3.2: Pattern Variant System**
-   - Define variant structure (1-5 variants per family)
-   - Create JSON pattern definition format
-   - Define layout structure (grid/flex positions)
-   - Define component slots (required/optional)
-   - Define spacing rules
-   - Define responsive breakpoints
-   - Define image placement rules
-   - Create pattern definition files for each variant (12 families × 5 variants = 60 patterns)
+### Principles / Constraints
+- Keep pipeline deterministic: Prompt → Intent → Template → Screens → Pattern → Variant → Image → Palette → DSL → Validate → Persist → Render.
+- All schemas require Zod validation + Vitest coverage.
+- Design services so future LLM providers or caching layers can be swapped without touching downstream stages.
 
-3. **Phase 3.3: Pattern Validation**
-   - Create Zod schema for pattern definitions
-   - Validate pattern JSON files on load
-   - Validate DSL against selected pattern contract
-   - Create pattern compatibility checker
-
-**Reference Files:**
-- `granular-plan.md` — See Phase 3 for detailed task breakdown
-- `lib/dsl/types.ts` — PatternFamily type already defined (4 families + 8 placeholders)
-- `lib/dsl/schemas.ts` — PatternFamily schema already includes all 12 families
-- `types/pattern.ts` — PatternDefinition interface already defined
-- `master-plan.md` — High-level project vision (DO NOT MODIFY)
-
-**Technical Requirements:**
-- Pattern families must be fixed and not user-extensible
-- Each family should have clear documentation
-- Patterns must be deterministic and JSON-defined
-- Pattern definitions must be Zod-validated
-- All 60 pattern variants (12 families × 5) must be defined
-
-**Context:**
-The DSL validation system is complete. Now we need to build the pattern system that defines how screens are laid out. Patterns are the foundation for the renderer - they define the structure, component slots, and layout rules for each screen variant.
-
----
-
-**Do not modify `master-plan.md`** — it is locked after creation. Only update `granular-plan.md` to check off completed tasks as you work.
-
-Let's continue building FlowRunner!
+Start by outlining the Intent schema + interpreter interfaces, then stub the flow template loader so Prompt → Template selection can be exercised end-to-end with fixtures.

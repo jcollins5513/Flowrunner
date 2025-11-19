@@ -217,17 +217,17 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 
 ### 4.1 Intent Extraction
 - [ ] Set up AI/LLM integration (OpenAI/Anthropic)
-- [ ] Create prompt interpreter service
-- [ ] Implement domain extraction
-  - [ ] E-commerce, SaaS, Mobile App, etc.
-- [ ] Implement style cue extraction
-  - [ ] Modern, retro, minimal, bold, etc.
-- [ ] Implement visual theme extraction
-- [ ] Implement tone extraction
-- [ ] Implement color mood extraction
-- [ ] Create Intent object type
-- [ ] Add error handling for API failures
-- [ ] Implement caching for similar prompts
+- [x] Create prompt interpreter service
+- [x] Implement domain extraction
+  - [x] E-commerce, SaaS, Mobile App, etc.
+- [x] Implement style cue extraction
+  - [x] Modern, retro, minimal, bold, etc.
+- [x] Implement visual theme extraction
+- [x] Implement tone extraction
+- [x] Implement color mood extraction
+- [x] Create Intent object type
+- [x] Add error handling for API failures
+- [x] Implement caching for similar prompts
 
 **Technical Notes:**
 - Use structured output from LLM for consistent parsing
@@ -238,17 +238,17 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ---
 
 ### 4.2 Flow Template System
-- [ ] Define flow template structure
-- [ ] Create flow templates for each domain
-  - [ ] E-commerce flow template
-  - [ ] SaaS onboarding template
-  - [ ] Mobile app template
+- [x] Define flow template structure
+- [x] Create flow templates for each domain
+  - [x] E-commerce flow template
+  - [x] SaaS onboarding template
+  - [x] Mobile app template
   - [ ] [Additional domain templates]
-- [ ] Implement template selector (Domain → Template)
-- [ ] Create template-to-screen-sequence mapper
+- [x] Implement template selector (Domain → Template)
+- [x] Create template-to-screen-sequence mapper
 - [ ] Add template customization options
-- [ ] Store templates as JSON files
-- [ ] Create template loader utility
+- [x] Store templates as JSON files
+- [x] Create template loader utility
 
 **Technical Notes:**
 - Templates define screen sequence and flow structure

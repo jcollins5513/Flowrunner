@@ -19,7 +19,7 @@ We are closing this conversation and transitioning to the next session. Please d
 ---
 
 ## ✉️ 3. Generate Next Conversation Prompt
-and place it in the start-of-conversation.md at the top.
+and place it in the /Users/justincollins/CursorProjects/Flowrunner/.cursor/commands/start-of-conversation.md at the top.
 - Provide a clean prompt I can use at the start of my next conversation.
 - The prompt should:
   - Reference the updated section of `granular-plan.md`

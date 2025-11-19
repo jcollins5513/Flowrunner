@@ -1,0 +1,97 @@
+{
+  "id": "ecommerce-storefront-v1",
+  "domain": "ecommerce",
+  "name": "E-commerce Storefront Launch",
+  "description": "High-impact storefront template that moves from hero hype to product detail and social proof for conversions.",
+  "metadata": {
+    "estimatedScreens": 4,
+    "version": "1.0.0"
+  },
+  "screens": [
+    {
+      "id": "hero-marquee",
+      "name": "Hero Product Spotlight",
+      "description": "Split hero anchoring the hero image on the left with copy and CTA stack on the right.",
+      "pattern": {
+        "family": "FEAT_IMAGE_TEXT_LEFT",
+        "variant": 2
+      },
+      "intentHints": {
+        "tone": "bold",
+        "styleCues": ["luxury", "modern"],
+        "colorMood": "vibrant",
+        "visualTheme": "photographic",
+        "contentFocus": "Upgrade the product hero with a direct CTA"
+      },
+      "heroDefaults": {
+        "vibe": "Premium lifestyle scene showing the hero product in context",
+        "colorMood": "warm",
+        "imagePrompt": "Editorial photograph of a premium artisan product on a dramatic gradient backdrop",
+        "aspectRatio": "16:9"
+      }
+    },
+    {
+      "id": "product-highlight",
+      "name": "Signature Product Detail",
+      "description": "Feature a key product with supporting details and feature highlights.",
+      "pattern": {
+        "family": "PRODUCT_DETAIL",
+        "variant": 3
+      },
+      "intentHints": {
+        "tone": "professional",
+        "styleCues": ["modern"],
+        "colorMood": "muted",
+        "contentFocus": "Call out the hero product specs and benefits"
+      },
+      "heroDefaults": {
+        "vibe": "Clean product vignette on soft gradient",
+        "colorMood": "cool",
+        "imagePrompt": "Isometric render of the hero product floating with soft rim light",
+        "aspectRatio": "4:3"
+      }
+    },
+    {
+      "id": "social-proof",
+      "name": "Testimonial Grid",
+      "description": "Customer love grid that reinforces trust before checkout.",
+      "pattern": {
+        "family": "TESTIMONIAL_CARD_GRID",
+        "variant": 4
+      },
+      "intentHints": {
+        "tone": "friendly",
+        "styleCues": ["minimal"],
+        "colorMood": "cool",
+        "contentFocus": "Highlight real customer quotes with ratings"
+      },
+      "heroDefaults": {
+        "vibe": "Lifestyle collage showing customers enjoying the product",
+        "colorMood": "muted",
+        "imagePrompt": "Collage of diverse people interacting with the product in natural light",
+        "aspectRatio": "3:2"
+      }
+    },
+    {
+      "id": "closing-cta",
+      "name": "Cart Accelerator CTA",
+      "description": "Final split CTA with incentives and quick links before checkout.",
+      "pattern": {
+        "family": "CTA_SPLIT_SCREEN",
+        "variant": 1
+      },
+      "intentHints": {
+        "tone": "energetic",
+        "styleCues": ["modern", "playful"],
+        "colorMood": "vibrant",
+        "contentFocus": "Promote limited-time offers and free shipping"
+      },
+      "heroDefaults": {
+        "vibe": "Bright lifestyle still of unboxing moment",
+        "colorMood": "warm",
+        "imagePrompt": "High-energy unboxing photograph with confetti elements",
+        "aspectRatio": "16:9"
+      }
+    }
+  ]
+}

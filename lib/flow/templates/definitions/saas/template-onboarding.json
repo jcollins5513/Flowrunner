@@ -1,0 +1,77 @@
+{
+  "id": "saas-onboarding-v1",
+  "domain": "saas",
+  "name": "SaaS Onboarding Warmup",
+  "description": "Guided SaaS onboarding arc that introduces the product value, shows the live product, and ends with a pricing nudge.",
+  "metadata": {
+    "estimatedScreens": 3,
+    "version": "1.0.0"
+  },
+  "screens": [
+    {
+      "id": "welcome-hero",
+      "name": "Hero Welcome",
+      "description": "Friendly onboarding hero with illustration-driven storytelling and CTA pair.",
+      "pattern": {
+        "family": "ONB_HERO_TOP",
+        "variant": 3
+      },
+      "intentHints": {
+        "tone": "friendly",
+        "styleCues": ["playful", "modern"],
+        "colorMood": "warm",
+        "visualTheme": "illustrated",
+        "contentFocus": "Capture the brand promise and invite users to get started"
+      },
+      "heroDefaults": {
+        "vibe": "Playful hero illustration of teammates collaborating in a bright studio",
+        "colorMood": "warm",
+        "imagePrompt": "Vibrant vector illustration of people onboarding to a product with floating UI panels",
+        "aspectRatio": "16:9"
+      }
+    },
+    {
+      "id": "product-tour",
+      "name": "Product Tour",
+      "description": "Dashboard overview that highlights key modules and metrics.",
+      "pattern": {
+        "family": "DASHBOARD_OVERVIEW",
+        "variant": 2
+      },
+      "intentHints": {
+        "tone": "professional",
+        "styleCues": ["modern", "minimal"],
+        "colorMood": "cool",
+        "visualTheme": "3d",
+        "contentFocus": "Showcase live product UI with labeled benefits"
+      },
+      "heroDefaults": {
+        "vibe": "3D render of floating dashboards and charts",
+        "colorMood": "cool",
+        "imagePrompt": "3D layered dashboard panels with depth-of-field lighting",
+        "aspectRatio": "16:10"
+      }
+    },
+    {
+      "id": "pricing-close",
+      "name": "Pricing + CTA",
+      "description": "Pricing comparison with CTA to convert trial users.",
+      "pattern": {
+        "family": "PRICING_TABLE",
+        "variant": 4
+      },
+      "intentHints": {
+        "tone": "professional",
+        "styleCues": ["minimal"],
+        "colorMood": "muted",
+        "contentFocus": "Present two or three pricing tiers with primary CTA"
+      },
+      "heroDefaults": {
+        "vibe": "Calm gradient-backed abstract city skyline representing scalability",
+        "colorMood": "muted",
+        "imagePrompt": "Soft gradient abstract skyline with geometric shapes symbolizing product tiers",
+        "aspectRatio": "21:9"
+      }
+    }
+  ]
+}
