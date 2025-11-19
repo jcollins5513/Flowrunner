@@ -212,7 +212,8 @@ All patterns:
 - Enforce layout rules  
 - Are JSON-defined  
 - Must be Zod-validated  
-- ✅ Validation integrated into DSL persistence + renderer blocking paths
+- ✅ Validation integrated into DSL persistence + renderer blocking paths  
+- ✅ Preview metadata + automated smoke tests + telemetry per family/variant
 
 Cursor must implement all pattern contracts.
 
