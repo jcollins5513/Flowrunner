@@ -122,6 +122,66 @@ const isCompatible = isPatternCompatible('modern', PATTERN_FAMILIES.DASHBOARD_OV
 - Queue tests cover deduplication, concurrency limits, and polling
 - Palette tests mock `node-vibrant` and validate contrast checks
 - Vibe inference tests cover analyzer utilities, rule-based scoring, and compatibility mapping
+- Persistence tests mock Prisma client and validate repository operations
+
+## Image Persistence
+
+Generated images are automatically persisted to the database with full metadata:
+
+```typescript
+import { ImageOrchestrator } from './lib/images/orchestrator'
+
+const orchestrator = new ImageOrchestrator({
+  service,
+  autoExtractPalette: true,
+  autoInferVibe: true,
+  autoPersist: true, // Enabled by default
+  userId: 'user-123', // Optional: associate with user
+})
+
+const { image, palette, vibe, imageId } = await orchestrator.generateHeroImageWithPalette(request)
+console.log(imageId) // Database ID of saved image
+```
+
+### Image Repository
+
+Manually save or retrieve images:
+
+```typescript
+import { ImageRepository } from './lib/images/repository'
+
+const repository = new ImageRepository()
+
+// Save an image
+const savedImage = await repository.saveImage({
+  url: 'https://example.com/image.jpg',
+  prompt: 'A beautiful sunset',
+  seed: 12345,
+  aspectRatio: '16:9',
+  style: 'photographic',
+  palette: { primary: '#FF5733', ... },
+  vibe: 'modern',
+  userId: 'user-123',
+})
+
+// Retrieve by ID
+const image = await repository.getImageById('image-id')
+
+// Query with filters
+const images = await repository.queryImages(
+  { vibe: 'modern', domain: 'ecommerce' },
+  { limit: 20, offset: 0 }
+)
+```
+
+### API Endpoints
+
+**GET /api/images** - List images with optional filters
+- Query params: `userId`, `domain`, `vibe`, `style`, `limit`, `offset`
+- Returns paginated list of images with basic metadata
+
+**GET /api/images/[id]** - Get image by ID
+- Returns full image data including deserialized palette and pattern tags
 
 ## Integration with Pipeline
 
@@ -132,7 +192,8 @@ The image orchestrator integrates with the Phase 4 intent → template pipeline:
 3. Image orchestrator generates hero image
 4. Palette extraction runs automatically
 5. Vibe inference analyzes image characteristics and maps to vibe descriptor
-6. Results (image, palette, vibe) feed into DSL assembly (Phase 8)
+6. Image is persisted to database with all metadata (if autoPersist enabled)
+7. Results (image, palette, vibe, imageId) feed into DSL assembly (Phase 8)
 
 ## Vibe Inference Details
 

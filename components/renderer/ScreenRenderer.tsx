@@ -4,14 +4,18 @@
 
 'use client'
 
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState, useRef } from 'react'
 import { type ScreenDSL } from '@/lib/dsl/types'
 import { loadPatternAsync } from '@/lib/patterns/loader'
 import { type PatternDefinition } from '@/lib/patterns/schema'
 import { renderComponent } from '@/lib/renderer/component-factory'
 import { HeroImage } from './HeroImage'
+import { SupportingImages } from './SupportingImages'
 import { applyPaletteStyles, applyVibeStyles } from '@/lib/renderer/styling'
 import { useResponsiveBreakpoint, type Breakpoint } from '@/lib/renderer/hooks'
+import { ContainerProvider, useContainerBreakpoint, containerStyles } from '@/lib/renderer/container-queries'
+import { ScreenRendererErrorBoundary, ComponentRendererErrorBoundary } from './ErrorBoundary'
+import { telemetry } from '@/lib/renderer/telemetry'
 import { validateScreenDSL } from '@/lib/dsl/validator'
 import { validateDSLAgainstPattern } from '@/lib/patterns/validator'
 
@@ -24,7 +28,8 @@ export interface ScreenRendererProps {
 
 const BREAKPOINT_ORDER: Breakpoint[] = ['mobile', 'tablet', 'desktop']
 
-export const ScreenRenderer: React.FC<ScreenRendererProps> = ({
+// Internal renderer component that uses container queries
+const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
   dsl,
   className = '',
   onComponentClick,
@@ -34,7 +39,11 @@ export const ScreenRenderer: React.FC<ScreenRendererProps> = ({
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [validationError, setValidationError] = useState<string | null>(null)
-  const breakpoint = useResponsiveBreakpoint()
+  const viewportBreakpoint = useResponsiveBreakpoint()
+  const containerBreakpoint = useContainerBreakpoint()
+  
+  // Prefer container breakpoint, fallback to viewport
+  const breakpoint: Breakpoint = containerBreakpoint || viewportBreakpoint
 
   // Validate DSL before rendering
   useEffect(() => {
@@ -144,6 +153,9 @@ export const ScreenRenderer: React.FC<ScreenRendererProps> = ({
       image={dsl.hero_image}
       position={pattern.imagePlacement.hero.position}
       size={pattern.imagePlacement.hero.size}
+      priority={true}
+      lazy={false}
+      palette={dsl.palette}
     />
   )
 
@@ -177,12 +189,13 @@ export const ScreenRenderer: React.FC<ScreenRendererProps> = ({
 
   const supportingImages =
     dsl.supporting_images && dsl.supporting_images.length > 0 ? (
-      <div className="mt-8 grid w-full grid-cols-2 gap-4">
-        {dsl.supporting_images.map((image) => (
-          <div key={image.id} className="relative h-40 w-full overflow-hidden rounded-xl">
-            <HeroImage image={image} />
-          </div>
-        ))}
+      <div className="mt-8 w-full">
+        <SupportingImages
+          images={dsl.supporting_images}
+          pattern={pattern}
+          lazy={true}
+          palette={dsl.palette}
+        />
       </div>
     ) : null
 
@@ -208,6 +221,7 @@ export const ScreenRenderer: React.FC<ScreenRendererProps> = ({
           gap: `${layoutConfig.gap}px`,
           position: 'relative',
           zIndex: 1,
+          ...containerStyles, // Enable container queries
         }}
       >
         {pattern.layout.positions.hero_image && (
@@ -226,11 +240,37 @@ export const ScreenRenderer: React.FC<ScreenRendererProps> = ({
 
           return (
             <div key={slotName} style={computeSlotStyle(position)}>
-              {renderComponent({
-                component,
-                style: componentStyle,
-                onClick: onComponentClick ? () => onComponentClick(component.type, component) : undefined,
-              })}
+              <ComponentRendererErrorBoundary
+                componentType={component.type}
+                slotName={slotName}
+                onError={(error, errorInfo) => {
+                  telemetry.reportError(
+                    error,
+                    errorInfo,
+                    {
+                      component: {
+                        type: component.type,
+                        slotName,
+                      },
+                      pattern: {
+                        family: dsl.pattern_family,
+                        variant: dsl.pattern_variant,
+                      },
+                    }
+                  )
+                }}
+                fallback={
+                  <div className="p-4 text-sm text-muted-foreground border border-dashed rounded">
+                    Failed to render {component.type}
+                  </div>
+                }
+              >
+                {renderComponent({
+                  component,
+                  style: componentStyle,
+                  onClick: onComponentClick ? () => onComponentClick(component.type, component) : undefined,
+                })}
+              </ComponentRendererErrorBoundary>
             </div>
           )
         })}
@@ -238,6 +278,44 @@ export const ScreenRenderer: React.FC<ScreenRendererProps> = ({
 
       {supportingImages}
     </div>
+  )
+}
+
+// Main renderer component with container provider wrapper and error boundary
+export const ScreenRenderer: React.FC<ScreenRendererProps> = (props) => {
+  const containerRef = useRef<HTMLDivElement>(null)
+  
+  const handleError = (error: Error, errorInfo: React.ErrorInfo, context?: { patternFamily?: string; patternVariant?: number }) => {
+    telemetry.reportError(
+      error,
+      errorInfo,
+      {
+        pattern: context
+          ? {
+              family: context.patternFamily || props.dsl.pattern_family,
+              variant: context.patternVariant || props.dsl.pattern_variant,
+            }
+          : undefined,
+        dsl: {
+          patternFamily: props.dsl.pattern_family,
+          patternVariant: props.dsl.pattern_variant,
+        },
+      }
+    )
+  }
+  
+  return (
+    <ContainerProvider containerRef={containerRef}>
+      <div ref={containerRef} style={{ width: '100%' }}>
+        <ScreenRendererErrorBoundary
+          onError={handleError}
+          patternFamily={props.dsl.pattern_family}
+          patternVariant={props.dsl.pattern_variant}
+        >
+          <ScreenRendererContent {...props} />
+        </ScreenRendererErrorBoundary>
+      </div>
+    </ContainerProvider>
   )
 }
 

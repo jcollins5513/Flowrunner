@@ -17,30 +17,50 @@ Continue work on **FlowRunner** — the AI-driven visual UI flow generator.
 - Palette extraction using `node-vibrant` with WCAG contrast validation
 - Full orchestrator wiring generation → palette extraction
 
+✅ Phase 5.3 Vibe Inference is complete:
+- Rule-based vibe inference service analyzing image characteristics (color saturation, composition, visual weight, mood)
+- Maps to 12 vibe descriptors (playful, professional, bold, minimal, modern, retro, elegant, energetic, calm, tech, creative, corporate)
+- Vibe-to-pattern compatibility mapping
+- Full integration with orchestrator pipeline
+- Comprehensive Vitest test coverage
+
+✅ Phase 5.4 Minimal Image Persistence is complete:
+- ImageRepository service for saving/retrieving images with full metadata
+- Automatic persistence in orchestrator (image → palette → vibe → save to DB)
+- API endpoints: GET /api/images (list with filters) and GET /api/images/[id] (retrieve by ID)
+- JSON serialization for palette and pattern tags
+- Comprehensive test coverage
+
 ## Next Steps
 
-Move into **Phase 5.3: Vibe Inference** per `granular-plan.md` (section 5.3).
+Move into **Phase 6: Reusable Image Library** per `granular-plan.md` (section 6).
 
 ### Priority Tasks
-1. **Vibe Inference Service (5.3)**
-   - Create vibe inference service that analyzes image characteristics (color saturation, composition style, visual weight, mood indicators)
-   - Map image analysis to vibe descriptors (Playful, Professional, Bold, Minimal, etc.)
-   - Store vibe in image metadata
-   - Allow manual vibe override
-   - Create vibe-to-pattern compatibility mapping
-   - Add Vitest coverage with fixture images
+1. **Library Database Schema Extensions (6.1)**
+   - Extend Image model with library-specific fields (isFavorite, tags, usageCount already exist in schema)
+   - Create LibraryCollection entity (optional) for organizing images
+   - Add indexes for search performance
+   - Run Prisma migrations if needed
+
+2. **Library Search & Filter (6.2)**
+   - Create search service (by prompt text, tags, domain)
+   - Create filter service (by palette, vibe, style, pattern compatibility, date range)
+   - Implement pagination and sorting
+   - Create search/filter API endpoints
+   - Optimize database queries with proper indexes
 
 ### Suggested Files / Locations
-- `lib/images/vibe/` (new) for vibe inference service + schema + tests
-- Integrate with existing `lib/images/orchestrator.ts` to add vibe extraction after palette
-- Update `granular-plan.md` once 5.3 milestone is complete
+- `lib/images/library/` (new) for search/filter services
+- Extend `lib/images/repository.ts` with search/filter methods
+- Create API endpoints in `app/api/images/search/` and `app/api/images/filter/`
+- Update `granular-plan.md` once 6.1 and 6.2 milestones are complete
 
 ### Principles / Constraints
-- Keep pipeline deterministic: Prompt → Intent → Template → Screens → Pattern → Variant → Image → Palette → **Vibe** → DSL → Validate → Persist → Render
-- Vibe inference can use LLM or rule-based system (start with rule-based, add LLM option later)
-- Vibe helps determine compatible patterns
-- All schemas require Zod validation + Vitest coverage
+- Build on existing Image model and ImageRepository
+- Search should be fast and support pagination
+- Filters should be composable (multiple filters at once)
+- Use database indexes for performance
+- All search/filter operations should be testable with mocks
 
-Start by designing the vibe inference schema and rule-based analyzer, then integrate it into the image orchestrator so the full image generation pipeline (image → palette → vibe) can be exercised end-to-end.
-
---- End Command ---
+### Note
+Phase 5.4 completed minimal persistence (metadata + URL storage). Full storage infrastructure (S3, optimization, thumbnails) can be added later based on actual needs. The current system stores image URLs and metadata, which is sufficient for building the library UI.

@@ -1,9 +1,13 @@
 // Pattern layout renderer
 // Applies pattern definitions to create the layout structure
 
+'use client'
+
 import React from 'react'
 import { type PatternDefinition } from '../patterns/schema'
 import { type Component } from '../dsl/types'
+import { useContainerBreakpoint, containerStyles } from './container-queries'
+import { useResponsiveBreakpoint, type Breakpoint } from './hooks'
 
 export interface PatternLayoutProps {
   pattern: PatternDefinition
@@ -22,8 +26,15 @@ export function PatternLayout({
 }: PatternLayoutProps) {
   const { layout, spacing, responsive } = pattern
 
-  // Get responsive breakpoint (simplified - would use media queries in real implementation)
-  const breakpoint = 'desktop' // TODO: Implement responsive detection
+  // Try to use container breakpoint, fallback to viewport breakpoint
+  let breakpoint: Breakpoint = 'desktop'
+  try {
+    breakpoint = useContainerBreakpoint()
+  } catch {
+    // Not in container context, use viewport breakpoint
+    breakpoint = useResponsiveBreakpoint()
+  }
+
   const breakpointConfig = responsive.breakpoints[breakpoint as keyof typeof responsive.breakpoints]
 
   const padding = breakpointConfig?.padding ?? spacing.padding
@@ -74,6 +85,7 @@ export function PatternLayout({
           gap: `${gap}px`,
           width: '100%',
           minHeight: '100vh',
+          ...containerStyles, // Enable container queries
         }}
       >
         {/* Render hero image */}
@@ -118,17 +130,18 @@ export function PatternLayout({
 
   // Flex layout (for future implementation)
   return (
-    <div
-      className={className}
-      style={{
-        display: 'flex',
-        flexDirection: layout.flexDirection || 'column',
-        padding: `${padding}px`,
-        gap: `${gap}px`,
-        width: '100%',
-        minHeight: '100vh',
-      }}
-    >
+      <div
+        className={className}
+        style={{
+          display: 'flex',
+          flexDirection: layout.flexDirection || 'column',
+          padding: `${padding}px`,
+          gap: `${gap}px`,
+          width: '100%',
+          minHeight: '100vh',
+          ...containerStyles, // Enable container queries
+        }}
+      >
       {heroImage && <div>{heroImage}</div>}
       {/* Flex components would go here */}
     </div>

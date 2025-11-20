@@ -83,7 +83,8 @@ Includes:
 - Reusable image library
 - Metadata tagging
 - ✅ Palette extraction
-- Vibe inference
+- ✅ Vibe inference
+- ✅ Image metadata persistence
 - Nano-Banana editing
 
 ## 3.4 DSL Generator (Strict + Creative)
@@ -104,7 +105,7 @@ FlowRunner uses a strict pipeline to ensure consistent outputs.
 4. **Screen → Pattern Family**
 5. **Pattern → Variant (5 per family)**
 6. **Generate Hero Image** ✅
-7. **Extract Palette & Vibe** ✅ (Palette complete, Vibe pending)
+7. **Extract Palette & Vibe** ✅
 8. **Fill Components with Creative Text**
 9. **Assemble DSL**
 10. **Validate via Zod**
@@ -331,7 +332,7 @@ Cursor must build:
 - ✅ Pattern contract system (Complete: 12 families × 5 variants, validation, telemetry)
 - ✅ Image metadata system (Database schema complete)
 - ✅ Prompt Interpreter System (Phase 4: Intent extraction + Flow templates)
-- ✅ Image Generation System (Phase 5.1/5.2: DALL-E integration + Palette extraction)
+- ✅ Image Generation System (Phase 5.1-5.4: DALL-E integration + Palette extraction + Vibe inference + Image persistence)
 - Full flow-engine
 - Renderer
 - Editing layer

@@ -299,17 +299,17 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ---
 
 ### 5.3 Vibe Inference
-- [ ] Create vibe inference service
-- [ ] Analyze image characteristics
-  - [ ] Color saturation
-  - [ ] Composition style
-  - [ ] Visual weight
-  - [ ] Mood indicators
-- [ ] Map to vibe descriptors
-  - [ ] Playful, Professional, Bold, Minimal, etc.
-- [ ] Store vibe in image metadata
-- [ ] Allow manual vibe override
-- [ ] Create vibe-to-pattern compatibility mapping
+- [x] Create vibe inference service
+- [x] Analyze image characteristics
+  - [x] Color saturation
+  - [x] Composition style
+  - [x] Visual weight
+  - [x] Mood indicators
+- [x] Map to vibe descriptors
+  - [x] Playful, Professional, Bold, Minimal, etc.
+- [x] Store vibe in image metadata
+- [x] Allow manual vibe override
+- [x] Create vibe-to-pattern compatibility mapping
 
 **Technical Notes:**
 - Vibe inference can use LLM or rule-based system
@@ -324,15 +324,16 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
   - [ ] Compression
   - [ ] Format conversion (WebP)
   - [ ] Multiple sizes (thumbnails)
-- [ ] Create image retrieval service
+- [x] Create image retrieval service
 - [ ] Implement image deletion (with safety checks)
-- [ ] Add image metadata persistence
+- [x] Add image metadata persistence
 - [ ] Create image URL generation utilities
 
 **Technical Notes:**
 - Use CDN for image delivery
 - Implement proper image cleanup on deletion
 - Support both generated and uploaded images
+- ✅ Minimal persistence complete: repository service, API endpoints, orchestrator integration
 
 ---
 

@@ -45,11 +45,14 @@ export function renderComponent({
     }
     case 'form': {
       const fields = Array.isArray(component.props?.fields)
-        ? (component.props?.fields as Array<Record<string, string>>).map((field, index) => ({
+        ? (component.props?.fields as Array<Record<string, unknown>>).map((field, index) => ({
             id: field.id ?? `field-${index}`,
             label: field.label ?? `Field ${index + 1}`,
-            placeholder: field.placeholder,
-            type: field.type,
+            placeholder: field.placeholder as string | undefined,
+            type: field.type as string | undefined,
+            options: field.options as Array<{ value: string; label: string }> | undefined,
+            required: field.required as boolean | undefined,
+            validation: field.validation as { error?: string; success?: boolean } | undefined,
           }))
         : []
 
@@ -57,12 +60,14 @@ export function renderComponent({
         <Form
           key={component.content}
           content={component.content}
+          description={component.props?.description as string | undefined}
           fields={fields}
           submitLabel={
             typeof component.props?.submitLabel === 'string'
               ? (component.props?.submitLabel as string)
               : 'Submit'
           }
+          onSubmit={component.props?.onSubmit as ((data: Record<string, unknown>) => void | Promise<void>) | undefined}
           {...commonProps}
         />
       )
