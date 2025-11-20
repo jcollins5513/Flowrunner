@@ -26,14 +26,9 @@ export function PatternLayout({
 }: PatternLayoutProps) {
   const { layout, spacing, responsive } = pattern
 
-  // Try to use container breakpoint, fallback to viewport breakpoint
-  let breakpoint: Breakpoint = 'desktop'
-  try {
-    breakpoint = useContainerBreakpoint()
-  } catch {
-    // Not in container context, use viewport breakpoint
-    breakpoint = useResponsiveBreakpoint()
-  }
+  // Always call hooks unconditionally (React rules)
+  // Use viewport breakpoint as primary source since pattern-layout might not be in container context
+  const breakpoint: Breakpoint = useResponsiveBreakpoint()
 
   const breakpointConfig = responsive.breakpoints[breakpoint as keyof typeof responsive.breakpoints]
 

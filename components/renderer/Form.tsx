@@ -112,8 +112,8 @@ export const Form: React.FC<FormProps> = ({
                 'border-green-500 focus-visible:ring-green-500': hasSuccess && !hasError,
               })}
             />
-            {hasError && (
-              <p className="text-sm text-destructive mt-1">{field.validation.error}</p>
+            {hasError && field.validation?.error && (
+              <p className="text-sm text-destructive mt-1">{field.validation?.error}</p>
             )}
           </div>
         )
@@ -148,8 +148,8 @@ export const Form: React.FC<FormProps> = ({
                 ))}
               </SelectContent>
             </Select>
-            {hasError && (
-              <p className="text-sm text-destructive mt-1">{field.validation.error}</p>
+            {hasError && field.validation?.error && (
+              <p className="text-sm text-destructive mt-1">{field.validation?.error}</p>
             )}
           </div>
         )
@@ -171,8 +171,8 @@ export const Form: React.FC<FormProps> = ({
               {field.label}
               {field.required && <span className="text-destructive ml-1">*</span>}
             </Label>
-            {hasError && (
-              <p className="text-sm text-destructive mt-1 w-full">{field.validation.error}</p>
+            {hasError && field.validation?.error && (
+              <p className="text-sm text-destructive mt-1 w-full">{field.validation?.error}</p>
             )}
           </div>
         )
@@ -202,8 +202,8 @@ export const Form: React.FC<FormProps> = ({
                 </div>
               ))}
             </RadioGroup>
-            {hasError && (
-              <p className="text-sm text-destructive mt-1">{field.validation.error}</p>
+            {hasError && field.validation?.error && (
+              <p className="text-sm text-destructive mt-1">{field.validation?.error}</p>
             )}
           </div>
         )
@@ -228,8 +228,8 @@ export const Form: React.FC<FormProps> = ({
                 'border-green-500 focus-visible:ring-green-500': hasSuccess && !hasError,
               })}
             />
-            {hasError && (
-              <p className="text-sm text-destructive mt-1">{field.validation.error}</p>
+            {hasError && field.validation?.error && (
+              <p className="text-sm text-destructive mt-1">{field.validation?.error}</p>
             )}
           </div>
         )

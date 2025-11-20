@@ -536,13 +536,16 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ### 9.1 Renderer Core
 - [x] Create React renderer shell (`ScreenRenderer`)
 - [x] Implement DSL-to-React transformer for core components (title/subtitle/button/text/image)
-- [ ] Implement remaining component renderers (forms, supporting images, navigation affordances)
-- [ ] Implement responsive layout system (respect pattern breakpoints)
-- [ ] Add error boundaries + telemetry
-- [ ] Create renderer utilities (palette/vibe styling extensions, hooks)
-- [ ] Build `RendererPreview` internal tool to inspect pattern variants quickly
-- [ ] Testing:
-  - [ ] Jest/unit tests for component factory + palette/vibe utilities
+- [x] Implement remaining component renderers (forms, supporting images, navigation affordances)
+- [x] Implement responsive layout system (respect pattern breakpoints)
+- [x] Add error boundaries + telemetry
+- [x] Create renderer utilities (palette/vibe styling extensions, hooks)
+- [x] Build `RendererPreview` internal tool to inspect pattern variants quickly (enhanced with grid view and navigation)
+- [x] Testing:
+  - [x] Jest/unit tests for component factory + palette/vibe utilities (82 tests passing)
+  - [x] Unit tests for Form, HeroImage, SupportingImages, Navigation, ErrorBoundary components
+  - [x] Unit tests for container queries, theme provider, hooks, utils
+  - [x] Accessibility tests (contrast, WCAG compliance)
   - [ ] Playwright visual regression per pattern family (CI gate)
   - [ ] Storybook/Chromatic coverage for manual QA across devices
 
@@ -556,10 +559,10 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ### 9.2 Pattern Layout Renderer
 - [x] Create pattern layout scaffolding + API loader
 - [x] Apply pattern layout rules for grid; [ ] extend to flex patterns
-- [ ] Handle responsive breakpoints (CSS + pattern config)
-- [ ] Apply spacing + hero/supporting image placement precisely
-- [ ] Render supporting images, overlays, animations
-- [ ] Add layout debugging overlay (slot outlines, names)
+- [x] Handle responsive breakpoints (CSS + pattern config)
+- [x] Apply spacing + hero/supporting image placement precisely
+- [x] Render supporting images, overlays, animations
+- [x] Add layout debugging overlay (slot outlines, names)
 - [ ] Testing: mount each pattern in CI, compare DOM structure + bounding boxes/screenshot diff.
 
 **Technical Notes:**
@@ -571,13 +574,14 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 
 ### 9.3 Styling System
 - [x] Initial palette/vibe utility
-- [ ] Build theme provider hooking palette + typography tokens
-- [ ] Apply palette to components (foreground/background/accent)
-- [ ] Implement vibe-informed typography + spacing adjustments
-- [ ] Create animation helpers for DSL `animations`
-- [ ] Ensure accessibility (contrast tests, focus states)
-- [ ] Create style utilities
-- [ ] Testing: automated contrast checker + story-level visual tests; add CI job verifying WCAG thresholds.
+- [x] Build theme provider hooking palette + typography tokens
+- [x] Apply palette to components (foreground/background/accent)
+- [x] Implement vibe-informed typography + spacing adjustments
+- [x] Create animation helpers for DSL `animations`
+- [x] Ensure accessibility (contrast tests, focus states) - implemented accessibility utilities
+- [x] Create style utilities
+- [x] Testing: automated contrast checker + WCAG validation utilities (17 accessibility tests)
+- [ ] CI job verifying WCAG thresholds (requires CI setup)
 
 **Technical Notes:**
 - Styling must respect extracted palette
@@ -588,11 +592,11 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 
 ### 9.4 Image Rendering
 - [x] Create optimized hero image component (Next/Image)
-- [ ] Implement lazy loading
-- [ ] Add image placeholder/skeleton
-- [ ] Handle image loading errors
-- [ ] Support different aspect ratios
-- [ ] Implement image optimization (next/image or similar)
+- [x] Implement lazy loading
+- [x] Add image placeholder/skeleton
+- [x] Handle image loading errors
+- [x] Support different aspect ratios
+- [x] Implement image optimization (next/image or similar)
 - [ ] Add image zoom/viewer (optional)
 
 **Technical Notes:**

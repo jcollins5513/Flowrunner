@@ -44,7 +44,7 @@ const DOMAIN_FALLBACKS: Record<Intent['domain'], FlowTemplate['domain'][]> = {
   healthcare: ['saas', 'mobile_app'],
 }
 
-const dedupeStyleCues = (cues: Intent['styleCues']): Intent['styleCues'] => {
+const dedupeStyleCues = (cues: readonly string[]): Intent['styleCues'] => {
   const unique = Array.from(new Set(cues))
   return unique.slice(0, 3) as Intent['styleCues']
 }
@@ -92,14 +92,14 @@ export const selectTemplateForIntent = (intent: Intent, templates = listTemplate
 }
 
 const resolveTone = (screen: FlowTemplateScreen, intent: Intent): Intent['tone'] =>
-  screen.intentHints?.tone ?? intent.tone
+  (screen.intentHints?.tone ?? intent.tone) as Intent['tone']
 
 const resolveColorMood = (screen: FlowTemplateScreen, intent: Intent): Intent['colorMood'] =>
-  screen.intentHints?.colorMood ?? intent.colorMood
+  (screen.intentHints?.colorMood ?? intent.colorMood) as Intent['colorMood']
 
 const resolveStyleCues = (screen: FlowTemplateScreen, intent: Intent): Intent['styleCues'] => {
   const combined = [...intent.styleCues, ...(screen.intentHints?.styleCues ?? [])]
-  return dedupeStyleCues(combined)
+  return dedupeStyleCues(combined) as Intent['styleCues']
 }
 
 const resolveHeroPrompt = (screen: FlowTemplateScreen, intent: Intent): string =>
@@ -218,7 +218,7 @@ export const mapTemplateToScreenSequence = (
       },
       heroPlan: {
         vibe: resolvedScreen.heroDefaults?.vibe ?? `${resolvedScreen.name} hero image`,
-        colorMood: resolvedScreen.heroDefaults?.colorMood ?? colorMood,
+        colorMood: (resolvedScreen.heroDefaults?.colorMood ?? colorMood) as Intent['colorMood'],
         imagePrompt: resolveHeroPrompt(resolvedScreen, intent),
         aspectRatio: resolveHeroAspectRatio(resolvedScreen),
       },

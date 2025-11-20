@@ -39,6 +39,7 @@ export default function RendererPreviewPage() {
   const [variant, setVariant] = useState<1 | 2 | 3 | 4 | 5>(() => parseVariant(searchParams.get('variant')))
   const [paletteIndex, setPaletteIndex] = useState<number>(() => parsePaletteIndex(searchParams.get('palette')))
   const [vibe, setVibe] = useState<Vibe>(() => parseVibe(searchParams.get('vibe')))
+  const [showGrid, setShowGrid] = useState(false)
 
   useEffect(() => {
     const params = new URLSearchParams()
@@ -121,14 +122,110 @@ export default function RendererPreviewPage() {
             ))}
           </select>
         </div>
+        <div className="flex flex-col justify-end">
+          <label className="text-xs font-semibold uppercase text-slate-500 mb-2">View Mode</label>
+          <button
+            type="button"
+            onClick={() => setShowGrid(!showGrid)}
+            className="rounded-lg border border-slate-200 px-3 py-2 text-sm hover:bg-slate-50"
+          >
+            {showGrid ? 'Single' : 'Grid'} View
+          </button>
+        </div>
+      </div>
+      
+      {/* Quick navigation controls */}
+      <div className="flex gap-2 rounded-2xl bg-white p-4 shadow-sm">
+        <button
+          type="button"
+          onClick={() => {
+            const currentIndex = ALL_PATTERN_FAMILIES.indexOf(family)
+            if (currentIndex > 0) {
+              setFamily(ALL_PATTERN_FAMILIES[currentIndex - 1]!)
+              setVariant(1)
+            }
+          }}
+          disabled={ALL_PATTERN_FAMILIES.indexOf(family) === 0}
+          className="rounded-lg border border-slate-200 px-3 py-1 text-sm disabled:opacity-50 hover:bg-slate-50"
+        >
+          ← Prev Family
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            const currentIndex = ALL_PATTERN_FAMILIES.indexOf(family)
+            if (currentIndex < ALL_PATTERN_FAMILIES.length - 1) {
+              setFamily(ALL_PATTERN_FAMILIES[currentIndex + 1]!)
+              setVariant(1)
+            }
+          }}
+          disabled={ALL_PATTERN_FAMILIES.indexOf(family) === ALL_PATTERN_FAMILIES.length - 1}
+          className="rounded-lg border border-slate-200 px-3 py-1 text-sm disabled:opacity-50 hover:bg-slate-50"
+        >
+          Next Family →
+        </button>
+        <div className="flex-1" />
+        <span className="text-xs text-slate-500 self-center">
+          {ALL_PATTERN_FAMILIES.indexOf(family) + 1} / {ALL_PATTERN_FAMILIES.length} families · Variant {variant} / 5
+        </span>
+        <button
+          type="button"
+          onClick={() => {
+            if (variant > 1) {
+              setVariant((v) => (v - 1) as 1 | 2 | 3 | 4 | 5)
+            }
+          }}
+          disabled={variant === 1}
+          className="rounded-lg border border-slate-200 px-3 py-1 text-sm disabled:opacity-50 hover:bg-slate-50"
+        >
+          ← Prev Variant
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            if (variant < 5) {
+              setVariant((v) => (v + 1) as 1 | 2 | 3 | 4 | 5)
+            }
+          }}
+          disabled={variant === 5}
+          className="rounded-lg border border-slate-200 px-3 py-1 text-sm disabled:opacity-50 hover:bg-slate-50"
+        >
+          Next Variant →
+        </button>
       </div>
 
-      <div
-        className="rounded-[32px] border border-slate-200 bg-white/90 shadow-xl"
-        data-testid="renderer-preview-root"
-      >
-        <ScreenRenderer dsl={dsl} />
-      </div>
+      {showGrid ? (
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {VARIANTS.map((v) => {
+            const gridDSL = createPatternFixtureDSL(family, v, {
+              paletteOverride: PREVIEW_PALETTES[paletteIndex] ?? PREVIEW_PALETTES[0],
+              vibe,
+            })
+            return (
+              <div
+                key={v}
+                className={`rounded-2xl border ${
+                  v === variant ? 'border-blue-500 shadow-lg' : 'border-slate-200'
+                } bg-white/90 shadow-sm`}
+              >
+                <div className="border-b border-slate-200 bg-slate-50 px-4 py-2 text-xs font-medium text-slate-600">
+                  {family.replace(/_/g, ' ')} · Variant {v}
+                </div>
+                <div className="max-h-[400px] overflow-auto">
+                  <ScreenRenderer dsl={gridDSL} />
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      ) : (
+        <div
+          className="rounded-[32px] border border-slate-200 bg-white/90 shadow-xl"
+          data-testid="renderer-preview-root"
+        >
+          <ScreenRenderer dsl={dsl} />
+        </div>
+      )}
     </div>
   )
 }

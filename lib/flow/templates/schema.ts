@@ -5,11 +5,11 @@ import { INTENT_CONSTANTS } from '../../ai/intent/intent.schema'
 const patternFamilyEnum = z.enum(ALL_PATTERN_FAMILIES as [string, ...string[]])
 const patternVariantEnum = z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)])
 
-const toneEnum = z.enum(INTENT_CONSTANTS.TONES as [string, ...string[]])
-const styleCueEnum = z.enum(INTENT_CONSTANTS.STYLE_CUES as [string, ...string[]])
-const colorMoodEnum = z.enum(INTENT_CONSTANTS.COLOR_MOODS as [string, ...string[]])
-const domainEnum = z.enum(INTENT_CONSTANTS.DOMAINS as [string, ...string[]])
-const visualThemeEnum = z.enum(INTENT_CONSTANTS.VISUAL_THEMES as [string, ...string[]])
+const toneEnum = z.enum(INTENT_CONSTANTS.TONES as unknown as [string, ...string[]])
+const styleCueEnum = z.enum(INTENT_CONSTANTS.STYLE_CUES as unknown as [string, ...string[]])
+const colorMoodEnum = z.enum(INTENT_CONSTANTS.COLOR_MOODS as unknown as [string, ...string[]])
+const domainEnum = z.enum(INTENT_CONSTANTS.DOMAINS as unknown as [string, ...string[]])
+const visualThemeEnum = z.enum(INTENT_CONSTANTS.VISUAL_THEMES as unknown as [string, ...string[]])
 
 const templateFieldSchema = z.object({
   id: z.string().min(1),

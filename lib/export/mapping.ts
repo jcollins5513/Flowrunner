@@ -145,7 +145,7 @@ function computeBoundingBox(
   const slotColumns = columnWidths.slice(position.x, position.x + position.width)
   const width = slotColumns.reduce((sum, width) => sum + width, 0) + gridContext.spacing.gap * Math.max(position.width - 1, 0)
 
-  const height = gridContext.rowUnit * position.height + gridContext.spacing.gap * Math.max(position.height - 1, 0)
+  const height = gridContext.rowUnit * (position.height ?? 1) + gridContext.spacing.gap * Math.max((position.height ?? 1) - 1, 0)
   const y = gridContext.spacing.padding + (gridContext.rowUnit + gridContext.spacing.gap) * position.y
 
   return { width, height, x: xOffset + gapTotalX, y }
@@ -320,7 +320,7 @@ function slotContextFromPattern(
   }
 
   const node = componentToFigmaNode({ slotName, component, palette: dsl.palette, vibe: dsl.vibe })
-  node.pluginData = ensurePluginData(node.pluginData, { required: position.height > 0 })
+  node.pluginData = ensurePluginData(node.pluginData, { required: (position.height ?? 1) > 0 })
   return { node }
 }
 
@@ -353,7 +353,7 @@ function mapSlotsToNodes(
 
 function computeFrameHeight(pattern: PatternDefinition, gridContext: GridContext): number {
   const rowDepth = Math.max(
-    ...Object.values(pattern.layout.positions).map((position) => position.y + position.height)
+    ...Object.values(pattern.layout.positions).map((position) => position.y + (position.height ?? 1))
   )
 
   return (

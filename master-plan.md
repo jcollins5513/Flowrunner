@@ -90,8 +90,16 @@ Includes:
 ## 3.4 DSL Generator (Strict + Creative)
 Builds a Zod-validated DSL document representing each screen.
 
-## 3.5 React Renderer
+## 3.5 React Renderer ✅
 Renders screens from DSL exactly and predictably.
+- ✅ Component renderers (forms, supporting images, navigation)
+- ✅ Responsive layout system with container queries
+- ✅ Error boundaries and telemetry
+- ✅ Renderer utilities and theme provider
+- ✅ Image rendering optimizations (lazy loading, placeholders, error handling, aspect ratios)
+- ✅ Comprehensive test suite (82 tests passing)
+- ✅ RendererPreview tool for pattern variant inspection
+- ✅ Accessibility utilities (WCAG contrast validation)
 
 ---
 

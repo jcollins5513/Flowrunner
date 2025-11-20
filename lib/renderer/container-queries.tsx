@@ -1,7 +1,9 @@
 // Container query utilities for responsive layouts based on container size
 // Uses CSS Container Queries for component-level responsiveness
 
-import { createContext, useContext, useEffect, useState, useRef, type ReactNode } from 'react'
+'use client'
+
+import React, { createContext, useContext, useEffect, useState, useRef, type ReactNode } from 'react'
 
 export type ContainerBreakpoint = 'mobile' | 'tablet' | 'desktop'
 

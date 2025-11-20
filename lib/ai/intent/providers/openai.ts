@@ -65,7 +65,7 @@ const sanitizeConfidence = (
   )
   if (!entries.length) return undefined
 
-  return entries.reduce<IntentProviderResult['confidence']>((acc, [key, value]) => {
+  return entries.reduce<Record<string, number>>((acc, [key, value]) => {
     acc[key] = clamp01(value)
     return acc
   }, {})

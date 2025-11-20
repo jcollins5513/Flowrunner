@@ -1,6 +1,8 @@
 // Common renderer utilities
 
-import React from 'react'
+'use client'
+
+import React, { type CSSProperties } from 'react'
 import { type PatternDefinition } from '../patterns/schema'
 import { type Component } from '../dsl/types'
 
@@ -18,7 +20,7 @@ export function computeSlotPosition(
   position: SlotPosition,
   layoutStructure: 'grid' | 'flex',
   isSingleColumn = false
-): React.CSSProperties {
+): CSSProperties {
   if (layoutStructure === 'grid') {
     if (isSingleColumn) {
       // Normalize positions for single column: all components at x:0, stack vertically

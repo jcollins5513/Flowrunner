@@ -56,7 +56,12 @@ export class ErrorBoundaryBase extends Component<ErrorBoundaryProps, ErrorBounda
 
     // Report error to telemetry if provided
     if (this.props.onError) {
-      this.props.onError(error, errorInfo, this.state.componentContext)
+      // Normalize componentStack: null -> undefined for telemetry
+      const normalizedErrorInfo = {
+        ...errorInfo,
+        componentStack: errorInfo.componentStack ?? undefined,
+      }
+      this.props.onError(error, normalizedErrorInfo, this.state.componentContext)
     }
   }
 

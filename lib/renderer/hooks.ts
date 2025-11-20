@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from 'react'
 import { type PatternDefinition } from '../patterns/schema'
-import { useContainerSize, useContainerBreakpoint, type ContainerBreakpoint } from './container-queries'
+import { useContainerSize, type ContainerBreakpoint } from './container-queries'
 import { useComponentStyles } from './theme-provider'
 
 export type Breakpoint = 'mobile' | 'tablet' | 'desktop'

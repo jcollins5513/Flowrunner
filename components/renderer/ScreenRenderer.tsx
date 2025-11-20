@@ -244,9 +244,13 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
                 componentType={component.type}
                 slotName={slotName}
                 onError={(error, errorInfo) => {
+                  // Normalize componentStack: null -> undefined for telemetry
+                  const normalizedErrorInfo = {
+                    componentStack: errorInfo.componentStack ?? undefined,
+                  }
                   telemetry.reportError(
                     error,
-                    errorInfo,
+                    normalizedErrorInfo,
                     {
                       component: {
                         type: component.type,
@@ -286,9 +290,13 @@ export const ScreenRenderer: React.FC<ScreenRendererProps> = (props) => {
   const containerRef = useRef<HTMLDivElement>(null)
   
   const handleError = (error: Error, errorInfo: React.ErrorInfo, context?: { patternFamily?: string; patternVariant?: number }) => {
+    // Normalize componentStack: null -> undefined for telemetry
+    const normalizedErrorInfo = {
+      componentStack: errorInfo.componentStack ?? undefined,
+    }
     telemetry.reportError(
       error,
-      errorInfo,
+      normalizedErrorInfo,
       {
         pattern: context
           ? {

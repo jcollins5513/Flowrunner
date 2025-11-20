@@ -1,7 +1,7 @@
 import { IntentInterpreter, InterpretOptions } from './interpreter'
 import { MockIntentProvider } from './providers/mock'
-import { selectTemplateForIntent, mapTemplateToScreenSequence, ScreenGenerationPlan } from '../flow/templates/selector'
-import { FlowTemplate } from '../flow/templates/schema'
+import { selectTemplateForIntent, mapTemplateToScreenSequence, ScreenGenerationPlan } from '../../flow/templates/selector'
+import { FlowTemplate } from '../../flow/templates/schema'
 import { Intent } from './intent.schema'
 
 export interface PromptPipelineResult {
