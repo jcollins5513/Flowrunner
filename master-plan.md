@@ -228,25 +228,27 @@ Cursor must implement all pattern contracts.
 
 ---
 
-# 10. MagicPath-Style Editable Screens
+# 10. MagicPath-Style Editable Screens ✅ (Partially Complete)
 
 After a screen is generated, everything must be editable:
 
-- Hero image → replace/edit with Nano-Banana  
-- Text → rewrite  
-- Layout → switch variant  
-- Palette → regenerate  
-- Vibe → modify  
-- Components → reorder if allowed  
-- Navigation → clickable, define next screen  
-- Pattern → user can choose another variant
+- Hero image → replace/edit with Nano-Banana ✅ (Replace done, Nano-Banana placeholder)
+- Text → rewrite ✅  
+- Layout → switch variant (Coming in Phase 11.4)
+- Palette → regenerate (Coming in Phase 11.5)
+- Vibe → modify (Coming in Phase 11.5)
+- Components → reorder if allowed ✅  
+- Navigation → clickable, define next screen (Coming in Phase 11.6)
+- Pattern → user can choose another variant (Coming in Phase 11.4)
 
 All edits must update:
-- DSL  
-- Renderer  
-- Pattern contracts  
-- Preview  
-- Navigation map
+- DSL ✅  
+- Renderer ✅  
+- Pattern contracts ✅  
+- Preview ✅  
+- Navigation map (Coming in Phase 11.6)
+
+**Status:** Core editing infrastructure complete (11.1-11.3). Remaining: Layout/Pattern editing (11.4), Palette/Vibe editing (11.5), Navigation editing (11.6).
 
 ---
 

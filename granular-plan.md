@@ -662,12 +662,12 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ## Phase 11: MagicPath-Style Editing
 
 ### 11.1 Editing Layer Architecture
-- [ ] Create editing context provider
-- [ ] Implement edit mode toggle
-- [ ] Create editable component wrappers
-- [ ] Add edit state management
-- [ ] Implement edit history/undo system
-- [ ] Create edit validation layer
+- [x] Create editing context provider
+- [x] Implement edit mode toggle
+- [x] Create editable component wrappers
+- [x] Add edit state management
+- [x] Implement edit history/undo system
+- [x] Create edit validation layer
 - [ ] Add edit conflict resolution
 
 **Technical Notes:**
@@ -678,15 +678,15 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ---
 
 ### 11.2 Component-Level Editing
-- [ ] Create inline text editor
-- [ ] Implement text editing (title, subtitle, body)
-- [ ] Add button label editing
-- [ ] Create form field editing
-- [ ] Implement component reordering (if allowed by pattern)
-- [ ] Add component deletion (if allowed)
-- [ ] Create component addition (if allowed by pattern)
+- [x] Create inline text editor
+- [x] Implement text editing (title, subtitle, body)
+- [x] Add button label editing
+- [x] Create form field editing (basic UI - full editing coming later)
+- [x] Implement component reordering (if allowed by pattern)
+- [x] Add component deletion (if allowed)
+- [x] Create component addition (if allowed by pattern)
 - [ ] Add component type switching
-- [ ] Implement live preview updates
+- [x] Implement live preview updates
 
 **Technical Notes:**
 - Editing must respect pattern constraints
@@ -696,14 +696,14 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ---
 
 ### 11.3 Image Editing Integration
-- [ ] Add "Replace Image" action
-- [ ] Integrate image library picker
-- [ ] Add "Edit with Nano-Banana" action
+- [x] Add "Replace Image" action
+- [x] Integrate image library picker
+- [x] Add "Edit with Nano-Banana" action (placeholder UI - implementation in Phase 12)
 - [ ] Open Nano-Banana editor in modal
-- [ ] Handle edited image replacement
-- [ ] Update palette on image change
-- [ ] Update vibe on image change
-- [ ] Refresh preview after image update
+- [x] Handle edited image replacement
+- [x] Update palette on image change
+- [x] Update vibe on image change
+- [x] Refresh preview after image update
 
 **Technical Notes:**
 - Image changes should trigger palette/vibe updates
