@@ -94,3 +94,26 @@
 - Zod validation for every DSL output
 - Pattern contract enforcement
 - Component type enforcement
+
+## 13. Subscription & Paywall System
+*(Post-MVP Feature)*
+- Free tier with trial tokens
+- Pro tier with unlimited access
+- Enterprise tier with custom limits
+- Token-based usage tracking
+- Feature gating for premium features
+- Subscription management UI
+- Billing integration (Stripe)
+
+## 14. External Component Library Integration
+*(Post-MVP, Paid Feature - Requires Pro Subscription)*
+- Component browser for external libraries
+- Support for Acernity UI, Magic UI, React Bits, Hero UI, GSAP
+- Visual component selection and preview
+- Inline component props editing
+- Pattern compatibility indicators
+- Full source code preservation in exports
+- Automatic dependency bundling
+- FlowRunner styling integration (palette/vibe)
+- Export support with working code
+- Library-specific adapters for seamless integration

@@ -341,7 +341,7 @@ Cursor must build:
 - ✅ Image metadata system (Database schema complete)
 - ✅ Prompt Interpreter System (Phase 4: Intent extraction + Flow templates)
 - ✅ Image Generation System (Phase 5.1-5.4: DALL-E integration + Palette extraction + Vibe inference + Image persistence)
-- Full flow-engine
+- ✅ Full flow-engine (Phase 10: Flow creation, screen sequence, navigation graph, theme consistency, API routes, React context)
 - Renderer
 - Editing layer
 - Navigation layer
@@ -355,3 +355,106 @@ Cursor must never:
 - Add new DSL fields
 - Skip hero images
 - Replace images with gradients or placeholders
+
+---
+
+# 17. Subscription & Paywall System
+*(Post-MVP Feature)*
+
+FlowRunner implements a subscription-based model with token usage tracking.
+
+## 17.1 Subscription Tiers
+
+- **Free Tier**: Limited tokens per month, basic features
+  - X free tokens on signup (trial)
+  - Basic image generation
+  - Standard patterns and components
+  - Limited exports
+  
+- **Pro Tier**: Unlimited tokens, all features
+  - Unlimited image generation
+  - External component library access
+  - Advanced export features
+  - Priority support
+  - All pattern families and variants
+
+- **Enterprise Tier**: Custom limits, dedicated support
+  - Custom token allocations
+  - White-label options
+  - API access
+  - Dedicated support
+
+## 17.2 Token System
+
+Tokens are consumed for:
+- Image generation (e.g., 10 tokens per image)
+- AI text generation (e.g., 2 tokens per generation)
+- External component usage (e.g., 5 tokens per component)
+- Advanced export operations
+
+Free tier users receive a trial allocation of tokens on signup. Pro users have unlimited tokens.
+
+## 17.3 Feature Gating
+
+The following features require Pro subscription:
+- **External Component Library Integration** (Acernity UI, Magic UI, React Bits, Hero UI, GSAP)
+- Unlimited image generation
+- Advanced export formats
+- Community sharing features
+- Priority support
+
+---
+
+# 18. External Component Library Integration
+*(Post-MVP, Paid Feature - Requires Pro Subscription)*
+
+FlowRunner integrates with popular component libraries to expand design capabilities beyond the core component set.
+
+## 18.1 Supported Libraries
+
+- **Acernity UI**: Advanced animated components with Framer Motion
+- **Magic UI**: Animation-focused components
+- **React Bits**: Simple, reusable components
+- **Hero UI**: Modern UI components
+- **GSAP**: Professional animation library wrappers
+
+## 18.2 Component Browser
+
+Users can:
+- Browse components by library
+- Search and filter components
+- Preview components before adding
+- Edit component props inline
+- See pattern compatibility
+- Add components to screens with one click
+
+## 18.3 Integration Features
+
+- **DSL Extension**: External components stored in DSL with full source code
+- **Renderer Integration**: Dynamic component loading in renderer
+- **Pattern Compatibility**: External components work with FlowRunner patterns
+- **Export Preservation**: Full source code included in exports
+- **Dependency Management**: Automatic dependency bundling
+- **Styling Integration**: FlowRunner palette/vibe applied to external components
+
+## 18.4 Export Support
+
+When exporting:
+- Full component source code is included
+- All dependencies are bundled
+- Proper import statements are generated
+- Components work out-of-the-box in exported projects
+- Cursor exports include all external component code
+- Figma exports convert external components appropriately
+
+## 18.5 Access Control
+
+**This feature is Pro-only.** Free tier users see:
+- Component browser with locked components
+- Upgrade prompts when attempting to use external components
+- Preview-only access to component library
+
+Pro users have:
+- Full access to all component libraries
+- Ability to use unlimited external components
+- Priority updates for new components

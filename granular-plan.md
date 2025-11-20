@@ -1265,6 +1265,295 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 - Layer regression, schema, and visual tests into every phase.
 - CI gate should include: pattern schema tests, renderer visual diff, flow/editor E2E after major milestones.
 
+**Phase 18: Subscription & Paywall System** (Post-MVP)
+- Implement user subscription tiers
+- Add token-based usage tracking
+- Create free trial system
+
+**Phase 19: External Component Library Integration** (Post-MVP, Paid Feature)
+- Integrate external component libraries
+- Build component browser UI
+- Preserve source code in exports
+
+---
+
+## Phase 18: Subscription & Paywall System
+*(Post-MVP - Implement after core features are complete)*
+
+### 18.1 User Subscription Model
+- [ ] Design subscription tiers (Free, Pro, Enterprise)
+- [ ] Create Subscription entity in Prisma schema
+  - [ ] id, userId
+  - [ ] tier (enum: FREE, PRO, ENTERPRISE)
+  - [ ] status (enum: ACTIVE, TRIAL, EXPIRED, CANCELLED)
+  - [ ] currentPeriodStart, currentPeriodEnd
+  - [ ] cancelAtPeriodEnd (boolean)
+  - [ ] createdAt, updatedAt
+- [ ] Create UserTokenBalance entity
+  - [ ] id, userId
+  - [ ] tokenBalance (int)
+  - [ ] tokensUsed (int)
+  - [ ] lastResetAt (date)
+  - [ ] createdAt, updatedAt
+- [ ] Run Prisma migrations
+- [ ] Create subscription repository functions
+
+**Technical Notes:**
+- Free tier: Limited tokens per month, basic features
+- Pro tier: Unlimited tokens, all features including external component libraries
+- Enterprise tier: Custom limits, priority support
+- Tokens consumed for: image generation, AI text generation, advanced features
+
+---
+
+### 18.2 Token System
+- [ ] Define token costs for operations
+  - [ ] Image generation cost (e.g., 10 tokens)
+  - [ ] Text generation cost (e.g., 2 tokens)
+  - [ ] External component usage cost (e.g., 5 tokens per component)
+  - [ ] Export operations cost
+- [ ] Create token deduction service
+- [ ] Implement token balance checking
+- [ ] Add token usage logging
+- [ ] Create token reset scheduler (monthly)
+- [ ] Implement token purchase/refill system
+- [ ] Add token balance API endpoints
+
+**Technical Notes:**
+- Track token usage for analytics
+- Prevent operations if insufficient tokens
+- Show token balance in UI
+- Allow token purchases for free tier users
+
+---
+
+### 18.3 Free Trial System
+- [ ] Create trial subscription logic
+  - [ ] New users get X free tokens (e.g., 50 tokens)
+  - [ ] Trial period duration (e.g., 7 days)
+  - [ ] Auto-expire trial after period
+- [ ] Implement trial activation on signup
+- [ ] Create trial expiration notifications
+- [ ] Add trial status indicators in UI
+- [ ] Track trial conversion metrics
+- [ ] Create trial-to-paid upgrade flow
+
+**Technical Notes:**
+- Trial tokens should allow full feature access
+- Show clear trial expiration countdown
+- Make upgrade path obvious and easy
+
+---
+
+### 18.4 Paywall UI Components
+- [ ] Create subscription status component
+- [ ] Create token balance display component
+- [ ] Create upgrade prompt component
+- [ ] Create paywall modal for paid features
+- [ ] Add subscription management page
+- [ ] Create billing/payment integration (Stripe)
+- [ ] Add subscription upgrade/downgrade UI
+- [ ] Create usage analytics dashboard
+- [ ] Add "Upgrade to Pro" CTAs throughout app
+
+**Technical Notes:**
+- Paywall should be non-intrusive but clear
+- Show value proposition for upgrading
+- Make upgrade process seamless
+
+---
+
+### 18.5 Feature Gating
+- [ ] Create feature flag system
+- [ ] Gate external component library access (Pro only)
+- [ ] Gate advanced export features (Pro only)
+- [ ] Gate unlimited image generation (Pro only)
+- [ ] Gate community sharing features (Pro only)
+- [ ] Implement feature check middleware
+- [ ] Add feature gate UI indicators
+- [ ] Create feature unlock messaging
+
+**Technical Notes:**
+- Feature gates should check subscription tier
+- Show clear upgrade prompts for gated features
+- Free tier should have reasonable limits
+
+---
+
+## Phase 19: External Component Library Integration
+*(Post-MVP, Paid Feature - Requires Pro subscription)*
+
+### 19.1 Component Library Registry
+- [ ] Design external component registry structure
+- [ ] Create ComponentLibrary entity in Prisma schema
+  - [ ] id, name (acernity, magic-ui, react-bits, hero-ui, gsap)
+  - [ ] displayName, description
+  - [ ] version, homepageUrl
+  - [ ] isActive (boolean)
+  - [ ] createdAt, updatedAt
+- [ ] Create ExternalComponent entity
+  - [ ] id, libraryId
+  - [ ] componentName, displayName
+  - [ ] description, category
+  - [ ] propsSchema (JSON)
+  - [ ] sourceCode (text)
+  - [ ] dependencies (array)
+  - [ ] previewImageUrl
+  - [ ] compatiblePatterns (array)
+  - [ ] createdAt, updatedAt
+- [ ] Create component registry seed data
+  - [ ] Catalog Acernity UI components
+  - [ ] Catalog Magic UI components
+  - [ ] Catalog React Bits components
+  - [ ] Catalog Hero UI components
+  - [ ] Catalog GSAP animation wrappers
+- [ ] Run Prisma migrations
+- [ ] Create component registry service
+
+**Technical Notes:**
+- Registry should be extensible for new libraries
+- Store full source code for export preservation
+- Track dependencies for proper bundling
+- Mark compatible patterns for each component
+
+---
+
+### 19.2 Extended DSL Schema
+- [ ] Extend componentSchema to support external components
+  - [ ] Add 'external' component type
+  - [ ] Add library field (enum)
+  - [ ] Add componentName field
+  - [ ] Add sourceCode field (optional, for export)
+  - [ ] Add dependencies field (array)
+- [ ] Update Zod validation schemas
+- [ ] Create migration for existing DSL documents
+- [ ] Update DSL type exports
+- [ ] Write validation tests for external components
+
+**Technical Notes:**
+- Backward compatible with existing component types
+- External components must include library and componentName
+- Source code stored for export fidelity
+
+---
+
+### 19.3 Component Browser UI
+- [ ] Create component browser page/component
+- [ ] Implement library tabs (Acernity, Magic UI, etc.)
+- [ ] Create category filters (button, card, animation, layout)
+- [ ] Add search functionality
+- [ ] Create component preview cards
+- [ ] Implement live preview modal
+- [ ] Create component props editor
+- [ ] Add pattern compatibility indicators
+- [ ] Create "Add to Screen" action
+- [ ] Add component favorites/bookmarks
+- [ ] Implement component usage tracking
+
+**Technical Notes:**
+- Browser should be fast and searchable
+- Show clear previews of components
+- Make adding components to screens intuitive
+- Gate access behind Pro subscription
+
+---
+
+### 19.4 Renderer Integration
+- [ ] Extend component-factory.tsx for external components
+- [ ] Create dynamic component loader
+- [ ] Implement component import system
+- [ ] Handle component dependencies
+- [ ] Apply FlowRunner palette/vibe to external components
+- [ ] Create component error boundaries
+- [ ] Add component loading states
+- [ ] Implement component fallbacks
+- [ ] Test component rendering with all libraries
+
+**Technical Notes:**
+- Components must load dynamically
+- Handle missing dependencies gracefully
+- Preserve FlowRunner styling context
+- Support SSR if using Next.js
+
+---
+
+### 19.5 Pattern System Integration
+- [ ] Extend pattern definitions to support external layouts
+- [ ] Create hybrid pattern support (FlowRunner + external)
+- [ ] Implement pattern compatibility validation
+- [ ] Allow external layout components as pattern alternatives
+- [ ] Create pattern migration system for external components
+- [ ] Update pattern validator for external components
+
+**Technical Notes:**
+- External layouts should integrate with pattern system
+- Validate compatibility before allowing usage
+- Support both pure FlowRunner and hybrid patterns
+
+---
+
+### 19.6 Export System Enhancement
+- [ ] Extend Cursor export to include external components
+  - [ ] Include full source code in export
+  - [ ] Bundle component dependencies
+  - [ ] Generate proper import statements
+  - [ ] Create component wrapper files
+- [ ] Extend Figma export for external components
+  - [ ] Convert external components to Figma elements
+  - [ ] Preserve component structure
+- [ ] Update export manifest to track external components
+- [ ] Create dependency resolution system
+- [ ] Test exports with external components
+
+**Technical Notes:**
+- Exports must be fully functional
+- Include all necessary dependencies
+- Generate working React code
+- Handle library-specific requirements (GSAP init, etc.)
+
+---
+
+### 19.7 Library-Specific Adapters
+- [ ] Create Acernity UI adapter
+  - [ ] Handle Framer Motion dependencies
+  - [ ] Map component props
+  - [ ] Apply FlowRunner styling
+- [ ] Create Magic UI adapter
+  - [ ] Similar to Acernity adapter
+  - [ ] Handle animation dependencies
+- [ ] Create React Bits adapter
+  - [ ] Simpler integration
+  - [ ] Map component props
+- [ ] Create Hero UI adapter
+  - [ ] Similar to shadcn/ui patterns
+  - [ ] Handle component variants
+- [ ] Create GSAP adapter
+  - [ ] Handle GSAP initialization
+  - [ ] Create animation wrapper components
+  - [ ] Map animation props
+
+**Technical Notes:**
+- Each library may need custom handling
+- Adapters ensure consistent integration
+- Handle version compatibility
+
+---
+
+### 19.8 Component Management
+- [ ] Create component update system
+- [ ] Implement component versioning
+- [ ] Add component deprecation handling
+- [ ] Create component usage analytics
+- [ ] Implement component caching
+- [ ] Add component performance monitoring
+- [ ] Create component documentation system
+
+**Technical Notes:**
+- Track which components are used most
+- Handle library updates gracefully
+- Monitor component performance
+- Provide clear documentation
+
 ---
 
 ## Notes
@@ -1274,4 +1563,6 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 - Testing should be done incrementally, not just at the end
 - Documentation should be updated as features are built
 - Performance optimization should be considered throughout, not just at the end
+- **Phase 18 & 19 are post-MVP features** - Build after core application is complete
+- **External Component Library Integration requires Pro subscription** - Gate all access behind paywall
 

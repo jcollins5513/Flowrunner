@@ -163,6 +163,126 @@ export async function createScreenWithValidation(
 }
 
 /**
+ * Update a screen with validation
+ * Accepts partial DSL updates and merges with existing screen data
+ * Throws ValidationError if DSL is invalid
+ */
+export async function updateScreenWithValidation(
+  screenId: string,
+  dslUpdate: Partial<ScreenDSL>,
+  options: {
+    skipPatternValidation?: boolean
+    changeType?: string
+  } = {}
+): Promise<{ screen: any; dsl: ScreenDSL }> {
+  // Get existing screen
+  const existingScreen = await prisma.screen.findUnique({
+    where: { id: screenId },
+    include: { heroImage: true },
+  })
+
+  if (!existingScreen) {
+    throw new Error(`Screen not found: ${screenId}`)
+  }
+
+  // Reconstruct existing DSL from database
+  const existingDSL: ScreenDSL = {
+    hero_image: existingScreen.heroImage
+      ? {
+          id: existingScreen.heroImage.id,
+          url: existingScreen.heroImage.url,
+          prompt: existingScreen.heroImage.prompt || undefined,
+          seed: existingScreen.heroImage.seed || undefined,
+          aspectRatio: existingScreen.heroImage.aspectRatio || undefined,
+          style: existingScreen.heroImage.style || undefined,
+          extractedPalette: existingScreen.heroImage.extractedPalette
+            ? (JSON.parse(existingScreen.heroImage.extractedPalette as string) as ScreenDSL['palette'])
+            : undefined,
+          vibe: (existingScreen.heroImage.vibe as ScreenDSL['vibe']) || undefined,
+        }
+      : {
+          id: 'placeholder',
+          url: '',
+        },
+    palette: existingScreen.palette
+      ? (JSON.parse(existingScreen.palette as string) as ScreenDSL['palette'])
+      : {
+          primary: '#000000',
+          secondary: '#666666',
+          accent: '#0066ff',
+          background: '#ffffff',
+        },
+    vibe: (existingScreen.vibe as ScreenDSL['vibe']) || 'modern',
+    pattern_family: (existingScreen.patternFamily as ScreenDSL['pattern_family']) || 'ONB_HERO_TOP',
+    pattern_variant: (existingScreen.patternVariant as ScreenDSL['pattern_variant']) || 1,
+    components: existingScreen.components
+      ? (JSON.parse(existingScreen.components as string) as ScreenDSL['components'])
+      : [],
+    navigation: existingScreen.navigation
+      ? (JSON.parse(existingScreen.navigation as string) as ScreenDSL['navigation'])
+      : undefined,
+    animations: existingScreen.animations
+      ? (JSON.parse(existingScreen.animations as string) as ScreenDSL['animations'])
+      : undefined,
+    metadata: existingScreen.metadata
+      ? (JSON.parse(existingScreen.metadata as string) as ScreenDSL['metadata'])
+      : undefined,
+  }
+
+  // Merge updates into existing DSL
+  const mergedDSL: ScreenDSL = {
+    ...existingDSL,
+    ...dslUpdate,
+    // Deep merge nested objects
+    palette: dslUpdate.palette || existingDSL.palette,
+    hero_image: dslUpdate.hero_image || existingDSL.hero_image,
+    components: dslUpdate.components || existingDSL.components,
+  }
+
+  // Validate merged DSL
+  const validation = await validateDSLForPersistence(mergedDSL, !options.skipPatternValidation)
+
+  if (!validation.success || !validation.dsl) {
+    const zodError = new z.ZodError(
+      validation.errors?.map((msg) => ({
+        code: 'custom',
+        path: [],
+        message: msg,
+      })) || []
+    )
+    throw new ValidationError('DSL validation failed', zodError)
+  }
+
+  const validatedDSL = validation.dsl
+
+  // Create revision for history tracking
+  await createRevisionWithValidation(existingScreen.flowId, validatedDSL, {
+    screenId,
+    changeType: options.changeType || 'edit',
+    skipPatternValidation: options.skipPatternValidation,
+  })
+
+  // Update screen
+  const updatedScreen = await prisma.screen.update({
+    where: { id: screenId },
+    data: {
+      heroImageId: validatedDSL.hero_image.id !== existingDSL.hero_image.id ? validatedDSL.hero_image.id : undefined,
+      palette: JSON.stringify(validatedDSL.palette),
+      vibe: validatedDSL.vibe,
+      patternFamily: validatedDSL.pattern_family,
+      patternVariant: validatedDSL.pattern_variant,
+      components: JSON.stringify(validatedDSL.components),
+      navigation: validatedDSL.navigation ? JSON.stringify(validatedDSL.navigation) : null,
+      animations: validatedDSL.animations ? JSON.stringify(validatedDSL.animations) : null,
+      metadata: validatedDSL.metadata ? JSON.stringify(validatedDSL.metadata) : null,
+    },
+    include: { heroImage: true },
+  })
+
+  return { screen: updatedScreen, dsl: validatedDSL }
+}
+
+/**
  * Validate FlowDSL before persistence
  */
 export function validateFlowForPersistence(

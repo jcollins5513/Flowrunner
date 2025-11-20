@@ -24,6 +24,13 @@ export interface ScreenRendererProps {
   className?: string
   onComponentClick?: (componentType: string, component: ScreenDSL['components'][0]) => void
   skipValidation?: boolean // Only use for development/debugging
+  // Editing props (optional)
+  editMode?: boolean
+  screenId?: string
+  onScreenUpdate?: (updatedDSL: ScreenDSL) => void
+  editingComponentId?: string | null
+  onStartEdit?: (componentIndex: number) => void
+  onSaveEdit?: (componentIndex: number, updatedComponent: ScreenDSL['components'][0]) => void
 }
 
 const BREAKPOINT_ORDER: Breakpoint[] = ['mobile', 'tablet', 'desktop']
@@ -34,6 +41,12 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
   className = '',
   onComponentClick,
   skipValidation = false,
+  editMode = false,
+  screenId,
+  onScreenUpdate,
+  editingComponentId = null,
+  onStartEdit,
+  onSaveEdit,
 }) => {
   const [pattern, setPattern] = useState<PatternDefinition | null>(null)
   const [loading, setLoading] = useState(true)
@@ -125,6 +138,11 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
     })
     return map
   }, [dsl.components])
+
+  // Create array for component indexing
+  const componentMapArray = useMemo(() => {
+    return Array.from(componentMap.values())
+  }, [componentMap])
 
   if (loading) {
     return <div className="p-8">Loading pattern...</div>
@@ -228,10 +246,13 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
           <div style={computeSlotStyle(pattern.layout.positions.hero_image)}>{heroImageNode}</div>
         )}
 
-        {Object.entries(pattern.layout.positions).map(([slotName, position]) => {
+        {Object.entries(pattern.layout.positions).map(([slotName, position], slotIndex) => {
           if (slotName === 'hero_image') return null
           const component = componentMap.get(slotName)
           if (!component) return null
+
+          // Find component index in DSL components array
+          const componentIndex = dsl.components.findIndex((c) => c === component)
 
           const componentStyle = {
             ...paletteStyles,
@@ -273,6 +294,12 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
                   component,
                   style: componentStyle,
                   onClick: onComponentClick ? () => onComponentClick(component.type, component) : undefined,
+                  editMode,
+                  editingComponentId,
+                  componentIndex: componentIndex >= 0 ? componentIndex : slotIndex,
+                  screenId,
+                  onStartEdit,
+                  onSaveEdit,
                 })}
               </ComponentRendererErrorBoundary>
             </div>

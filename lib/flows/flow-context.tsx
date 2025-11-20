@@ -93,6 +93,7 @@ function flowReducer(state: FlowState, action: FlowAction): FlowState {
 interface FlowContextValue extends FlowState {
   // Flow operations
   loadFlow: (flowId: string) => Promise<void>
+  updateScreen: (screenId: string, dslUpdates: Partial<ScreenDSL>) => Promise<void>
   createFlow: (options: CreateFlowOptions) => Promise<FlowMetadata>
   updateFlow: (flowId: string, options: UpdateFlowOptions) => Promise<void>
   deleteFlow: (flowId: string) => Promise<void>
@@ -304,6 +305,69 @@ export function FlowProvider({ children }: FlowProviderProps) {
     }
   }, [loadScreens])
 
+  const updateScreen = useCallback(
+    async (screenId: string, dslUpdates: Partial<ScreenDSL>) => {
+      dispatch({ type: 'SET_LOADING', payload: true })
+      dispatch({ type: 'SET_ERROR', payload: null })
+
+      // Optimistically update local state
+      const currentScreens = state.screens
+      const screenIndex = currentScreens.findIndex((s: any) => s.id === screenId)
+      
+      if (screenIndex >= 0) {
+        // Optimistically update screen in local state
+        const updatedScreens = [...currentScreens]
+        updatedScreens[screenIndex] = { ...updatedScreens[screenIndex], ...dslUpdates }
+        dispatch({ type: 'SET_SCREENS', payload: updatedScreens })
+      }
+
+      try {
+        // Find the flowId from the screen
+        const screen = currentScreens.find((s: any) => s.id === screenId)
+        if (!screen) {
+          throw new Error('Screen not found in local state')
+        }
+
+        const flowId = state.currentFlow?.id || screen.flowId
+        if (!flowId) {
+          throw new Error('Flow ID not found')
+        }
+
+        const response = await fetch(`/api/flows/${flowId}/screens/${screenId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ dsl: dslUpdates }),
+        })
+
+        if (!response.ok) {
+          const error = await response.json()
+          throw new Error(error.error || 'Failed to update screen')
+        }
+
+        const result = await response.json()
+
+        // Update local state with server response
+        if (result.screen) {
+          const updatedScreens = currentScreens.map((s: any) =>
+            s.id === screenId ? result.screen : s
+          )
+          dispatch({ type: 'SET_SCREENS', payload: updatedScreens })
+        }
+
+        // Reload screens to ensure consistency
+        await loadScreens(flowId)
+      } catch (error) {
+        // Rollback optimistic update
+        dispatch({ type: 'SET_SCREENS', payload: currentScreens })
+        dispatch({ type: 'SET_ERROR', payload: error instanceof Error ? error.message : 'Unknown error' })
+        throw error
+      } finally {
+        dispatch({ type: 'SET_LOADING', payload: false })
+      }
+    },
+    [state.screens, state.currentFlow, loadScreens]
+  )
+
   const removeScreen = useCallback(
     async (flowId: string, screenId: string) => {
       dispatch({ type: 'SET_LOADING', payload: true })
@@ -447,6 +511,7 @@ export function FlowProvider({ children }: FlowProviderProps) {
     cloneFlow,
     loadScreens,
     insertScreen,
+    updateScreen,
     removeScreen,
     reorderScreen,
     loadNavigationGraph,
