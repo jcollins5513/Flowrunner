@@ -5,7 +5,7 @@
 'use client'
 
 import React, { useEffect, useMemo, useState, useRef } from 'react'
-import { type ScreenDSL } from '@/lib/dsl/types'
+import { type Component, type ScreenDSL } from '@/lib/dsl/types'
 import { loadPatternAsync } from '@/lib/patterns/loader'
 import { type PatternDefinition } from '@/lib/patterns/schema'
 import { renderComponent } from '@/lib/renderer/component-factory'
@@ -18,11 +18,22 @@ import { ScreenRendererErrorBoundary, ComponentRendererErrorBoundary } from './E
 import { telemetry } from '@/lib/renderer/telemetry'
 import { validateScreenDSL } from '@/lib/dsl/validator'
 import { validateDSLAgainstPattern } from '@/lib/patterns/validator'
+import { cn } from '@/lib/utils'
+
+export interface ComponentInteractionContext {
+  event: React.MouseEvent
+  slotName: string
+  screenId?: string
+}
 
 export interface ScreenRendererProps {
   dsl: ScreenDSL
   className?: string
-  onComponentClick?: (componentType: string, component: ScreenDSL['components'][0]) => void
+  onComponentClick?: (
+    componentType: Component['type'],
+    component: ScreenDSL['components'][0],
+    context: ComponentInteractionContext
+  ) => void
   skipValidation?: boolean // Only use for development/debugging
   // Editing props (optional)
   editMode?: boolean
@@ -31,6 +42,7 @@ export interface ScreenRendererProps {
   editingComponentId?: string | null
   onStartEdit?: (componentIndex: number) => void
   onSaveEdit?: (componentIndex: number, updatedComponent: ScreenDSL['components'][0]) => void
+  interactiveComponentTypes?: Component['type'][]
 }
 
 const BREAKPOINT_ORDER: Breakpoint[] = ['mobile', 'tablet', 'desktop']
@@ -47,6 +59,7 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
   editingComponentId = null,
   onStartEdit,
   onSaveEdit,
+  interactiveComponentTypes,
 }) => {
   const [pattern, setPattern] = useState<PatternDefinition | null>(null)
   const [loading, setLoading] = useState(true)
@@ -254,13 +267,34 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
           // Find component index in DSL components array
           const componentIndex = dsl.components.findIndex((c) => c === component)
 
+          const isInteractiveComponent =
+            !!interactiveComponentTypes && !editMode && interactiveComponentTypes.includes(component.type as Component['type'])
+
           const componentStyle = {
             ...paletteStyles,
             ...vibeStyles,
           }
 
+          const slotClassName = cn(
+            isInteractiveComponent &&
+              'interactive-slot group relative cursor-pointer transition duration-200 hover:-translate-y-0.5 hover:shadow-2xl hover:ring-1 hover:ring-slate-200 focus-within:ring-2 focus-within:ring-slate-300'
+          )
+
+          const componentClassName = cn(
+            'w-full',
+            isInteractiveComponent &&
+              'interactive-slot-component pointer-events-auto focus:outline-none group-hover:opacity-95 group-active:scale-[0.99]'
+          )
+
           return (
-            <div key={slotName} style={computeSlotStyle(position)}>
+            <div
+              key={slotName}
+              style={computeSlotStyle(position)}
+              className={slotClassName}
+              data-component-type={component.type}
+              data-slot-name={slotName}
+              data-interactive={isInteractiveComponent ? 'true' : undefined}
+            >
               <ComponentRendererErrorBoundary
                 componentType={component.type}
                 slotName={slotName}
@@ -293,7 +327,15 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
                 {renderComponent({
                   component,
                   style: componentStyle,
-                  onClick: onComponentClick ? () => onComponentClick(component.type, component) : undefined,
+                  className: componentClassName,
+                  onClick: onComponentClick
+                    ? (event) =>
+                        onComponentClick(component.type as Component['type'], component, {
+                          event,
+                          slotName,
+                          screenId,
+                        })
+                    : undefined,
                   editMode,
                   editingComponentId,
                   componentIndex: componentIndex >= 0 ? componentIndex : slotIndex,

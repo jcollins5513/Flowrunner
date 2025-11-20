@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useMemo, useState } from 'react'
-import { ScreenRenderer } from '@/components/renderer/ScreenRenderer'
+import { InteractiveScreen } from '@/components/flow/InteractiveScreen'
 import {
   type Component,
   type HeroImage,
@@ -267,16 +267,11 @@ export default function FlowPlaygroundPage() {
                 Continue from here
               </button>
             </div>
-            <div className="overflow-hidden rounded-[32px] border border-slate-200 shadow-md">
-              <ScreenRenderer
-                dsl={screen}
-                onComponentClick={(type) => {
-                  if (type === 'button') {
-                    handleButtonNext(index)
-                  }
-                }}
-              />
-            </div>
+            <InteractiveScreen
+              screen={screen}
+              screenIndex={index}
+              onGenerateNext={() => handleButtonNext(index)}
+            />
           </article>
         ))}
       </section>

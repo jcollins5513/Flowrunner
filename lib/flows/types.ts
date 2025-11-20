@@ -1,7 +1,7 @@
 // Flow Engine Types
 // Types for flow management, screen sequences, and navigation graphs
 
-import type { ScreenDSL, FlowDSL, Palette, Vibe } from '../dsl/types'
+import type { ScreenDSL, FlowDSL, Palette, Vibe, Component } from '../dsl/types'
 
 /**
  * Flow metadata and configuration
@@ -148,5 +148,17 @@ export interface FlowStats {
   lastUpdated: Date
   averagePaletteConsistency?: number // 0-1 score
   averageVibeConsistency?: number // 0-1 score
+}
+
+/**
+ * Context passed when the user triggers generation of the next screen
+ */
+export interface NextScreenTriggerContext {
+  sourceScreenId?: string
+  screen: ScreenDSL
+  component: Component
+  componentType: Component['type']
+  slotName?: string
+  trigger: 'click'
 }
 

@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 
 export interface ButtonProps {
   content: string
-  onClick?: () => void
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
   className?: string
   style?: React.CSSProperties
   type?: 'button' | 'submit' | 'reset'

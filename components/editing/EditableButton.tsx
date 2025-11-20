@@ -13,7 +13,7 @@ export interface EditableButtonProps extends Omit<ButtonProps, 'onClick'> {
   onSave: (newContent: string) => void
   isEditing: boolean
   onStartEdit: () => void
-  onClick?: () => void
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
 export const EditableButton: React.FC<EditableButtonProps> = ({
@@ -43,12 +43,12 @@ export const EditableButton: React.FC<EditableButtonProps> = ({
     // Cancel editing
   }, [])
 
-  const handleClick = useCallback(() => {
+  const handleClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     if (isEditing) {
       return // Don't trigger onClick when editing
     }
     if (onClick) {
-      onClick()
+      onClick(event)
     } else {
       onStartEdit()
     }

@@ -87,8 +87,8 @@ export default function TestRendererPage() {
           </div>
           <ScreenRenderer
             dsl={testDSL}
-            onComponentClick={(type, component) => {
-              console.log('Component clicked:', type, component)
+            onComponentClick={(type, component, context) => {
+              console.log('Component clicked:', type, component, context.slotName)
             }}
           />
         </div>

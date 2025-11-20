@@ -17,7 +17,7 @@ export interface ComponentRendererProps {
   component: Component
   style?: React.CSSProperties
   className?: string
-  onClick?: () => void
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
   // Editing props (optional)
   editMode?: boolean
   editingComponentId?: string | null

@@ -83,7 +83,7 @@ export default function Screen() {
 }
 ```
 - Cursor's project rules can swap `ScreenRenderer` with in-project components if desired.
-- Buttons keep `onComponentClick` contract so Cursor workflows can attach handlers automatically.
+- Buttons keep the expanded `onComponentClick` contract (type, component payload, slot + event context) so Cursor workflows can attach handlers automatically or replay click locations.
 
 ### 2.3 DSL Serialization
 - Persist each `ScreenDSL` to `/dsl/screen-${id}.json`.
