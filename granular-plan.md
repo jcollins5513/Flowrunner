@@ -712,14 +712,14 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ---
 
 ### 11.4 Layout & Pattern Editing
-- [ ] Create pattern variant selector
-- [ ] Implement variant switching
-- [ ] Handle component migration between variants
-- [ ] Validate component compatibility with new variant
-- [ ] Update layout on variant change
-- [ ] Add layout customization (spacing, alignment)
-- [ ] Create pattern family selector
-- [ ] Handle pattern family switching
+- [x] Create pattern variant selector
+- [x] Implement variant switching
+- [x] Handle component migration between variants
+- [x] Validate component compatibility with new variant
+- [x] Update layout on variant change
+- [ ] Add layout customization (spacing, alignment) - Deferred for future enhancement
+- [x] Create pattern family selector
+- [x] Handle pattern family switching
 
 **Technical Notes:**
 - Pattern switching must preserve compatible components
@@ -729,14 +729,14 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ---
 
 ### 11.5 Palette & Vibe Editing
-- [ ] Create palette editor UI
-- [ ] Allow manual color selection
-- [ ] Implement color picker
-- [ ] Add palette regeneration from image
-- [ ] Create vibe selector
-- [ ] Allow manual vibe override
-- [ ] Update styling on palette/vibe change
-- [ ] Add palette/vibe preview
+- [x] Create palette editor UI
+- [x] Allow manual color selection
+- [x] Implement color picker
+- [x] Add palette regeneration from image
+- [x] Create vibe selector
+- [x] Allow manual vibe override
+- [x] Update styling on palette/vibe change
+- [ ] Add palette/vibe preview - Real-time preview available through ScreenRenderer
 
 **Technical Notes:**
 - Palette changes should update all components
@@ -745,14 +745,14 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ---
 
 ### 11.6 Navigation Editing
-- [ ] Create navigation editor
-- [ ] Make components clickable in edit mode
-- [ ] Add "Set as Navigation Target" action
-- [ ] Create navigation link configuration
-- [ ] Implement navigation removal
-- [ ] Add navigation type selection (internal/external)
-- [ ] Update navigation map on changes
-- [ ] Visualize navigation in flow diagram
+- [x] Create navigation editor
+- [x] Make components clickable in edit mode
+- [x] Add "Set as Navigation Target" action
+- [x] Create navigation link configuration
+- [x] Implement navigation removal
+- [x] Add navigation type selection (internal/external)
+- [x] Update navigation map on changes
+- [ ] Visualize navigation in flow diagram - Deferred for Phase 12
 
 **Technical Notes:**
 - Navigation editing is key to flow building

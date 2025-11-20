@@ -228,27 +228,27 @@ Cursor must implement all pattern contracts.
 
 ---
 
-# 10. MagicPath-Style Editable Screens ✅ (Partially Complete)
+# 10. MagicPath-Style Editable Screens ✅ (Complete - Core Features)
 
 After a screen is generated, everything must be editable:
 
 - Hero image → replace/edit with Nano-Banana ✅ (Replace done, Nano-Banana placeholder)
 - Text → rewrite ✅  
-- Layout → switch variant (Coming in Phase 11.4)
-- Palette → regenerate (Coming in Phase 11.5)
-- Vibe → modify (Coming in Phase 11.5)
+- Layout → switch variant ✅
+- Palette → regenerate/edit manually ✅
+- Vibe → modify ✅
 - Components → reorder if allowed ✅  
-- Navigation → clickable, define next screen (Coming in Phase 11.6)
-- Pattern → user can choose another variant (Coming in Phase 11.4)
+- Navigation → clickable, define next screen ✅
+- Pattern → user can choose another variant/family ✅
 
 All edits must update:
 - DSL ✅  
 - Renderer ✅  
 - Pattern contracts ✅  
 - Preview ✅  
-- Navigation map (Coming in Phase 11.6)
+- Navigation map ✅
 
-**Status:** Core editing infrastructure complete (11.1-11.3). Remaining: Layout/Pattern editing (11.4), Palette/Vibe editing (11.5), Navigation editing (11.6).
+**Status:** Core editing features complete (11.1-11.6). Remaining: Live preview optimizations (11.7 - optional), Nano-Banana integration (Phase 7).
 
 ---
 
@@ -344,12 +344,12 @@ Cursor must build:
 - ✅ Prompt Interpreter System (Phase 4: Intent extraction + Flow templates)
 - ✅ Image Generation System (Phase 5.1-5.4: DALL-E integration + Palette extraction + Vibe inference + Image persistence)
 - ✅ Full flow-engine (Phase 10: Flow creation, screen sequence, navigation graph, theme consistency, API routes, React context)
-- Renderer
-- Editing layer
-- Navigation layer
-- Image library
+- ✅ Renderer (Complete: Component renderers, responsive layout, error boundaries, telemetry, accessibility)
+- ✅ Editing layer (Phase 11: Core features complete - Layout/Pattern/Palette/Vibe/Navigation editing)
+- Navigation layer (Phase 12: Flow Navigation Builder)
+- Image library (Phase 6: Reusable Image Library)
 - Community system (initial scaffolding)
-- Export infrastructure
+- ✅ Export infrastructure (Phase 15: Figma & Cursor export complete)
 Cursor must never:
 
 - Invent layout structures

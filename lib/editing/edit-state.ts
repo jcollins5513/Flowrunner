@@ -2,7 +2,7 @@
 // Manages editing state for screens and components
 
 export interface EditHistoryEntry {
-  type: 'component_update' | 'image_replace' | 'palette_change' | 'vibe_change' | 'pattern_change'
+  type: 'component_update' | 'image_replace' | 'palette_change' | 'vibe_change' | 'pattern_change' | 'pattern_variant_change' | 'pattern_family_change' | 'palette_regenerate' | 'vibe_regenerate' | 'navigation_set' | 'navigation_set_external' | 'navigation_remove'
   screenId: string
   before: unknown // ScreenDSL or partial DSL
   after: unknown // ScreenDSL or partial DSL
