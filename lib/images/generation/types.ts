@@ -43,9 +43,11 @@ export const imageGenerationResultSchema = z.object({
       model: z.string().optional(),
       generationId: z.string().optional(),
       createdAt: z.date().default(() => new Date()),
+      revisedPrompt: z.string().optional(),
     })
-    .catchall(z.string())
-    .default({}),
+    .passthrough()
+    .optional()
+    .default(() => ({ provider: 'unknown', createdAt: new Date() })),
 })
 
 export type ImageStyle = (typeof IMAGE_STYLES)[number]

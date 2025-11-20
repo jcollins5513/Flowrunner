@@ -5,7 +5,7 @@ import { Title } from '@/components/renderer/Title'
 import { Subtitle } from '@/components/renderer/Subtitle'
 import { Button } from '@/components/renderer/Button'
 import { Text } from '@/components/renderer/Text'
-import { Form } from '@/components/renderer/Form'
+import { Form, type FormFieldType } from '@/components/renderer/Form'
 import { HeroImage } from '@/components/renderer/HeroImage'
 
 export interface ComponentRendererProps {
@@ -46,10 +46,10 @@ export function renderComponent({
     case 'form': {
       const fields = Array.isArray(component.props?.fields)
         ? (component.props?.fields as Array<Record<string, unknown>>).map((field, index) => ({
-            id: field.id ?? `field-${index}`,
-            label: field.label ?? `Field ${index + 1}`,
+            id: (field.id as string | undefined) ?? `field-${index}`,
+            label: (field.label as string | undefined) ?? `Field ${index + 1}`,
             placeholder: field.placeholder as string | undefined,
-            type: field.type as string | undefined,
+            type: field.type as FormFieldType | undefined,
             options: field.options as Array<{ value: string; label: string }> | undefined,
             required: field.required as boolean | undefined,
             validation: field.validation as { error?: string; success?: boolean } | undefined,

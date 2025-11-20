@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { ImageRepository } from '@/lib/images/repository'
 import type { ImageQueryFilters, PaginationOptions } from '@/lib/images/persistence/types'
 
+// Mark route as dynamic since it uses searchParams
+export const dynamic = 'force-dynamic'
+
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams

@@ -2,13 +2,16 @@ import OpenAI from 'openai'
 import { ImageGenerationProvider, ImageGenerationProviderOptions } from '../provider'
 import { ImageGenerationRequest, ImageGenerationResult, imageGenerationResultSchema } from '../types'
 
-const ASPECT_RATIO_TO_DALLE_SIZE: Record<string, { width: number; height: number }> = {
-  '1:1': { width: 1024, height: 1024 },
-  '16:9': { width: 1792, height: 1024 },
-  '4:3': { width: 1344, height: 1024 },
-  '9:16': { width: 1024, height: 1792 },
-  '21:9': { width: 2048, height: 896 },
-  '16:10': { width: 1792, height: 1120 },
+type DALLE3Size = '1024x1024' | '1792x1024' | '1024x1792' | '1024x1536' | '1536x1024'
+
+const ASPECT_RATIO_TO_DALLE_SIZE: Record<string, DALLE3Size> = {
+  '1:1': '1024x1024',
+  '16:9': '1792x1024',
+  '4:3': '1536x1024',
+  '9:16': '1024x1792',
+  '21:9': '1792x1024', // Closest match for 21:9
+  '16:10': '1792x1024', // Closest match for 16:10
+  '3:4': '1024x1536',
 }
 
 const STYLE_TO_DALLE_PROMPT: Record<string, string> = {
@@ -78,7 +81,7 @@ export class OpenAIImageProvider implements ImageGenerationProvider {
 
   async generateImage(request: ImageGenerationRequest): Promise<ImageGenerationResult> {
     const dallePrompt = buildDALLEPrompt(request)
-    const size = ASPECT_RATIO_TO_DALLE_SIZE[request.aspectRatio] ?? ASPECT_RATIO_TO_DALLE_SIZE['16:9']
+    const size: DALLE3Size = ASPECT_RATIO_TO_DALLE_SIZE[request.aspectRatio] ?? '1792x1024'
 
     let lastError: Error | undefined
     for (let attempt = 0; attempt <= this.maxRetries; attempt++) {
@@ -87,7 +90,7 @@ export class OpenAIImageProvider implements ImageGenerationProvider {
           this.client.images.generate({
             model: this.model,
             prompt: dallePrompt,
-            size: `${size.width}x${size.height}`,
+            size,
             quality: 'hd',
             n: 1,
             ...(request.seed && { seed: request.seed }),
@@ -97,22 +100,27 @@ export class OpenAIImageProvider implements ImageGenerationProvider {
           ),
         ])
 
-        const imageUrl = completion.data[0]?.url
+        if (!completion.data || completion.data.length === 0) {
+          throw new Error('OpenAI did not return image data')
+        }
+
+        const imageData = completion.data[0]
+        const imageUrl = imageData?.url
         if (!imageUrl) {
           throw new Error('OpenAI did not return an image URL')
         }
 
         return imageGenerationResultSchema.parse({
           url: imageUrl,
-          seed: request.seed ?? completion.data[0]?.revised_prompt ? undefined : undefined,
+          seed: request.seed ?? undefined,
           prompt: request.prompt,
           style: request.style,
           aspectRatio: request.aspectRatio,
           metadata: {
             provider: this.name,
             model: this.model,
-            generationId: completion.data[0]?.url,
-            revisedPrompt: completion.data[0]?.revised_prompt,
+            generationId: imageUrl,
+            revisedPrompt: imageData?.revised_prompt,
           },
         })
       } catch (error) {

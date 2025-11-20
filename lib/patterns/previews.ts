@@ -16,7 +16,7 @@ export interface PatternPreview {
   optionalSlots: string[]
 }
 
-export const PATTERN_PREVIEWS: PatternPreview[] = previews
+export const PATTERN_PREVIEWS: PatternPreview[] = previews as PatternPreview[]
 
 export function getPatternPreview(family: PatternFamily, variant: PatternVariant): PatternPreview | undefined {
   return PATTERN_PREVIEWS.find((preview) => preview.family === family && preview.variant === variant)

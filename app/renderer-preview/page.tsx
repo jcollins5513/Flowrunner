@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { Suspense, useEffect, useMemo, useState } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { ScreenRenderer } from '@/components/renderer/ScreenRenderer'
 import { type PatternFamily, type Vibe } from '@/lib/dsl/types'
@@ -30,7 +30,7 @@ function parseVibe(value: string | null): Vibe {
   return (value && PREVIEW_VIBES.includes(value as Vibe) ? value : PREVIEW_VIBES[0]) as Vibe
 }
 
-export default function RendererPreviewPage() {
+function RendererPreviewContent() {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -227,6 +227,14 @@ export default function RendererPreviewPage() {
         </div>
       )}
     </div>
+  )
+}
+
+export default function RendererPreviewPage() {
+  return (
+    <Suspense fallback={<div className="flex min-h-screen items-center justify-center">Loading...</div>}>
+      <RendererPreviewContent />
+    </Suspense>
   )
 }
 

@@ -232,7 +232,7 @@ export function getAnimationStyles(animations?: Record<string, unknown>): React.
   // Custom animation duration
   if (animations.duration) {
     const duration = String(animations.duration)
-    if (styles.animation) {
+    if (styles.animation && typeof styles.animation === 'string') {
       styles.animation = styles.animation.replace(/\d+\.?\d*s/, `${duration}ms`)
     }
   }

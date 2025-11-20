@@ -1,5 +1,6 @@
 import sharp from 'sharp'
-import Vibrant from 'node-vibrant'
+// @ts-ignore - node-vibrant has inconsistent exports
+const Vibrant = require('node-vibrant')
 import type { Palette } from '../palette'
 import type { CompositionAnalysis, MoodIndicators } from './schema'
 

@@ -1,4 +1,5 @@
-import Vibrant from 'node-vibrant'
+// @ts-ignore - node-vibrant has inconsistent exports
+const Vibrant = require('node-vibrant')
 import { z } from 'zod'
 
 export const paletteSchema = z.object({
