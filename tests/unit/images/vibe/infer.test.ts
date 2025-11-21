@@ -27,13 +27,15 @@ vi.mock('../../../../lib/images/vibe/analyzer', () => ({
 }))
 
 // Mock node-vibrant and sharp
-vi.mock('node-vibrant', () => ({
-  default: {
+vi.mock('node-vibrant/node', () => {
+  const mockModule = {
     from: vi.fn(() => ({
       getPalette: vi.fn(() => Promise.resolve({})),
     })),
-  },
-}))
+  }
+
+  return { default: mockModule, Vibrant: mockModule }
+})
 
 vi.mock('sharp', () => ({
   default: vi.fn(() => ({

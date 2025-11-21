@@ -7,8 +7,8 @@ import {
 } from '../../../../lib/images/vibe/analyzer'
 import type { Palette } from '../../../../lib/images/palette'
 
-vi.mock('node-vibrant', () => ({
-  default: {
+vi.mock('node-vibrant/node', () => {
+  const mockModule = {
     from: vi.fn(() => ({
       getPalette: vi.fn(() =>
         Promise.resolve({
@@ -21,8 +21,10 @@ vi.mock('node-vibrant', () => ({
         })
       ),
     })),
-  },
-}))
+  }
+
+  return { default: mockModule, Vibrant: mockModule }
+})
 
 vi.mock('sharp', () => {
   return {
@@ -74,7 +76,7 @@ describe('Vibe Analyzer', () => {
     })
 
     it('returns default saturation on error', async () => {
-      const Vibrant = await import('node-vibrant')
+    const Vibrant = await import('node-vibrant/node')
       vi.mocked(Vibrant.default.from).mockImplementationOnce(() => {
         throw new Error('Extraction failed')
       })

@@ -5,13 +5,15 @@ import { ImageGenerationQueue } from '../../../../lib/images/generation/queue'
 import { MockImageProvider } from '../../../../lib/images/generation/providers/mock'
 
 // Mock node-vibrant (required by vibe analyzer)
-vi.mock('node-vibrant', () => ({
-  default: {
+vi.mock('node-vibrant/node', () => {
+  const mockModule = {
     from: vi.fn(() => ({
       getPalette: vi.fn(() => Promise.resolve({})),
     })),
-  },
-}))
+  }
+
+  return { default: mockModule, Vibrant: mockModule }
+})
 
 // Mock sharp (required by vibe analyzer)
 vi.mock('sharp', () => ({

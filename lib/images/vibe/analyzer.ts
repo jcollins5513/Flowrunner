@@ -1,8 +1,23 @@
 import sharp from 'sharp'
-// @ts-ignore - node-vibrant has inconsistent exports
-const Vibrant = require('node-vibrant')
 import type { Palette } from '../palette'
 import type { CompositionAnalysis, MoodIndicators } from './schema'
+
+type VibrantModule = {
+  from: (source: string) => { getPalette: () => Promise<Record<string, { hsl?: [number, number, number] }>> }
+  Vibrant?: VibrantModule
+  default?: VibrantModule
+}
+
+// node-vibrant exposes different shapes depending on bundling; normalize to a single interface
+let vibrantInstance: VibrantModule | null = null
+
+const getVibrant = async (): Promise<VibrantModule> => {
+  if (vibrantInstance) return vibrantInstance
+
+  const vibrantImport = (await import('node-vibrant/node')) as unknown as VibrantModule
+  vibrantInstance = vibrantImport.Vibrant ?? vibrantImport.default ?? vibrantImport
+  return vibrantInstance
+}
 
 /**
  * Calculate average color saturation from palette
@@ -10,7 +25,8 @@ import type { CompositionAnalysis, MoodIndicators } from './schema'
  */
 export const analyzeColorSaturation = async (url: string): Promise<number> => {
   try {
-    const palette = await Vibrant.from(url).getPalette()
+    const vibrant = await getVibrant()
+    const palette = await vibrant.from(url).getPalette()
     
     // Extract saturation values from vibrant swatches
     const saturations: number[] = []

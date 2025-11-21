@@ -1,8 +1,8 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest'
 import { extractPalette, validateContrast, paletteSchema } from '../../../lib/images/palette'
 
-vi.mock('node-vibrant', () => ({
-  default: {
+vi.mock('node-vibrant/node', () => {
+  const mockModule = {
     from: vi.fn(() => ({
       getPalette: vi.fn(() =>
         Promise.resolve({
@@ -15,8 +15,10 @@ vi.mock('node-vibrant', () => ({
         })
       ),
     })),
-  },
-}))
+  }
+
+  return { default: mockModule, Vibrant: mockModule }
+})
 
 describe('Palette Extraction', () => {
   beforeEach(() => {
@@ -33,7 +35,7 @@ describe('Palette Extraction', () => {
   })
 
   it('uses fallback palette on extraction failure', async () => {
-    const Vibrant = await import('node-vibrant')
+    const Vibrant = await import('node-vibrant/node')
     vi.mocked(Vibrant.default.from).mockImplementationOnce(() => {
       throw new Error('Extraction failed')
     })
@@ -62,7 +64,7 @@ describe('Palette Extraction', () => {
   })
 
   it('adjusts text color for accessibility when contrast is low', async () => {
-    const Vibrant = await import('node-vibrant')
+    const Vibrant = await import('node-vibrant/node')
     vi.mocked(Vibrant.default.from).mockImplementationOnce(() => ({
       getPalette: vi.fn(() =>
         Promise.resolve({

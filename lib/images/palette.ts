@@ -1,6 +1,21 @@
-// @ts-ignore - node-vibrant has inconsistent exports
-const Vibrant = require('node-vibrant')
 import { z } from 'zod'
+
+type VibrantModule = {
+  from: (source: string) => { getPalette: () => Promise<Record<string, { hex?: string }>> }
+  Vibrant?: VibrantModule
+  default?: VibrantModule
+}
+
+// node-vibrant exposes different shapes depending on bundling; normalize to a single interface
+let vibrantInstance: VibrantModule | null = null
+
+const getVibrant = async (): Promise<VibrantModule> => {
+  if (vibrantInstance) return vibrantInstance
+
+  const vibrantImport = (await import('node-vibrant/node')) as unknown as VibrantModule
+  vibrantInstance = vibrantImport.Vibrant ?? vibrantImport.default ?? vibrantImport
+  return vibrantInstance
+}
 
 export const paletteSchema = z.object({
   primary: z.string().regex(/^#[0-9A-Fa-f]{6}$/),
@@ -67,7 +82,8 @@ export const extractPalette = async (options: ExtractPaletteOptions): Promise<Pa
   const { url, fallback = generateFallbackPalette(), minContrast = 4.5 } = options
 
   try {
-    const palette = await Vibrant.from(url).getPalette()
+    const vibrant = await getVibrant()
+    const palette = await vibrant.from(url).getPalette()
 
     const primary = palette.Vibrant?.hex ?? palette.Muted?.hex ?? fallback.primary
     const secondary = palette.LightVibrant?.hex ?? palette.LightMuted?.hex ?? fallback.secondary

@@ -471,22 +471,22 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ## Phase 8: DSL Generator
 
 ### 8.1 Creative Text Generation
-- [ ] Set up LLM for creative text generation
-- [ ] Create text generation service
-- [ ] Generate titles based on context
-- [ ] Generate subtitles
-- [ ] Generate button labels
-- [ ] Generate form labels
-- [ ] Generate body text
-- [ ] Ensure text matches vibe and tone
-- [ ] Add text length constraints
-- [ ] Implement text caching for similar contexts
+- [x] Set up LLM for creative text generation
+- [x] Create text generation service
+- [x] Generate titles based on context
+- [x] Generate subtitles
+- [x] Generate button labels
+- [x] Generate form labels
+- [x] Generate body text
+- [x] Ensure text matches vibe and tone
+- [x] Add text length constraints
+- [x] Implement text caching for similar contexts
 
 **Technical Notes:**
 - Use same LLM provider as prompt interpreter
 - Text should match screen context and flow theme
 - Support multiple languages (future)
-- [ ] Testing: snapshot DSL text fields for deterministic fixtures; enforce length constraints in unit tests.
+- [x] Testing: snapshot DSL text fields for deterministic fixtures; enforce length constraints in unit tests.
 
 ---
 
