@@ -16,6 +16,7 @@ export interface SaveImageData {
   domain?: string | null
   userId?: string | null
   patternCompatibilityTags?: string[] | null
+  tags?: string[] | null
 }
 
 /**
@@ -57,6 +58,7 @@ export const saveImageDataSchema = z.object({
   domain: z.string().nullable().optional(),
   userId: z.string().nullable().optional(),
   patternCompatibilityTags: z.array(z.string()).nullable().optional(),
+  tags: z.array(z.string()).nullable().optional(),
 })
 
 /**
@@ -75,5 +77,9 @@ export interface ImageQueryFilters {
   domain?: string
   vibe?: Vibe
   style?: string
+  isFavorite?: boolean
+  tags?: string[]
+  dateFrom?: Date
+  dateTo?: Date
 }
 

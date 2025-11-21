@@ -340,33 +340,33 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ## Phase 6: Reusable Image Library
 
 ### 6.1 Library Database Schema
-- [ ] Extend Image model with library-specific fields
-  - [ ] isFavorite (boolean)
-  - [ ] tags (array)
-  - [ ] usageCount (int)
-- [ ] Create LibraryCollection entity (optional)
-  - [ ] id, userId, name
-  - [ ] imageIds (relation)
-- [ ] Add indexes for search performance
-- [ ] Run Prisma migrations
+- [x] Extend Image model with library-specific fields
+  - [x] isFavorite (boolean)
+  - [x] tags (array)
+  - [x] usageCount (int)
+- [x] Create LibraryCollection entity (optional)
+  - [x] id, userId, name
+  - [x] imageIds (relation)
+- [x] Add indexes for search performance
+- [x] Run Prisma migrations
 
 ---
 
 ### 6.2 Library Search & Filter
-- [ ] Create search service
-  - [ ] Search by prompt text
-  - [ ] Search by tags
-  - [ ] Search by domain
-- [ ] Create filter service
-  - [ ] Filter by palette
-  - [ ] Filter by vibe
-  - [ ] Filter by style
-  - [ ] Filter by pattern compatibility
-  - [ ] Filter by date range
-- [ ] Implement pagination
-- [ ] Add sorting options (newest, most used, etc.)
-- [ ] Create search/filter API endpoints
-- [ ] Optimize database queries with proper indexes
+- [x] Create search service
+  - [x] Search by prompt text
+  - [x] Search by tags
+  - [x] Search by domain
+- [x] Create filter service
+  - [x] Filter by palette
+  - [x] Filter by vibe
+  - [x] Filter by style
+  - [x] Filter by pattern compatibility
+  - [x] Filter by date range
+- [x] Implement pagination
+- [x] Add sorting options (newest, most used, etc.)
+- [x] Create search/filter API endpoints
+- [x] Optimize database queries with proper indexes
 
 **Technical Notes:**
 - Use full-text search for prompt/tag searching
@@ -375,17 +375,17 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ---
 
 ### 6.3 Library UI Components
-- [ ] Create library browser component
-- [ ] Create image grid/list view
-- [ ] Create filter sidebar component
-- [ ] Create search bar component
-- [ ] Create image detail modal
-- [ ] Create image selection interface
-- [ ] Add favorite/unfavorite functionality
-- [ ] Add image tagging UI
-- [ ] Implement infinite scroll or pagination
-- [ ] Add image preview on hover
-- [ ] Create upload drag-and-drop interface
+- [x] Create library browser component
+- [x] Create image grid/list view
+- [x] Create filter sidebar component
+- [x] Create search bar component
+- [x] Create image detail modal
+- [ ] Create image selection interface (partially done in ImageLibraryPicker)
+- [x] Add favorite/unfavorite functionality
+- [x] Add image tagging UI
+- [x] Implement infinite scroll or pagination
+- [x] Add image preview on hover
+- [ ] Create upload drag-and-drop interface (deferred - requires image storage setup)
 
 **Technical Notes:**
 - Use virtual scrolling for large image lists
@@ -491,19 +491,19 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ---
 
 ### 8.2 DSL Assembly
-- [ ] Create DSL assembler service
-- [ ] Assemble hero_image from image metadata
-- [ ] Assemble supporting_images array
-- [ ] Assemble palette from extracted colors
-- [ ] Add vibe from inference
-- [ ] Add pattern_family and pattern_variant
-- [ ] Assemble components array with generated text
-- [ ] Build navigation object
-- [ ] Add animations (default or inferred)
-- [ ] Assemble metadata object
-- [ ] Create complete ScreenDSL object
-- [ ] Validate DSL against Zod schema
-- [ ] Handle validation errors gracefully
+- [x] Create DSL assembler service
+- [x] Assemble hero_image from image metadata
+- [x] Assemble supporting_images array
+- [x] Assemble palette from extracted colors
+- [x] Add vibe from inference
+- [x] Add pattern_family and pattern_variant
+- [x] Assemble components array with generated text
+- [x] Build navigation object
+- [x] Add animations (default or inferred)
+- [x] Assemble metadata object
+- [x] Create complete ScreenDSL object
+- [x] Validate DSL against Zod schema
+- [x] Handle validation errors gracefully
 
 **Technical Notes:**
 - DSL assembly must follow deterministic pipeline
@@ -785,7 +785,7 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 - [x] Implement click-to-generate flow
 - [x] Create "Generate Next Screen" action menu
 - [x] Add context menu on component click
-- [ ] Handle multiple navigation options
+- [x] Handle multiple navigation options
 
 **Technical Notes:**
 - Click detection must be accurate
@@ -795,19 +795,20 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ---
 
 ### 12.2 Next Screen Generation
-- [ ] Create next screen generator service
-- [ ] Extract context from current screen
-- [ ] Infer next screen intent from click
-- [ ] Allow user prompt override
-- [ ] Generate next screen using pipeline
-- [ ] Link new screen to navigation
-- [ ] Update flow navigation graph
-- [ ] Add screen to flow sequence
-- [ ] Show generation progress
+- [x] Create next screen generator service
+- [x] Extract context from current screen
+- [x] Infer next screen intent from click
+- [x] Allow user prompt override
+- [x] Generate next screen using pipeline
+- [x] Link new screen to navigation
+- [x] Update flow navigation graph
+- [x] Add screen to flow sequence
+- [x] Show generation progress
 
 **Technical Notes:**
 - Context inference improves UX
 - Allow manual prompt for control
+- [x] Testing: Unit tests for generator service, integration tests for InteractiveScreen, E2E tests for flow generation workflow
 
 ---
 
@@ -915,19 +916,19 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ---
 
 ### 14.2 Gallery UI
-- [ ] Create gallery page/component
-- [ ] Implement gallery grid layout
-- [ ] Add gallery filtering
-  - [ ] By domain
-  - [ ] By style
-  - [ ] By popularity
-  - [ ] By date
-- [ ] Add gallery search
-- [ ] Create flow detail view
-- [ ] Add flow preview
-- [ ] Implement pagination
-- [ ] Add sorting options
-- [ ] Create gallery categories
+- [x] Create gallery page/component
+- [x] Implement gallery grid layout
+- [x] Add gallery filtering
+  - [x] By domain
+  - [x] By style
+  - [ ] By popularity (requires popularity metric - future enhancement)
+  - [x] By date
+- [x] Add gallery search
+- [x] Create flow detail view
+- [x] Add flow preview
+- [x] Implement pagination
+- [x] Add sorting options
+- [x] Create gallery categories
 
 **Technical Notes:**
 - Gallery should be discoverable and browsable

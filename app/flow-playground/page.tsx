@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useState } from 'react'
 import { InteractiveScreen } from '@/components/flow/InteractiveScreen'
+import type { ScreenOption } from '@/components/flow/ScreenPickerModal'
 import {
   type Component,
   type HeroImage,
@@ -11,6 +12,8 @@ import {
   type Vibe,
   type Palette,
 } from '@/lib/dsl/types'
+import { type NextScreenTriggerContext } from '@/lib/flows/types'
+import { generateNextScreen } from '@/lib/flows/next-screen-generator'
 
 const PATTERN_SEQUENCE: PatternFamily[] = [
   'ONB_HERO_TOP',
@@ -190,6 +193,70 @@ export default function FlowPlaygroundPage() {
     [prompt]
   )
 
+  const handleGenerateNext = useCallback(
+    async (context: NextScreenTriggerContext) => {
+      try {
+        const result = await generateNextScreen(context, {
+          onProgress: (stage, progress) => {
+            console.log(`Generation: ${stage} (${progress}%)`)
+          },
+        })
+        // Add generated screen to local state
+        setScreens((current) => {
+          const screenIndex = current.findIndex(
+            (s) => s.metadata?.step === (context.screen.metadata as { step?: number })?.step,
+          )
+          if (screenIndex < 0) return [...current, result.screenDSL]
+          return [...current.slice(0, screenIndex + 1), result.screenDSL]
+        })
+      } catch (error) {
+        console.error('Failed to generate next screen:', error)
+        // Fallback to simple generation
+        handleButtonNext(
+          screens.findIndex(
+            (s) => s.metadata?.step === (context.screen.metadata as { step?: number })?.step,
+          ),
+        )
+      }
+    },
+    [handleButtonNext, screens],
+  )
+
+  const handleLinkExisting = useCallback(
+    async (context: NextScreenTriggerContext) => {
+      if (!context.targetScreenId) return
+
+      // Update the source screen's navigation to point to the target
+      setScreens((current) => {
+        const sourceIndex = current.findIndex(
+          (s) => s.metadata?.step === (context.screen.metadata as { step?: number })?.step,
+        )
+        if (sourceIndex < 0) return current
+
+        const updated = [...current]
+        const targetIndex = parseInt(context.targetScreenId?.split('-').pop() || '0', 10) - 1
+        updated[sourceIndex] = {
+          ...updated[sourceIndex],
+          navigation: {
+            type: 'internal',
+            target: context.targetScreenId,
+            screenId: context.targetScreenId,
+          },
+        }
+        return updated
+      })
+    },
+    [],
+  )
+
+  const availableScreens: ScreenOption[] = useMemo(() => {
+    return screens.map((screen, index) => ({
+      id: `screen-${index + 1}`,
+      name: screen.components[0]?.content || `Screen ${index + 1}`,
+      description: `Pattern: ${screen.pattern_family}`,
+    }))
+  }, [screens])
+
   const canGenerate = useMemo(() => prompt.trim().length > 0, [prompt])
 
   return (
@@ -269,8 +336,11 @@ export default function FlowPlaygroundPage() {
             </div>
             <InteractiveScreen
               screen={screen}
+              screenId={`screen-${index + 1}`}
               screenIndex={index}
-              onGenerateNext={() => handleButtonNext(index)}
+              availableScreens={availableScreens}
+              onGenerateNext={handleGenerateNext}
+              onLinkExisting={handleLinkExisting}
             />
           </article>
         ))}

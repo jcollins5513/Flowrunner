@@ -1,7 +1,7 @@
 // Flow Engine Types
 // Types for flow management, screen sequences, and navigation graphs
 
-import type { ScreenDSL, FlowDSL, Palette, Vibe, Component } from '../dsl/types'
+import type { ScreenDSL, FlowDSL, Palette, Vibe, Component, PatternFamily, PatternVariant } from '../dsl/types'
 
 /**
  * Flow metadata and configuration
@@ -160,5 +160,45 @@ export interface NextScreenTriggerContext {
   componentType: Component['type']
   slotName?: string
   trigger: 'click'
+  targetScreenId?: string // For linking to existing screens
+}
+
+/**
+ * Context extracted from current screen for next screen generation
+ */
+export interface ScreenContext {
+  palette: Palette
+  vibe: Vibe
+  patternFamily: PatternFamily
+  patternVariant: PatternVariant
+  components: Component[]
+  flowMetadata?: {
+    domain?: string
+    theme?: string
+    style?: string
+  }
+}
+
+/**
+ * Options for generating next screen
+ */
+export interface GenerateNextScreenOptions {
+  flowId?: string
+  userPrompt?: string // Override inferred prompt
+  onProgress?: (stage: string, progress: number) => void
+  imageOrchestrator?: any // ImageOrchestrator instance
+  flowEngine?: any // FlowEngine instance
+}
+
+/**
+ * Result of next screen generation
+ */
+export interface GenerateNextScreenResult {
+  screenId: string
+  screenDSL: ScreenDSL
+  navigationPath?: {
+    fromScreenId: string
+    toScreenId: string
+  }
 }
 

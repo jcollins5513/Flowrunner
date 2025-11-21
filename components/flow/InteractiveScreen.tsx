@@ -7,6 +7,10 @@ import { type NextScreenTriggerContext } from '@/lib/flows/types'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { GitBranch, LinkIcon, Sparkles, X } from 'lucide-react'
+import { ScreenPickerModal, type ScreenOption } from './ScreenPickerModal'
+import { NavigationConfigModal } from '@/components/editing/NavigationConfigModal'
+import { generateNextScreen } from '@/lib/flows/next-screen-generator'
+import type { GenerateNextScreenResult } from '@/lib/flows/types'
 
 const CLICKABLE_COMPONENT_TYPES: Component['type'][] = ['button']
 
@@ -33,6 +37,7 @@ export interface InteractiveScreenProps {
   className?: string
   disabled?: boolean
   clickableComponentTypes?: Component['type'][]
+  availableScreens?: ScreenOption[]
   onGenerateNext?: (context: NextScreenTriggerContext) => Promise<void> | void
   onLinkExisting?: (context: NextScreenTriggerContext) => Promise<void> | void
 }
@@ -44,12 +49,15 @@ export function InteractiveScreen({
   className,
   disabled = false,
   clickableComponentTypes = CLICKABLE_COMPONENT_TYPES,
+  availableScreens = [],
   onGenerateNext,
   onLinkExisting,
 }: InteractiveScreenProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [menuState, setMenuState] = useState<ActionMenuState | null>(null)
   const [isGenerating, setIsGenerating] = useState(false)
+  const [showScreenPicker, setShowScreenPicker] = useState(false)
+  const [showNavConfig, setShowNavConfig] = useState(false)
 
   const interactiveTypes = useMemo(() => {
     return Array.from(new Set(clickableComponentTypes))
@@ -110,37 +118,95 @@ export function InteractiveScreen({
   )
 
   const handleGenerateNext = useCallback(async () => {
-    if (!menuState || !onGenerateNext || isGenerating) {
+    if (!menuState || isGenerating) {
       return
     }
     setIsGenerating(true)
     try {
-      await onGenerateNext({
+      const context = {
+        sourceScreenId: screenId ?? menuState.sourceScreenId,
+        screen,
+        component: menuState.component,
+        componentType: menuState.componentType,
+        slotName: menuState.slotName,
+        trigger: 'click' as const,
+      }
+
+      // If onGenerateNext is provided, use it (for custom handling)
+      if (onGenerateNext) {
+        await onGenerateNext(context)
+      } else {
+        // Otherwise, use the generator service
+        const result = await generateNextScreen(context, {
+          onProgress: (stage, progress) => {
+            // Could update UI with progress here
+            console.log(`Generation progress: ${stage} (${progress}%)`)
+          },
+        })
+        // Result is available but not automatically added to flow
+        // Caller should handle adding to flow if needed
+        console.log('Generated screen:', result)
+      }
+      closeMenu()
+    } catch (error) {
+      console.error('Failed to generate next screen:', error)
+      // Could show error toast here
+    } finally {
+      setIsGenerating(false)
+    }
+  }, [closeMenu, isGenerating, menuState, onGenerateNext, screen, screenId])
+
+  const handleLinkExistingClick = useCallback(() => {
+    if (!menuState || !onLinkExisting) return
+    setShowScreenPicker(true)
+  }, [menuState, onLinkExisting])
+
+  const handleScreenSelected = useCallback(
+    async (targetScreenId: string) => {
+      if (!menuState || !onLinkExisting) return
+      await onLinkExisting({
         sourceScreenId: screenId ?? menuState.sourceScreenId,
         screen,
         component: menuState.component,
         componentType: menuState.componentType,
         slotName: menuState.slotName,
         trigger: 'click',
+        targetScreenId,
       })
       closeMenu()
-    } finally {
-      setIsGenerating(false)
-    }
-  }, [closeMenu, isGenerating, menuState, onGenerateNext, screen, screenId])
+    },
+    [closeMenu, menuState, onLinkExisting, screen, screenId],
+  )
 
-  const handleLinkExisting = useCallback(async () => {
-    if (!menuState || !onLinkExisting) return
-    await onLinkExisting({
-      sourceScreenId: screenId ?? menuState.sourceScreenId,
-      screen,
-      component: menuState.component,
-      componentType: menuState.componentType,
-      slotName: menuState.slotName,
-      trigger: 'click',
-    })
-    closeMenu()
-  }, [closeMenu, menuState, onLinkExisting, screen, screenId])
+  const handleConfigureNavigation = useCallback(() => {
+    setShowNavConfig(true)
+  }, [])
+
+  const handleNavigationSet = useCallback(
+    (targetScreenId: string) => {
+      if (onLinkExisting && menuState) {
+        onLinkExisting({
+          sourceScreenId: screenId ?? menuState.sourceScreenId,
+          screen,
+          component: menuState.component,
+          componentType: menuState.componentType,
+          slotName: menuState.slotName,
+          trigger: 'click',
+          targetScreenId,
+        })
+      }
+      closeMenu()
+    },
+    [closeMenu, menuState, onLinkExisting, screen, screenId],
+  )
+
+  // Find component index from menuState
+  const componentIndex = useMemo(() => {
+    if (!menuState) return -1
+    return screen.components.findIndex(
+      (c) => c.type === menuState.componentType && c.content === menuState.component.content,
+    )
+  }, [menuState, screen.components])
 
   const menuPosition = useMemo(() => {
     if (!menuState) return null
@@ -221,7 +287,7 @@ export function InteractiveScreen({
                   variant="outline"
                   className="w-full justify-center gap-2"
                   disabled={!onLinkExisting}
-                  onClick={handleLinkExisting}
+                  onClick={handleLinkExistingClick}
                 >
                   <GitBranch className="h-4 w-4" />
                   Link to existing screen
@@ -230,7 +296,7 @@ export function InteractiveScreen({
                   type="button"
                   variant="ghost"
                   className="w-full justify-center gap-2 text-slate-500 hover:text-slate-900"
-                  onClick={closeMenu}
+                  onClick={handleConfigureNavigation}
                 >
                   <LinkIcon className="h-4 w-4" />
                   Configure navigation
@@ -239,6 +305,26 @@ export function InteractiveScreen({
             </div>
           )}
         </>
+      )}
+
+      <ScreenPickerModal
+        open={showScreenPicker}
+        onOpenChange={setShowScreenPicker}
+        screens={availableScreens}
+        sourceScreenId={screenId}
+        onSelect={handleScreenSelected}
+      />
+
+      {showNavConfig && screenId && componentIndex >= 0 && (
+        <NavigationConfigModal
+          open={showNavConfig}
+          onOpenChange={setShowNavConfig}
+          dsl={screen}
+          screenId={screenId}
+          componentIndex={componentIndex}
+          availableScreens={availableScreens.map((s) => ({ id: s.id, name: s.name || s.id }))}
+          onNavigationSet={handleNavigationSet}
+        />
       )}
     </div>
   )

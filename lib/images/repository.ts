@@ -23,6 +23,9 @@ export class ImageRepository {
       ? JSON.stringify(validated.patternCompatibilityTags)
       : null
 
+    // Serialize tags to JSON array string
+    const tags = validated.tags ? JSON.stringify(validated.tags) : null
+
     // Save to database
     const image = await prisma.image.create({
       data: {
@@ -36,6 +39,7 @@ export class ImageRepository {
         domain: validated.domain ?? null,
         userId: validated.userId ?? null,
         patternCompatibilityTags,
+        tags,
         isPublic: false,
         isFavorite: false,
         usageCount: 0,
@@ -129,6 +133,54 @@ export class ImageRepository {
       console.warn('Failed to deserialize pattern tags:', error)
       return null
     }
+  }
+
+  /**
+   * Deserialize user tags from JSON array string
+   */
+  static deserializeTags(tagsJson: string | null): string[] | null {
+    if (!tagsJson) return null
+    try {
+      return JSON.parse(tagsJson)
+    } catch (error) {
+      console.warn('Failed to deserialize tags:', error)
+      return null
+    }
+  }
+
+  /**
+   * Update image favorite status
+   */
+  async updateFavorite(id: string, isFavorite: boolean): Promise<Image> {
+    return prisma.image.update({
+      where: { id },
+      data: { isFavorite },
+    })
+  }
+
+  /**
+   * Update image tags
+   */
+  async updateTags(id: string, tags: string[]): Promise<Image> {
+    const tagsJson = tags.length > 0 ? JSON.stringify(tags) : null
+    return prisma.image.update({
+      where: { id },
+      data: { tags: tagsJson },
+    })
+  }
+
+  /**
+   * Increment usage count
+   */
+  async incrementUsageCount(id: string): Promise<Image> {
+    return prisma.image.update({
+      where: { id },
+      data: {
+        usageCount: {
+          increment: 1,
+        },
+      },
+    })
   }
 }
 
