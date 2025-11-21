@@ -1,0 +1,61 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]: Pattern family
+        - combobox [ref=e6]:
+          - option "ONB HERO TOP" [selected]
+          - option "FEAT IMAGE TEXT RIGHT"
+          - option "FEAT IMAGE TEXT LEFT"
+          - option "CTA SPLIT SCREEN"
+          - option "HERO CENTER TEXT"
+          - option "NEWSLETTER SIGNUP"
+          - option "PRICING TABLE"
+          - option "TESTIMONIAL CARD GRID"
+          - option "DEMO DEVICE FULLBLEED"
+          - option "ACT FORM MINIMAL"
+          - option "DASHBOARD OVERVIEW"
+          - option "PRODUCT DETAIL"
+      - generic [ref=e7]:
+        - generic [ref=e8]: Variant
+        - combobox [ref=e9]:
+          - option "1"
+          - option "2"
+          - option "3" [selected]
+          - option "4"
+          - option "5"
+      - generic [ref=e10]:
+        - generic [ref=e11]: Palette
+        - combobox [ref=e12]:
+          - option "Palette 1" [selected]
+          - option "Palette 2"
+          - option "Palette 3"
+          - option "Palette 4"
+      - generic [ref=e13]:
+        - generic [ref=e14]: Vibe
+        - combobox [ref=e15]:
+          - option "modern" [selected]
+          - option "professional"
+          - option "bold"
+          - option "minimal"
+          - option "creative"
+      - generic [ref=e16]:
+        - generic [ref=e17]: View Mode
+        - button "Grid View" [ref=e18] [cursor=pointer]
+    - generic [ref=e19]:
+      - button "← Prev Family" [disabled] [ref=e20]
+      - button "Next Family →" [ref=e21] [cursor=pointer]
+      - generic [ref=e23]: 1 / 12 families · Variant 3 / 5
+      - button "← Prev Variant" [ref=e24] [cursor=pointer]
+      - button "Next Variant →" [ref=e25] [cursor=pointer]
+    - generic [ref=e29]:
+      - img "Hero image" [ref=e33]
+      - heading "FlowRunner orchestrates rich, image-led screens" [level=1] [ref=e35]
+      - heading "AI-generated hero art drives the entire visual identity." [level=2] [ref=e37]
+      - button "Generate next screen" [ref=e39] [cursor=pointer]
+      - paragraph [ref=e41]: Compose multi-screen flows with deterministic patterns and reusable image systems.
+  - alert [ref=e42]
+```
