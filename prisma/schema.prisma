@@ -17,9 +17,10 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  flows      Flow[]
-  images     Image[]
+  flows       Flow[]
+  images      Image[]
   collections LibraryCollection[]
+  revisions   Revision[]
 }
 
 model Flow {
@@ -27,14 +28,14 @@ model Flow {
   userId      String?
   name        String
   description String?
-  domain      String?  // E-commerce, SaaS, Mobile App, etc.
+  domain      String? // E-commerce, SaaS, Mobile App, etc.
   theme       String?
   style       String?
   isPublic    Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  user      User?     @relation(fields: [userId], references: [id])
+  user      User?      @relation(fields: [userId], references: [id])
   screens   Screen[]
   revisions Revision[]
 
@@ -43,20 +44,20 @@ model Flow {
 }
 
 model Screen {
-  id            String   @id @default(cuid())
-  flowId        String
-  revisionId    String?
-  heroImageId   String?
-  palette       String?  // JSON string
-  vibe          String?
-  patternFamily String?
+  id             String   @id @default(cuid())
+  flowId         String
+  revisionId     String?
+  heroImageId    String?
+  palette        String? // JSON string
+  vibe           String?
+  patternFamily  String?
   patternVariant Int?
-  components    String?  // JSON string
-  navigation    String?  // JSON string
-  animations    String?  // JSON string
-  metadata      String?  // JSON string
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  components     String? // JSON string
+  navigation     String? // JSON string
+  animations     String? // JSON string
+  metadata       String? // JSON string
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
   flow      Flow       @relation(fields: [flowId], references: [id], onDelete: Cascade)
   heroImage Image?     @relation("HeroImage", fields: [heroImageId], references: [id])
@@ -67,30 +68,30 @@ model Screen {
 }
 
 model Image {
-  id                    String   @id @default(cuid())
-  userId                String?
-  url                   String
-  prompt                String?
-  seed                  Int?
-  aspectRatio           String?
-  style                 String?  // 3D, clay, vector, neon, editorial, etc.
-  extractedPalette      String?  // JSON string
-  vibe                  String?
+  id                       String   @id @default(cuid())
+  userId                   String?
+  url                      String
+  prompt                   String?
+  seed                     Int?
+  aspectRatio              String?
+  style                    String? // 3D, clay, vector, neon, editorial, etc.
+  extractedPalette         String? // JSON string
+  vibe                     String?
   patternCompatibilityTags String? // JSON array string
-  tags                  String?  // JSON array string for user-defined tags
-  domain                String?
-  isPublic              Boolean  @default(false)
-  isFavorite            Boolean  @default(false)
-  usageCount            Int      @default(0)
-  parentImageId         String?  // For edited versions
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  tags                     String? // JSON array string for user-defined tags
+  domain                   String?
+  isPublic                 Boolean  @default(false)
+  isFavorite               Boolean  @default(false)
+  usageCount               Int      @default(0)
+  parentImageId            String? // For edited versions
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
 
-  user         User?     @relation(fields: [userId], references: [id])
-  parentImage  Image?    @relation("ImageVersions", fields: [parentImageId], references: [id])
-  childImages  Image[]   @relation("ImageVersions")
-  heroScreens  Screen[]  @relation("HeroImage")
-  collections  LibraryCollectionImage[]
+  user        User?                    @relation(fields: [userId], references: [id])
+  parentImage Image?                   @relation("ImageVersions", fields: [parentImageId], references: [id])
+  childImages Image[]                  @relation("ImageVersions")
+  heroScreens Screen[]                 @relation("HeroImage")
+  collections LibraryCollectionImage[]
 
   @@index([userId])
   @@index([isPublic])
@@ -102,19 +103,34 @@ model Image {
 }
 
 model Revision {
-  id            String   @id @default(cuid())
-  flowId        String
-  screenId      String?
-  dslSnapshot   String   // JSON string
-  version       Int
-  changeType    String?  // generation, edit, etc.
-  createdAt     DateTime @default(now())
+  id               String   @id @default(cuid())
+  flowId           String
+  screenId         String?
+  userId           String? // User who created this revision
+  dslSnapshot      String // JSON string - complete DSL snapshot
+  version          Int // Sequential version number per flow
+  changeType       String? // generation, edit, restore, merge, etc.
+  description      String? // Optional description/notes about the change
+  assetReferences  String? // JSON string - { heroImageId, supportingImageIds: [] }
+  patternMapping   String? // JSON string - { family, variant }
+  screenState      String? // JSON string - { palette, vibe, etc. }
+  parentRevisionId String? // For revision branching
+  isAutoGenerated  Boolean  @default(false) // True for auto-generated revisions
+  createdAt        DateTime @default(now())
 
-  flow   Flow    @relation(fields: [flowId], references: [id], onDelete: Cascade)
-  screen Screen? @relation(fields: [screenId], references: [id], onDelete: Cascade)
+  flow           Flow       @relation(fields: [flowId], references: [id], onDelete: Cascade)
+  screen         Screen?    @relation(fields: [screenId], references: [id], onDelete: Cascade)
+  user           User?      @relation(fields: [userId], references: [id])
+  parentRevision Revision?  @relation("RevisionBranches", fields: [parentRevisionId], references: [id])
+  childRevisions Revision[] @relation("RevisionBranches")
 
   @@index([flowId])
   @@index([screenId])
+  @@index([userId])
+  @@index([version])
+  @@index([changeType])
+  @@index([createdAt])
+  @@index([parentRevisionId])
 }
 
 model LibraryCollection {
@@ -125,7 +141,7 @@ model LibraryCollection {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  user   User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
   images LibraryCollectionImage[]
 
   @@index([userId])
@@ -146,4 +162,3 @@ model LibraryCollectionImage {
   @@index([collectionId])
   @@index([imageId])
 }
-

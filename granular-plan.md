@@ -813,55 +813,72 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 ---
 
 ### 12.3 Navigation Diagram
-- [ ] Create flow visualization component
-- [ ] Render screen nodes
-- [ ] Render navigation arrows/links
-- [ ] Implement interactive diagram
-- [ ] Add screen selection in diagram
-- [ ] Allow navigation editing in diagram
-- [ ] Add zoom/pan controls
-- [ ] Show screen thumbnails
-- [ ] Highlight active screen
-- [ ] Support branching flows
+- [x] Create flow visualization component
+- [x] Render screen nodes
+- [x] Render navigation arrows/links
+- [x] Implement interactive diagram
+- [x] Add screen selection in diagram
+- [x] Allow navigation editing in diagram
+- [x] Add zoom/pan controls
+- [x] Show screen thumbnails
+- [x] Highlight active screen
+- [x] Support branching flows
 
 **Technical Notes:**
 - Use a graph visualization library (D3, React Flow)
 - Diagram should be interactive and informative
+- ✅ Implemented with React Flow library
+- ✅ Custom ScreenNode component with thumbnails
+- ✅ Integrated into flow detail page with tab switcher
+- ✅ Full navigation editing support (add/remove paths)
+- ✅ Tests written and passing (14 tests)
 
 ---
 
 ### 12.4 Flow Branching
-- [ ] Support multiple navigation paths
-- [ ] Create branch points in flow
-- [ ] Handle conditional navigation
-- [ ] Add branch labels/descriptions
-- [ ] Visualize branches in diagram
-- [ ] Allow branch deletion
-- [ ] Implement branch merging
-- [ ] Add branch testing/preview
+- [x] Support multiple navigation paths
+- [x] Create branch points in flow
+- [ ] Handle conditional navigation (runtime evaluation - deferred for future enhancement)
+- [x] Add branch labels/descriptions
+- [x] Visualize branches in diagram (with labels and conditions on edges)
+- [x] Allow branch deletion
+- [x] Implement branch merging
+- [x] Add branch management UI (BranchEditor component)
+- [x] Branch management API endpoints (GET, POST, PATCH, DELETE, MERGE)
+- [x] Comprehensive test suite for branch utilities
 
 **Technical Notes:**
 - Branching enables complex user flows
 - Support both linear and branched flows
+- Branch labels and conditions are stored and displayed in diagram
+- Conditional navigation runtime evaluation can be added in future phase
 
 ---
 
 ## Phase 13: Revision System
 
 ### 13.1 Revision Tracking
-- [ ] Extend Revision model with all required fields
-- [ ] Implement revision creation on generation
-- [ ] Store complete DSL snapshot
-- [ ] Store screen state
-- [ ] Store asset references
-- [ ] Store pattern mappings
-- [ ] Store palette & vibe data
-- [ ] Add revision metadata (user, timestamp, change type)
-- [ ] Implement revision numbering
+- [x] Extend Revision model with all required fields
+- [x] Implement revision creation on generation
+- [x] Store complete DSL snapshot
+- [x] Store screen state
+- [x] Store asset references
+- [x] Store pattern mappings
+- [x] Store palette & vibe data
+- [x] Add revision metadata (user, timestamp, change type)
+- [x] Implement revision numbering
+- [x] Create comprehensive revision service (revision-service.ts)
+- [x] Enhance createRevisionWithValidation with full metadata
+- [x] Auto-create revisions on screen generation
+- [x] Support revision branching (parentRevisionId)
+- [x] Add revision restoration functionality
+- [x] Add revision diff/comparison functionality
 
 **Technical Notes:**
 - Every generation creates a new revision
 - Revisions enable undo/redo and history
+- Revisions store complete metadata: assets, patterns, screen state
+- Revision service provides comprehensive revision management
 
 ---
 
@@ -1275,6 +1292,104 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 - Integrate external component libraries
 - Build component browser UI
 - Preserve source code in exports
+
+---
+
+## Phase A: Ship Preparation (Make App Testable & Shippable)
+
+**Goal:** Connect all existing features into a working, testable application that can be shipped and demonstrated.
+
+### A.1 Core Navigation & Landing
+- [ ] Create home page with navigation links
+- [ ] Add navigation bar/header component
+- [ ] Create routes: Home → Create Flow → Gallery → Library → Playground
+- [ ] Add basic styling and layout consistency
+
+### A.2 Flow Creation UI
+- [ ] Create "New Flow" page (`/flows/new`)
+- [ ] Add form: flow name, description, prompt, domain
+- [ ] Connect to flow creation API
+- [ ] Redirect to flow editor after creation
+
+### A.3 Flow Editor Page
+- [ ] Create flow editor page (`/flows/[flowId]/edit`)
+- [ ] Load existing flow with screens
+- [ ] Integrate InteractiveScreen component
+- [ ] Connect screen generation (use existing generateNextScreen)
+- [ ] Integrate editing components (use existing editing components)
+- [ ] Add save functionality
+- [ ] Show navigation diagram (already exists)
+- [ ] Add tab switcher: Screens | Diagram | Settings
+
+### A.4 Connect Existing Pieces
+- [ ] Wire flow playground to save flows option
+- [ ] Connect gallery page to flow editor
+- [ ] Connect flow detail page to flow editor
+- [ ] Ensure all API endpoints are accessible from UI
+- [ ] Add error handling and loading states
+
+### A.5 Basic Testing Flow
+- [ ] Test: Create flow → Generate screens → Edit screen → View diagram
+- [ ] Test: Load existing flow → Edit → Save
+- [ ] Test: Gallery → Open flow → Edit
+- [ ] Verify all core features are accessible
+
+**Technical Notes:**
+- Focus on connecting existing backend features to UI
+- Use existing components where possible
+- Prioritize functionality over polish
+- Goal is to make everything testable, not perfect
+
+---
+
+## Phase A: Ship Preparation (Make App Testable & Shippable)
+
+**Goal:** Connect all existing features into a working, testable application that can be shipped and demonstrated.
+
+### A.1 Core Navigation & Landing
+- [ ] Create home page with navigation links
+- [ ] Add navigation bar/header component
+- [ ] Create routes: Home → Create Flow → Gallery → Library → Playground
+- [ ] Add basic styling and layout consistency
+
+### A.2 Flow Creation UI
+- [ ] Create "New Flow" page (`/flows/new`)
+- [ ] Add form: flow name, description, prompt, domain
+- [ ] Connect to flow creation API
+- [ ] Redirect to flow editor after creation
+
+### A.3 Flow Editor Page
+- [ ] Create flow editor page (`/flows/[flowId]/edit`)
+- [ ] Load existing flow with screens
+- [ ] Integrate InteractiveScreen component
+- [ ] Connect screen generation (use existing generateNextScreen)
+- [ ] Integrate editing components (use existing editing components)
+- [ ] Add save functionality
+- [ ] Show navigation diagram (already exists)
+- [ ] Add tab switcher: Screens | Diagram | Settings
+
+### A.4 Connect Existing Pieces
+- [ ] Wire flow playground to save flows option
+- [ ] Connect gallery page to flow editor
+- [ ] Connect flow detail page to flow editor
+- [ ] Ensure all API endpoints are accessible from UI
+- [ ] Add error handling and loading states
+
+### A.5 Basic Testing Flow
+- [ ] Test: Create flow → Generate screens → Edit screen → View diagram
+- [ ] Test: Load existing flow → Edit → Save
+- [ ] Test: Gallery → Open flow → Edit
+- [ ] Verify all core features are accessible
+
+**Technical Notes:**
+- Focus on connecting existing backend features to UI
+- Use existing components where possible
+- Prioritize functionality over polish
+- Goal is to make everything testable, not perfect
+
+---
+
+## Phase A: Ship Preparation (Make App Testable & Shippable)
 
 ---
 

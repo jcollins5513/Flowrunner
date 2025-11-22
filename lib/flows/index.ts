@@ -6,4 +6,5 @@ export * from './types'
 export * from './screen-sequence'
 export * from './navigation-graph'
 export * from './theme-consistency'
+export * from './branching'
 

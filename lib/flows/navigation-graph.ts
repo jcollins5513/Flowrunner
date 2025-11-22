@@ -6,7 +6,58 @@ import type { FlowNavigationGraph, NavigationPath, ScreenSequenceEntry } from '.
 import { getScreenSequence } from './screen-sequence'
 
 /**
+ * Normalize navigation JSON to multi-path format
+ * Handles backward compatibility with old single-path format
+ */
+function normalizeNavigation(navJson: string | null): {
+  type: 'internal' | 'external'
+  screenId?: string
+  paths?: Array<{
+    screenId: string
+    trigger?: string
+    condition?: string
+    label?: string
+  }>
+  trigger?: string
+  condition?: string
+  label?: string
+} {
+  if (!navJson) {
+    return { type: 'internal', paths: [] }
+  }
+
+  const nav = JSON.parse(navJson)
+
+  // If it's already in the new format with paths array
+  if (nav.paths && Array.isArray(nav.paths)) {
+    return {
+      type: nav.type || 'internal',
+      paths: nav.paths,
+    }
+  }
+
+  // Legacy format: single screenId path
+  if (nav.screenId) {
+    return {
+      type: nav.type || 'internal',
+      paths: [
+        {
+          screenId: nav.screenId,
+          trigger: nav.trigger || 'button-click',
+          condition: nav.condition,
+          label: nav.label,
+        },
+      ],
+    }
+  }
+
+  // Empty navigation
+  return { type: nav.type || 'internal', paths: [] }
+}
+
+/**
  * Build navigation graph for a flow
+ * Supports both old single-path and new multi-path navigation formats
  */
 export async function buildNavigationGraph(flowId: string): Promise<FlowNavigationGraph> {
   const sequence = await getScreenSequence(flowId)
@@ -20,18 +71,22 @@ export async function buildNavigationGraph(flowId: string): Promise<FlowNavigati
     screenMap.set(entry.screenId, entry)
   }
 
-  // Extract navigation paths
+  // Extract navigation paths (supports multiple paths per screen)
   const navigationPaths: NavigationPath[] = []
 
   for (const screen of screens) {
     if (screen.navigation) {
-      const nav = JSON.parse(screen.navigation as string)
-      if (nav.screenId) {
+      const nav = normalizeNavigation(screen.navigation)
+      const paths = nav.paths || []
+
+      // Extract all paths from this screen
+      for (const path of paths) {
         navigationPaths.push({
           fromScreenId: screen.id,
-          toScreenId: nav.screenId,
-          trigger: nav.trigger || 'button-click',
-          condition: nav.condition,
+          toScreenId: path.screenId,
+          trigger: path.trigger || 'button-click',
+          condition: path.condition,
+          label: path.label,
         })
       }
     }
@@ -50,6 +105,8 @@ export async function buildNavigationGraph(flowId: string): Promise<FlowNavigati
 
 /**
  * Add navigation path between two screens
+ * If paths already exist, adds a new path (does not overwrite)
+ * For replacing, use removeNavigationPath first or use branching utilities
  */
 export async function addNavigationPath(
   flowId: string,
@@ -58,6 +115,7 @@ export async function addNavigationPath(
   options?: {
     trigger?: string
     condition?: string
+    label?: string
   }
 ): Promise<void> {
   // Verify both screens exist in the flow
@@ -77,18 +135,34 @@ export async function addNavigationPath(
     throw new Error(`Target screen not found in flow: ${toScreenId}`)
   }
 
-  // Update navigation
-  const navigation = fromScreen.navigation ? JSON.parse(fromScreen.navigation as string) : { type: 'internal' }
-  navigation.screenId = toScreenId
-  navigation.trigger = options?.trigger || 'button-click'
-  if (options?.condition) {
-    navigation.condition = options.condition
+  // Normalize navigation and add new path
+  const nav = normalizeNavigation(fromScreen.navigation)
+  nav.paths = nav.paths || []
+
+  // Check if path already exists
+  const exists = nav.paths.some(
+    (p) =>
+      p.screenId === toScreenId &&
+      (p.trigger || 'button-click') === (options?.trigger || 'button-click') &&
+      p.condition === options?.condition
+  )
+
+  if (exists) {
+    throw new Error('Navigation path already exists')
   }
+
+  // Add new path
+  nav.paths.push({
+    screenId: toScreenId,
+    trigger: options?.trigger || 'button-click',
+    condition: options?.condition,
+    label: options?.label,
+  })
 
   await prisma.screen.update({
     where: { id: fromScreenId },
     data: {
-      navigation: JSON.stringify(navigation),
+      navigation: JSON.stringify(nav),
     },
   })
 }

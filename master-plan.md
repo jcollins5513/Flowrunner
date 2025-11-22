@@ -264,6 +264,12 @@ Users can:
 
 This allows fully interactive, visual flow creation.
 
+**Status:** 
+- ✅ Phase 12.1: Click-Through Interface (Complete)
+- ✅ Phase 12.2: Next Screen Generation (Complete)
+- ✅ Phase 12.3: Navigation Diagram (Complete - React Flow visualization with interactive diagram, screen thumbnails, navigation editing, branching support)
+- ✅ Phase 12.4: Flow Branching (Complete - Branch management utilities, API endpoints, UI components, branch merging, conditional navigation metadata)
+
 ---
 
 # 12. Community Gallery
@@ -324,17 +330,24 @@ animations{}
 metadata{}
 ✅ Zod validation is mandatory and implemented.
 
-15. Storage + Revision System ✅ (Foundation Complete)
+15. Storage + Revision System ✅ (Complete - Phase 13.1)
 Each generation is stored as a revision.
 
 A revision includes:
-DSL snapshot
-Screens
-Assets
-Metadata
-Pattern mappings
-Palette & vibe data
+- DSL snapshot
+- Screens
+- Assets
+- Metadata
+- Pattern mappings
+- Palette & vibe data
+- User attribution
+- Change type tracking
+- Revision branching
+
 ✅ SQLite + Prisma implemented.
+✅ Comprehensive revision service with full metadata storage
+✅ Auto-creation on generation and edits
+✅ Revision restoration and diff functionality
 
 16. What Cursor Must Build
 Cursor must build:

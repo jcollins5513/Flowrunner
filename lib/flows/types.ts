@@ -49,6 +49,7 @@ export interface NavigationPath {
   toScreenId: string
   trigger?: string // e.g., 'button-click', 'form-submit', 'auto-advance'
   condition?: string // Optional condition for conditional navigation
+  label?: string // Human-readable label for the branch (e.g., "Premium Users", "Free Users")
 }
 
 /**
