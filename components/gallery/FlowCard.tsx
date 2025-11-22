@@ -5,7 +5,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { FlowMetadata, FlowStats } from '@/lib/flows/types'
+import { Pencil } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 function formatDate(date: Date): string {
   const now = new Date()
@@ -31,8 +34,8 @@ interface FlowCardProps {
 
 export function FlowCard({ flow, stats, thumbnailUrl }: FlowCardProps) {
   return (
-    <Link href={`/gallery/${flow.id}`} className="block h-full">
-      <Card className="h-full flex flex-col hover:shadow-lg transition-shadow cursor-pointer">
+    <Card className="h-full flex flex-col hover:shadow-lg transition-shadow">
+      <Link href={`/gallery/${flow.id}`} className="block flex-1">
         {/* Thumbnail */}
         <div className="relative w-full aspect-video bg-muted rounded-t-lg overflow-hidden">
           {thumbnailUrl ? (
@@ -76,19 +79,27 @@ export function FlowCard({ flow, stats, thumbnailUrl }: FlowCardProps) {
             )}
           </div>
         </CardContent>
+      </Link>
 
-        <CardFooter className="text-sm text-muted-foreground pt-0">
-          <div className="flex items-center justify-between w-full">
-            <div className="flex items-center gap-4">
-              {stats && (
-                <span>{stats.screenCount} screen{stats.screenCount !== 1 ? 's' : ''}</span>
-              )}
-              <span>{formatDate(new Date(flow.updatedAt))}</span>
-            </div>
-          </div>
-        </CardFooter>
-      </Card>
-    </Link>
+      <CardFooter className="text-sm text-muted-foreground pt-0 flex items-center justify-between gap-2">
+        <div className="flex items-center gap-4">
+          {stats && (
+            <span>{stats.screenCount} screen{stats.screenCount !== 1 ? 's' : ''}</span>
+          )}
+          <span>{formatDate(new Date(flow.updatedAt))}</span>
+        </div>
+        <Link href={`/flows/${flow.id}/edit`} onClick={(e) => e.stopPropagation()}>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="h-8 w-8 p-0"
+            title="Edit flow"
+          >
+            <Pencil className="h-4 w-4" />
+          </Button>
+        </Link>
+      </CardFooter>
+    </Card>
   )
 }
 

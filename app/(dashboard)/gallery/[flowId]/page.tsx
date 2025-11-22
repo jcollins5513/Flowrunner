@@ -316,7 +316,7 @@ export default function FlowDetailPage() {
 
       {/* Flow Actions */}
       <div className="container flex gap-4">
-        <Link href={`/flows/${flowId}`}>
+        <Link href={`/flows/${flowId}/edit`}>
           <Button>
             <ExternalLink className="mr-2 h-4 w-4" />
             Open in Editor
