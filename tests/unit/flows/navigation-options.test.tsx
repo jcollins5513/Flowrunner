@@ -7,6 +7,7 @@ import { ScreenPickerModal } from '@/components/flow/ScreenPickerModal'
 import { NavigationConfigModal } from '@/components/editing/NavigationConfigModal'
 import type { ScreenDSL } from '@/lib/dsl/types'
 import { createPatternFixtureDSL } from '@/lib/patterns/fixtures'
+import React from 'react'
 
 describe('ScreenPickerModal', () => {
   const mockScreens = [

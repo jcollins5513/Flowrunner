@@ -91,6 +91,7 @@ describe('ImageRepository', () => {
           domain: imageData.domain,
           userId: imageData.userId,
           patternCompatibilityTags: null,
+          tags: null,
           isPublic: false,
           isFavorite: false,
           usageCount: 0,

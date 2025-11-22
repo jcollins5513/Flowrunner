@@ -219,7 +219,7 @@ export async function generateNextScreen(
     const orchestrator =
       imageOrchestrator ||
       new ImageOrchestrator({
-        service: new ImageGenerationService(new MockImageProvider()),
+        service: new ImageGenerationService({ provider: new MockImageProvider() }),
         autoExtractPalette: true,
         autoInferVibe: true,
         autoPersist: true,
@@ -228,7 +228,7 @@ export async function generateNextScreen(
     const heroImage = await orchestrator.generateHeroImageWithPalette({
       prompt: plan.heroPlan.imagePrompt,
       aspectRatio: plan.heroPlan.aspectRatio,
-      style: 'modern',
+      // style is optional - let the orchestrator use defaults or infer from visualTheme
       visualTheme: screenContext.flowMetadata?.theme,
     })
 
