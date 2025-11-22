@@ -1295,38 +1295,38 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 
 ---
 
-## Phase A: Ship Preparation (Make App Testable & Shippable)
+## Phase A: Ship Preparation (Make App Testable & Shippable) ✅ (Basic Version Complete)
 
 **Goal:** Connect all existing features into a working, testable application that can be shipped and demonstrated.
 
-### A.1 Core Navigation & Landing
-- [ ] Create home page with navigation links
-- [ ] Add navigation bar/header component
-- [ ] Create routes: Home → Create Flow → Gallery → Library → Playground
-- [ ] Add basic styling and layout consistency
+### A.1 Core Navigation & Landing ✅
+- [x] Create home page with navigation links
+- [x] Add navigation bar/header component
+- [x] Create routes: Home → Create Flow → Gallery → Library → Playground
+- [x] Add basic styling and layout consistency
 
-### A.2 Flow Creation UI
-- [ ] Create "New Flow" page (`/flows/new`)
-- [ ] Add form: flow name, description, prompt, domain
-- [ ] Connect to flow creation API
-- [ ] Redirect to flow editor after creation
+### A.2 Flow Creation UI ✅
+- [x] Create "New Flow" page (`/flows/new`)
+- [x] Add form: flow name, description, prompt, domain
+- [x] Connect to flow creation API
+- [x] Redirect to flow editor after creation
 
-### A.3 Flow Editor Page
-- [ ] Create flow editor page (`/flows/[flowId]/edit`)
-- [ ] Load existing flow with screens
-- [ ] Integrate InteractiveScreen component
-- [ ] Connect screen generation (use existing generateNextScreen)
-- [ ] Integrate editing components (use existing editing components)
-- [ ] Add save functionality
-- [ ] Show navigation diagram (already exists)
-- [ ] Add tab switcher: Screens | Diagram | Settings
+### A.3 Flow Editor Page ✅ (Basic Version)
+- [x] Create flow editor page (`/flows/[flowId]/edit`)
+- [x] Load existing flow with screens
+- [x] Integrate InteractiveScreen component
+- [x] Connect screen generation (use existing generateNextScreen)
+- [ ] Integrate editing components (use existing editing components) - *Deferred to A.6*
+- [x] Add save functionality (settings tab)
+- [x] Show navigation diagram (already exists)
+- [x] Add tab switcher: Screens | Diagram | Settings
 
-### A.4 Connect Existing Pieces
-- [ ] Wire flow playground to save flows option
-- [ ] Connect gallery page to flow editor
-- [ ] Connect flow detail page to flow editor
-- [ ] Ensure all API endpoints are accessible from UI
-- [ ] Add error handling and loading states
+### A.4 Connect Existing Pieces ✅
+- [ ] Wire flow playground to save flows option - *Deferred to A.6*
+- [x] Connect gallery page to flow editor
+- [x] Connect flow detail page to flow editor
+- [x] Ensure all API endpoints are accessible from UI
+- [x] Add error handling and loading states
 
 ### A.5 Basic Testing Flow
 - [ ] Test: Create flow → Generate screens → Edit screen → View diagram
@@ -1334,52 +1334,11 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 - [ ] Test: Gallery → Open flow → Edit
 - [ ] Verify all core features are accessible
 
-**Technical Notes:**
-- Focus on connecting existing backend features to UI
-- Use existing components where possible
-- Prioritize functionality over polish
-- Goal is to make everything testable, not perfect
-
----
-
-## Phase A: Ship Preparation (Make App Testable & Shippable)
-
-**Goal:** Connect all existing features into a working, testable application that can be shipped and demonstrated.
-
-### A.1 Core Navigation & Landing
-- [ ] Create home page with navigation links
-- [ ] Add navigation bar/header component
-- [ ] Create routes: Home → Create Flow → Gallery → Library → Playground
-- [ ] Add basic styling and layout consistency
-
-### A.2 Flow Creation UI
-- [ ] Create "New Flow" page (`/flows/new`)
-- [ ] Add form: flow name, description, prompt, domain
-- [ ] Connect to flow creation API
-- [ ] Redirect to flow editor after creation
-
-### A.3 Flow Editor Page
-- [ ] Create flow editor page (`/flows/[flowId]/edit`)
-- [ ] Load existing flow with screens
-- [ ] Integrate InteractiveScreen component
-- [ ] Connect screen generation (use existing generateNextScreen)
-- [ ] Integrate editing components (use existing editing components)
-- [ ] Add save functionality
-- [ ] Show navigation diagram (already exists)
-- [ ] Add tab switcher: Screens | Diagram | Settings
-
-### A.4 Connect Existing Pieces
-- [ ] Wire flow playground to save flows option
-- [ ] Connect gallery page to flow editor
-- [ ] Connect flow detail page to flow editor
-- [ ] Ensure all API endpoints are accessible from UI
-- [ ] Add error handling and loading states
-
-### A.5 Basic Testing Flow
-- [ ] Test: Create flow → Generate screens → Edit screen → View diagram
-- [ ] Test: Load existing flow → Edit → Save
-- [ ] Test: Gallery → Open flow → Edit
-- [ ] Verify all core features are accessible
+### A.6 Advanced Editing & Polish (Next Phase)
+- [ ] Add full editing capabilities to editor (edit components, palette, vibe, images)
+- [ ] Add "Save as Flow" button to flow playground
+- [ ] Add screen deletion/reordering UI
+- [ ] Improve editor UX and polish
 
 **Technical Notes:**
 - Focus on connecting existing backend features to UI
@@ -1387,9 +1346,7 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 - Prioritize functionality over polish
 - Goal is to make everything testable, not perfect
 
----
-
-## Phase A: Ship Preparation (Make App Testable & Shippable)
+**Status:** Basic flow creation and editing is now functional. Core navigation paths are complete. Next phase should focus on advanced editing features and polish.
 
 ---
 
