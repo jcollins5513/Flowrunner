@@ -14,9 +14,10 @@ import type { PatternFamily, PatternVariant, Palette, Vibe, Component } from '@/
 
 export async function POST(
   request: Request,
-  { params }: { params: { flowId: string } }
+  { params }: { params: Promise<{ flowId: string }> }
 ) {
   try {
+    const { flowId } = await params
     const body = await request.json()
     const { prompt, guidance } = body
 
@@ -69,7 +70,7 @@ export async function POST(
     })
 
     // Get flow metadata for theme
-    const flow = await FlowEngine.getFlow(params.flowId)
+    const flow = await FlowEngine.getFlow(flowId)
     const flowTheme = flow?.theme
     
     // Use guidance visualTheme if provided, otherwise fall back to flow theme or plan
@@ -149,7 +150,7 @@ export async function POST(
     console.log('DSL validation passed!')
 
     // Stage 4: Save to flow
-    const { screen } = await insertScreen(params.flowId, {
+    const { screen } = await insertScreen(flowId, {
       screenDSL: validation.data,
       position: 'start',
       heroImageId: heroImage.imageId,

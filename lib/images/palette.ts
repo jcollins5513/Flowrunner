@@ -1,7 +1,8 @@
 import { z } from 'zod'
+import { getImageSource } from './source'
 
 type VibrantModule = {
-  from: (source: string) => { getPalette: () => Promise<Record<string, { hex?: string }>> }
+  from: (source: string | Buffer) => { getPalette: () => Promise<Record<string, { hex?: string }>> }
   Vibrant?: VibrantModule
   default?: VibrantModule
 }
@@ -83,7 +84,8 @@ export const extractPalette = async (options: ExtractPaletteOptions): Promise<Pa
 
   try {
     const vibrant = await getVibrant()
-    const palette = await vibrant.from(url).getPalette()
+    const source = await getImageSource(url)
+    const palette = await vibrant.from(source).getPalette()
 
     const primary = palette.Vibrant?.hex ?? palette.Muted?.hex ?? fallback.primary
     const secondary = palette.LightVibrant?.hex ?? palette.LightMuted?.hex ?? fallback.secondary

@@ -1,6 +1,7 @@
 import sharp from 'sharp'
 import type { Palette } from '../palette'
 import type { CompositionAnalysis, MoodIndicators } from './schema'
+import { getImageSource, loadImageBuffer } from '../source'
 
 type VibrantModule = {
   from: (source: string) => { getPalette: () => Promise<Record<string, { hsl?: [number, number, number] }>> }
@@ -26,7 +27,8 @@ const getVibrant = async (): Promise<VibrantModule> => {
 export const analyzeColorSaturation = async (url: string): Promise<number> => {
   try {
     const vibrant = await getVibrant()
-    const palette = await vibrant.from(url).getPalette()
+    const source = await getImageSource(url)
+    const palette = await vibrant.from(source).getPalette()
     
     // Extract saturation values from vibrant swatches
     const saturations: number[] = []
@@ -54,9 +56,7 @@ export const analyzeColorSaturation = async (url: string): Promise<number> => {
  */
 export const analyzeVisualWeight = async (url: string): Promise<number> => {
   try {
-    // Fetch image and convert to buffer
-    const response = await fetch(url)
-    const buffer = Buffer.from(await response.arrayBuffer())
+    const buffer = await loadImageBuffer(url)
     
     // Get image statistics
     const stats = await sharp(buffer)
@@ -85,8 +85,7 @@ export const analyzeVisualWeight = async (url: string): Promise<number> => {
  */
 export const analyzeComposition = async (url: string): Promise<CompositionAnalysis> => {
   try {
-    const response = await fetch(url)
-    const buffer = Buffer.from(await response.arrayBuffer())
+    const buffer = await loadImageBuffer(url)
     
     const metadata = await sharp(buffer).metadata()
     const width = metadata.width ?? 1

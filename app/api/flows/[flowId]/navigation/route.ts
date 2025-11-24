@@ -11,13 +11,17 @@ import {
 } from '@/lib/flows'
 
 // GET /api/flows/[flowId]/navigation - Get navigation graph
-export async function GET(request: Request, { params }: { params: { flowId: string } }) {
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ flowId: string }> }
+) {
   try {
+    const { flowId } = await params
     const { searchParams } = new URL(request.url)
     const action = searchParams.get('action')
 
     if (action === 'validate') {
-      const validation = await validateNavigationGraph(params.flowId)
+      const validation = await validateNavigationGraph(flowId)
       return NextResponse.json(validation)
     }
 
@@ -29,12 +33,12 @@ export async function GET(request: Request, { params }: { params: { flowId: stri
         return NextResponse.json({ error: 'from and to screen IDs are required' }, { status: 400 })
       }
 
-      const path = await getNavigationPath(params.flowId, fromScreenId, toScreenId)
+      const path = await getNavigationPath(flowId, fromScreenId, toScreenId)
       return NextResponse.json({ path })
     }
 
     // Default: return full navigation graph
-    const graph = await buildNavigationGraph(params.flowId)
+    const graph = await buildNavigationGraph(flowId)
     return NextResponse.json({
       ...graph,
       screens: Array.from(graph.screens.entries()).map(([id, entry]) => ({ id, ...entry })),
@@ -49,15 +53,19 @@ export async function GET(request: Request, { params }: { params: { flowId: stri
 }
 
 // POST /api/flows/[flowId]/navigation - Add navigation path
-export async function POST(request: Request, { params }: { params: { flowId: string } }) {
+export async function POST(
+  request: Request,
+  { params }: { params: Promise<{ flowId: string }> }
+) {
   try {
+    const { flowId } = await params
     const body = await request.json()
 
     if (!body.fromScreenId || !body.toScreenId) {
       return NextResponse.json({ error: 'fromScreenId and toScreenId are required' }, { status: 400 })
     }
 
-    await addNavigationPath(params.flowId, body.fromScreenId, body.toScreenId, {
+    await addNavigationPath(flowId, body.fromScreenId, body.toScreenId, {
       trigger: body.trigger,
       condition: body.condition,
     })
@@ -73,8 +81,12 @@ export async function POST(request: Request, { params }: { params: { flowId: str
 }
 
 // DELETE /api/flows/[flowId]/navigation - Remove navigation path
-export async function DELETE(request: Request, { params }: { params: { flowId: string } }) {
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ flowId: string }> }
+) {
   try {
+    const { flowId } = await params
     const { searchParams } = new URL(request.url)
     const fromScreenId = searchParams.get('fromScreenId')
 
@@ -82,7 +94,7 @@ export async function DELETE(request: Request, { params }: { params: { flowId: s
       return NextResponse.json({ error: 'fromScreenId is required' }, { status: 400 })
     }
 
-    await removeNavigationPath(params.flowId, fromScreenId)
+    await removeNavigationPath(flowId, fromScreenId)
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Error removing navigation path:', error)

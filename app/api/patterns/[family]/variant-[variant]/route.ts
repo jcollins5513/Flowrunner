@@ -5,10 +5,11 @@ import { join } from 'path'
 
 export async function GET(
   request: Request,
-  { params }: { params: { family: string; variant: string } }
+  { params }: { params: Promise<{ family: string; variant: string }> }
 ) {
   try {
-    const { family, variant } = params
+    const { family, variant } = await params
+    const variantFile = variant.startsWith('variant-') ? variant : `variant-${variant}`
 
     const patternPath = join(
       process.cwd(),
@@ -16,7 +17,7 @@ export async function GET(
       'patterns',
       'definitions',
       family,
-      `${variant}.json`
+      `${variantFile}.json`
     )
 
     const fileContent = readFileSync(patternPath, 'utf-8')

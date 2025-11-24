@@ -8,6 +8,8 @@ import type { ScreenDSL } from '@/lib/dsl/types'
 import { createPatternFixtureDSL } from '@/lib/patterns/fixtures'
 import type { NextScreenTriggerContext } from '@/lib/flows/types'
 
+const pause = (ms = 0) => new Promise((resolve) => setTimeout(resolve, ms))
+
 describe('InteractiveScreen Flow Generation', () => {
   let mockScreen: ScreenDSL
   const mockOnGenerateNext = vi.fn()
@@ -30,15 +32,8 @@ describe('InteractiveScreen Flow Generation', () => {
     )
 
     // Find and click a button component
-    const buttons = screen.getAllByRole('button')
-    const actionButton = buttons.find((btn) => btn.textContent?.includes('Generate next screen'))
-    if (!actionButton) {
-      // Click any button to trigger menu
-      const firstButton = buttons[0]
-      if (firstButton) {
-        await user.click(firstButton)
-      }
-    }
+    const [primaryButton] = await screen.findAllByRole('button', { name: /generate next screen/i })
+    await user.click(primaryButton)
 
     // Menu should appear
     await waitFor(() => {
@@ -48,7 +43,9 @@ describe('InteractiveScreen Flow Generation', () => {
 
   it('click "Generate next screen" → shows progress → creates screen', async () => {
     const user = userEvent.setup()
-    mockOnGenerateNext.mockResolvedValue(undefined)
+    mockOnGenerateNext.mockImplementation(async () => {
+      await pause(10)
+    })
 
     render(
       <InteractiveScreen
@@ -59,11 +56,8 @@ describe('InteractiveScreen Flow Generation', () => {
     )
 
     // Click button to open menu
-    const buttons = screen.getAllByRole('button')
-    const firstButton = buttons.find((btn) => !btn.textContent?.includes('Generate'))
-    if (firstButton) {
-      await user.click(firstButton)
-    }
+    const [primaryButton] = await screen.findAllByRole('button', { name: /generate next screen/i })
+    await user.click(primaryButton)
 
     // Wait for menu
     await waitFor(() => {
@@ -71,12 +65,12 @@ describe('InteractiveScreen Flow Generation', () => {
     })
 
     // Click "Generate next screen"
-    const generateButton = screen.getByRole('button', { name: /generate next screen/i })
-    await user.click(generateButton)
+    const generateButtons = await screen.findAllByRole('button', { name: /generate next screen/i })
+    await user.click(generateButtons[generateButtons.length - 1])
 
-    // Should show generating state
+    // Should disable button while generating
     await waitFor(() => {
-      expect(screen.getByText(/generating/i)).toBeInTheDocument()
+      expect(generateButtons[generateButtons.length - 1]).toBeDisabled()
     })
 
     // Should call onGenerateNext
@@ -102,11 +96,8 @@ describe('InteractiveScreen Flow Generation', () => {
     )
 
     // Click button to open menu
-    const buttons = screen.getAllByRole('button')
-    const firstButton = buttons.find((btn) => !btn.textContent?.includes('Link'))
-    if (firstButton) {
-      await user.click(firstButton)
-    }
+    const [primaryButton] = await screen.findAllByRole('button', { name: /generate next screen/i })
+    await user.click(primaryButton)
 
     // Wait for menu
     await waitFor(() => {
@@ -114,20 +105,18 @@ describe('InteractiveScreen Flow Generation', () => {
     })
 
     // Click "Link to existing screen"
-    const linkButton = screen.getByRole('button', { name: /link to existing screen/i })
-    await user.click(linkButton)
+    const linkButtons = await screen.findAllByRole('button', { name: /link to existing screen/i })
+    await user.click(linkButtons[0])
 
     // Screen picker should open
-    await waitFor(() => {
-      expect(screen.getByText(/link to existing screen/i)).toBeInTheDocument()
-    })
+    await screen.findByRole('dialog', { name: /link to existing screen/i })
 
     // Select a screen
     const screenOption = screen.getByText('Screen 2')
     await user.click(screenOption)
 
     // Click Link Screen
-    const confirmButton = screen.getByRole('button', { name: /link screen/i })
+    const confirmButton = await screen.findByRole('button', { name: /link screen/i })
     await user.click(confirmButton)
 
     // Should call onLinkExisting with target screen
@@ -155,11 +144,8 @@ describe('InteractiveScreen Flow Generation', () => {
     )
 
     // Click button to open menu
-    const buttons = screen.getAllByRole('button')
-    const firstButton = buttons.find((btn) => !btn.textContent?.includes('Configure'))
-    if (firstButton) {
-      await user.click(firstButton)
-    }
+    const [primaryButton] = await screen.findAllByRole('button', { name: /generate next screen/i })
+    await user.click(primaryButton)
 
     // Wait for menu
     await waitFor(() => {
@@ -167,8 +153,8 @@ describe('InteractiveScreen Flow Generation', () => {
     })
 
     // Click "Configure navigation"
-    const configButton = screen.getByRole('button', { name: /configure navigation/i })
-    await user.click(configButton)
+    const configButtons = await screen.findAllByRole('button', { name: /configure navigation/i })
+    await user.click(configButtons[0])
 
     // Config modal should open
     await waitFor(() => {
@@ -190,11 +176,8 @@ describe('InteractiveScreen Flow Generation', () => {
     )
 
     // Click button to open menu
-    const buttons = screen.getAllByRole('button')
-    const firstButton = buttons.find((btn) => !btn.textContent?.includes('Generate'))
-    if (firstButton) {
-      await user.click(firstButton)
-    }
+    const [primaryButton] = await screen.findAllByRole('button', { name: /generate next screen/i })
+    await user.click(primaryButton)
 
     // Wait for menu
     await waitFor(() => {
@@ -202,8 +185,8 @@ describe('InteractiveScreen Flow Generation', () => {
     })
 
     // Click "Generate next screen"
-    const generateButton = screen.getByRole('button', { name: /generate next screen/i })
-    await user.click(generateButton)
+    const generateButtons = await screen.findAllByRole('button', { name: /generate next screen/i })
+    await user.click(generateButtons[generateButtons.length - 1])
 
     // Error should be logged
     await waitFor(() => {

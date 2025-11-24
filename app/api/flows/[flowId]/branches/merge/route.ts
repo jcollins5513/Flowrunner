@@ -5,8 +5,12 @@ import { NextResponse } from 'next/server'
 import { mergeBranches } from '@/lib/flows'
 
 // POST /api/flows/[flowId]/branches/merge - Merge branches
-export async function POST(request: Request, { params }: { params: { flowId: string } }) {
+export async function POST(
+  request: Request,
+  { params }: { params: Promise<{ flowId: string }> }
+) {
   try {
+    const { flowId } = await params
     const body = await request.json()
 
     if (!body.fromScreenId || !body.branchToKeep || !body.branchesToMerge) {
@@ -24,7 +28,7 @@ export async function POST(request: Request, { params }: { params: { flowId: str
     }
 
     await mergeBranches(
-      params.flowId,
+      flowId,
       body.fromScreenId,
       {
         toScreenId: body.branchToKeep.toScreenId,

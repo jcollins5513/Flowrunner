@@ -8,6 +8,7 @@ import {
   recordPatternLoadFailure,
   recordPatternLoadSuccess,
 } from '../telemetry/patterns'
+import { getPatternFromRegistry } from './definitions/registry'
 
 // Cache for loaded patterns
 const patternCache = new Map<string, PatternDefinition>()
@@ -40,6 +41,14 @@ export async function loadPatternAsync(
   }
 
   try {
+    const registryPattern = getPatternFromRegistry(family, variant)
+    if (registryPattern) {
+      const validatedRegistryPattern = patternDefinitionSchema.parse(registryPattern)
+      patternCache.set(cacheKey, validatedRegistryPattern)
+      recordPatternLoadSuccess(family, variant, getTimestamp() - start)
+      return validatedRegistryPattern
+    }
+
     // Load pattern file via fetch (works in both server and client)
     const response = await fetch(
       `/api/patterns/${family}/variant-${variant}`
@@ -96,18 +105,35 @@ export async function loadPatternAsync(
  */
 export function loadPattern(family: PatternFamily, variant: PatternVariant): PatternDefinition {
   const cacheKey = `${family}-${variant}`
-  
-  // Check cache first
+  const start = getTimestamp()
+
+  // Return cached pattern when available
   if (patternCache.has(cacheKey)) {
+    recordPatternLoadSuccess(family, variant, getTimestamp() - start)
     return patternCache.get(cacheKey)!
   }
 
-  // For client-side, we need to use async loading
-  // This is a temporary solution - in production, patterns should be pre-loaded
+  // Try registry (available in both server and client builds)
+  const registryPattern = getPatternFromRegistry(family, variant)
+  if (registryPattern) {
+    try {
+      const validatedPattern = patternDefinitionSchema.parse(registryPattern)
+      patternCache.set(cacheKey, validatedPattern)
+      recordPatternLoadSuccess(family, variant, getTimestamp() - start)
+      return validatedPattern
+    } catch (error) {
+      const duration = getTimestamp() - start
+      const message = error instanceof Error ? error.message : 'Registry pattern validation failed'
+      recordPatternLoadFailure(family, variant, duration, message)
+      throw new Error(`Stored pattern ${family} variant ${variant} is invalid: ${message}`)
+    }
+  }
+
+  // Client-side fallback: instruct to use async loader
   recordPatternLoadFailure(
     family,
     variant,
-    0,
+    getTimestamp() - start,
     `Pattern ${family} variant ${variant} not cached. Use loadPatternAsync() in client components.`
   )
   throw new Error(

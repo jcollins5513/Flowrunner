@@ -10,9 +10,10 @@ import type { ScreenDSL } from '@/lib/dsl/types'
 // PUT /api/flows/[flowId]/screens/[screenId] - Update a screen
 export async function PUT(
   request: Request,
-  { params }: { params: { flowId: string; screenId: string } }
+  { params }: { params: Promise<{ flowId: string; screenId: string }> }
 ) {
   try {
+    const { flowId, screenId } = await params
     const body = await request.json()
     const dslUpdate = body.dsl as Partial<ScreenDSL>
 
@@ -27,14 +28,14 @@ export async function PUT(
     // Verify screen belongs to flow
     const { prisma } = await import('@/lib/db/client')
     const screen = await prisma.screen.findUnique({
-      where: { id: params.screenId },
+      where: { id: screenId },
     })
 
-    if (!screen || screen.flowId !== params.flowId) {
+    if (!screen || screen.flowId !== flowId) {
       return NextResponse.json({ error: 'Screen not found in flow' }, { status: 404 })
     }
 
-    const result = await updateScreenWithValidation(params.screenId, dslUpdate, {
+    const result = await updateScreenWithValidation(screenId, dslUpdate, {
       skipPatternValidation,
       changeType: changeType as string,
     })
@@ -77,13 +78,14 @@ export async function PUT(
 // DELETE /api/flows/[flowId]/screens/[screenId] - Remove a screen
 export async function DELETE(
   request: Request,
-  { params }: { params: { flowId: string; screenId: string } }
+  { params }: { params: Promise<{ flowId: string; screenId: string }> }
 ) {
   try {
+    const { flowId, screenId } = await params
     const { searchParams } = new URL(request.url)
     const updateNavigation = searchParams.get('updateNavigation') !== 'false'
 
-    await removeScreen(params.flowId, params.screenId, updateNavigation)
+    await removeScreen(flowId, screenId, updateNavigation)
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Error removing screen:', error)

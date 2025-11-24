@@ -88,11 +88,13 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
   useEffect(() => {
     if (validationError) return // Don't load pattern if schema validation failed
 
+    let cancelled = false
+
     loadPatternAsync(dsl.pattern_family, dsl.pattern_variant)
       .then((loadedPattern) => {
+        if (cancelled) return
         setPattern(loadedPattern)
 
-        // Validate DSL against pattern
         if (!skipValidation) {
           const patternResult = validateDSLAgainstPattern(dsl, loadedPattern)
           if (!patternResult.valid) {
@@ -102,8 +104,44 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
           }
         }
       })
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false))
+      .catch(async (err) => {
+        if (cancelled) return
+
+        // Retry once after clearing the pattern cache (handles dev auto-reloads)
+        try {
+          const { clearPatternCache } = await import('@/lib/patterns/loader')
+          clearPatternCache()
+        } catch {
+          // ignore cache clear errors and surface original error
+        }
+
+        // Retry load
+        try {
+          const retryPattern = await loadPatternAsync(dsl.pattern_family, dsl.pattern_variant)
+          if (cancelled) return
+          setPattern(retryPattern)
+          if (!skipValidation) {
+            const patternResult = validateDSLAgainstPattern(dsl, retryPattern)
+            if (!patternResult.valid) {
+              setValidationError(
+                `Pattern Validation Error: ${patternResult.errors.map((e) => `${e.field}: ${e.message}`).join(', ')}`
+              )
+            }
+          }
+        } catch (retryError) {
+          if (cancelled) return
+          setError(retryError instanceof Error ? retryError.message : String(retryError))
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setLoading(false)
+        }
+      })
+
+    return () => {
+      cancelled = true
+    }
   }, [dsl, skipValidation, validationError])
 
   useEffect(() => {

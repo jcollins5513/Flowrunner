@@ -110,8 +110,8 @@ FlowRunner uses a strict pipeline to ensure consistent outputs.
 1. **Prompt Intake → Intent Object** ✅
 2. **Domain → Flow Template** ✅
 3. **Template → Screen Sequence** ✅
-4. **Screen → Pattern Family**
-5. **Pattern → Variant (5 per family)**
+4. **Screen → Pattern Family** ✅
+5. **Pattern → Variant (5 per family)** ✅
 6. **Generate Hero Image** ✅
 7. **Extract Palette & Vibe** ✅
 8. **Fill Components with Creative Text**

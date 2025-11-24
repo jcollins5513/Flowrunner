@@ -205,7 +205,7 @@ export default function NewFlowPage() {
           <div className="space-y-2">
             <h1 className="text-3xl font-bold tracking-tight">Create Your First Screen</h1>
             <p className="text-muted-foreground">
-              Describe what you're building and FlowRunner will generate a screen with AI images and layout.
+              Describe what you&apos;re building and FlowRunner will generate a screen with AI images and layout.
             </p>
           </div>
 
@@ -214,7 +214,7 @@ export default function NewFlowPage() {
             <CardHeader>
               <CardTitle>Flow Details</CardTitle>
               <CardDescription>
-                Give your flow a name and describe what you're building. The optional fields help guide the AI to create better images and layouts.
+                Give your flow a name and describe what you&apos;re building. The optional fields help guide the AI to create better images and layouts.
               </CardDescription>
             </CardHeader>
             <CardContent>

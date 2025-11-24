@@ -51,16 +51,22 @@ vi.mock('sharp', () => {
   }
 })
 
-// Mock fetch for image URLs
-global.fetch = vi.fn(() =>
-  Promise.resolve({
-    arrayBuffer: () => Promise.resolve(new ArrayBuffer(8)),
-  } as Response)
-) as typeof fetch
+const originalFetch = global.fetch
 
 describe('Vibe Analyzer', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    global.fetch = vi.fn(() =>
+      Promise.resolve({
+        ok: true,
+        status: 200,
+        arrayBuffer: () => Promise.resolve(new ArrayBuffer(8)),
+      } as Response)
+    ) as typeof fetch
+  })
+
+  afterAll(() => {
+    global.fetch = originalFetch
   })
 
   describe('analyzeColorSaturation', () => {

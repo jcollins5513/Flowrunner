@@ -16,15 +16,19 @@ import {
 import type { BranchConfig } from '@/lib/flows/branching'
 
 // GET /api/flows/[flowId]/branches - Get branches
-export async function GET(request: Request, { params }: { params: { flowId: string } }) {
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ flowId: string }> }
+) {
   try {
+    const { flowId } = await params
     const { searchParams } = new URL(request.url)
     const action = searchParams.get('action')
     const screenId = searchParams.get('screenId')
 
     // Get all branch points in the flow
     if (action === 'branch-points') {
-      const branchPoints = await findBranchPoints(params.flowId)
+      const branchPoints = await findBranchPoints(flowId)
       return NextResponse.json({ branchPoints })
     }
 
@@ -33,7 +37,7 @@ export async function GET(request: Request, { params }: { params: { flowId: stri
       if (!screenId) {
         return NextResponse.json({ error: 'screenId is required' }, { status: 400 })
       }
-      const hasBranching = await hasBranches(params.flowId, screenId)
+      const hasBranching = await hasBranches(flowId, screenId)
       return NextResponse.json({ hasBranches: hasBranching })
     }
 
@@ -42,7 +46,7 @@ export async function GET(request: Request, { params }: { params: { flowId: stri
       if (!screenId) {
         return NextResponse.json({ error: 'screenId is required' }, { status: 400 })
       }
-      const count = await getBranchCount(params.flowId, screenId)
+      const count = await getBranchCount(flowId, screenId)
       return NextResponse.json({ count })
     }
 
@@ -54,10 +58,10 @@ export async function GET(request: Request, { params }: { params: { flowId: stri
     const direction = searchParams.get('direction') || 'from' // 'from' or 'to'
 
     if (direction === 'to') {
-      const branches = await getBranchesToScreen(params.flowId, screenId)
+      const branches = await getBranchesToScreen(flowId, screenId)
       return NextResponse.json({ branches })
     } else {
-      const branches = await getBranchesFromScreen(params.flowId, screenId)
+      const branches = await getBranchesFromScreen(flowId, screenId)
       return NextResponse.json({ branches })
     }
   } catch (error) {
@@ -70,8 +74,12 @@ export async function GET(request: Request, { params }: { params: { flowId: stri
 }
 
 // POST /api/flows/[flowId]/branches - Create a new branch
-export async function POST(request: Request, { params }: { params: { flowId: string } }) {
+export async function POST(
+  request: Request,
+  { params }: { params: Promise<{ flowId: string }> }
+) {
   try {
+    const { flowId } = await params
     const body = await request.json()
 
     if (!body.fromScreenId || !body.toScreenId) {
@@ -85,7 +93,7 @@ export async function POST(request: Request, { params }: { params: { flowId: str
       label: body.label,
     }
 
-    await createBranch(params.flowId, body.fromScreenId, config)
+    await createBranch(flowId, body.fromScreenId, config)
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Error creating branch:', error)
@@ -97,8 +105,12 @@ export async function POST(request: Request, { params }: { params: { flowId: str
 }
 
 // PATCH /api/flows/[flowId]/branches - Update a branch
-export async function PATCH(request: Request, { params }: { params: { flowId: string } }) {
+export async function PATCH(
+  request: Request,
+  { params }: { params: Promise<{ flowId: string }> }
+) {
   try {
+    const { flowId } = await params
     const body = await request.json()
 
     if (!body.fromScreenId || !body.toScreenId) {
@@ -106,7 +118,7 @@ export async function PATCH(request: Request, { params }: { params: { flowId: st
     }
 
     await updateBranch(
-      params.flowId,
+      flowId,
       body.fromScreenId,
       body.toScreenId,
       {
@@ -127,8 +139,12 @@ export async function PATCH(request: Request, { params }: { params: { flowId: st
 }
 
 // DELETE /api/flows/[flowId]/branches - Delete a branch
-export async function DELETE(request: Request, { params }: { params: { flowId: string } }) {
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ flowId: string }> }
+) {
   try {
+    const { flowId } = await params
     const { searchParams } = new URL(request.url)
     const fromScreenId = searchParams.get('fromScreenId')
 
@@ -148,7 +164,7 @@ export async function DELETE(request: Request, { params }: { params: { flowId: s
       )
     }
 
-    await deleteBranch(params.flowId, fromScreenId, {
+    await deleteBranch(flowId, fromScreenId, {
       toScreenId: toScreenId || undefined,
       condition: condition || undefined,
       label: label || undefined,

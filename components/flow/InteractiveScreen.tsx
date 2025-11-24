@@ -40,6 +40,10 @@ export interface InteractiveScreenProps {
   availableScreens?: ScreenOption[]
   onGenerateNext?: (context: NextScreenTriggerContext) => Promise<void> | void
   onLinkExisting?: (context: NextScreenTriggerContext) => Promise<void> | void
+  editMode?: boolean
+  editingComponentId?: string | null
+  onStartEdit?: (componentIndex: number) => void
+  onSaveEdit?: (componentIndex: number, updatedComponent: Component) => void
 }
 
 export function InteractiveScreen({
@@ -52,6 +56,10 @@ export function InteractiveScreen({
   availableScreens = [],
   onGenerateNext,
   onLinkExisting,
+  editMode = false,
+  editingComponentId = null,
+  onStartEdit,
+  onSaveEdit,
 }: InteractiveScreenProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [menuState, setMenuState] = useState<ActionMenuState | null>(null)
@@ -86,7 +94,7 @@ export function InteractiveScreen({
       component: Component,
       context: ComponentInteractionContext,
     ) => {
-      if (disabled) {
+      if (disabled || editMode) {
         return
       }
       if (!interactiveTypes.includes(componentType)) {
@@ -114,7 +122,7 @@ export function InteractiveScreen({
         },
       })
     },
-    [disabled, interactiveTypes],
+    [disabled, editMode, interactiveTypes],
   )
 
   const handleGenerateNext = useCallback(async () => {
@@ -238,7 +246,12 @@ export function InteractiveScreen({
       <ScreenRenderer
         dsl={screen}
         className="min-h-[640px]"
-        onComponentClick={handleComponentClick}
+        screenId={screenId}
+        editMode={editMode}
+        editingComponentId={editingComponentId}
+        onStartEdit={onStartEdit}
+        onSaveEdit={onSaveEdit}
+        onComponentClick={!editMode ? handleComponentClick : undefined}
         interactiveComponentTypes={interactiveTypes}
       />
 

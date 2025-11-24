@@ -1,8 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['localhost', 'images.unsplash.com'],
     remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
+      {
+        protocol: 'http',
+        hostname: '127.0.0.1',
+      },
       {
         protocol: 'https',
         hostname: '**.amazonaws.com',
@@ -14,7 +25,6 @@ const nextConfig = {
     ],
   },
   webpack: (config, { isServer }) => {
-    // Exclude Node.js-only modules from client bundle
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
@@ -25,20 +35,19 @@ const nextConfig = {
         path: false,
         os: false,
       }
-      
-      // Ignore Node.js-only modules and their dependencies in client bundle
+
       config.resolve.alias = {
         ...config.resolve.alias,
-        'sharp': false,
+        sharp: false,
         'node-vibrant': false,
         '@jimp/core': false,
         '@jimp/custom': false,
         '@jimp/types': false,
         '@jimp/gif': false,
         '@vibrant/image-node': false,
-        'gifwrap': false,
+        gifwrap: false,
         'detect-libc': false,
-        'strtok3': false,
+        strtok3: false,
       }
     }
     return config

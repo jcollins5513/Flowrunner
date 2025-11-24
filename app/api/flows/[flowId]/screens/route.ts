@@ -7,16 +7,20 @@ import type { InsertScreenOptions } from '@/lib/flows/types'
 import type { ScreenDSL } from '@/lib/dsl/types'
 
 // GET /api/flows/[flowId]/screens - Get all screens in a flow
-export async function GET(request: Request, { params }: { params: { flowId: string } }) {
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ flowId: string }> }
+) {
   try {
+    const { flowId } = await params
     const { searchParams } = new URL(request.url)
     const format = searchParams.get('format') || 'ordered' // 'ordered' or 'sequence'
 
     if (format === 'sequence') {
-      const sequence = await getScreenSequence(params.flowId)
+      const sequence = await getScreenSequence(flowId)
       return NextResponse.json(sequence)
     } else {
-      const screens = await getOrderedScreens(params.flowId)
+      const screens = await getOrderedScreens(flowId)
       return NextResponse.json(screens)
     }
   } catch (error) {
@@ -29,8 +33,12 @@ export async function GET(request: Request, { params }: { params: { flowId: stri
 }
 
 // POST /api/flows/[flowId]/screens - Insert a new screen
-export async function POST(request: Request, { params }: { params: { flowId: string } }) {
+export async function POST(
+  request: Request,
+  { params }: { params: Promise<{ flowId: string }> }
+) {
   try {
+    const { flowId } = await params
     const body = await request.json()
 
     const insertOptions: InsertScreenOptions = {
@@ -46,7 +54,7 @@ export async function POST(request: Request, { params }: { params: { flowId: str
       return NextResponse.json({ error: 'screenDSL is required' }, { status: 400 })
     }
 
-    const result = await insertScreen(params.flowId, insertOptions)
+    const result = await insertScreen(flowId, insertOptions)
     return NextResponse.json(result, { status: 201 })
   } catch (error) {
     console.error('Error inserting screen:', error)

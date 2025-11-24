@@ -4,9 +4,13 @@
 import { NextResponse } from 'next/server'
 import { FlowEngine } from '@/lib/flows'
 
-export async function GET(request: Request, { params }: { params: { flowId: string } }) {
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ flowId: string }> }
+) {
   try {
-    const stats = await FlowEngine.getFlowStats(params.flowId)
+    const { flowId } = await params
+    const stats = await FlowEngine.getFlowStats(flowId)
     return NextResponse.json(stats)
   } catch (error) {
     console.error('Error fetching flow stats:', error)

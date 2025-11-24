@@ -1,6 +1,6 @@
 // Unit tests for navigation options (Phase 12.1)
 
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeAll } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { ScreenPickerModal } from '@/components/flow/ScreenPickerModal'
@@ -8,6 +8,13 @@ import { NavigationConfigModal } from '@/components/editing/NavigationConfigModa
 import type { ScreenDSL } from '@/lib/dsl/types'
 import { createPatternFixtureDSL } from '@/lib/patterns/fixtures'
 import React from 'react'
+
+beforeAll(() => {
+  ;(Element.prototype as any).hasPointerCapture = () => false
+  ;(Element.prototype as any).setPointerCapture = () => {}
+  ;(Element.prototype as any).releasePointerCapture = () => {}
+  ;(Element.prototype as any).scrollIntoView = () => {}
+})
 
 describe('ScreenPickerModal', () => {
   const mockScreens = [
@@ -23,7 +30,7 @@ describe('ScreenPickerModal', () => {
         open={true}
         onOpenChange={vi.fn()}
         screens={mockScreens}
-        sourceScreenId="screen-1"
+        sourceScreenId="source-screen"
         onSelect={onSelect}
       />,
     )
@@ -45,12 +52,7 @@ describe('ScreenPickerModal', () => {
       />,
     )
 
-    // Source screen should not be in the list
-    const welcomeScreen = screen.queryByText('Welcome Screen')
-    // Actually, it should show but be filtered - let's check the available screens count
-    const buttons = screen.getAllByRole('button')
-    // Should have Cancel, Link Screen, and screen options (minus source)
-    expect(buttons.length).toBeGreaterThan(2)
+    expect(screen.queryByText('Welcome Screen')).not.toBeInTheDocument()
   })
 
   it('shows empty state when no screens available', () => {
@@ -142,7 +144,7 @@ describe('NavigationConfigModal', () => {
     // Select target screen
     const select = screen.getByRole('combobox')
     await user.click(select)
-    const option = screen.getByText('Dashboard')
+    const option = await screen.findByText('Dashboard')
     await user.click(option)
 
     // Click Set Navigation

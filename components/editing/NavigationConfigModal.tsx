@@ -45,7 +45,7 @@ export function NavigationConfigModal({
       onOpenChange(false)
       setTargetScreenId('')
     }
-  }, [targetScreenId, onNavigationSet, onOpenChange])
+  }, [targetScreenId, onNavigationSet, onOpenChange, setTargetScreenId])
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

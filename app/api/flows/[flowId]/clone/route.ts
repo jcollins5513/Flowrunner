@@ -5,8 +5,12 @@ import { NextResponse } from 'next/server'
 import { FlowEngine } from '@/lib/flows'
 import type { CloneFlowOptions } from '@/lib/flows/types'
 
-export async function POST(request: Request, { params }: { params: { flowId: string } }) {
+export async function POST(
+  request: Request,
+  { params }: { params: Promise<{ flowId: string }> }
+) {
   try {
+    const { flowId } = await params
     const body = await request.json()
 
     const cloneOptions: CloneFlowOptions = {
@@ -22,7 +26,7 @@ export async function POST(request: Request, { params }: { params: { flowId: str
       return NextResponse.json({ error: 'New flow name is required' }, { status: 400 })
     }
 
-    const clonedFlow = await FlowEngine.cloneFlow(params.flowId, cloneOptions)
+    const clonedFlow = await FlowEngine.cloneFlow(flowId, cloneOptions)
     return NextResponse.json(clonedFlow, { status: 201 })
   } catch (error) {
     console.error('Error cloning flow:', error)
