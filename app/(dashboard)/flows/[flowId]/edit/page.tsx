@@ -14,6 +14,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import {
   ArrowLeft,
   LayoutGrid,
   List,
@@ -24,6 +32,7 @@ import {
   ArrowUp,
   ArrowDown,
   GripVertical,
+  AlertTriangle,
 } from 'lucide-react'
 import type { Component, HeroImage as HeroImageType, ScreenDSL } from '@/lib/dsl/types'
 import type { FlowNavigationGraph, NextScreenTriggerContext } from '@/lib/flows/types'
@@ -43,6 +52,7 @@ import {
 } from '@/components/editing'
 import { extractPalette } from '@/lib/images/palette'
 import { inferVibe } from '@/lib/images/vibe/infer'
+import { useToast } from '@/components/ui/toast-provider'
 
 const parseMaybeJson = <T,>(value: unknown, fallback?: T): T | undefined => {
   if (value === null || value === undefined) return fallback
@@ -118,6 +128,7 @@ function FlowEditorPageInner() {
     updateScreen,
     removeScreen: removeFlowScreen,
     error: flowError,
+    loading: flowLoading,
   } = useFlow()
 
   const {
@@ -128,6 +139,7 @@ function FlowEditorPageInner() {
     setEditingScreenId,
     addHistory,
   } = useEditing()
+  const { showToast } = useToast()
 
   const [initializing, setInitializing] = useState(true)
   const [pageError, setPageError] = useState<string | null>(null)
@@ -140,6 +152,13 @@ function FlowEditorPageInner() {
   const [settingsForm, setSettingsForm] = useState({ name: '', description: '' })
   const [savingSettings, setSavingSettings] = useState(false)
   const [heroUpdateLoading, setHeroUpdateLoading] = useState(false)
+  const [deleteDialog, setDeleteDialog] = useState<{ screenId: string; label: string } | null>(null)
+  const [isDeletingScreen, setIsDeletingScreen] = useState(false)
+  const [pendingHeroReplace, setPendingHeroReplace] = useState<{
+    screenId: string
+    screenSnapshot: ScreenDSL
+    newImage: HeroImageType
+  } | null>(null)
 
   const combinedError = pageError || flowError || null
 
@@ -273,14 +292,24 @@ function FlowEditorPageInner() {
       setPendingSelectScreenId(result.screenId)
       setGenerationPrompt('')
       setGenerationProgress(null)
+      showToast({
+        title: 'Screen created',
+        description: 'Your first screen is ready to edit.',
+        variant: 'success',
+      })
     } catch (error) {
       console.error('Failed to generate first screen:', error)
       setPageError(error instanceof Error ? error.message : 'Failed to generate screen')
       setGenerationProgress(null)
+      showToast({
+        title: 'Generation failed',
+        description: error instanceof Error ? error.message : 'Failed to generate screen',
+        variant: 'error',
+      })
     } finally {
       setIsGenerating(false)
     }
-  }, [flowId, generationPrompt, isGenerating, refreshScreensAndGraph])
+  }, [flowId, generationPrompt, isGenerating, refreshScreensAndGraph, showToast])
 
   const handleGenerateNext = useCallback(
     async (context: NextScreenTriggerContext) => {
@@ -308,14 +337,24 @@ function FlowEditorPageInner() {
 
         await refreshScreensAndGraph()
         setPendingSelectScreenId(result.screenId)
+        showToast({
+          title: 'Screen generated',
+          description: 'A new branch was added to the flow.',
+          variant: 'success',
+        })
       } catch (error) {
         console.error('Failed to generate next screen:', error)
         setPageError(error instanceof Error ? error.message : 'Failed to generate screen')
+        showToast({
+          title: 'Generation failed',
+          description: error instanceof Error ? error.message : 'Failed to generate screen',
+          variant: 'error',
+        })
       } finally {
         setIsGenerating(false)
       }
     },
-    [flowId, isGenerating, refreshScreensAndGraph, selectedScreenWithId?.id]
+    [flowId, isGenerating, refreshScreensAndGraph, selectedScreenWithId?.id, showToast],
   )
 
   const handleLinkExisting = useCallback(
@@ -347,12 +386,22 @@ function FlowEditorPageInner() {
         }
 
         await refreshScreensAndGraph()
+        showToast({
+          title: 'Navigation updated',
+          description: 'This action now links to the selected screen.',
+          variant: 'success',
+        })
       } catch (error) {
         console.error('Failed to link existing screen:', error)
         setPageError(error instanceof Error ? error.message : 'Failed to link screen')
+        showToast({
+          title: 'Failed to update navigation',
+          description: error instanceof Error ? error.message : 'Unknown error occurred',
+          variant: 'error',
+        })
       }
     },
-    [flowId, refreshScreensAndGraph, selectedScreenWithId?.id]
+    [flowId, refreshScreensAndGraph, selectedScreenWithId?.id, showToast],
   )
 
   const handleSaveSettings = useCallback(async () => {
@@ -364,14 +413,23 @@ function FlowEditorPageInner() {
         name: settingsForm.name,
         description: settingsForm.description,
       })
-      alert('Settings saved successfully!')
+      showToast({
+        title: 'Settings saved',
+        description: 'Flow name and description updated.',
+        variant: 'success',
+      })
     } catch (error) {
       console.error('Failed to save settings:', error)
       setPageError(error instanceof Error ? error.message : 'Failed to save settings')
+      showToast({
+        title: 'Failed to save settings',
+        description: error instanceof Error ? error.message : 'Unknown error occurred',
+        variant: 'error',
+      })
     } finally {
       setSavingSettings(false)
     }
-  }, [flowId, settingsForm, savingSettings, updateFlowMetadata])
+  }, [flowId, savingSettings, settingsForm.description, settingsForm.name, showToast, updateFlowMetadata])
 
   const handleComponentSave = useCallback(
     async (componentIndex: number, updatedComponent: Component) => {
@@ -393,12 +451,22 @@ function FlowEditorPageInner() {
           components: updatedComponents,
         })
         setEditingComponentId(null)
+        showToast({
+          title: 'Component updated',
+          description: 'Changes saved to the flow.',
+          variant: 'success',
+        })
       } catch (error) {
         console.error('Failed to update component:', error)
         setPageError(error instanceof Error ? error.message : 'Failed to update component')
+        showToast({
+          title: 'Failed to update component',
+          description: error instanceof Error ? error.message : 'Unknown error occurred',
+          variant: 'error',
+        })
       }
     },
-    [addHistory, selectedScreen, selectedScreenId, setEditingComponentId, updateScreen]
+    [addHistory, selectedScreen, selectedScreenId, setEditingComponentId, showToast, updateScreen],
   )
 
   const handleStartEditComponent = useCallback(
@@ -410,23 +478,21 @@ function FlowEditorPageInner() {
     [selectedScreenId, setEditingComponentId, setEditingScreenId]
   )
 
-  const handleHeroReplace = useCallback(
-    async (newImage: HeroImageType) => {
-      if (!selectedScreenId || !selectedScreen) return
-
+  const performHeroReplace = useCallback(
+    async (screenId: string, screenSnapshot: ScreenDSL, newImage: HeroImageType) => {
       setHeroUpdateLoading(true)
       try {
         const rawPalette =
           newImage.extractedPalette ??
           (await extractPalette({
             url: newImage.url,
-            fallback: selectedScreen.palette,
+            fallback: screenSnapshot.palette,
           }))
         const palette: ScreenDSL['palette'] = {
-          primary: rawPalette.primary ?? selectedScreen.palette.primary ?? '#3B82F6',
-          secondary: rawPalette.secondary ?? selectedScreen.palette.secondary ?? '#8B5CF6',
-          accent: rawPalette.accent ?? selectedScreen.palette.accent ?? '#F59E0B',
-          background: rawPalette.background ?? selectedScreen.palette.background ?? '#FFFFFF',
+          primary: rawPalette.primary ?? screenSnapshot.palette.primary ?? '#3B82F6',
+          secondary: rawPalette.secondary ?? screenSnapshot.palette.secondary ?? '#8B5CF6',
+          accent: rawPalette.accent ?? screenSnapshot.palette.accent ?? '#F59E0B',
+          background: rawPalette.background ?? screenSnapshot.palette.background ?? '#FFFFFF',
         }
         const vibeAnalysis = await inferVibe({
           url: newImage.url,
@@ -435,45 +501,116 @@ function FlowEditorPageInner() {
         })
 
         addHistory({
-          screenId: selectedScreenId,
+          screenId,
           type: 'image_replace',
-          before: selectedScreen,
-          after: { ...selectedScreen, hero_image: newImage, palette, vibe: vibeAnalysis.vibe },
+          before: screenSnapshot,
+          after: { ...screenSnapshot, hero_image: newImage, palette, vibe: vibeAnalysis.vibe },
         })
 
-        await updateScreen(selectedScreenId, {
+        await updateScreen(screenId, {
           hero_image: newImage,
           palette,
           vibe: vibeAnalysis.vibe,
         })
+
+        showToast({
+          title: 'Hero image updated',
+          description: 'Palette and vibe synced to the new artwork.',
+          variant: 'success',
+        })
       } catch (error) {
         console.error('Failed to replace hero image:', error)
-        setPageError(error instanceof Error ? error.message : 'Failed to replace hero image')
+        const message = error instanceof Error ? error.message : 'Failed to replace hero image'
+        setPageError(message)
+        showToast({
+          title: 'Failed to replace hero image',
+          description: message,
+          variant: 'error',
+        })
       } finally {
         setHeroUpdateLoading(false)
       }
     },
-    [addHistory, selectedScreen, selectedScreenId, updateScreen]
+    [addHistory, showToast, updateScreen],
   )
 
-  const handleDeleteScreen = useCallback(
-    async (screenId: string) => {
-      if (!flowId) return
-      const confirmed = window.confirm('Delete this screen? This action cannot be undone.')
-      if (!confirmed) return
+  const handleHeroReplaceRequest = useCallback(
+    (newImage: HeroImageType) => {
+      if (!selectedScreenId || !selectedScreen) return
+      setPendingHeroReplace({
+        screenId: selectedScreenId,
+        screenSnapshot: selectedScreen,
+        newImage,
+      })
+    },
+    [selectedScreen, selectedScreenId],
+  )
 
-      try {
-        await removeFlowScreen(flowId, screenId)
-        await refreshScreensAndGraph()
-        if (selectedScreenId === screenId) {
-          setSelectedScreenId(null)
-        }
-      } catch (error) {
-        console.error('Failed to delete screen:', error)
-        setPageError(error instanceof Error ? error.message : 'Failed to delete screen')
+  const confirmHeroReplace = useCallback(async () => {
+    if (!pendingHeroReplace) return
+    await performHeroReplace(
+      pendingHeroReplace.screenId,
+      pendingHeroReplace.screenSnapshot,
+      pendingHeroReplace.newImage,
+    )
+    setPendingHeroReplace(null)
+  }, [pendingHeroReplace, performHeroReplace])
+
+  const handleHeroDialogOpenChange = useCallback(
+    (open: boolean) => {
+      if (!open && !heroUpdateLoading) {
+        setPendingHeroReplace(null)
       }
     },
-    [flowId, refreshScreensAndGraph, removeFlowScreen, selectedScreenId]
+    [heroUpdateLoading],
+  )
+
+  const requestDeleteScreen = useCallback(
+    (screenId: string) => {
+      const target = screensWithIds.find((screen) => screen.id === screenId)
+      const label =
+        target?.dsl.components.find((component) => component.type === 'title')?.content || 'Untitled screen'
+      setDeleteDialog({ screenId, label })
+    },
+    [screensWithIds],
+  )
+
+  const confirmDeleteScreen = useCallback(async () => {
+    if (!flowId || !deleteDialog) return
+    setIsDeletingScreen(true)
+    try {
+      await removeFlowScreen(flowId, deleteDialog.screenId)
+      await refreshScreensAndGraph()
+      if (selectedScreenId === deleteDialog.screenId) {
+        setSelectedScreenId(null)
+      }
+      showToast({
+        title: 'Screen deleted',
+        description: `${deleteDialog.label} removed from the flow.`,
+        variant: 'success',
+      })
+    } catch (error) {
+      console.error('Failed to delete screen:', error)
+      const message = error instanceof Error ? error.message : 'Failed to delete screen'
+      setPageError(message)
+      showToast({
+        title: 'Failed to delete screen',
+        description: message,
+        variant: 'error',
+      })
+    } finally {
+      setIsDeletingScreen(false)
+      setDeleteDialog(null)
+    }
+  }, [deleteDialog, flowId, refreshScreensAndGraph, removeFlowScreen, selectedScreenId, showToast])
+
+  const handleDeleteDialogOpenChange = useCallback(
+    (open: boolean) => {
+      if (!open && !isDeletingScreen) {
+        setDeleteDialog(null)
+      }
+    },
+    [isDeletingScreen],
   )
 
   const handleDuplicateScreen = useCallback(
@@ -499,12 +636,22 @@ function FlowEditorPageInner() {
         const result = await response.json()
         await loadFlowScreens(flowId)
         setPendingSelectScreenId(result.screen?.id || result.screenId || null)
+        showToast({
+          title: 'Screen duplicated',
+          description: 'A copy was added right after the original.',
+          variant: 'success',
+        })
       } catch (error) {
         console.error('Failed to duplicate screen:', error)
         setPageError(error instanceof Error ? error.message : 'Failed to duplicate screen')
+        showToast({
+          title: 'Failed to duplicate screen',
+          description: error instanceof Error ? error.message : 'Unknown error occurred',
+          variant: 'error',
+        })
       }
     },
-    [flowId, loadFlowScreens, screensWithIds]
+    [flowId, loadFlowScreens, screensWithIds, showToast],
   )
 
   const handleReorderScreen = useCallback(
@@ -596,6 +743,13 @@ function FlowEditorPageInner() {
           </div>
           <EditModeToggle editMode={isEditMode} onToggle={setEditMode} />
         </div>
+
+        {flowLoading && (
+          <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white/80 px-4 py-2 text-sm text-slate-600">
+            <Loader2 className="h-4 w-4 animate-spin" />
+            Syncing latest changes...
+          </div>
+        )}
 
         {combinedError && (
           <Alert variant="destructive">
@@ -730,7 +884,7 @@ function FlowEditorPageInner() {
                               variant="ghost"
                               size="icon"
                               className="h-8 w-8 text-red-500 hover:text-red-600"
-                              onClick={() => handleDeleteScreen(screen.id)}
+                              onClick={() => requestDeleteScreen(screen.id)}
                             >
                               <Trash2 className="h-4 w-4" />
                             </Button>
@@ -838,15 +992,20 @@ function FlowEditorPageInner() {
                   </CardHeader>
                   <CardContent className="space-y-6">
                     {!selectedScreen && (
-                      <p className="text-sm text-muted-foreground">Select a screen to edit its details.</p>
+                      <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50/70 px-4 py-10 text-center text-sm text-muted-foreground">
+                        Select a screen to edit its details. Generated screens appear here with hero, palette, and pattern controls.
+                      </div>
                     )}
 
                     {selectedScreen && selectedScreenWithId && (
-                      <>
+                      <div className="space-y-5">
                         {selectedScreen.hero_image && (
-                          <div className="space-y-3">
+                          <div className="rounded-2xl border bg-white/80 p-4 shadow-sm">
                             <div className="flex items-center justify-between">
-                              <h3 className="text-sm font-medium">Hero Image</h3>
+                              <div>
+                                <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Hero</p>
+                                <h3 className="text-base font-semibold text-slate-900">Hero Image</h3>
+                              </div>
                               {heroUpdateLoading && (
                                 <span className="text-xs text-muted-foreground flex items-center gap-1">
                                   <Loader2 className="h-3 w-3 animate-spin" />
@@ -854,10 +1013,10 @@ function FlowEditorPageInner() {
                                 </span>
                               )}
                             </div>
-                            <div className="overflow-hidden rounded-lg border">
+                            <div className="mt-3 overflow-hidden rounded-xl border">
                               <ImageReplacer
                                 image={selectedScreen.hero_image}
-                                onReplace={handleHeroReplace}
+                                onReplace={handleHeroReplaceRequest}
                                 editMode={isEditMode}
                                 size="large"
                                 palette={selectedScreen.palette}
@@ -866,14 +1025,18 @@ function FlowEditorPageInner() {
                           </div>
                         )}
 
-                        <PaletteEditor dsl={selectedScreen} screenId={selectedScreenWithId.id} />
-                        <VibeSelector dsl={selectedScreen} screenId={selectedScreenWithId.id} />
+                        <div className="rounded-2xl border bg-white/80 p-4 shadow-sm space-y-4">
+                          <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Palette & vibe</p>
+                          <PaletteEditor dsl={selectedScreen} screenId={selectedScreenWithId.id} />
+                          <VibeSelector dsl={selectedScreen} screenId={selectedScreenWithId.id} />
+                        </div>
 
-                        <div className="flex flex-col gap-4">
+                        <div className="rounded-2xl border bg-white/80 p-4 shadow-sm space-y-4">
+                          <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Layout pattern</p>
                           <PatternFamilySelector dsl={selectedScreen} screenId={selectedScreenWithId.id} />
                           <PatternVariantSelector dsl={selectedScreen} screenId={selectedScreenWithId.id} />
                         </div>
-                      </>
+                      </div>
                     )}
                   </CardContent>
                 </Card>
@@ -947,6 +1110,73 @@ function FlowEditorPageInner() {
             </Card>
           </TabsContent>
         </Tabs>
+
+        <Dialog open={Boolean(deleteDialog)} onOpenChange={handleDeleteDialogOpenChange}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Delete this screen?</DialogTitle>
+              <DialogDescription>
+                This action permanently removes <span className="font-medium text-slate-900">{deleteDialog?.label}</span> from the flow,
+                including its hero image and navigation branches.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="rounded-xl border border-rose-100 bg-rose-50/70 px-4 py-3 text-sm text-rose-700 flex items-center gap-2">
+              <AlertTriangle className="h-4 w-4" />
+              Deleting screens can break navigation paths—double-check before continuing.
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setDeleteDialog(null)} disabled={isDeletingScreen}>
+                Cancel
+              </Button>
+              <Button variant="destructive" onClick={confirmDeleteScreen} disabled={isDeletingScreen}>
+                {isDeletingScreen ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Deleting…
+                  </>
+                ) : (
+                  'Delete screen'
+                )}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        <Dialog open={Boolean(pendingHeroReplace)} onOpenChange={handleHeroDialogOpenChange}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Replace hero image?</DialogTitle>
+              <DialogDescription>
+                The palette and vibe for this screen will be rebalanced to match the new artwork.
+              </DialogDescription>
+            </DialogHeader>
+            {pendingHeroReplace && (
+              <div className="overflow-hidden rounded-xl border">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={pendingHeroReplace.newImage.url}
+                  alt="New hero preview"
+                  className="h-48 w-full object-cover"
+                />
+              </div>
+            )}
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setPendingHeroReplace(null)} disabled={heroUpdateLoading}>
+                Keep current image
+              </Button>
+              <Button onClick={confirmHeroReplace} disabled={heroUpdateLoading}>
+                {heroUpdateLoading ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Replacing…
+                  </>
+                ) : (
+                  'Replace image'
+                )}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </main>
     </div>
   )

@@ -20,6 +20,12 @@ vi.mock('reactflow', () => ({
   applyNodeChanges: (changes: any, nodes: any) => nodes,
   applyEdgeChanges: (changes: any, edges: any) => edges,
   addEdge: (edge: any, edges: any) => [...edges, edge],
+  MarkerType: {
+    ArrowClosed: 'ArrowClosed',
+  },
+  ConnectionLineType: {
+    SmoothStep: 'smoothstep',
+  },
 }))
 
 vi.mock('reactflow/dist/style.css', () => ({}))

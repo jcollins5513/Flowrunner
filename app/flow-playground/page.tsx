@@ -1,6 +1,8 @@
 'use client'
 
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { Loader2 } from 'lucide-react'
 import { InteractiveScreen } from '@/components/flow/InteractiveScreen'
 import type { ScreenOption } from '@/components/flow/ScreenPickerModal'
 import {
@@ -14,6 +16,8 @@ import {
 } from '@/lib/dsl/types'
 import { type NextScreenTriggerContext } from '@/lib/flows/types'
 import { generateNextScreen } from '@/lib/flows/next-screen-generator'
+import { Button } from '@/components/ui/button'
+import { useToast } from '@/components/ui/toast-provider'
 
 const PATTERN_SEQUENCE: PatternFamily[] = [
   'ONB_HERO_TOP',
@@ -175,8 +179,20 @@ function createScreen(step: number, prompt: string): ScreenDSL {
 }
 
 export default function FlowPlaygroundPage() {
+  const router = useRouter()
+  const { showToast } = useToast()
   const [prompt, setPrompt] = useState(PROMPT_SUGGESTIONS[0])
   const [screens, setScreens] = useState<ScreenDSL[]>(() => [createScreen(0, PROMPT_SUGGESTIONS[0])])
+  const [flowNameTouched, setFlowNameTouched] = useState(false)
+  const [flowName, setFlowName] = useState(() => deriveFlowName(PROMPT_SUGGESTIONS[0]))
+  const [flowDescription, setFlowDescription] = useState('Draft created in Flow Playground.')
+  const [isSavingFlow, setIsSavingFlow] = useState(false)
+
+  useEffect(() => {
+    if (!flowNameTouched) {
+      setFlowName(deriveFlowName(prompt))
+    }
+  }, [flowNameTouched, prompt])
 
   const handleGenerate = useCallback(() => {
     setScreens((current) => [...current, createScreen(current.length, prompt)])
@@ -258,9 +274,52 @@ export default function FlowPlaygroundPage() {
   }, [screens])
 
   const canGenerate = useMemo(() => prompt.trim().length > 0, [prompt])
+  const canSaveFlow = useMemo(
+    () => flowName.trim().length > 0 && screens.length > 0 && !isSavingFlow,
+    [flowName, screens.length, isSavingFlow],
+  )
+
+  const handleSaveFlow = useCallback(async () => {
+    if (!canSaveFlow) return
+    setIsSavingFlow(true)
+    try {
+      const response = await fetch('/api/flows', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: flowName.trim(),
+          description: flowDescription.trim() || undefined,
+          initialScreens: screens,
+          isPublic: false,
+        }),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.error || 'Failed to save flow')
+      }
+
+      const flow = await response.json()
+      showToast({
+        title: 'Flow saved',
+        description: 'Redirecting you to the editor…',
+        variant: 'success',
+      })
+      router.push(`/flows/${flow.id}/edit`)
+    } catch (error) {
+      console.error('Failed to save flow from playground', error)
+      showToast({
+        title: 'Unable to save flow',
+        description: error instanceof Error ? error.message : 'Unknown error occurred',
+        variant: 'error',
+      })
+    } finally {
+      setIsSavingFlow(false)
+    }
+  }, [canSaveFlow, flowDescription, flowName, router, screens, showToast])
 
   return (
-    <div className="px-6 py-10 space-y-10">
+    <div className="container mx-auto px-6 py-10 space-y-10">
       <section className="max-w-4xl mx-auto space-y-4 rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm">
         <header className="space-y-2">
           <p className="text-xs uppercase tracking-wide text-slate-500">Experiment</p>
@@ -318,6 +377,59 @@ export default function FlowPlaygroundPage() {
         </div>
       </section>
 
+      <section className="max-w-4xl mx-auto space-y-6 rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm">
+        <header className="space-y-1">
+          <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Continue in editor</p>
+          <h2 className="text-2xl font-semibold text-slate-900">Save this playground flow</h2>
+          <p className="text-sm text-slate-600">
+            Capture everything you&apos;ve generated so far and jump straight into the full editor with inline edits, palette controls, and hero
+            replacements.
+          </p>
+        </header>
+
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-slate-700">Flow name</label>
+            <input
+              value={flowName}
+              onChange={(event) => {
+                setFlowNameTouched(true)
+                setFlowName(event.target.value)
+              }}
+              className="w-full rounded-xl border border-slate-200 p-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500"
+              placeholder="e.g., AI launch assistant onboarding"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-slate-700">Description (optional)</label>
+            <input
+              value={flowDescription}
+              onChange={(event) => setFlowDescription(event.target.value)}
+              className="w-full rounded-xl border border-slate-200 p-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500"
+              placeholder="Short summary for the gallery/editor"
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-dashed border-slate-200 bg-slate-50/70 px-4 py-3 text-sm text-slate-600">
+          <p>
+            {screens.length === 1
+              ? '1 generated screen will be added to your new flow.'
+              : `${screens.length} generated screens will be added to your new flow.`}
+          </p>
+          <Button onClick={handleSaveFlow} disabled={!canSaveFlow} className="min-w-[160px] justify-center">
+            {isSavingFlow ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Saving…
+              </>
+            ) : (
+              'Save as Flow'
+            )}
+          </Button>
+        </div>
+      </section>
+
       <section className="mx-auto max-w-5xl space-y-12">
         {screens.map((screen, index) => (
           <article key={`${screen.pattern_family}-${index}`} className="space-y-4">
@@ -347,4 +459,11 @@ export default function FlowPlaygroundPage() {
       </section>
     </div>
   )
+}
+
+function deriveFlowName(value: string) {
+  const fallback = 'Flow Playground Draft'
+  const trimmed = value.trim()
+  if (!trimmed) return fallback
+  return trimmed.length > 80 ? `${trimmed.slice(0, 77)}…` : trimmed
 }

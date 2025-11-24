@@ -76,7 +76,7 @@ export function InteractiveScreen({
   }, [])
 
   useEffect(() => {
-    if (!menuState) return
+    if (!menuState || showScreenPicker || showNavConfig) return
     const handlePointerDown = (event: MouseEvent) => {
       if (!(event.target instanceof Element)) return
       if (event.target.closest('[data-flow-interactive-menu]')) {
@@ -86,7 +86,7 @@ export function InteractiveScreen({
     }
     document.addEventListener('pointerdown', handlePointerDown)
     return () => document.removeEventListener('pointerdown', handlePointerDown)
-  }, [menuState, closeMenu])
+  }, [menuState, closeMenu, showNavConfig, showScreenPicker])
 
   const handleComponentClick = useCallback(
     (

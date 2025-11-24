@@ -1332,7 +1332,7 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 - [x] Improved screen loading and refresh logic
 
 ### A.4 Connect Existing Pieces ✅
-- [ ] Wire flow playground to save flows option - *Deferred to A.6*
+- [x] Wire flow playground to save flows option - *Deferred to A.6*
 - [x] Connect gallery page to flow editor
 - [x] Connect flow detail page to flow editor
 - [x] Ensure all API endpoints are accessible from UI
@@ -1350,10 +1350,10 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 - [x] Connect palette editor + vibe selector UI to the screen update API
 - [x] Hook pattern family/variant selectors into migration utilities and refresh renderer on change
 - [x] Add hero image replacement flow (ImageReplacer + ImageLibraryPicker) with palette/vibe refresh
-- [ ] Add "Save as Flow" button to flow playground (`app/flow-playground/page.tsx`)
+- [x] Add "Save as Flow" button to flow playground (`app/flow-playground/page.tsx`)
 - [x] Add screen deletion/reordering/duplication UI in editor
 - [x] Add screen list sidebar for quick navigation
-- [ ] Improve editor UX: loading states, toasts, destructive action confirmations, spacing polish
+- [x] Improve editor UX: loading states, toasts, destructive action confirmations, spacing polish
 
 **Technical Notes:**
 - Focus on connecting existing backend features to UI
