@@ -3,12 +3,17 @@ import { z } from 'zod'
 
 // Base schemas
 
+const hexColor = z
+  .string()
+  .regex(/^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/)
+  .describe('Hex color (supports 3 or 6 characters)')
+
 export const paletteSchema = z
   .object({
-    primary: z.string().describe('Primary color in hex format'),
-    secondary: z.string().describe('Secondary color in hex format'),
-    accent: z.string().describe('Accent color in hex format'),
-    background: z.string().describe('Background color in hex format'),
+    primary: hexColor.describe('Primary color in hex format'),
+    secondary: hexColor.describe('Secondary color in hex format'),
+    accent: hexColor.describe('Accent color in hex format'),
+    background: hexColor.describe('Background color in hex format'),
   })
   .describe('Color palette with primary, secondary, accent, and background colors')
 
@@ -68,7 +73,7 @@ export const componentSchema = z
     type: z
       .enum(['title', 'subtitle', 'button', 'form', 'text', 'image'])
       .describe('Type of component'),
-    content: z.string().describe('Text content or label for the component'),
+    content: z.string().min(1).describe('Text content or label for the component'),
     props: z.record(z.unknown()).optional().describe('Additional component properties'),
   })
   .describe('UI component definition')

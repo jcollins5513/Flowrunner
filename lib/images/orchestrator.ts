@@ -45,7 +45,18 @@ export class ImageOrchestrator {
 
     let palette: Palette
     if (this.options.autoExtractPalette !== false) {
-      palette = await extractPalette({ url: job.result.url })
+      try {
+        palette = await extractPalette({ url: job.result.url })
+      } catch (error) {
+        console.warn('Failed to extract palette, using defaults:', error)
+        palette = {
+          primary: '#3B82F6',
+          secondary: '#8B5CF6',
+          accent: '#F59E0B',
+          background: '#FFFFFF',
+          text: '#1F2937',
+        }
+      }
     } else {
       palette = {
         primary: '#3B82F6',
@@ -60,11 +71,27 @@ export class ImageOrchestrator {
     let vibe: Vibe | undefined
     let vibeAnalysis: VibeAnalysis | undefined
     if (this.options.autoInferVibe !== false) {
-      vibeAnalysis = await inferVibe({
-        url: job.result.url,
-        palette,
-      })
-      vibe = vibeAnalysis.vibe
+      try {
+        vibeAnalysis = await inferVibe({
+          url: job.result.url,
+          palette,
+        })
+        vibe = vibeAnalysis.vibe
+      } catch (error) {
+        console.warn('Failed to infer vibe, using default vibe:', error)
+        vibeAnalysis = {
+          vibe: 'modern',
+          confidence: 0.5,
+          characteristics: {
+            colorSaturation: 0.5,
+            visualWeight: 0.5,
+            compositionComplexity: 0.5,
+            colorTemperature: 0,
+            brightness: 0.5,
+          },
+        }
+        vibe = 'modern'
+      }
     }
 
     // Persist image if enabled

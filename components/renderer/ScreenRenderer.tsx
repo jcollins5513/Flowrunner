@@ -79,6 +79,7 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
     const schemaResult = validateScreenDSL(dsl)
     if (!schemaResult.success) {
       setValidationError(`DSL Schema Error: ${schemaResult.formattedErrors?.join(', ') || schemaResult.error?.message}`)
+      setLoading(false)
       return
     }
 

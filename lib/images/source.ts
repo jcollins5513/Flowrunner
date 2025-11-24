@@ -1,4 +1,4 @@
-import { promises as fs } from 'fs'
+import fs from 'fs/promises'
 import path from 'path'
 
 const HTTP_REGEX = /^https?:\/\//i

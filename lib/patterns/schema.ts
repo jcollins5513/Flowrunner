@@ -75,6 +75,25 @@ export const patternDefinitionSchema = z.object({
     hero: imagePlacementSchema.describe('Hero image placement configuration'),
     supporting: z.array(imagePlacementSchema).optional().describe('Supporting image placements (if applicable)'),
   }),
+}).superRefine((value, ctx) => {
+  const hasHeroSlot = Boolean(value.layout.positions.hero_image)
+  if (!hasHeroSlot && !value.imagePlacement.hero) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: 'hero_image placement must be declared in layout.positions or imagePlacement.hero',
+      path: ['layout', 'positions'],
+    })
+  }
+
+  value.componentSlots.required.forEach((slot) => {
+    if (!value.layout.positions[slot]) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `Required slot ${slot} is missing a layout position`,
+        path: ['layout', 'positions', slot],
+      })
+    }
+  })
 })
 
 export type PatternDefinition = z.infer<typeof patternDefinitionSchema>

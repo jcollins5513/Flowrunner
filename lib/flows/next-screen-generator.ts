@@ -17,6 +17,7 @@ import { ImageOrchestrator } from '../images/orchestrator'
 import { ImageGenerationService } from '../images/generation/service'
 import { MockImageProvider } from '../images/generation/providers/mock'
 import { ALL_PATTERN_FAMILIES } from '../patterns/families'
+import { persistHeroImageMetadata } from '../db/hero-image-persistence'
 
 /**
  * Pattern suggestion heuristics
@@ -256,6 +257,15 @@ export async function generateNextScreen(
       // style is optional - let the orchestrator use defaults or infer from visualTheme
       visualTheme: screenContext.flowMetadata?.theme,
     })
+
+    try {
+      await persistHeroImageMetadata(heroImage, {
+        userId: options.userId,
+        domain: screenContext.flowMetadata?.domain ?? pipelineResult.intent.domain,
+      })
+    } catch (error) {
+      console.warn('Unable to persist hero image metadata for next screen generation', error)
+    }
 
     // Stage 5: Build DSL (70%)
     onProgress?.('building-screen', 70)

@@ -12,6 +12,7 @@ import type { ScreenContext } from '@/lib/flows/types'
 import { validateScreenDSL } from '@/lib/dsl/validator'
 import type { PatternFamily, PatternVariant, Palette, Vibe, Component } from '@/lib/dsl/types'
 import { ASPECT_RATIOS, AspectRatio } from '@/lib/images/generation/types'
+import { persistHeroImageMetadata } from '@/lib/db/hero-image-persistence'
 
 export async function POST(
   request: Request,
@@ -89,6 +90,15 @@ export async function POST(
       aspectRatio: resolveAspectRatio(plan.heroPlan.aspectRatio),
       visualTheme: visualTheme,
     })
+
+    try {
+      await persistHeroImageMetadata(heroImage, {
+        userId: flow.userId ?? undefined,
+        domain: flow.domain,
+      })
+    } catch (error) {
+      console.warn('Failed to persist hero image metadata for first screen', error)
+    }
 
     // Validate hero image was generated
     if (!heroImage?.image?.url) {

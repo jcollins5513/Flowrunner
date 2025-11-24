@@ -189,6 +189,7 @@ export interface GenerateNextScreenOptions {
   onProgress?: (stage: string, progress: number) => void
   imageOrchestrator?: any // ImageOrchestrator instance
   flowEngine?: any // FlowEngine instance
+  userId?: string
 }
 
 /**
