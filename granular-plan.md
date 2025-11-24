@@ -289,7 +289,7 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 - [x] Create palette harmonization algorithm
 - [x] Store extracted palette in image metadata
 - [x] Add palette validation (ensure contrast, accessibility)
-- [ ] Add offline/local-image fallback so palette extraction skips remote fetch when using bundled mock assets
+- [x] Add offline/local-image fallback so palette extraction skips remote fetch when using bundled mock assets
 
 **Technical Notes:**
 - Palette extraction must be deterministic
@@ -311,7 +311,7 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 - [x] Store vibe in image metadata
 - [x] Allow manual vibe override
 - [x] Create vibe-to-pattern compatibility mapping
-- [ ] Short-circuit vibe analyzers for local mock images to avoid failed fetches/offline noise
+- [x] Short-circuit vibe analyzers for local mock images to avoid failed fetches/offline noise
 
 **Technical Notes:**
 - Vibe inference can use LLM or rule-based system
@@ -1345,14 +1345,14 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 - [ ] Verify all core features are accessible
 
 ### A.6 Advanced Editing & Polish (Next Phase)
-- [ ] Wire edit mode toggle + editing context into `/flows/[flowId]/edit`
-- [ ] Integrate EditableTitle/Subtitle/Text/Button/Form components so inline edits persist via FlowProvider
-- [ ] Connect palette editor + vibe selector UI to the screen update API
-- [ ] Hook pattern family/variant selectors into migration utilities and refresh renderer on change
-- [ ] Add hero image replacement flow (ImageReplacer + ImageLibraryPicker) with palette/vibe refresh
+- [x] Wire edit mode toggle + editing context into `/flows/[flowId]/edit`
+- [x] Integrate EditableTitle/Subtitle/Text/Button/Form components so inline edits persist via FlowProvider
+- [x] Connect palette editor + vibe selector UI to the screen update API
+- [x] Hook pattern family/variant selectors into migration utilities and refresh renderer on change
+- [x] Add hero image replacement flow (ImageReplacer + ImageLibraryPicker) with palette/vibe refresh
 - [ ] Add "Save as Flow" button to flow playground (`app/flow-playground/page.tsx`)
-- [ ] Add screen deletion/reordering/duplication UI in editor
-- [ ] Add screen list sidebar for quick navigation
+- [x] Add screen deletion/reordering/duplication UI in editor
+- [x] Add screen list sidebar for quick navigation
 - [ ] Improve editor UX: loading states, toasts, destructive action confirmations, spacing polish
 
 **Technical Notes:**

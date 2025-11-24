@@ -11,6 +11,7 @@ import { FlowEngine } from '@/lib/flows/engine'
 import type { ScreenContext } from '@/lib/flows/types'
 import { validateScreenDSL } from '@/lib/dsl/validator'
 import type { PatternFamily, PatternVariant, Palette, Vibe, Component } from '@/lib/dsl/types'
+import { ASPECT_RATIOS, AspectRatio } from '@/lib/images/generation/types'
 
 export async function POST(
   request: Request,
@@ -76,9 +77,16 @@ export async function POST(
     // Use guidance visualTheme if provided, otherwise fall back to flow theme or plan
     const visualTheme = guidance?.visualTheme || flowTheme || plan.heroPlan.colorMood
 
+    const resolveAspectRatio = (value: string | undefined): AspectRatio => {
+      if (value && (ASPECT_RATIOS as readonly string[]).includes(value)) {
+        return value as AspectRatio
+      }
+      return '16:9'
+    }
+
     const heroImage = await orchestrator.generateHeroImageWithPalette({
       prompt: plan.heroPlan.imagePrompt,
-      aspectRatio: plan.heroPlan.aspectRatio,
+      aspectRatio: resolveAspectRatio(plan.heroPlan.aspectRatio),
       visualTheme: visualTheme,
     })
 
@@ -130,7 +138,7 @@ export async function POST(
     // Validate DSL before saving
     console.log('Validating DSL:', JSON.stringify(screenDSL, null, 2))
     const validation = validateScreenDSL(screenDSL)
-    if (!validation.success) {
+    if (!validation.success || !validation.data) {
       console.error('DSL validation failed:', validation.formattedErrors)
       console.error('Validation error details:', validation.error)
       const errorMessage = validation.formattedErrors?.join(', ') || validation.error?.message || 'Unknown validation error'
@@ -149,9 +157,11 @@ export async function POST(
     
     console.log('DSL validation passed!')
 
+    const validatedDSL = validation.data
+
     // Stage 4: Save to flow
     const { screen } = await insertScreen(flowId, {
-      screenDSL: validation.data,
+      screenDSL: validatedDSL,
       position: 'start',
       heroImageId: heroImage.imageId,
     })

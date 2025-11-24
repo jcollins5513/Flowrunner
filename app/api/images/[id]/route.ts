@@ -3,11 +3,12 @@ import { ImageRepository } from '@/lib/images/repository'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const repository = new ImageRepository()
-    const image = await repository.getImageById(params.id)
+    const image = await repository.getImageById(id)
 
     if (!image) {
       return NextResponse.json({ error: 'Image not found' }, { status: 404 })

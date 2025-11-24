@@ -3,9 +3,10 @@ import { ImageRepository } from '@/lib/images/repository'
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const body = await request.json()
     const { isFavorite } = body
 
@@ -17,7 +18,7 @@ export async function PATCH(
     }
 
     const repository = new ImageRepository()
-    const image = await repository.updateFavorite(params.id, isFavorite)
+    const image = await repository.updateFavorite(id, isFavorite)
 
     return NextResponse.json({
       id: image.id,

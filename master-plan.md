@@ -114,11 +114,11 @@ FlowRunner uses a strict pipeline to ensure consistent outputs.
 5. **Pattern → Variant (5 per family)** ✅
 6. **Generate Hero Image** ✅
 7. **Extract Palette & Vibe** ✅
-8. **Fill Components with Creative Text**
-9. **Assemble DSL**
-10. **Validate via Zod**
-11. **Persist Revision**
-12. **Render UI**
+8. **Fill Components with Creative Text** ✅
+9. **Assemble DSL** ✅
+10. **Validate via Zod** ✅
+11. **Persist Revision** ✅
+12. **Render UI** ✅
 
 Every execution follows this pipeline.
 

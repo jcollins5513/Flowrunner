@@ -18,6 +18,8 @@ import ReactFlow, {
   applyEdgeChanges,
   addEdge,
   type Connection,
+  MarkerType,
+  ConnectionLineType,
 } from 'reactflow'
 import 'reactflow/dist/style.css'
 
@@ -31,7 +33,7 @@ import {
   hasBranching,
   getBranchTargets,
 } from '@/lib/flows/diagram-utils'
-import type { FlowNavigationGraph } from '@/lib/flows/types'
+import type { FlowNavigationGraph, ScreenSequenceEntry } from '@/lib/flows/types'
 import type { ScreenDSL } from '@/lib/dsl/types'
 import { Button } from '@/components/ui/button'
 import { Loader2, RefreshCw, GitBranch, Trash2, X } from 'lucide-react'
@@ -106,7 +108,7 @@ export function NavigationDiagram({
 
         const data = await response.json()
         // Convert array back to Map
-        const screensMap = new Map(
+        const screensMap = new Map<string, ScreenSequenceEntry>(
           (data.screens || []).map((s: any) => [
             s.id || s.screenId,
             {
@@ -162,7 +164,7 @@ export function NavigationDiagram({
   )
 
   const onEdgesChange: OnEdgesChange = useCallback(
-    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
+    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds as Edge[]) as DiagramEdge[]),
     []
   )
 
@@ -186,12 +188,12 @@ export function NavigationDiagram({
           strokeWidth: 2,
         },
         markerEnd: {
-          type: 'arrowclosed',
+          type: MarkerType.ArrowClosed,
           color: '#64748b',
         },
       }
 
-      setEdges((eds) => addEdge(newEdge, eds))
+      setEdges((eds) => addEdge(newEdge, eds as Edge[]) as DiagramEdge[])
     },
     [onNavigationEdit]
   )
@@ -361,7 +363,7 @@ export function NavigationDiagram({
         nodeTypes={nodeTypes}
         fitView
         fitViewOptions={{ padding: 0.2 }}
-        connectionLineType="smoothstep"
+        connectionLineType={ConnectionLineType.SmoothStep}
         defaultEdgeOptions={{
           type: 'smoothstep',
           animated: false,

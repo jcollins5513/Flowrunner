@@ -3,7 +3,7 @@
 
 import type { FlowNavigationGraph, ScreenSequenceEntry } from './types'
 import type { ScreenDSL } from '../dsl/types'
-import type { Node, Edge } from 'reactflow'
+import { MarkerType, type Node, type Edge } from 'reactflow'
 
 export interface DiagramNode extends Node {
   data: {
@@ -15,14 +15,13 @@ export interface DiagramNode extends Node {
   }
 }
 
-export interface DiagramEdge extends Edge {
+export type DiagramEdgeData = {
+  trigger?: string
+  condition?: string
   label?: string
-  data?: {
-    trigger?: string
-    condition?: string
-    label?: string
-  }
 }
+
+export type DiagramEdge = Edge<DiagramEdgeData>
 
 const NODE_WIDTH = 200
 const NODE_HEIGHT = 150
@@ -205,7 +204,7 @@ export function convertGraphToReactFlow(
         strokeWidth: 2,
       },
       markerEnd: {
-        type: 'arrowclosed',
+        type: MarkerType.ArrowClosed,
         color: '#64748b',
       },
     })

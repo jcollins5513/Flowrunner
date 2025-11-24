@@ -8,14 +8,15 @@ const updateTagsSchema = z.object({
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const body = await request.json()
     const validated = updateTagsSchema.parse(body)
 
     const repository = new ImageRepository()
-    const image = await repository.updateTags(params.id, validated.tags)
+    const image = await repository.updateTags(id, validated.tags)
 
     const tags = ImageRepository.deserializeTags(image.tags)
 

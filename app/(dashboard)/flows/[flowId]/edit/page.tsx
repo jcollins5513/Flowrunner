@@ -81,6 +81,11 @@ const convertScreenRecordToDSL = (screen: any): ScreenDSL | null => {
         }
       : undefined
 
+    if (!heroImage) {
+      console.warn('Screen missing hero image metadata, skipping conversion', screen.id)
+      return null
+    }
+
     return {
       hero_image: heroImage,
       palette,
@@ -212,8 +217,9 @@ function FlowEditorPageInner() {
     if (flowNavigationGraph.screens instanceof Map) {
       return flowNavigationGraph
     }
+    const legacyScreens = (flowNavigationGraph.screens as unknown as any[]) || []
     const screensMap = new Map(
-      (flowNavigationGraph.screens || []).map((screen: any) => [screen.id, { ...screen, screenId: screen.id }])
+      legacyScreens.map((screen: any) => [screen.id, { ...screen, screenId: screen.id }])
     )
     return {
       ...flowNavigationGraph,
@@ -410,12 +416,18 @@ function FlowEditorPageInner() {
 
       setHeroUpdateLoading(true)
       try {
-        const palette =
+        const rawPalette =
           newImage.extractedPalette ??
           (await extractPalette({
             url: newImage.url,
             fallback: selectedScreen.palette,
           }))
+        const palette: ScreenDSL['palette'] = {
+          primary: rawPalette.primary ?? selectedScreen.palette.primary ?? '#3B82F6',
+          secondary: rawPalette.secondary ?? selectedScreen.palette.secondary ?? '#8B5CF6',
+          accent: rawPalette.accent ?? selectedScreen.palette.accent ?? '#F59E0B',
+          background: rawPalette.background ?? selectedScreen.palette.background ?? '#FFFFFF',
+        }
         const vibeAnalysis = await inferVibe({
           url: newImage.url,
           palette,

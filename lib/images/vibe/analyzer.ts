@@ -28,7 +28,7 @@ export const analyzeColorSaturation = async (url: string): Promise<number> => {
   try {
     const vibrant = await getVibrant()
     const source = await getImageSource(url)
-    const palette = await vibrant.from(source).getPalette()
+    const palette = await vibrant.from(source as any).getPalette()
     
     // Extract saturation values from vibrant swatches
     const saturations: number[] = []

@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { ScreenRenderer } from '@/components/renderer/ScreenRenderer'
 import { NavigationDiagram } from '@/components/flow/NavigationDiagram'
-import { FlowMetadata, FlowStats } from '@/lib/flows/types'
+import { FlowMetadata, FlowStats, ScreenSequenceEntry } from '@/lib/flows/types'
 import { ScreenDSL } from '@/lib/dsl/types'
 import type { FlowNavigationGraph } from '@/lib/flows/types'
 import type { ScreenWithId } from '@/lib/flows/diagram-utils'
@@ -52,34 +52,54 @@ export default function FlowDetailPage() {
         if (screensResponse.ok) {
           const screensData = await screensResponse.json()
           // Convert screen data to DSL format
-          const screenDSLs: ScreenDSL[] = screensData.map((screen: any) => {
-            try {
-              return {
-                hero_image: screen.heroImage ? {
-                  id: screen.heroImageId || '',
-                  url: screen.heroImage?.url || '',
-                } : undefined,
-                palette: screen.palette ? JSON.parse(screen.palette) : undefined,
-                vibe: screen.vibe as any,
-                pattern_family: screen.patternFamily as any,
-                pattern_variant: (screen.patternVariant || 1) as any,
-                components: screen.components ? JSON.parse(screen.components) : [],
-                navigation: screen.navigation ? JSON.parse(screen.navigation) : undefined,
-                animations: screen.animations ? JSON.parse(screen.animations) : undefined,
-              } as ScreenDSL
-            } catch (err) {
-              console.error('Error parsing screen:', err)
-              return null
-            }
-          }).filter(Boolean) as ScreenDSL[]
-
-          // Create screens with IDs
           const screensWithIdsData: ScreenWithId[] = screensData
-            .filter((screen: any, idx: number) => screenDSLs[idx] !== null)
-            .map((screen: any, idx: number) => ({
-              id: screen.id,
-              dsl: screenDSLs[idx],
-            }))
+            .map((screen: any) => {
+              try {
+                if (!screen.heroImage) {
+                  console.warn('Gallery screen missing hero image, skipping', screen.id)
+                  return null
+                }
+
+                const palette = screen.palette
+                  ? JSON.parse(screen.palette)
+                  : {
+                      primary: '#3B82F6',
+                      secondary: '#8B5CF6',
+                      accent: '#F59E0B',
+                      background: '#FFFFFF',
+                    }
+
+                const dsl: ScreenDSL = {
+                  hero_image: {
+                    id: screen.heroImageId || screen.heroImage.id || 'hero',
+                    url: screen.heroImage.url || '',
+                    prompt: screen.heroImage.prompt || undefined,
+                    seed: screen.heroImage.seed || undefined,
+                    aspectRatio: screen.heroImage.aspectRatio || undefined,
+                    style: screen.heroImage.style || undefined,
+                    extractedPalette: screen.heroImage.extractedPalette
+                      ? JSON.parse(screen.heroImage.extractedPalette)
+                      : undefined,
+                    vibe: screen.heroImage.vibe || undefined,
+                  },
+                  palette,
+                  vibe: (screen.vibe as ScreenDSL['vibe']) ?? 'modern',
+                  pattern_family: (screen.patternFamily as ScreenDSL['pattern_family']) ?? 'HERO_CENTER_TEXT',
+                  pattern_variant: (screen.patternVariant as ScreenDSL['pattern_variant']) ?? 1,
+                  components: screen.components ? JSON.parse(screen.components) : [],
+                  navigation: screen.navigation ? JSON.parse(screen.navigation) : undefined,
+                  animations: screen.animations ? JSON.parse(screen.animations) : undefined,
+                }
+
+                return { id: screen.id, dsl }
+              } catch (err) {
+                console.error('Error parsing screen:', err)
+                return null
+              }
+            })
+            .filter(Boolean) as ScreenWithId[]
+
+          const screenDSLs = screensWithIdsData.map((entry) => entry.dsl)
 
           setScreens(screenDSLs)
           setScreensWithIds(screensWithIdsData)
@@ -94,8 +114,17 @@ export default function FlowDetailPage() {
         if (navResponse.ok) {
           const navData = await navResponse.json()
           // Convert array back to Map
-          const screensMap = new Map(
-            (navData.screens || []).map((s: any) => [s.id, { ...s, screenId: s.id }])
+          const screensMap = new Map<string, ScreenSequenceEntry>(
+            (navData.screens || []).map((s: any) => [
+              s.id,
+              {
+                screenId: s.screenId ?? s.id,
+                order: s.order ?? 0,
+                parentScreenId: s.parentScreenId,
+                childScreenIds: s.childScreenIds ?? [],
+                navigationTargets: s.navigationTargets ?? [],
+              },
+            ])
           )
 
           const navigationGraph: FlowNavigationGraph = {
