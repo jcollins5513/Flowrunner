@@ -7,7 +7,7 @@ import type {
   GenerateNextScreenOptions,
   GenerateNextScreenResult,
 } from './types'
-import type { ScreenDSL, Component, PatternFamily, PatternVariant, Palette } from '../dsl/types'
+import type { ScreenDSL, Component, PatternFamily, PatternVariant, Palette, Vibe } from '../dsl/types'
 import { runPromptToTemplatePipeline } from '../ai/intent/pipeline'
 import type { ScreenGenerationPlan } from '../flow/templates/selector'
 import type { HeroImageWithPalette } from '../images/orchestrator'
@@ -115,13 +115,24 @@ export function buildScreenDSLFromPlan(
   const paletteFromImage = heroImage.palette
   const finalPalette: Palette = paletteFromImage
     ? {
-        primary: paletteFromImage.primary,
+        primary: paletteFromImage.primary || palette.primary || '#3B82F6',
         secondary: paletteFromImage.secondary || palette.secondary || '#8B5CF6',
         accent: paletteFromImage.accent || palette.accent || '#F59E0B',
         background: paletteFromImage.background || palette.background || '#FFFFFF',
       }
-    : palette
-  const finalVibe = heroImage.vibe || vibe
+    : {
+        primary: palette.primary || '#3B82F6',
+        secondary: palette.secondary || '#8B5CF6',
+        accent: palette.accent || '#F59E0B',
+        background: palette.background || '#FFFFFF',
+      }
+  // Ensure vibe is valid, default to 'modern' if not
+  const validVibes: Vibe[] = ['playful', 'professional', 'bold', 'minimal', 'modern', 'retro', 'elegant', 'energetic', 'calm', 'tech', 'creative', 'corporate']
+  const finalVibe: Vibe = (heroImage.vibe && validVibes.includes(heroImage.vibe as Vibe)) 
+    ? (heroImage.vibe as Vibe)
+    : (vibe && validVibes.includes(vibe)) 
+      ? vibe 
+      : 'modern'
 
   // Build components from textPlan
   // This is a simplified version - in production, you'd use AI or templates
@@ -158,29 +169,43 @@ export function buildScreenDSLFromPlan(
     content: 'Continue',
   })
 
+  // Ensure hero_image has required fields
+  if (!heroImage.image?.url) {
+    throw new Error('Hero image URL is required')
+  }
+
+  // Ensure URL is valid (Zod requires valid URL format)
+  try {
+    new URL(heroImage.image.url)
+  } catch {
+    throw new Error(`Invalid hero image URL: ${heroImage.image.url}`)
+  }
+
+  // Ensure ID is always a string
+  const heroImageId = heroImage.imageId || `hero-${Date.now()}`
+
   return {
     hero_image: {
-      id: heroImage.imageId || `hero-${Date.now()}`,
+      id: String(heroImageId),
       url: heroImage.image.url,
-      prompt: heroImage.image.prompt,
-      seed: heroImage.image.seed,
-      aspectRatio: heroImage.image.aspectRatio,
-      style: heroImage.image.style,
-      extractedPalette: finalPalette,
-      vibe: finalVibe,
+      ...(heroImage.image.prompt && { prompt: heroImage.image.prompt }),
+      ...(heroImage.image.seed !== undefined && { seed: heroImage.image.seed }),
+      ...(heroImage.image.aspectRatio && { aspectRatio: heroImage.image.aspectRatio }),
+      ...(heroImage.image.style && { style: heroImage.image.style }),
+      ...(finalPalette && { extractedPalette: finalPalette }),
+      ...(finalVibe && { vibe: finalVibe }),
     },
     palette: finalPalette,
     vibe: finalVibe,
     pattern_family: pattern.family as PatternFamily,
     pattern_variant: (pattern.variant as PatternVariant) || 1,
     components,
-    navigation: {
-      type: 'internal',
-    },
-    metadata: {
-      generatedFrom: context.patternFamily,
-      planName: plan.name,
-    },
+    ...(context.patternFamily || plan.name ? {
+      metadata: {
+        ...(context.patternFamily && { generatedFrom: context.patternFamily }),
+        ...(plan.name && { planName: plan.name }),
+      },
+    } : {}),
   }
 }
 

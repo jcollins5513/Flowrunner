@@ -21,7 +21,8 @@ export class MockImageProvider implements ImageGenerationProvider {
       await new Promise((resolve) => setTimeout(resolve, this.options.latencyMs))
     }
 
-    const url = this.options.fixedUrl ?? `https://example.com/mock-image-${Date.now()}.png`
+    // Use a valid placeholder image URL (placeholder.com service)
+    const url = this.options.fixedUrl ?? `https://via.placeholder.com/800x600/3B82F6/FFFFFF?text=Mock+Image`
 
     return imageGenerationResultSchema.parse({
       url,

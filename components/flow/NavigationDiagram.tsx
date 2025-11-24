@@ -196,22 +196,6 @@ export function NavigationDiagram({
     [onNavigationEdit]
   )
 
-  const onNodeClick = useCallback(
-    (_event: React.MouseEvent, node: Node) => {
-      if (onScreenSelect) {
-        onScreenSelect(node.id)
-      }
-      
-      // Open branch editor for selected screen in editable mode
-      if (editable) {
-        setSelectedScreenId(node.id)
-        setShowBranchEditor(true)
-        loadBranchesForScreen(node.id)
-      }
-    },
-    [onScreenSelect, editable, loadBranchesForScreen]
-  )
-
   const loadBranchesForScreen = useCallback(async (screenId: string) => {
     setLoadingBranches(true)
     try {
@@ -230,6 +214,22 @@ export function NavigationDiagram({
       setLoadingBranches(false)
     }
   }, [flowId])
+
+  const onNodeClick = useCallback(
+    (_event: React.MouseEvent, node: Node) => {
+      if (onScreenSelect) {
+        onScreenSelect(node.id)
+      }
+      
+      // Open branch editor for selected screen in editable mode
+      if (editable) {
+        setSelectedScreenId(node.id)
+        setShowBranchEditor(true)
+        loadBranchesForScreen(node.id)
+      }
+    },
+    [onScreenSelect, editable, loadBranchesForScreen]
+  )
 
   const onEdgeClick = useCallback(
     (_event: React.MouseEvent, edge: Edge) => {

@@ -42,6 +42,8 @@ export default function FlowEditorPage() {
   const [activeScreenId, setActiveScreenId] = useState<string | undefined>(undefined)
   const [isGenerating, setIsGenerating] = useState(false)
   const [activeTab, setActiveTab] = useState('screens')
+  const [generationPrompt, setGenerationPrompt] = useState('')
+  const [generationProgress, setGenerationProgress] = useState<string | null>(null)
 
   // Settings state
   const [settingsForm, setSettingsForm] = useState({
@@ -57,6 +59,15 @@ export default function FlowEditorPage() {
     const fetchFlow = async () => {
       setLoading(true)
       setError(null)
+      
+      // Check for error in URL params
+      const urlParams = new URLSearchParams(window.location.search)
+      const errorParam = urlParams.get('error')
+      if (errorParam) {
+        setError(decodeURIComponent(errorParam))
+        // Clear the error param from URL
+        window.history.replaceState({}, '', window.location.pathname)
+      }
 
       try {
         // Fetch flow metadata
@@ -157,6 +168,105 @@ export default function FlowEditorPage() {
       }
     })
   }, [screensWithIds])
+
+  // Handle first screen generation
+  const handleGenerateFirstScreen = useCallback(async () => {
+    if (!flowId || !generationPrompt.trim() || isGenerating) return
+
+    setIsGenerating(true)
+    setGenerationProgress('Analyzing your prompt...')
+    setError(null)
+
+    try {
+      const response = await fetch(`/api/flows/${flowId}/generate-first-screen`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: generationPrompt }),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Failed to generate screen')
+      }
+
+      setGenerationProgress('Selecting layout pattern...')
+      const result = await response.json()
+
+      setGenerationProgress('Generating images...')
+      // Small delay to show progress
+      await new Promise((resolve) => setTimeout(resolve, 500))
+
+      setGenerationProgress('Assembling screen...')
+      // Refresh screens and navigation
+      const screensResponse = await fetch(`/api/flows/${flowId}/screens`)
+      if (screensResponse.ok) {
+        const screensData = await screensResponse.json()
+        
+        const screenDSLs: ScreenDSL[] = screensData.map((screen: any) => {
+          try {
+            return {
+              hero_image: screen.heroImage ? {
+                id: screen.heroImageId || '',
+                url: screen.heroImage?.url || '',
+                prompt: screen.heroImage?.prompt || '',
+              } : undefined,
+              palette: screen.palette ? JSON.parse(screen.palette) : undefined,
+              vibe: screen.vibe as any,
+              pattern_family: screen.patternFamily as any,
+              pattern_variant: (screen.patternVariant || 1) as any,
+              components: screen.components ? JSON.parse(screen.components) : [],
+              navigation: screen.navigation ? JSON.parse(screen.navigation) : undefined,
+              animations: screen.animations ? JSON.parse(screen.animations) : undefined,
+              metadata: screen.metadata ? JSON.parse(screen.metadata) : undefined,
+            } as ScreenDSL
+          } catch (err) {
+            console.error('Error parsing screen:', err)
+            return null
+          }
+        }).filter(Boolean) as ScreenDSL[]
+
+        const screensWithIdsData: ScreenWithId[] = screensData
+          .filter((screen: any, idx: number) => screenDSLs[idx] !== null)
+          .map((screen: any, idx: number) => ({
+            id: screen.id,
+            dsl: screenDSLs[idx],
+          }))
+
+        setScreens(screenDSLs)
+        setScreensWithIds(screensWithIdsData)
+        
+        if (screensWithIdsData.length > 0) {
+          setSelectedScreenIndex(0)
+          setActiveScreenId(screensWithIdsData[0]?.id)
+        }
+      }
+
+      // Refresh navigation graph
+      const navResponse = await fetch(`/api/flows/${flowId}/navigation`)
+      if (navResponse.ok) {
+        const navData = await navResponse.json()
+        const screensMap = new Map(
+          (navData.screens || []).map((s: any) => [s.id, { ...s, screenId: s.id }])
+        )
+
+        setGraph({
+          flowId: navData.flowId,
+          entryScreenId: navData.entryScreenId,
+          screens: screensMap,
+          navigationPaths: navData.navigationPaths || [],
+        })
+      }
+
+      setGenerationPrompt('')
+      setGenerationProgress(null)
+    } catch (error) {
+      console.error('Failed to generate first screen:', error)
+      setError(error instanceof Error ? error.message : 'Failed to generate screen')
+      setGenerationProgress(null)
+    } finally {
+      setIsGenerating(false)
+    }
+  }, [flowId, generationPrompt, isGenerating])
 
   // Handle screen generation
   const handleGenerateNext = useCallback(async (context: NextScreenTriggerContext) => {
@@ -432,11 +542,51 @@ export default function FlowEditorPage() {
           <TabsContent value="screens" className="space-y-6">
             {screens.length === 0 ? (
               <Card>
-                <CardContent className="py-12 text-center">
-                  <p className="text-muted-foreground mb-4">No screens in this flow yet.</p>
-                  <p className="text-sm text-muted-foreground">
-                    Create your first screen by using the InteractiveScreen component below.
-                  </p>
+                <CardHeader>
+                  <CardTitle>Create Your First Screen</CardTitle>
+                  <CardDescription>
+                    Describe what you're building and FlowRunner will generate a screen with AI images and layout.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="generation-prompt">What are you building?</Label>
+                    <Textarea
+                      id="generation-prompt"
+                      placeholder="e.g., A landing page for a SaaS product that helps teams collaborate, with a hero section showcasing the main value proposition..."
+                      value={generationPrompt}
+                      onChange={(e) => setGenerationPrompt(e.target.value)}
+                      rows={4}
+                      disabled={isGenerating}
+                      className="resize-none"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      FlowRunner will analyze your prompt, select an appropriate layout pattern, generate AI images based on that layout, and create your first screen.
+                    </p>
+                  </div>
+                  
+                  {generationProgress && (
+                    <Alert>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      <AlertDescription>{generationProgress}</AlertDescription>
+                    </Alert>
+                  )}
+
+                  <div className="flex justify-end">
+                    <Button
+                      onClick={handleGenerateFirstScreen}
+                      disabled={!generationPrompt.trim() || isGenerating}
+                    >
+                      {isGenerating ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Generating...
+                        </>
+                      ) : (
+                        'Generate First Screen'
+                      )}
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             ) : (

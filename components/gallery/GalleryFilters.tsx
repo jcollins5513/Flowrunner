@@ -42,7 +42,7 @@ export function GalleryFilters({ filters, onFiltersChange }: GalleryFiltersProps
   const handleFilterChange = (key: keyof FlowQueryOptions, value: string | undefined) => {
     onFiltersChange({
       ...filters,
-      [key]: value || undefined,
+      [key]: value === 'all' ? undefined : value || undefined,
     })
   }
 
@@ -53,14 +53,14 @@ export function GalleryFilters({ filters, onFiltersChange }: GalleryFiltersProps
         <div className="space-y-2">
           <Label htmlFor="domain-filter">Domain</Label>
           <Select
-            value={filters.domain || ''}
+            value={filters.domain || 'all'}
             onValueChange={(value) => handleFilterChange('domain', value)}
           >
             <SelectTrigger id="domain-filter">
               <SelectValue placeholder="All domains" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All domains</SelectItem>
+              <SelectItem value="all">All domains</SelectItem>
               {DOMAINS.map((domain) => (
                 <SelectItem key={domain} value={domain}>
                   {domain}
@@ -74,14 +74,14 @@ export function GalleryFilters({ filters, onFiltersChange }: GalleryFiltersProps
         <div className="space-y-2">
           <Label htmlFor="style-filter">Style</Label>
           <Select
-            value={filters.theme || ''}
+            value={filters.theme || 'all'}
             onValueChange={(value) => handleFilterChange('theme', value)}
           >
             <SelectTrigger id="style-filter">
               <SelectValue placeholder="All styles" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All styles</SelectItem>
+              <SelectItem value="all">All styles</SelectItem>
               {STYLES.map((style) => (
                 <SelectItem key={style} value={style}>
                   {style}
