@@ -1310,6 +1310,11 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 - [x] Add form: flow name, description, prompt, domain
 - [x] Connect to flow creation API
 - [x] Redirect to flow editor after creation
+- [x] Streamline flow creation: Combined flow creation + first screen generation in single form
+- [x] Added guidance fields (domain, style, visualTheme, tone, colorMood) to steer AI
+- [x] Fixed DSL validation errors in generate-first-screen endpoint
+- [x] Fixed Select component controlled/uncontrolled warnings
+- [x] Improved error handling and user feedback
 
 ### A.3 Flow Editor Page ✅ (Basic Version)
 - [x] Create flow editor page (`/flows/[flowId]/edit`)
@@ -1320,6 +1325,9 @@ This document breaks down the master-plan.md into actionable, step-by-step tasks
 - [x] Add save functionality (settings tab)
 - [x] Show navigation diagram (already exists)
 - [x] Add tab switcher: Screens | Diagram | Settings
+- [x] Fixed "Create Your First Screen" form visibility (only shows when screens.length === 0)
+- [x] Added error display from URL query parameters
+- [x] Improved screen loading and refresh logic
 
 ### A.4 Connect Existing Pieces ✅
 - [ ] Wire flow playground to save flows option - *Deferred to A.6*

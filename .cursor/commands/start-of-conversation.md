@@ -4,29 +4,63 @@ Continue work on **FlowRunner** — the AI-driven visual UI flow generator.
 
 ## Current Status
 
-✅ **Phase A: Ship Preparation (Basic Version) is COMPLETE:**
+✅ **Phase A: Ship Preparation (Basic Version) - IN PROGRESS:**
 - ✅ Navigation component (`components/navigation/AppHeader.tsx`)
 - ✅ Updated home page with navigation and CTAs
-- ✅ Flow creation page (`app/(dashboard)/flows/new/page.tsx`)
-- ✅ Flow editor page (`app/(dashboard)/flows/[flowId]/edit/page.tsx`) with:
-  - Screen display using InteractiveScreen component
-  - Screen generation via `generateNextScreen`
-  - Navigation diagram in Diagram tab
-  - Basic settings tab for flow metadata
+- ✅ Flow creation page (`app/(dashboard)/flows/new/page.tsx`) - **RECENTLY IMPROVED**
+  - Combined flow creation + first screen generation in single form
+  - Added guidance fields (domain, style, visualTheme, tone, colorMood) to steer AI
+  - Fixed DSL validation errors and Select component warnings
+  - Improved error handling and user feedback
+- ✅ Flow editor page (`app/(dashboard)/flows/[flowId]/edit/page.tsx`) - **RECENTLY IMPROVED**
+  - Fixed "Create Your First Screen" form visibility (only shows when no screens exist)
+  - Added error display from URL query parameters
+  - Improved screen loading and refresh logic
 - ✅ Gallery integration (Edit buttons on flow cards, fixed editor links)
 - ✅ Error handling and loading states across all pages
 
-**Core Flow is Now Functional:**
-- Users can create flows → Edit flows → Generate screens → View navigation diagrams → Save changes
-- All basic navigation paths are connected and working
+**Recent Improvements:**
+- Streamlined flow creation workflow (single form instead of two-step process)
+- Fixed DSL validation errors in generate-first-screen endpoint
+- Fixed React Select component warnings
+- Improved error handling with detailed logging and user feedback
+- Fixed mock image provider URL validation
 
-## Next Focus: Phase A.6 - Advanced Editing & Polish
+## Current Issue to Resolve
 
-The basic editor is functional, but lacks full editing capabilities. The next phase should add comprehensive editing features and polish the user experience.
+**Screen Generation Still Failing:**
+- DSL validation is still failing when generating the first screen
+- Error: "DSL validation failed" (500 error)
+- Need to debug and fix the actual validation issue
+- Check server logs for detailed validation errors (we added extensive logging)
 
-### Phase A.6: Advanced Editing & Polish
+## Next Focus: Fix Screen Generation + Phase A.6
 
-**Goal:** Add full editing capabilities to the flow editor and improve the overall UX.
+### Immediate Priority: Debug & Fix Screen Generation
+
+1. **Investigate DSL Validation Failure**
+   - Check server console logs for detailed validation errors
+   - Verify hero image URL format is valid (we changed to `via.placeholder.com`)
+   - Ensure all required DSL fields are present and valid
+   - Test the `buildScreenDSLFromPlan` function with mock data
+   - Verify palette, vibe, pattern_family, pattern_variant are all valid
+
+2. **Fix Any Remaining Issues**
+   - Ensure hero_image.id is always a string
+   - Ensure hero_image.url passes Zod URL validation
+   - Verify all palette fields (primary, secondary, accent, background) are present
+   - Verify vibe is a valid enum value
+   - Check that components array has at least one element
+
+3. **Test End-to-End Flow**
+   - Create a new flow from `/flows/new`
+   - Verify first screen is generated successfully
+   - Verify edit page loads with the screen (no "Create Your First Screen" form)
+   - Verify screen renders correctly
+
+### Then: Phase A.6 - Advanced Editing & Polish
+
+Once screen generation is working, proceed with:
 
 #### A.6.1 Full Editing Integration
 - [ ] Integrate editing components into editor (EditableTitle, EditableSubtitle, EditableText, EditableButton, etc.)
@@ -57,23 +91,17 @@ The basic editor is functional, but lacks full editing capabilities. The next ph
 - [ ] Add confirmation dialogs for destructive actions
 - [ ] Improve empty states and messaging
 
-#### A.6.5 Testing & Bug Fixes
-- [ ] Test complete editing flow end-to-end
-- [ ] Fix any issues discovered during testing
-- [ ] Ensure all API endpoints work correctly from UI
-- [ ] Verify navigation diagram updates correctly after edits
-
-**Technical Notes:**
-- Use existing editing components from `components/editing/`
-- All editing should update DSL via `PUT /api/flows/[flowId]/screens/[screenId]`
-- Ensure revisions are created on all edits (backend already handles this)
-- Keep container-based layouts throughout
-
 ---
 
 ## Key Files / Locations
 
-### Files to Update:
+### Files to Debug:
+- `app/api/flows/[flowId]/generate-first-screen/route.ts` - Check validation errors in logs
+- `lib/flows/next-screen-generator.ts` - Verify DSL construction
+- `lib/images/generation/providers/mock.ts` - Verify URL format
+- `lib/dsl/validator.ts` - Check validation logic
+
+### Files to Update (After Fix):
 - Flow Editor: `app/(dashboard)/flows/[flowId]/edit/page.tsx` - Add editing mode and integrate editing components
 - Flow Playground: `app/flow-playground/page.tsx` - Add save functionality
 - Editing Components: `components/editing/` - All components already exist, need integration
@@ -94,13 +122,34 @@ The basic editor is functional, but lacks full editing capabilities. The next ph
 
 ---
 
+## Debugging Steps
+
+1. **Check Server Logs**
+   - Look for "DSL validation failed" errors
+   - Check the detailed validation error messages we added
+   - Look for "DSL that failed validation" JSON output
+
+2. **Verify DSL Structure**
+   - Check that `hero_image.url` is a valid URL format
+   - Verify `hero_image.id` is a string
+   - Check that `palette` has all required fields
+   - Verify `vibe` is a valid enum value
+   - Ensure `pattern_family` and `pattern_variant` are valid
+
+3. **Test with Mock Data**
+   - Create a test DSL object manually
+   - Run it through `validateScreenDSL`
+   - See what specific field is failing
+
+---
+
 ## Principles / Constraints
 
 - Use existing editing components (don't reinvent)
 - Ensure all edits create revisions (backend handles this automatically)
 - Maintain container-based layouts
-- Prioritize functionality, add polish incrementally
-- Test thoroughly as features are added
+- Prioritize fixing screen generation before adding new features
+- Test thoroughly as issues are fixed
 
 ---
 
@@ -109,15 +158,18 @@ The basic editor is functional, but lacks full editing capabilities. The next ph
 - ✅ Phase 12.1-12.4: Click-Through Interface, Screen Generation, Navigation Diagram, Branching
 - ✅ Phase 13.1: Revision Tracking
 - ✅ Phase A.1-A.4: Core Navigation, Flow Creation, Basic Editor, Gallery Integration
+- ✅ Phase A.2: Streamlined flow creation with combined form
+- ✅ Phase A.3: Fixed form visibility and error handling
 
 ---
 
 ## Next Session Goals
 
-1. Add edit mode toggle to flow editor
-2. Integrate all editing components into editor
-3. Add screen management (delete, reorder)
-4. Add "Save as Flow" to playground
-5. Improve UX with loading states, toasts, and better feedback
+1. **IMMEDIATE:** Debug and fix DSL validation error preventing screen generation
+2. **THEN:** Add edit mode toggle to flow editor
+3. **THEN:** Integrate all editing components into editor
+4. **THEN:** Add screen management (delete, reorder)
+5. **THEN:** Add "Save as Flow" to playground
+6. **THEN:** Improve UX with loading states, toasts, and better feedback
 
-This will complete the editing layer and make the app fully functional for end-to-end usage!
+**Priority:** Fix screen generation first, then proceed with editing features!
