@@ -9,11 +9,28 @@ const normalizeLocalPath = (input: string) => {
   if (!input) {
     throw new Error('Image path is required')
   }
-  if (path.isAbsolute(input)) {
+  const isAbsolute = path.isAbsolute(input)
+  const trimmed = input.replace(/^\/+/, '')
+  const resolved = path.join(PUBLIC_DIR, trimmed)
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/72637a11-5b8b-46bb-adcb-77d24d2ba474', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      sessionId: 'debug-session',
+      runId: 'run1',
+      hypothesisId: 'H1',
+      location: 'lib/images/source.ts:16',
+      message: 'normalizeLocalPath resolution',
+      data: { input, isAbsolute, trimmed, resolved },
+      timestamp: Date.now(),
+    }),
+  }).catch(() => {})
+  // #endregion
+  if (isAbsolute) {
     return input
   }
-  const trimmed = input.replace(/^\/+/, '')
-  return path.join(PUBLIC_DIR, trimmed)
+  return resolved
 }
 
 const ensureProtocol = (input: string) => {
@@ -54,8 +71,42 @@ const maybeResolveSelfHostedPath = (input: string): string | undefined => {
     const selfHosts = getSelfHosts()
     const isSelfHost = selfHosts.includes(parsed.hostname)
     const isPublicAsset = parsed.pathname.startsWith('/images/')
+    const isPrivateHost = ['127.0.0.1', 'localhost'].includes(parsed.hostname)
+    if (isPrivateHost) {
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/72637a11-5b8b-46bb-adcb-77d24d2ba474', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sessionId: 'debug-session',
+          runId: 'run1',
+          hypothesisId: 'H4',
+          location: 'lib/images/source.ts:60',
+          message: 'Detected private host image URL',
+          data: { input, hostname: parsed.hostname, isSelfHost, isPublicAsset },
+          timestamp: Date.now(),
+        }),
+      }).catch(() => {})
+      // #endregion
+    }
     if (isSelfHost && isPublicAsset) {
-      return normalizeLocalPath(parsed.pathname)
+      const resolved = normalizeLocalPath(parsed.pathname)
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/72637a11-5b8b-46bb-adcb-77d24d2ba474', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sessionId: 'debug-session',
+          runId: 'run1',
+          hypothesisId: 'H2',
+          location: 'lib/images/source.ts:58',
+          message: 'Resolved self-hosted image path',
+          data: { input, resolved, host: parsed.hostname },
+          timestamp: Date.now(),
+        }),
+      }).catch(() => {})
+      // #endregion
+      return resolved
     }
   } catch {
     // not a valid URL, fall through to other resolution paths
@@ -101,6 +152,21 @@ export const loadImageBuffer = async (url: string): Promise<Buffer> => {
 
   const localSelfHosted = maybeResolveSelfHostedPath(url)
   if (localSelfHosted) {
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/72637a11-5b8b-46bb-adcb-77d24d2ba474', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sessionId: 'debug-session',
+        runId: 'run1',
+        hypothesisId: 'H3',
+        location: 'lib/images/source.ts:105',
+        message: 'Loading local self-hosted image',
+        data: { url, localSelfHosted },
+        timestamp: Date.now(),
+      }),
+    }).catch(() => {})
+    // #endregion
     return fs.readFile(localSelfHosted)
   }
 
@@ -112,6 +178,21 @@ export const loadImageBuffer = async (url: string): Promise<Buffer> => {
 
   if (HTTP_REGEX.test(withProtocol)) {
     try {
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/72637a11-5b8b-46bb-adcb-77d24d2ba474', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sessionId: 'debug-session',
+          runId: 'run1',
+          hypothesisId: 'H5',
+          location: 'lib/images/source.ts:118',
+          message: 'Fetching remote image over HTTP',
+          data: { url: withProtocol },
+          timestamp: Date.now(),
+        }),
+      }).catch(() => {})
+      // #endregion
       const response = await fetch(withProtocol)
       const ok = 'ok' in response ? (response as Response).ok : true
       if (!ok) {
