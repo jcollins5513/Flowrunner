@@ -183,7 +183,7 @@ export const assembleScreenFromPrompt = async (
   if (!schemaValidation.success) {
     pipelineTelemetry.logStage('validation', 'error', {
       message: 'schema_validation_failed',
-      metadata: { issues: schemaValidation.error?.issues ?? [] },
+      metadata: { issues: schemaValidation.error?.errors?.issues ?? [] },
     })
     throw schemaValidation.error ?? new Error('Screen DSL failed schema validation')
   }
@@ -235,4 +235,3 @@ export const assembleScreenFromPrompt = async (
     screenId,
   }
 }
-
