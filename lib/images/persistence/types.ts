@@ -17,7 +17,42 @@ export interface SaveImageData {
   userId?: string | null
   patternCompatibilityTags?: string[] | null
   tags?: string[] | null
+  storage?: StorageMetadata | null
 }
+
+export interface StorageMetadata {
+  driver: string
+  bucket?: string | null
+  key: string
+  url: string
+  optimizedKey?: string | null
+  optimizedUrl?: string | null
+  thumbnailKey?: string | null
+  thumbnailUrl?: string | null
+  format?: string | null
+  bytes?: number | null
+  width?: number | null
+  height?: number | null
+  parentVersionId?: string | null
+  metadata?: Record<string, unknown> | null
+}
+
+export const storageMetadataSchema: z.ZodType<StorageMetadata> = z.object({
+  driver: z.string().min(1),
+  bucket: z.string().min(1).nullable().optional(),
+  key: z.string().min(1),
+  url: z.string().url().min(1),
+  optimizedKey: z.string().min(1).nullable().optional(),
+  optimizedUrl: z.string().url().min(1).nullable().optional(),
+  thumbnailKey: z.string().min(1).nullable().optional(),
+  thumbnailUrl: z.string().url().min(1).nullable().optional(),
+  format: z.string().nullable().optional(),
+  bytes: z.number().int().nonnegative().nullable().optional(),
+  width: z.number().int().nonnegative().nullable().optional(),
+  height: z.number().int().nonnegative().nullable().optional(),
+  parentVersionId: z.string().nullable().optional(),
+  metadata: z.record(z.unknown()).nullable().optional(),
+})
 
 /**
  * Zod schema for validating image data before persistence
@@ -59,6 +94,7 @@ export const saveImageDataSchema = z.object({
   userId: z.string().nullable().optional(),
   patternCompatibilityTags: z.array(z.string()).nullable().optional(),
   tags: z.array(z.string()).nullable().optional(),
+  storage: storageMetadataSchema.nullable().optional(),
 })
 
 /**

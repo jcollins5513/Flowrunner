@@ -98,7 +98,7 @@ export class ImageOrchestrator {
     let imageId: string | undefined
     if (this.options.autoPersist !== false) {
       try {
-        const savedImage = await this.repository.saveImage({
+        const persisted = await this.repository.saveImage({
           url: job.result.url,
           prompt: job.result.prompt,
           seed: job.result.seed,
@@ -109,6 +109,7 @@ export class ImageOrchestrator {
           domain: request.visualTheme ? undefined : undefined, // Can be extracted from request if needed
           userId: this.options.userId ?? null,
         })
+        const savedImage = (persisted as any).image ?? persisted
         imageId = savedImage.id
       } catch (error) {
         console.warn('Failed to persist image:', error)
