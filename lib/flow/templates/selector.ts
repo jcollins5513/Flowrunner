@@ -1,5 +1,6 @@
 import { Intent } from '../../ai/intent/intent.schema'
 import { FlowTemplate, FlowTemplateScreen } from './schema'
+import { ASPECT_RATIOS, AspectRatio } from '../../images/generation/types'
 import { listTemplates } from './loader'
 
 export interface ScreenGenerationPlan {
@@ -19,7 +20,7 @@ export interface ScreenGenerationPlan {
     vibe: string
     colorMood: Intent['colorMood']
     imagePrompt: string
-    aspectRatio: string
+    aspectRatio: AspectRatio
   }
 }
 
@@ -105,7 +106,13 @@ const resolveStyleCues = (screen: FlowTemplateScreen, intent: Intent): Intent['s
 const resolveHeroPrompt = (screen: FlowTemplateScreen, intent: Intent): string =>
   screen.heroDefaults?.imagePrompt ?? intent.normalizedPrompt
 
-const resolveHeroAspectRatio = (screen: FlowTemplateScreen): string => screen.heroDefaults?.aspectRatio ?? '16:9'
+const resolveHeroAspectRatio = (screen: FlowTemplateScreen): AspectRatio => {
+  const candidate = screen.heroDefaults?.aspectRatio
+  if (candidate && (ASPECT_RATIOS as readonly string[]).includes(candidate)) {
+    return candidate as AspectRatio
+  }
+  return '16:9'
+}
 
 const orderScreens = (screens: FlowTemplateScreen[], preferredOrder?: string[]): FlowTemplateScreen[] => {
   if (!preferredOrder?.length) {
