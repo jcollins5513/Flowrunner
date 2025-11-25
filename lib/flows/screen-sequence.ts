@@ -1,8 +1,9 @@
 // Screen Sequence Management
 // Utilities for managing screen ordering, insertion, removal, and reordering
 
-import { prisma } from '../db/client'
+import type { Prisma } from '@prisma/client'
 import { createScreenWithValidation } from '../db/dsl-persistence'
+import { screenRepository, withDbTransaction } from '../db/repositories'
 import type { ScreenSequenceEntry, InsertScreenOptions, ReorderScreenOptions, NavigationPath } from './types'
 import type { ScreenDSL } from '../dsl/types'
 
@@ -10,13 +11,14 @@ import type { ScreenDSL } from '../dsl/types'
  * Get screen sequence for a flow
  * Returns screens in their current order with relationship information
  */
-export async function getScreenSequence(flowId: string): Promise<ScreenSequenceEntry[]> {
-  const screens = await prisma.screen.findMany({
-    where: { flowId },
-    orderBy: { createdAt: 'asc' }, // Default ordering
-    include: {
-      heroImage: true,
-    },
+export async function getScreenSequence(
+  flowId: string,
+  options: { tx?: Prisma.TransactionClient } = {}
+): Promise<ScreenSequenceEntry[]> {
+  const screens = await screenRepository.findByFlow(flowId, {
+    orderByCreated: 'asc',
+    includeHero: true,
+    tx: options.tx,
   })
 
   // Build navigation graph from screen navigation data
@@ -60,121 +62,116 @@ export async function getScreenSequence(flowId: string): Promise<ScreenSequenceE
  * Insert a screen into a flow
  */
 export async function insertScreen(flowId: string, options: InsertScreenOptions): Promise<{ screen: any; dsl: ScreenDSL }> {
-  const sequence = await getScreenSequence(flowId)
+  return withDbTransaction(async (tx) => {
+    const sequence = await getScreenSequence(flowId, { tx })
 
-  // Determine insertion position
-  let insertOrder: number
+    let insertOrder: number
 
-  if (options.position === 'start') {
-    insertOrder = 0
-  } else if (options.position === 'end' || options.position === undefined) {
-    insertOrder = sequence.length
-  } else if (typeof options.position === 'number') {
-    insertOrder = Math.max(0, Math.min(options.position, sequence.length))
-  } else if (options.afterScreenId) {
-    const afterIndex = sequence.findIndex((entry) => entry.screenId === options.afterScreenId)
-    if (afterIndex === -1) {
-      throw new Error(`Screen not found: ${options.afterScreenId}`)
+    if (options.position === 'start') {
+      insertOrder = 0
+    } else if (options.position === 'end' || options.position === undefined) {
+      insertOrder = sequence.length
+    } else if (typeof options.position === 'number') {
+      insertOrder = Math.max(0, Math.min(options.position, sequence.length))
+    } else if (options.afterScreenId) {
+      const afterIndex = sequence.findIndex((entry) => entry.screenId === options.afterScreenId)
+      if (afterIndex === -1) {
+        throw new Error(`Screen not found: ${options.afterScreenId}`)
+      }
+      insertOrder = afterIndex + 1
+    } else if (options.beforeScreenId) {
+      const beforeIndex = sequence.findIndex((entry) => entry.screenId === options.beforeScreenId)
+      if (beforeIndex === -1) {
+        throw new Error(`Screen not found: ${options.beforeScreenId}`)
+      }
+      insertOrder = beforeIndex
+    } else {
+      insertOrder = sequence.length
     }
-    insertOrder = afterIndex + 1
-  } else if (options.beforeScreenId) {
-    const beforeIndex = sequence.findIndex((entry) => entry.screenId === options.beforeScreenId)
-    if (beforeIndex === -1) {
-      throw new Error(`Screen not found: ${options.beforeScreenId}`)
-    }
-    insertOrder = beforeIndex
-  } else {
-    insertOrder = sequence.length
-  }
 
-  // Create screen
-  const { screen, dsl } = await createScreenWithValidation(flowId, options.screenDSL, {
-    heroImageId: options.heroImageId,
-  })
-
-  // Update navigation if specified
-  if (options.navigationFrom) {
-    const fromScreen = await prisma.screen.findUnique({
-      where: { id: options.navigationFrom },
+    const { screen, dsl } = await createScreenWithValidation(flowId, options.screenDSL, {
+      heroImageId: options.heroImageId,
+      client: tx,
     })
 
-    if (fromScreen) {
-      const navigation = fromScreen.navigation ? JSON.parse(fromScreen.navigation as string) : { type: 'internal' }
-      navigation.screenId = screen.id
+    if (options.navigationFrom) {
+      const fromScreen = await screenRepository.findById(options.navigationFrom, { tx })
 
-      await prisma.screen.update({
-        where: { id: options.navigationFrom },
-        data: {
-          navigation: JSON.stringify(navigation),
-        },
-      })
-    }
-  }
+      if (fromScreen) {
+        const navigation = fromScreen.navigation ? JSON.parse(fromScreen.navigation as string) : { type: 'internal' }
+        navigation.screenId = screen.id
 
-  // Update DSL navigation to point to next screen if applicable
-  if (insertOrder < sequence.length) {
-    const nextScreen = sequence[insertOrder]
-    if (nextScreen && dsl.navigation?.type === 'internal') {
-      const updatedDSL: ScreenDSL = {
-        ...dsl,
-        navigation: {
-          ...dsl.navigation,
-          screenId: nextScreen.screenId,
-        },
+        await screenRepository.update(
+          options.navigationFrom,
+          {
+            navigation: JSON.stringify(navigation),
+          },
+          { tx }
+        )
       }
-
-      await prisma.screen.update({
-        where: { id: screen.id },
-        data: {
-          navigation: JSON.stringify(updatedDSL.navigation),
-        },
-      })
     }
-  }
 
-  return { screen, dsl }
+    if (insertOrder < sequence.length) {
+      const nextScreen = sequence[insertOrder]
+      if (nextScreen && dsl.navigation?.type === 'internal') {
+        const updatedDSL: ScreenDSL = {
+          ...dsl,
+          navigation: {
+            ...dsl.navigation,
+            screenId: nextScreen.screenId,
+          },
+        }
+
+        await screenRepository.update(
+          screen.id,
+          {
+            navigation: JSON.stringify(updatedDSL.navigation),
+          },
+          { tx }
+        )
+      }
+    }
+
+    return { screen, dsl }
+  })
 }
 
 /**
  * Remove a screen from a flow
  */
 export async function removeScreen(flowId: string, screenId: string, updateNavigation: boolean = true): Promise<void> {
-  const screen = await prisma.screen.findUnique({
-    where: { id: screenId },
-  })
+  await withDbTransaction(async (tx) => {
+    const screen = await screenRepository.findById(screenId, { tx })
 
-  if (!screen || screen.flowId !== flowId) {
-    throw new Error(`Screen not found in flow: ${screenId}`)
-  }
+    if (!screen || screen.flowId !== flowId) {
+      throw new Error(`Screen not found in flow: ${screenId}`)
+    }
 
-  // Update navigation from parent screens
-  if (updateNavigation) {
-    const sequence = await getScreenSequence(flowId)
-    const screenEntry = sequence.find((entry) => entry.screenId === screenId)
+    if (updateNavigation) {
+      const sequence = await getScreenSequence(flowId, { tx })
+      const screenEntry = sequence.find((entry) => entry.screenId === screenId)
 
-    if (screenEntry?.parentScreenId) {
-      // Update parent to navigate to child instead
-      const parentScreen = await prisma.screen.findUnique({
-        where: { id: screenEntry.parentScreenId },
-      })
+      if (screenEntry?.parentScreenId) {
+        const parentScreen = await screenRepository.findById(screenEntry.parentScreenId, { tx })
 
-      if (parentScreen && screenEntry.childScreenIds.length > 0) {
-        const navigation = parentScreen.navigation ? JSON.parse(parentScreen.navigation as string) : { type: 'internal' }
-        navigation.screenId = screenEntry.childScreenIds[0]
+        if (parentScreen && screenEntry.childScreenIds.length > 0) {
+          const navigation = parentScreen.navigation
+            ? JSON.parse(parentScreen.navigation as string)
+            : { type: 'internal' }
+          navigation.screenId = screenEntry.childScreenIds[0]
 
-        await prisma.screen.update({
-          where: { id: screenEntry.parentScreenId },
-          data: {
-            navigation: JSON.stringify(navigation),
-          },
-        })
+          await screenRepository.update(
+            parentScreen.id,
+            {
+              navigation: JSON.stringify(navigation),
+            },
+            { tx }
+          )
+        }
       }
     }
-  }
 
-  // Delete screen (cascade will handle related data)
-  await prisma.screen.delete({
-    where: { id: screenId },
+    await screenRepository.delete(screenId, { tx })
   })
 }
 
@@ -182,52 +179,47 @@ export async function removeScreen(flowId: string, screenId: string, updateNavig
  * Reorder screens in a flow
  */
 export async function reorderScreen(flowId: string, options: ReorderScreenOptions): Promise<void> {
-  const sequence = await getScreenSequence(flowId)
-  const screenIndex = sequence.findIndex((entry) => entry.screenId === options.screenId)
+  await withDbTransaction(async (tx) => {
+    const sequence = await getScreenSequence(flowId, { tx })
+    const screenIndex = sequence.findIndex((entry) => entry.screenId === options.screenId)
 
-  if (screenIndex === -1) {
-    throw new Error(`Screen not found in flow: ${options.screenId}`)
-  }
-
-  // Determine new order
-  let newOrder: number
-
-  if (options.orAfterScreenId) {
-    const afterIndex = sequence.findIndex((entry) => entry.screenId === options.orAfterScreenId)
-    if (afterIndex === -1) {
-      throw new Error(`Screen not found: ${options.orAfterScreenId}`)
+    if (screenIndex === -1) {
+      throw new Error(`Screen not found in flow: ${options.screenId}`)
     }
-    newOrder = afterIndex + 1
-  } else if (options.orBeforeScreenId) {
-    const beforeIndex = sequence.findIndex((entry) => entry.screenId === options.orBeforeScreenId)
-    if (beforeIndex === -1) {
-      throw new Error(`Screen not found: ${options.orBeforeScreenId}`)
-    }
-    newOrder = beforeIndex
-  } else {
-    newOrder = Math.max(0, Math.min(options.newOrder, sequence.length - 1))
-  }
 
-  // Note: Since we're using createdAt for ordering, we need to update metadata or use a separate order field
-  // For now, we'll store order in metadata
-  const screen = await prisma.screen.findUnique({
-    where: { id: options.screenId },
+    let newOrder: number
+
+    if (options.orAfterScreenId) {
+      const afterIndex = sequence.findIndex((entry) => entry.screenId === options.orAfterScreenId)
+      if (afterIndex === -1) {
+        throw new Error(`Screen not found: ${options.orAfterScreenId}`)
+      }
+      newOrder = afterIndex + 1
+    } else if (options.orBeforeScreenId) {
+      const beforeIndex = sequence.findIndex((entry) => entry.screenId === options.orBeforeScreenId)
+      if (beforeIndex === -1) {
+        throw new Error(`Screen not found: ${options.orBeforeScreenId}`)
+      }
+      newOrder = beforeIndex
+    } else {
+      newOrder = Math.max(0, Math.min(options.newOrder, sequence.length - 1))
+    }
+
+    const screen = await screenRepository.findById(options.screenId, { tx })
+
+    if (screen) {
+      const metadata = screen.metadata ? JSON.parse(screen.metadata as string) : {}
+      metadata.order = newOrder
+
+      await screenRepository.update(
+        options.screenId,
+        {
+          metadata: JSON.stringify(metadata),
+        },
+        { tx }
+      )
+    }
   })
-
-  if (screen) {
-    const metadata = screen.metadata ? JSON.parse(screen.metadata as string) : {}
-    metadata.order = newOrder
-
-    await prisma.screen.update({
-      where: { id: options.screenId },
-      data: {
-        metadata: JSON.stringify(metadata),
-      },
-    })
-  }
-
-  // Update navigation connections if needed
-  // This is a simplified implementation - in a full system, you'd want to rebuild the navigation graph
 }
 
 /**
@@ -235,12 +227,7 @@ export async function reorderScreen(flowId: string, options: ReorderScreenOption
  * Returns screens sorted by their order (from metadata or creation time)
  */
 export async function getOrderedScreens(flowId: string): Promise<any[]> {
-  const screens = await prisma.screen.findMany({
-    where: { flowId },
-    include: {
-      heroImage: true,
-    },
-  })
+  const screens = await screenRepository.findByFlow(flowId, { includeHero: true })
 
   // Sort by metadata order if available, otherwise by creation time
   return screens.sort((a, b) => {

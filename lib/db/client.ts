@@ -138,6 +138,7 @@ if (process.env.NODE_ENV === 'test') {
         return images[index]
       },
     },
+    $transaction: async <T>(fn: (tx: any) => Promise<T>): Promise<T> => fn(mockPrisma),
   }
 
   prisma = mockPrisma as unknown as PrismaClient

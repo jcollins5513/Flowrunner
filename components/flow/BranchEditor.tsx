@@ -118,7 +118,16 @@ export function BranchEditor({
     } finally {
       setLoading(false)
     }
-  }, [flowId, screenId, formToScreenId, formLabel, formCondition, formTrigger, refreshBranches])
+  }, [
+    flowId,
+    screenId,
+    formToScreenId,
+    formLabel,
+    formCondition,
+    formTrigger,
+    refreshBranches,
+    resetForm,
+  ])
 
   const handleUpdateBranch = useCallback(async () => {
     if (!editingBranch) return
@@ -153,7 +162,16 @@ export function BranchEditor({
     } finally {
       setLoading(false)
     }
-  }, [flowId, screenId, editingBranch, formLabel, formCondition, formTrigger, refreshBranches])
+  }, [
+    flowId,
+    screenId,
+    editingBranch,
+    formLabel,
+    formCondition,
+    formTrigger,
+    refreshBranches,
+    resetForm,
+  ])
 
   const handleDeleteBranch = useCallback(
     async (branch: BranchMetadata) => {
