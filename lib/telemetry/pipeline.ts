@@ -1,4 +1,16 @@
-import { performance } from 'node:perf_hooks'
+// Cross-platform performance timing
+// performance.now() is available globally in both browsers and Node.js (v16+)
+// Using a safe wrapper to avoid TypeScript/webpack issues with node:perf_hooks
+function getPerformanceNow(): number {
+  // Use the global performance object available in both browser and Node.js environments
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const perf = (globalThis as any).performance || (typeof window !== 'undefined' ? (window as any).performance : null)
+  if (perf && typeof perf.now === 'function') {
+    return perf.now()
+  }
+  // Fallback to Date.now() if performance is not available
+  return Date.now()
+}
 
 export type PipelineStage =
   | 'prompt_intake'
@@ -56,20 +68,20 @@ export class PipelineTelemetry {
     action: () => Promise<unknown>,
     metadata?: Record<string, unknown>,
   ): Promise<unknown> {
-    const start = performance.now()
+    const start = getPerformanceNow()
     this.logStage(stage, 'start', { metadata })
 
     return action()
       .then((result) => {
         this.logStage(stage, 'success', {
-          durationMs: Math.round(performance.now() - start),
+          durationMs: Math.round(getPerformanceNow() - start),
           metadata,
         })
         return result
       })
       .catch((error) => {
         this.logStage(stage, 'error', {
-          durationMs: Math.round(performance.now() - start),
+          durationMs: Math.round(getPerformanceNow() - start),
           message: error instanceof Error ? error.message : String(error),
           metadata,
         })
