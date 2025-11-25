@@ -226,8 +226,9 @@ export class FlowEngine {
 
       const clonedScreens = []
       const screenIdMap = new Map<string, string>()
+      const screens = sourceFlow.screens ?? []
 
-      for (const screen of sourceFlow.screens) {
+      for (const screen of screens) {
         const screenDSL: ScreenDSL = {
           hero_image: screen.heroImage
             ? {
