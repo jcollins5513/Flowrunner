@@ -23,6 +23,46 @@ const ensureProtocol = (input: string) => {
   return input
 }
 
+const getSelfHosts = (): string[] => {
+  const hosts: string[] = []
+  if (process.env.VERCEL_URL) {
+    hosts.push(process.env.VERCEL_URL)
+  }
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+  if (siteUrl) {
+    try {
+      hosts.push(new URL(siteUrl).hostname)
+    } catch {
+      // ignore invalid host strings
+    }
+  }
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL
+  if (appUrl) {
+    try {
+      hosts.push(new URL(appUrl).hostname)
+    } catch {
+      // ignore invalid host strings
+    }
+  }
+  return hosts.filter(Boolean)
+}
+
+const maybeResolveSelfHostedPath = (input: string): string | undefined => {
+  const withProtocol = ensureProtocol(input)
+  try {
+    const parsed = new URL(withProtocol)
+    const selfHosts = getSelfHosts()
+    const isSelfHost = selfHosts.includes(parsed.hostname)
+    const isPublicAsset = parsed.pathname.startsWith('/images/')
+    if (isSelfHost && isPublicAsset) {
+      return normalizeLocalPath(parsed.pathname)
+    }
+  } catch {
+    // not a valid URL, fall through to other resolution paths
+  }
+  return undefined
+}
+
 const decodeDataUrl = (dataUrl: string): Buffer => {
   const [, payload] = dataUrl.split(',')
   if (!payload) {
@@ -36,6 +76,11 @@ export type ImageSource = string | Buffer
 export const getImageSource = async (url: string): Promise<ImageSource> => {
   if (!url) {
     throw new Error('Image URL is required')
+  }
+
+  const localSelfHosted = maybeResolveSelfHostedPath(url)
+  if (localSelfHosted) {
+    return localSelfHosted
   }
 
   if (url.startsWith('data:')) {
@@ -52,6 +97,11 @@ export const getImageSource = async (url: string): Promise<ImageSource> => {
 export const loadImageBuffer = async (url: string): Promise<Buffer> => {
   if (!url) {
     throw new Error('Image URL is required')
+  }
+
+  const localSelfHosted = maybeResolveSelfHostedPath(url)
+  if (localSelfHosted) {
+    return fs.readFile(localSelfHosted)
   }
 
   if (url.startsWith('data:')) {
@@ -79,4 +129,3 @@ export const loadImageBuffer = async (url: string): Promise<Buffer> => {
   const filePath = normalizeLocalPath(url)
   return fs.readFile(filePath)
 }
-
