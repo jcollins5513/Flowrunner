@@ -2,7 +2,7 @@ import { createRevisionWithValidation, createScreenWithValidation } from '../lib
 import { prisma } from '../lib/db/client'
 import { flowRepository, imageRepository, screenRepository, withDbTransaction } from '../lib/db/repositories'
 import type { RepositoryLogger } from '../lib/db/repositories'
-import type { ScreenDSL, Palette } from '../lib/dsl/types'
+import type { Navigation, Palette, ScreenDSL } from '../lib/dsl/types'
 
 const environment = process.env.APP_ENV || process.env.NODE_ENV || 'local'
 
@@ -37,7 +37,6 @@ function buildScreenDSL(heroId: string, heroUrl: string, overrides: Partial<Scre
     pattern_family: 'HERO_CENTER_TEXT',
     pattern_variant: 1,
     components: defaultComponents,
-    navigation: { type: 'internal', label: 'Next' },
     ...overrides,
   }
 }
@@ -91,20 +90,6 @@ async function seedFlow(
       { tx, logger }
     )
 
-    const welcomeDSL = buildScreenDSL(heroA.id, heroA.url, {
-      components: [
-        { type: 'title', content: `${flowName} welcome` },
-        { type: 'text', content: description },
-        { type: 'button', content: 'Start now' },
-      ],
-    })
-
-    const { screen: welcomeScreen, dsl: welcomeDsl } = await createScreenWithValidation(flow.id, welcomeDSL, {
-      heroImageId: heroA.id,
-      client: tx,
-      logger,
-    })
-
     const detailDSL = buildScreenDSL(heroB.id, heroB.url, {
       pattern_family: 'FEAT_IMAGE_TEXT_RIGHT',
       pattern_variant: 2,
@@ -121,13 +106,20 @@ async function seedFlow(
       logger,
     })
 
-    if (welcomeDsl.navigation?.type === 'internal') {
-      await screenRepository.update(
-        welcomeScreen.id,
-        { navigation: JSON.stringify({ ...welcomeDsl.navigation, screenId: detailScreen.id }) },
-        { tx, logger }
-      )
-    }
+    const welcomeDSL = buildScreenDSL(heroA.id, heroA.url, {
+      components: [
+        { type: 'title', content: `${flowName} welcome` },
+        { type: 'text', content: description },
+        { type: 'button', content: 'Start now' },
+      ],
+      navigation: { type: 'internal', screenId: detailScreen.id, target: 'Next' } satisfies Navigation,
+    })
+
+    const { screen: welcomeScreen } = await createScreenWithValidation(flow.id, welcomeDSL, {
+      heroImageId: heroA.id,
+      client: tx,
+      logger,
+    })
 
     await createRevisionWithValidation(flow.id, { ...detailDsl, vibe: 'bold' }, {
       screenId: detailScreen.id,
