@@ -19,6 +19,8 @@ import { MockImageProvider } from '../images/generation/providers/mock'
 import { persistHeroImageMetadata } from '../db/hero-image-persistence'
 import { ImageRepository } from '../images/repository'
 import type { AspectRatio, ImageStyle } from '../images/generation/types'
+import { loadPattern } from '../patterns/loader'
+import type { PatternDefinition } from '../patterns/schema'
 
 /**
  * Pattern suggestion heuristics
@@ -37,6 +39,191 @@ const PATTERN_SUGGESTIONS: Partial<Record<PatternFamily, PatternFamily[]>> = {
   PRICING_TABLE: ['ACT_FORM_MINIMAL', 'PRODUCT_DETAIL'],
   TESTIMONIAL_CARD_GRID: ['ACT_FORM_MINIMAL', 'PRODUCT_DETAIL'],
   CTA_SPLIT_SCREEN: ['ACT_FORM_MINIMAL', 'DASHBOARD_OVERVIEW'],
+}
+
+const SUPPORTED_COMPONENT_SLOTS: Component['type'][] = ['title', 'subtitle', 'text', 'button', 'form', 'image']
+
+const CTA_TONE_PRESETS: Record<string, string[]> = {
+  friendly: ['Get started free', 'Invite your team'],
+  professional: ['Schedule a demo', 'Book a walkthrough'],
+  bold: ['Launch now', 'Unlock access'],
+  modern: ['Start exploring', 'Pair with product tour'],
+  playful: ['Jump into the flow', 'Let’s go'],
+  minimal: ['Begin', 'Continue'],
+}
+
+const CTA_PATTERN_FALLBACKS: Partial<Record<PatternFamily, string>> = {
+  ONB_HERO_TOP: 'Start your journey',
+  ACT_FORM_MINIMAL: 'Request access',
+  PRICING_TABLE: 'Choose a plan',
+  CTA_SPLIT_SCREEN: 'Talk to sales',
+}
+
+const DEFAULT_FORM_FIELDS = [
+  { id: 'full_name', label: 'Full name', placeholder: 'Alex Product', type: 'text', required: true },
+  { id: 'work_email', label: 'Work email', placeholder: 'alex@company.com', type: 'email', required: true },
+  { id: 'company', label: 'Company', placeholder: 'Product Labs', type: 'text', required: false },
+  { id: 'goal', label: 'Primary goal', placeholder: 'e.g. onboard trial users', type: 'text', required: false },
+]
+
+type ComponentBuildMeta = {
+  buttonLabel?: string
+  buttonSource?: 'custom' | 'tone' | 'pattern' | 'default'
+  hasForm: boolean
+}
+
+const humanize = (value?: string) => {
+  if (!value) return ''
+  return value
+    .split(/[_\s]+/)
+    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+    .join(' ')
+}
+
+const describeAudience = (context: ScreenContext) => {
+  if (context.flowMetadata?.domain) {
+    return `${humanize(context.flowMetadata.domain)} teams`
+  }
+  return 'growing teams'
+}
+
+const formatStyleCues = (styleCues?: readonly string[]) => {
+  if (!styleCues?.length) {
+    return 'Modern & confident'
+  }
+  return styleCues.map((cue) => humanize(cue)).join(' • ')
+}
+
+const selectCtaLabel = (
+  tone: string,
+  family: PatternFamily,
+  customLabel?: string
+): { label: string; source: ComponentBuildMeta['buttonSource'] } => {
+  if (customLabel?.trim()) {
+    return { label: customLabel.trim(), source: 'custom' }
+  }
+  const tonePreset = CTA_TONE_PRESETS[tone]
+  if (tonePreset?.length) {
+    return { label: tonePreset[0], source: 'tone' }
+  }
+  const patternFallback = CTA_PATTERN_FALLBACKS[family]
+  if (patternFallback) {
+    return { label: patternFallback, source: 'pattern' }
+  }
+  return { label: 'Continue', source: 'default' }
+}
+
+const buildComponentsForPattern = (
+  patternDefinition: PatternDefinition,
+  plan: ScreenGenerationPlan,
+  context: ScreenContext,
+  heroImage: HeroImageWithPalette
+): { components: Component[]; meta: ComponentBuildMeta; slotOrder: Component['type'][] } => {
+  const slotOrder = Object.keys(patternDefinition.layout.positions)
+    .filter((slot): slot is Component['type'] => slot !== 'hero_image' && SUPPORTED_COMPONENT_SLOTS.includes(slot as Component['type']))
+  const seen = new Set<Component['type']>()
+  const components: Component[] = []
+  const meta: ComponentBuildMeta = { hasForm: false }
+  const focus = plan.textPlan.contentFocus ?? plan.name
+  const cuesText = formatStyleCues(plan.textPlan.styleCues)
+  const audience = describeAudience(context)
+  const toneLabel = humanize(plan.textPlan.tone)
+
+  slotOrder.forEach((slot) => {
+    if (seen.has(slot)) {
+      return
+    }
+    switch (slot) {
+      case 'title':
+        components.push({
+          type: 'title',
+          content: focus,
+        })
+        seen.add(slot)
+        break
+      case 'subtitle':
+        components.push({
+          type: 'subtitle',
+          content: `${toneLabel} • ${cuesText}`,
+        })
+        seen.add(slot)
+        break
+      case 'text': {
+        const narrative = `${focus}. Designed for ${audience} who want a ${toneLabel.toLowerCase()} experience with ${cuesText.toLowerCase()} energy.`
+        components.push({
+          type: 'text',
+          content: narrative,
+        })
+        seen.add(slot)
+        break
+      }
+      case 'button': {
+        const { label, source } = selectCtaLabel(
+          plan.textPlan.tone,
+          patternDefinition.family as PatternFamily,
+          plan.textPlan.customFields?.hero_cta_label
+        )
+        meta.buttonLabel = label
+        meta.buttonSource = source
+        components.push({
+          type: 'button',
+          content: label,
+          props: { variant: 'default', size: 'lg' },
+        })
+        seen.add(slot)
+        break
+      }
+      case 'form': {
+        meta.hasForm = true
+        const formTitle = plan.textPlan.customFields?.form_title ?? 'Tell us about yourself'
+        const formDescription =
+          plan.textPlan.customFields?.form_description ??
+          `Share a few details so we can tailor the next step for ${audience}.`
+        const submitPreset = selectCtaLabel(
+          plan.textPlan.tone,
+          patternDefinition.family as PatternFamily,
+          plan.textPlan.customFields?.form_submit_label
+        )
+        components.push({
+          type: 'form',
+          content: formTitle,
+          props: {
+            description: formDescription,
+            fields: DEFAULT_FORM_FIELDS.map((field) => ({ ...field })),
+            submitLabel: submitPreset.label,
+          },
+        })
+        seen.add(slot)
+        break
+      }
+      case 'image': {
+        if (heroImage.image?.url) {
+          components.push({
+            type: 'image',
+            content: heroImage.image.prompt ?? 'Supporting visual',
+            props: {
+              url: heroImage.image.url,
+              id: heroImage.imageId ?? heroImage.image.url,
+            },
+          })
+          seen.add(slot)
+        }
+        break
+      }
+      default:
+        break
+    }
+  })
+
+  const requiredSlots = patternDefinition.componentSlots.required.filter((slot): slot is Component['type'] =>
+    SUPPORTED_COMPONENT_SLOTS.includes(slot as Component['type'])
+  )
+  const missingSlots = requiredSlots.filter((slot) => !components.some((component) => component.type === slot))
+  if (missingSlots.length) {
+    throw new Error(`Missing components for required slots: ${missingSlots.join(', ')}`)
+  }
+
+  return { components, meta, slotOrder }
 }
 
 const buildHeroFromLibrary = (
@@ -166,38 +353,67 @@ export function buildScreenDSLFromPlan(
 
   // Build components from textPlan
   // This is a simplified version - in production, you'd use AI or templates
-  const components: Component[] = []
-  
-  // Add title
-  if (textPlan.contentFocus) {
-    components.push({
-      type: 'title',
-      content: textPlan.contentFocus,
-    })
-  } else {
-    components.push({
-      type: 'title',
-      content: plan.name,
-    })
-  }
+  const patternDefinition = loadPattern(pattern.family as PatternFamily, (pattern.variant as PatternVariant) || 1)
+  const { components, meta, slotOrder } = buildComponentsForPattern(patternDefinition, plan, context, heroImage)
 
-  // Add subtitle
-  components.push({
-    type: 'subtitle',
-    content: `Continue your journey`,
-  })
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/72637a11-5b8b-46bb-adcb-77d24d2ba474', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      sessionId: 'debug-session',
+      runId: 'run1',
+      hypothesisId: 'H7',
+      location: 'lib/flows/next-screen-generator.ts:220',
+      message: 'Loaded pattern for DSL builder',
+      data: {
+        family: patternDefinition.family,
+        variant: patternDefinition.variant,
+        slots: slotOrder,
+      },
+      timestamp: Date.now(),
+    }),
+  }).catch(() => {})
+  // #endregion
 
-  // Add text
-  components.push({
-    type: 'text',
-    content: `This screen follows naturally from the previous step.`,
-  })
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/72637a11-5b8b-46bb-adcb-77d24d2ba474', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      sessionId: 'debug-session',
+      runId: 'run1',
+      hypothesisId: 'H8',
+      location: 'lib/flows/next-screen-generator.ts:235',
+      message: 'Generated component sequence from pattern slots',
+      data: {
+        componentTypes: components.map((component) => component.type),
+        buttonLabel: meta.buttonLabel,
+        buttonSource: meta.buttonSource,
+      },
+      timestamp: Date.now(),
+    }),
+  }).catch(() => {})
+  // #endregion
 
-  // Add button
-  components.push({
-    type: 'button',
-    content: 'Continue',
-  })
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/72637a11-5b8b-46bb-adcb-77d24d2ba474', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      sessionId: 'debug-session',
+      runId: 'run1',
+      hypothesisId: 'H9',
+      location: 'lib/flows/next-screen-generator.ts:248',
+      message: 'Component meta summary',
+      data: {
+        hasForm: meta.hasForm,
+        componentCount: components.length,
+      },
+      timestamp: Date.now(),
+    }),
+  }).catch(() => {})
+  // #endregion
 
   // Ensure hero_image has required fields
   if (!heroImage.image?.url) {

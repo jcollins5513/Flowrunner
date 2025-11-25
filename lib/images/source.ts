@@ -5,6 +5,8 @@ const HTTP_REGEX = /^https?:\/\//i
 
 const PUBLIC_DIR = path.join(process.cwd(), 'public')
 
+const PRIVATE_HOSTS = new Set(['127.0.0.1', 'localhost'])
+
 const normalizeLocalPath = (input: string) => {
   if (!input) {
     throw new Error('Image path is required')
@@ -27,7 +29,7 @@ const normalizeLocalPath = (input: string) => {
     }),
   }).catch(() => {})
   // #endregion
-  if (isAbsolute) {
+  if (isAbsolute && input.startsWith(PUBLIC_DIR)) {
     return input
   }
   return resolved
@@ -71,7 +73,7 @@ const maybeResolveSelfHostedPath = (input: string): string | undefined => {
     const selfHosts = getSelfHosts()
     const isSelfHost = selfHosts.includes(parsed.hostname)
     const isPublicAsset = parsed.pathname.startsWith('/images/')
-    const isPrivateHost = ['127.0.0.1', 'localhost'].includes(parsed.hostname)
+    const isPrivateHost = PRIVATE_HOSTS.has(parsed.hostname)
     if (isPrivateHost) {
       // #region agent log
       fetch('http://127.0.0.1:7242/ingest/72637a11-5b8b-46bb-adcb-77d24d2ba474', {
@@ -114,6 +116,60 @@ const maybeResolveSelfHostedPath = (input: string): string | undefined => {
   return undefined
 }
 
+const getPreferredPublicBase = (): URL | undefined => {
+  const candidates = [
+    process.env.NEXT_PUBLIC_SITE_URL,
+    process.env.NEXT_PUBLIC_APP_URL,
+    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined,
+  ].filter(Boolean) as string[]
+  for (const candidate of candidates) {
+    try {
+      return new URL(candidate)
+    } catch {
+      // ignore invalid URLs
+    }
+  }
+  return undefined
+}
+
+const rewritePrivateHost = (input: string): string => {
+  if (!input || input.startsWith('/') || input.startsWith('data:')) {
+    return input
+  }
+  const withProtocol = ensureProtocol(input)
+  try {
+    const parsed = new URL(withProtocol)
+    if (!PRIVATE_HOSTS.has(parsed.hostname)) {
+      return withProtocol
+    }
+    const preferred = getPreferredPublicBase()
+    if (!preferred) {
+      return withProtocol
+    }
+    parsed.protocol = preferred.protocol
+    parsed.hostname = preferred.hostname
+    parsed.port = preferred.port
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/72637a11-5b8b-46bb-adcb-77d24d2ba474', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sessionId: 'debug-session',
+        runId: 'run1',
+        hypothesisId: 'H6',
+        location: 'lib/images/source.ts:126',
+        message: 'Rewriting private host URL',
+        data: { original: input, rewritten: parsed.toString() },
+        timestamp: Date.now(),
+      }),
+    }).catch(() => {})
+    // #endregion
+    return parsed.toString()
+  } catch {
+    return input
+  }
+}
+
 const decodeDataUrl = (dataUrl: string): Buffer => {
   const [, payload] = dataUrl.split(',')
   if (!payload) {
@@ -129,20 +185,21 @@ export const getImageSource = async (url: string): Promise<ImageSource> => {
     throw new Error('Image URL is required')
   }
 
-  const localSelfHosted = maybeResolveSelfHostedPath(url)
+  const preparedUrl = rewritePrivateHost(url)
+  const localSelfHosted = maybeResolveSelfHostedPath(preparedUrl)
   if (localSelfHosted) {
     return localSelfHosted
   }
 
-  if (url.startsWith('data:')) {
-    return decodeDataUrl(url)
+  if (preparedUrl.startsWith('data:')) {
+    return decodeDataUrl(preparedUrl)
   }
 
-  if (HTTP_REGEX.test(url) || url.startsWith('//')) {
-    return ensureProtocol(url)
+  if (HTTP_REGEX.test(preparedUrl) || preparedUrl.startsWith('//')) {
+    return ensureProtocol(preparedUrl)
   }
 
-  return normalizeLocalPath(url)
+  return normalizeLocalPath(preparedUrl)
 }
 
 export const loadImageBuffer = async (url: string): Promise<Buffer> => {
@@ -150,7 +207,8 @@ export const loadImageBuffer = async (url: string): Promise<Buffer> => {
     throw new Error('Image URL is required')
   }
 
-  const localSelfHosted = maybeResolveSelfHostedPath(url)
+  const preparedUrl = rewritePrivateHost(url)
+  const localSelfHosted = maybeResolveSelfHostedPath(preparedUrl)
   if (localSelfHosted) {
     // #region agent log
     fetch('http://127.0.0.1:7242/ingest/72637a11-5b8b-46bb-adcb-77d24d2ba474', {
@@ -170,11 +228,11 @@ export const loadImageBuffer = async (url: string): Promise<Buffer> => {
     return fs.readFile(localSelfHosted)
   }
 
-  if (url.startsWith('data:')) {
-    return decodeDataUrl(url)
+  if (preparedUrl.startsWith('data:')) {
+    return decodeDataUrl(preparedUrl)
   }
 
-  const withProtocol = ensureProtocol(url)
+  const withProtocol = ensureProtocol(preparedUrl)
 
   if (HTTP_REGEX.test(withProtocol)) {
     try {
