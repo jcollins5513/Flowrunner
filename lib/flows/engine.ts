@@ -1,8 +1,8 @@
 // Flow Engine Service
 // Core service for managing flows, screen sequences, and navigation graphs
 
-import { prisma } from '../db/client'
 import { createScreenWithValidation, createRevisionWithValidation } from '../db/dsl-persistence'
+import { flowRepository, screenRepository, withDbTransaction } from '../db/repositories'
 import type {
   FlowMetadata,
   ScreenSequenceEntry,
@@ -17,8 +17,32 @@ import type {
   FlowQueryOptions,
   FlowStats,
 } from './types'
-import type { ScreenDSL, FlowDSL, Palette, Vibe } from '../dsl/types'
+import type { ScreenDSL, Palette, Vibe } from '../dsl/types'
 import { validateScreenDSL } from '../dsl/validator'
+
+const mapFlowMetadata = (flow: {
+  id: string
+  name: string
+  description: string | null
+  domain: string | null
+  theme: string | null
+  style: string | null
+  isPublic: boolean
+  userId: string | null
+  createdAt: Date
+  updatedAt: Date
+}): FlowMetadata => ({
+  id: flow.id,
+  name: flow.name,
+  description: flow.description ?? undefined,
+  domain: flow.domain ?? undefined,
+  theme: flow.theme ?? undefined,
+  style: flow.style ?? undefined,
+  isPublic: flow.isPublic,
+  userId: flow.userId ?? undefined,
+  createdAt: flow.createdAt,
+  updatedAt: flow.updatedAt,
+})
 
 /**
  * Flow Engine Service
@@ -29,90 +53,83 @@ export class FlowEngine {
    * Create a new flow
    */
   static async createFlow(options: CreateFlowOptions): Promise<FlowMetadata & { screens: any[] }> {
-    const flow = await prisma.flow.create({
-      data: {
-        name: options.name,
-        description: options.description,
-        domain: options.domain,
-        theme: options.theme,
-        style: options.style,
-        userId: options.userId,
-        isPublic: options.isPublic ?? false,
-      },
-    })
+    try {
+      const result = await withDbTransaction(async (tx) => {
+        const flow = await flowRepository.create(
+          {
+            name: options.name,
+            description: options.description,
+            domain: options.domain,
+            theme: options.theme,
+            style: options.style,
+            userId: options.userId ?? null,
+            isPublic: options.isPublic ?? false,
+          },
+          { tx, logger: options.logger }
+        )
 
-    // Create initial screens if provided
-    const screens = []
-    if (options.initialScreens && options.initialScreens.length > 0) {
-      for (let i = 0; i < options.initialScreens.length; i++) {
-        const screenDSL = options.initialScreens[i]
-        const { screen } = await createScreenWithValidation(flow.id, screenDSL, {
-          heroImageId: screenDSL.hero_image.id,
-        })
-        screens.push(screen)
+        const screens: any[] = []
 
-        // Update navigation to point to next screen
-        if (i < options.initialScreens.length - 1) {
-          const nextScreenId = `temp-${i + 1}` // Will be replaced with actual ID
-          // Navigation will be updated after all screens are created
-        }
-      }
-
-      // Update navigation with actual screen IDs
-      for (let i = 0; i < screens.length - 1; i++) {
-        const currentScreen = screens[i]
-        const nextScreen = screens[i + 1]
-        const currentDSL = options.initialScreens[i]
-
-        if (currentDSL.navigation?.type === 'internal') {
-          const updatedDSL: ScreenDSL = {
-            ...currentDSL,
-            navigation: {
-              ...currentDSL.navigation,
-              screenId: nextScreen.id,
-            },
+        if (options.initialScreens && options.initialScreens.length > 0) {
+          for (let i = 0; i < options.initialScreens.length; i++) {
+            const screenDSL = options.initialScreens[i]
+            const { screen } = await createScreenWithValidation(flow.id, screenDSL, {
+              heroImageId: screenDSL.hero_image.id,
+              client: tx,
+              logger: options.logger,
+            })
+            screens.push(screen)
           }
 
-          await prisma.screen.update({
-            where: { id: currentScreen.id },
-            data: {
-              navigation: JSON.stringify(updatedDSL.navigation),
-            },
-          })
+          for (let i = 0; i < screens.length - 1; i++) {
+            const currentScreen = screens[i]
+            const nextScreen = screens[i + 1]
+            const currentDSL = options.initialScreens[i]
+
+            if (currentDSL.navigation?.type === 'internal') {
+              const updatedDSL: ScreenDSL = {
+                ...currentDSL,
+                navigation: {
+                  ...currentDSL.navigation,
+                  screenId: nextScreen.id,
+                },
+              }
+
+              await screenRepository.update(
+                currentScreen.id,
+                {
+                  navigation: JSON.stringify(updatedDSL.navigation),
+                },
+                { tx, logger: options.logger }
+              )
+            }
+          }
         }
-      }
-    }
 
-    // Store theme config - we'll use a separate approach since Flow doesn't have metadata field
-    // For now, we can store it in the first screen's metadata or create a separate table
-    // This is a temporary solution - in production, add metadata field to Flow model
-    if (options.themeConfig && screens.length > 0) {
-      // Store in first screen's metadata as a workaround
-      const firstScreen = screens[0]
-      const existingMetadata = firstScreen.metadata ? JSON.parse(firstScreen.metadata as string) : {}
-      await prisma.screen.update({
-        where: { id: firstScreen.id },
-        data: {
-          metadata: JSON.stringify({
-            ...existingMetadata,
-            flowThemeConfig: options.themeConfig,
-          }),
-        },
+        if (options.themeConfig && screens.length > 0) {
+          const firstScreen = screens[0]
+          const existingMetadata = firstScreen.metadata ? JSON.parse(firstScreen.metadata as string) : {}
+          await screenRepository.update(
+            firstScreen.id,
+            {
+              metadata: JSON.stringify({
+                ...existingMetadata,
+                flowThemeConfig: options.themeConfig,
+              }),
+            },
+            { tx, logger: options.logger }
+          )
+        }
+
+        return { ...mapFlowMetadata(flow), screens }
       })
-    }
 
-    return {
-      id: flow.id,
-      name: flow.name,
-      description: flow.description ?? undefined,
-      domain: flow.domain ?? undefined,
-      theme: flow.theme ?? undefined,
-      style: flow.style ?? undefined,
-      isPublic: flow.isPublic,
-      userId: flow.userId ?? undefined,
-      createdAt: flow.createdAt,
-      updatedAt: flow.updatedAt,
-      screens,
+      return result
+    } catch (error) {
+      options.logger?.error?.('flow.create.failed', {
+        error: error instanceof Error ? error.message : 'Unknown error',
+      })
+      throw error
     }
   }
 
@@ -120,18 +137,8 @@ export class FlowEngine {
    * Get flow by ID with screens
    */
   static async getFlow(flowId: string, includeScreens: boolean = true): Promise<FlowMetadata & { screens?: any[] }> {
-    const flow = await prisma.flow.findUnique({
-      where: { id: flowId },
-      include: {
-        screens: includeScreens
-          ? {
-              orderBy: { createdAt: 'asc' }, // Default ordering by creation time
-              include: {
-                heroImage: true,
-              },
-            }
-          : false,
-      },
+    const flow = await flowRepository.findById(flowId, {
+      includeScreens,
     })
 
     if (!flow) {
@@ -139,16 +146,7 @@ export class FlowEngine {
     }
 
     return {
-      id: flow.id,
-      name: flow.name,
-      description: flow.description ?? undefined,
-      domain: flow.domain ?? undefined,
-      theme: flow.theme ?? undefined,
-      style: flow.style ?? undefined,
-      isPublic: flow.isPublic,
-      userId: flow.userId ?? undefined,
-      createdAt: flow.createdAt,
-      updatedAt: flow.updatedAt,
+      ...mapFlowMetadata(flow),
       screens: includeScreens ? flow.screens : undefined,
     }
   }
@@ -168,44 +166,27 @@ export class FlowEngine {
 
     // Update theme config - store in first screen's metadata as workaround
     if (options.themeConfig) {
-      const screens = await prisma.screen.findMany({
-        where: { flowId },
-        orderBy: { createdAt: 'asc' },
-        take: 1,
-      })
+      const screens = await screenRepository.findByFlow(flowId, { orderByCreated: 'asc', logger: options.logger })
 
       if (screens.length > 0) {
         const firstScreen = screens[0]
         const existingMetadata = firstScreen.metadata ? JSON.parse(firstScreen.metadata as string) : {}
-        await prisma.screen.update({
-          where: { id: firstScreen.id },
-          data: {
+        await screenRepository.update(
+          firstScreen.id,
+          {
             metadata: JSON.stringify({
               ...existingMetadata,
               flowThemeConfig: options.themeConfig,
             }),
           },
-        })
+          { logger: options.logger }
+        )
       }
     }
 
-    const flow = await prisma.flow.update({
-      where: { id: flowId },
-      data: updateData,
-    })
+    const flow = await flowRepository.update(flowId, updateData, { logger: options.logger })
 
-    return {
-      id: flow.id,
-      name: flow.name,
-      description: flow.description ?? undefined,
-      domain: flow.domain ?? undefined,
-      theme: flow.theme ?? undefined,
-      style: flow.style ?? undefined,
-      isPublic: flow.isPublic,
-      userId: flow.userId ?? undefined,
-      createdAt: flow.createdAt,
-      updatedAt: flow.updatedAt,
-    }
+    return mapFlowMetadata(flow)
   }
 
   /**
@@ -213,9 +194,7 @@ export class FlowEngine {
    */
   static async deleteFlow(flowId: string): Promise<void> {
     // Screens are cascade deleted via Prisma schema
-    await prisma.flow.delete({
-      where: { id: flowId },
-    })
+    await flowRepository.delete(flowId)
   }
 
   /**
@@ -223,88 +202,92 @@ export class FlowEngine {
    */
   static async cloneFlow(flowId: string, options: CloneFlowOptions): Promise<FlowMetadata & { screens: any[] }> {
     const sourceFlow = await this.getFlow(flowId, true)
-    if (!sourceFlow.screens) {
-      throw new Error('Source flow has no screens to clone')
-    }
 
-    // Create new flow
-    const newFlow = await this.createFlow({
-      name: options.newName,
-      description: options.newDescription ?? sourceFlow.description,
-      domain: sourceFlow.domain,
-      theme: sourceFlow.theme,
-      style: sourceFlow.style,
-      userId: options.userId ?? sourceFlow.userId,
-      isPublic: false, // Cloned flows are private by default
-    })
+    return withDbTransaction(async (tx) => {
+      const newFlow = await flowRepository.create(
+        {
+          name: options.newName,
+          description: options.newDescription ?? sourceFlow.description,
+          domain: sourceFlow.domain,
+          theme: sourceFlow.theme,
+          style: sourceFlow.style,
+          userId: options.userId ?? sourceFlow.userId ?? null,
+          isPublic: false,
+        },
+        { tx, logger: options.logger }
+      )
 
-    if (!options.includeScreens) {
-      return { ...newFlow, screens: [] }
-    }
-
-    // Clone screens
-    const clonedScreens = []
-    const screenIdMap = new Map<string, string>() // Map old screen IDs to new ones
-
-    for (const screen of sourceFlow.screens) {
-      // Parse screen DSL from database
-      const screenDSL: ScreenDSL = {
-        hero_image: screen.heroImage
-          ? {
-              id: screen.heroImage.id,
-              url: screen.heroImage.url,
-              prompt: screen.heroImage.prompt ?? undefined,
-              seed: screen.heroImage.seed ?? undefined,
-              aspectRatio: screen.heroImage.aspectRatio ?? undefined,
-              style: screen.heroImage.style ?? undefined,
-              extractedPalette: screen.heroImage.extractedPalette
-                ? JSON.parse(screen.heroImage.extractedPalette)
-                : undefined,
-              vibe: screen.heroImage.vibe as Vibe | undefined,
-            }
-          : {
-              id: 'placeholder',
-              url: '',
-            },
-        palette: screen.palette ? JSON.parse(screen.palette) : { primary: '#000', secondary: '#666', accent: '#999', background: '#fff' },
-        vibe: (screen.vibe as Vibe) ?? 'modern',
-        pattern_family: (screen.patternFamily as any) ?? 'HERO_CENTER_TEXT',
-        pattern_variant: (screen.patternVariant as 1 | 2 | 3 | 4 | 5) ?? 1,
-        components: screen.components ? JSON.parse(screen.components as string) : [],
-        navigation: screen.navigation ? JSON.parse(screen.navigation as string) : undefined,
-        animations: screen.animations ? JSON.parse(screen.animations as string) : undefined,
-        metadata: screen.metadata ? JSON.parse(screen.metadata as string) : undefined,
+      if (!options.includeScreens) {
+        return { ...mapFlowMetadata(newFlow), screens: [] }
       }
 
-      const { screen: newScreen } = await createScreenWithValidation(newFlow.id, screenDSL, {
-        heroImageId: screen.heroImageId ?? undefined,
-      })
+      const clonedScreens = []
+      const screenIdMap = new Map<string, string>()
+      const screens = sourceFlow.screens ?? []
 
-      screenIdMap.set(screen.id, newScreen.id)
-      clonedScreens.push(newScreen)
-    }
-
-    // Update navigation with new screen IDs
-    for (let i = 0; i < clonedScreens.length; i++) {
-      const clonedScreen = clonedScreens[i]
-      const originalScreen = sourceFlow.screens[i]
-
-      if (originalScreen.navigation) {
-        const navigation = JSON.parse(originalScreen.navigation as string)
-        if (navigation.screenId && screenIdMap.has(navigation.screenId)) {
-          navigation.screenId = screenIdMap.get(navigation.screenId)
+      for (const screen of screens) {
+        const screenDSL: ScreenDSL = {
+          hero_image: screen.heroImage
+            ? {
+                id: screen.heroImage.id,
+                url: screen.heroImage.url,
+                prompt: screen.heroImage.prompt ?? undefined,
+                seed: screen.heroImage.seed ?? undefined,
+                aspectRatio: screen.heroImage.aspectRatio ?? undefined,
+                style: screen.heroImage.style ?? undefined,
+                extractedPalette: screen.heroImage.extractedPalette
+                  ? JSON.parse(screen.heroImage.extractedPalette)
+                  : undefined,
+                vibe: screen.heroImage.vibe as Vibe | undefined,
+              }
+            : {
+                id: 'placeholder',
+                url: '',
+              },
+          palette: screen.palette
+            ? JSON.parse(screen.palette)
+            : { primary: '#000', secondary: '#666', accent: '#999', background: '#fff' },
+          vibe: (screen.vibe as Vibe) ?? 'modern',
+          pattern_family: (screen.patternFamily as any) ?? 'HERO_CENTER_TEXT',
+          pattern_variant: (screen.patternVariant as 1 | 2 | 3 | 4 | 5) ?? 1,
+          components: screen.components ? JSON.parse(screen.components as string) : [],
+          navigation: screen.navigation ? JSON.parse(screen.navigation as string) : undefined,
+          animations: screen.animations ? JSON.parse(screen.animations as string) : undefined,
+          metadata: screen.metadata ? JSON.parse(screen.metadata as string) : undefined,
         }
 
-        await prisma.screen.update({
-          where: { id: clonedScreen.id },
-          data: {
-            navigation: JSON.stringify(navigation),
-          },
+        const { screen: newScreen } = await createScreenWithValidation(newFlow.id, screenDSL, {
+          heroImageId: screen.heroImageId ?? undefined,
+          client: tx,
+          logger: options.logger,
         })
-      }
-    }
 
-    return { ...newFlow, screens: clonedScreens }
+        screenIdMap.set(screen.id, newScreen.id)
+        clonedScreens.push(newScreen)
+      }
+
+      for (let i = 0; i < clonedScreens.length; i++) {
+        const clonedScreen = clonedScreens[i]
+        const originalScreen = screens[i]
+
+        if (originalScreen.navigation) {
+          const navigation = JSON.parse(originalScreen.navigation as string)
+          if (navigation.screenId && screenIdMap.has(navigation.screenId)) {
+            navigation.screenId = screenIdMap.get(navigation.screenId)
+          }
+
+          await screenRepository.update(
+            clonedScreen.id,
+            {
+              navigation: JSON.stringify(navigation),
+            },
+            { tx, logger: options.logger }
+          )
+        }
+      }
+
+      return { ...mapFlowMetadata(newFlow), screens: clonedScreens }
+    })
   }
 
   /**
@@ -334,38 +317,20 @@ export class FlowEngine {
       orderBy.createdAt = 'desc'
     }
 
-    const flows = await prisma.flow.findMany({
-      where,
+    const flows = await flowRepository.list(where, {
       orderBy,
       take: options.limit ?? 100,
       skip: options.offset ?? 0,
     })
 
-    return flows.map((flow) => ({
-      id: flow.id,
-      name: flow.name,
-      description: flow.description ?? undefined,
-      domain: flow.domain ?? undefined,
-      theme: flow.theme ?? undefined,
-      style: flow.style ?? undefined,
-      isPublic: flow.isPublic,
-      userId: flow.userId ?? undefined,
-      createdAt: flow.createdAt,
-      updatedAt: flow.updatedAt,
-    }))
+    return flows.map((flow) => mapFlowMetadata(flow))
   }
 
   /**
    * Get flow statistics
    */
   static async getFlowStats(flowId: string): Promise<FlowStats> {
-    const flow = await prisma.flow.findUnique({
-      where: { id: flowId },
-      include: {
-        screens: true,
-        revisions: true,
-      },
-    })
+    const flow = await flowRepository.findById(flowId, { includeScreens: true, includeRevisions: true })
 
     if (!flow) {
       throw new Error(`Flow not found: ${flowId}`)

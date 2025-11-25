@@ -2,6 +2,7 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 import { Handle, Position, type NodeProps } from 'reactflow'
 import type { DiagramNode } from '@/lib/flows/diagram-utils'
 import type { ScreenDSL } from '@/lib/dsl/types'
@@ -42,10 +43,12 @@ export function ScreenNode({ data, selected }: NodeProps<DiagramNode['data']>) {
       <div className="w-full h-full rounded-lg overflow-hidden bg-gray-50 relative">
         {screenDSL?.hero_image?.url ? (
           <div className="w-full h-full relative">
-            <img
+            <Image
               src={screenDSL.hero_image.url}
               alt={label || 'Screen thumbnail'}
-              className="w-full h-full object-cover"
+              fill
+              sizes="200px"
+              className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           </div>

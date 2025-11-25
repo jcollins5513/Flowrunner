@@ -2,6 +2,7 @@
 // Types for flow management, screen sequences, and navigation graphs
 
 import type { ScreenDSL, FlowDSL, Palette, Vibe, Component, PatternFamily, PatternVariant } from '../dsl/types'
+import type { RepositoryLogger } from '../db/repositories'
 
 /**
  * Flow metadata and configuration
@@ -75,6 +76,7 @@ export interface CreateFlowOptions {
   isPublic?: boolean
   initialScreens?: ScreenDSL[]
   themeConfig?: FlowThemeConfig
+  logger?: RepositoryLogger
 }
 
 /**
@@ -88,6 +90,7 @@ export interface UpdateFlowOptions {
   style?: string
   isPublic?: boolean
   themeConfig?: FlowThemeConfig
+  logger?: RepositoryLogger
 }
 
 /**
@@ -122,6 +125,7 @@ export interface CloneFlowOptions {
   includeScreens?: boolean
   includeRevisions?: boolean
   resetNavigation?: boolean // Whether to reset navigation graph
+  logger?: RepositoryLogger
 }
 
 /**

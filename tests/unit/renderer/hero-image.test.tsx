@@ -7,7 +7,7 @@ import { type HeroImage as HeroImageType } from '@/lib/dsl/types'
 // Mock next/image
 vi.mock('next/image', () => ({
   default: (props: any) => {
-    // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
+    // eslint-disable-next-line @next/next/no-img-element
     return <img {...props} src={props.src} alt={props.alt} />
   },
 }))
