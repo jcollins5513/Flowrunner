@@ -83,6 +83,13 @@ export function BranchEditor({
     }
   }, [flowId, screenId, onBranchChange])
 
+  const resetForm = useCallback(() => {
+    setFormToScreenId('')
+    setFormLabel('')
+    setFormCondition('')
+    setFormTrigger('button-click')
+  }, [])
+
   const handleAddBranch = useCallback(async () => {
     if (!formToScreenId) {
       setError('Target screen is required')
@@ -212,13 +219,6 @@ export function BranchEditor({
     setFormCondition(branch.condition || '')
     setFormTrigger(branch.trigger || 'button-click')
     setShowEditDialog(true)
-  }, [])
-
-  const resetForm = useCallback(() => {
-    setFormToScreenId('')
-    setFormLabel('')
-    setFormCondition('')
-    setFormTrigger('button-click')
   }, [])
 
   const handleOpenAddDialog = useCallback(() => {
