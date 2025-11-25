@@ -3,7 +3,6 @@
 // Using a safe wrapper to avoid TypeScript/webpack issues with node:perf_hooks
 function getPerformanceNow(): number {
   // Use the global performance object available in both browser and Node.js environments
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const perf = (globalThis as any).performance || (typeof window !== 'undefined' ? (window as any).performance : null)
   if (perf && typeof perf.now === 'function') {
     return perf.now()

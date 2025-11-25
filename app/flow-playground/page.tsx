@@ -6,45 +6,22 @@ import { Loader2 } from 'lucide-react'
 import { InteractiveScreen } from '@/components/flow/InteractiveScreen'
 import type { ScreenOption } from '@/components/flow/ScreenPickerModal'
 import {
-  type Component,
-  type HeroImage,
   type PatternFamily,
   type PatternVariant,
   type ScreenDSL,
   type Vibe,
-  type Palette,
 } from '@/lib/dsl/types'
-import { type NextScreenTriggerContext } from '@/lib/flows/types'
-import { generateNextScreen } from '@/lib/flows/next-screen-generator'
+import { type NextScreenTriggerContext, type ScreenContext } from '@/lib/flows/types'
+import {
+  buildScreenDSLFromPlan,
+  generateNextScreen,
+} from '@/lib/flows/next-screen-generator'
+import { runPromptToTemplatePipeline } from '@/lib/ai/intent/pipeline'
+import { ImageOrchestrator } from '@/lib/images/orchestrator'
+import { ImageGenerationService } from '@/lib/images/generation/service'
+import { MockImageProvider } from '@/lib/images/generation/providers/mock'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/toast-provider'
-
-const PATTERN_SEQUENCE: PatternFamily[] = [
-  'ONB_HERO_TOP',
-  'FEAT_IMAGE_TEXT_RIGHT',
-  'ACT_FORM_MINIMAL',
-  'PRODUCT_DETAIL',
-  'DASHBOARD_OVERVIEW',
-  'DEMO_DEVICE_FULLBLEED',
-]
-
-const VARIANTS: PatternVariant[] = [1, 2, 3, 4, 5]
-
-const PALETTE_POOL: Palette[] = [
-  { primary: '#0f172a', secondary: '#475569', accent: '#6366f1', background: '#f8fafc' },
-  { primary: '#111827', secondary: '#6b7280', accent: '#0ea5e9', background: '#fdf4ff' },
-  { primary: '#1c1917', secondary: '#57534e', accent: '#f97316', background: '#fff7ed' },
-  { primary: '#0b1a2a', secondary: '#64748b', accent: '#22d3ee', background: '#0f172a' },
-]
-
-const HERO_IMAGES: Partial<Record<PatternFamily, string>> = {
-  ONB_HERO_TOP: 'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=1200&q=80',
-  FEAT_IMAGE_TEXT_RIGHT: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80',
-  ACT_FORM_MINIMAL: 'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=1200&q=80',
-  PRODUCT_DETAIL: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=1200&q=80',
-  DASHBOARD_OVERVIEW: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
-  DEMO_DEVICE_FULLBLEED: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&q=80',
-}
 
 const PROMPT_SUGGESTIONS = [
   'Onboard creators to a new AI design assistant.',
@@ -55,138 +32,92 @@ const PROMPT_SUGGESTIONS = [
 
 const VIBES: Vibe[] = ['modern', 'professional', 'bold', 'minimal', 'creative']
 
-type TemplateContext = {
-  prompt: string
-  step: number
-  cta?: string
-}
-
 function pick<T>(items: T[]): T {
   return items[Math.floor(Math.random() * items.length)]
-}
-
-function buildHeroImage(family: PatternFamily, step: number): HeroImage {
-  return {
-    id: `${family}-${step}-${Date.now()}`,
-    url:
-      HERO_IMAGES[family] ??
-      'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80',
-    prompt: `${family} showcase`,
-  }
-}
-
-function buildSupportingImages(family: PatternFamily): HeroImage[] | undefined {
-  if (family !== 'PRODUCT_DETAIL' && family !== 'DEMO_DEVICE_FULLBLEED') return undefined
-  return [
-    {
-      id: `${family}-support-1`,
-      url: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80',
-    },
-    {
-      id: `${family}-support-2`,
-      url: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80',
-    },
-  ]
-}
-
-function buildComponents(family: PatternFamily, ctx: TemplateContext): Component[] {
-  const baseTitle = ctx.prompt || `Step ${ctx.step + 1}`
-  const copy = `Help users make progress toward their goal with clear messaging and action.`
-
-  switch (family) {
-    case 'ACT_FORM_MINIMAL':
-      return [
-        { type: 'title', content: baseTitle },
-        { type: 'subtitle', content: 'Complete this quick form to continue.' },
-        {
-          type: 'form',
-          content: 'Join the beta',
-          props: {
-            fields: [
-              { id: 'name', label: 'Full name', placeholder: 'Jane Doe' },
-              { id: 'email', label: 'Work email', placeholder: 'you@company.com' },
-            ],
-            submit: 'Create account',
-          },
-        },
-        { type: 'text', content: copy },
-        { type: 'button', content: ctx.cta ?? 'Continue' },
-      ]
-    case 'PRODUCT_DETAIL':
-      return [
-        { type: 'title', content: baseTitle },
-        { type: 'subtitle', content: 'Pro plan · $49/mo' },
-        { type: 'text', content: 'Everything you need to launch and scale your experience.' },
-        {
-          type: 'image',
-          content: 'Feature highlight',
-          props: { url: 'https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=800&q=80' },
-        },
-        { type: 'button', content: ctx.cta ?? 'Start free trial' },
-      ]
-    case 'DASHBOARD_OVERVIEW':
-      return [
-        { type: 'title', content: baseTitle },
-        { type: 'subtitle', content: 'Today’s snapshot' },
-        { type: 'text', content: copy },
-        {
-          type: 'image',
-          content: 'Analytics chart',
-          props: { url: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=900&q=80' },
-        },
-        { type: 'button', content: ctx.cta ?? 'View details' },
-      ]
-    case 'DEMO_DEVICE_FULLBLEED':
-      return [
-        { type: 'title', content: baseTitle },
-        { type: 'subtitle', content: 'See the product in action.' },
-        { type: 'text', content: copy },
-        { type: 'button', content: ctx.cta ?? 'Book demo' },
-      ]
-    default:
-      return [
-        { type: 'title', content: baseTitle },
-        { type: 'subtitle', content: 'Explain what this step unlocks.' },
-        { type: 'text', content: copy },
-        { type: 'button', content: ctx.cta ?? 'Next step' },
-      ]
-  }
-}
-
-function createScreen(step: number, prompt: string): ScreenDSL {
-  const family = PATTERN_SEQUENCE[step % PATTERN_SEQUENCE.length]
-  const variant = VARIANTS[step % VARIANTS.length]
-  const palette = PALETTE_POOL[step % PALETTE_POOL.length]
-  const vibe = VIBES[step % VIBES.length]
-
-  return {
-    hero_image: buildHeroImage(family, step),
-    supporting_images: buildSupportingImages(family),
-    palette,
-    vibe,
-    pattern_family: family,
-    pattern_variant: variant,
-    components: buildComponents(family, { prompt, step, cta: step === 0 ? 'Get started' : 'Continue' }),
-    navigation: {
-      type: 'internal',
-      target: `screen-${step + 1}`,
-    },
-    metadata: {
-      step,
-      prompt,
-    },
-  }
 }
 
 export default function FlowPlaygroundPage() {
   const router = useRouter()
   const { showToast } = useToast()
   const [prompt, setPrompt] = useState(PROMPT_SUGGESTIONS[0])
-  const [screens, setScreens] = useState<ScreenDSL[]>(() => [createScreen(0, PROMPT_SUGGESTIONS[0])])
+  const [screens, setScreens] = useState<ScreenDSL[]>([])
   const [flowNameTouched, setFlowNameTouched] = useState(false)
   const [flowName, setFlowName] = useState(() => deriveFlowName(PROMPT_SUGGESTIONS[0]))
   const [flowDescription, setFlowDescription] = useState('Draft created in Flow Playground.')
   const [isSavingFlow, setIsSavingFlow] = useState(false)
+  const [isGenerating, setIsGenerating] = useState(false)
+
+  const flowMetadata = useMemo(
+    () => ({
+      theme: flowName.trim() || undefined,
+      style: undefined as string | undefined,
+      domain: undefined as string | undefined,
+    }),
+    [flowName],
+  )
+
+  const imageOrchestrator = useMemo(
+    () =>
+      new ImageOrchestrator({
+        service: new ImageGenerationService({ provider: new MockImageProvider() }),
+        autoExtractPalette: true,
+        autoInferVibe: true,
+        autoPersist: true,
+      }),
+    [],
+  )
+
+  const createScreen = useCallback(
+    async (step: number, promptValue: string): Promise<ScreenDSL> => {
+      const pipelineResult = await runPromptToTemplatePipeline(promptValue)
+      const plan =
+        pipelineResult.sequence[step] ??
+        pipelineResult.sequence[pipelineResult.sequence.length - 1]
+
+      if (!plan) {
+        throw new Error('No screen plan generated from template')
+      }
+
+      const heroImage = await imageOrchestrator.generateHeroImageWithPalette({
+        prompt: plan.heroPlan.imagePrompt,
+        aspectRatio: plan.heroPlan.aspectRatio,
+        visualTheme: flowMetadata.theme,
+      })
+
+      const vibe: Vibe = (heroImage.vibe as Vibe | undefined) ?? VIBES[0]
+      const context: ScreenContext = {
+        palette: heroImage.palette,
+        vibe,
+        patternFamily: plan.pattern.family as PatternFamily,
+        patternVariant: (plan.pattern.variant as PatternVariant) ?? 1,
+        components: [],
+        flowMetadata,
+      }
+
+      const screenDSL = buildScreenDSLFromPlan(plan, context, heroImage)
+
+      return {
+        ...screenDSL,
+        navigation:
+          screenDSL.navigation ??
+          ({
+            type: 'internal',
+            target: `screen-${step + 1}`,
+          } satisfies ScreenDSL['navigation']),
+        metadata: {
+          ...screenDSL.metadata,
+          step,
+          prompt: promptValue,
+          templateId: plan.templateId,
+          templateScreenId: plan.screenId,
+          heroImageId: screenDSL.hero_image.id,
+          planName: plan.name,
+          generatedAt: new Date().toISOString(),
+        },
+      }
+    },
+    [flowMetadata, imageOrchestrator],
+  )
 
   useEffect(() => {
     if (!flowNameTouched) {
@@ -194,24 +125,104 @@ export default function FlowPlaygroundPage() {
     }
   }, [flowNameTouched, prompt])
 
-  const handleGenerate = useCallback(() => {
-    setScreens((current) => [...current, createScreen(current.length, prompt)])
-  }, [prompt])
+  useEffect(() => {
+    if (screens.length > 0) return
+
+    let isMounted = true
+    setIsGenerating(true)
+
+    createScreen(0, prompt)
+      .then((screen) => {
+        if (isMounted) {
+          setScreens([screen])
+        }
+      })
+      .catch((error) => {
+        console.error('Failed to generate initial screen', error)
+        showToast({
+          title: 'Unable to generate initial screen',
+          description: error instanceof Error ? error.message : 'Unexpected error occurred',
+          variant: 'error',
+        })
+      })
+      .finally(() => {
+        if (isMounted) {
+          setIsGenerating(false)
+        }
+      })
+
+    return () => {
+      isMounted = false
+    }
+  }, [createScreen, prompt, screens.length, showToast])
+
+  const handleGenerate = useCallback(async () => {
+    if (isGenerating) return
+    setIsGenerating(true)
+    try {
+      const nextScreen = await createScreen(screens.length, prompt)
+      setScreens((current) => [...current, nextScreen])
+    } catch (error) {
+      console.error('Failed to add screen from prompt', error)
+      showToast({
+        title: 'Unable to add screen',
+        description: error instanceof Error ? error.message : 'Unexpected error occurred',
+        variant: 'error',
+      })
+    } finally {
+      setIsGenerating(false)
+    }
+  }, [createScreen, isGenerating, prompt, screens.length, showToast])
 
   const handleButtonNext = useCallback(
-    (screenIndex: number) => {
-      setScreens((current) => {
-        const nextPrompt = `${prompt} · Step ${current.length + 1}`
-        const next = createScreen(current.length, nextPrompt)
-        return [...current.slice(0, screenIndex + 1), next]
-      })
+    async (screenIndex: number) => {
+      if (isGenerating) return
+      setIsGenerating(true)
+
+      try {
+        const nextPrompt = `${prompt} · Step ${screenIndex + 2}`
+        const next = await createScreen(screenIndex + 1, nextPrompt)
+        setScreens((current) => [...current.slice(0, screenIndex + 1), next])
+      } catch (error) {
+        console.error('Failed to branch flow', error)
+        showToast({
+          title: 'Unable to continue from here',
+          description: error instanceof Error ? error.message : 'Unexpected error occurred',
+          variant: 'error',
+        })
+      } finally {
+        setIsGenerating(false)
+      }
     },
-    [prompt]
+    [createScreen, isGenerating, prompt, showToast]
+  )
+
+  const handleResetWithPrompt = useCallback(
+    async (nextPrompt: string) => {
+      if (isGenerating) return
+      setPrompt(nextPrompt)
+      setIsGenerating(true)
+      try {
+        const firstScreen = await createScreen(0, nextPrompt)
+        setScreens([firstScreen])
+      } catch (error) {
+        console.error('Failed to reset flow', error)
+        showToast({
+          title: 'Unable to reset flow',
+          description: error instanceof Error ? error.message : 'Unexpected error occurred',
+          variant: 'error',
+        })
+      } finally {
+        setIsGenerating(false)
+      }
+    },
+    [createScreen, isGenerating, showToast]
   )
 
   const handleGenerateNext = useCallback(
     async (context: NextScreenTriggerContext) => {
       try {
+        setIsGenerating(true)
         const result = await generateNextScreen(context, {
           onProgress: (stage, progress) => {
             console.log(`Generation: ${stage} (${progress}%)`)
@@ -228,11 +239,15 @@ export default function FlowPlaygroundPage() {
       } catch (error) {
         console.error('Failed to generate next screen:', error)
         // Fallback to simple generation
-        handleButtonNext(
+        setIsGenerating(false)
+        await handleButtonNext(
           screens.findIndex(
             (s) => s.metadata?.step === (context.screen.metadata as { step?: number })?.step,
           ),
         )
+        return
+      } finally {
+        setIsGenerating(false)
       }
     },
     [handleButtonNext, screens],
@@ -340,41 +355,36 @@ export default function FlowPlaygroundPage() {
           />
         </div>
         <div className="flex flex-wrap gap-2">
-          {PROMPT_SUGGESTIONS.map((suggestion) => (
+            {PROMPT_SUGGESTIONS.map((suggestion) => (
+              <button
+                key={suggestion}
+                type="button"
+                className="rounded-full border border-slate-200 px-3 py-1 text-sm text-slate-700 hover:border-slate-400"
+                disabled={isGenerating}
+                onClick={() => handleResetWithPrompt(suggestion)}
+              >
+                {suggestion}
+              </button>
+            ))}
+          </div>
+          <div className="flex flex-wrap gap-3">
             <button
-              key={suggestion}
               type="button"
-              className="rounded-full border border-slate-200 px-3 py-1 text-sm text-slate-700 hover:border-slate-400"
-              onClick={() => {
-                setPrompt(suggestion)
-                setScreens([createScreen(0, suggestion)])
-              }}
+              disabled={!canGenerate || isGenerating}
+              onClick={handleGenerate}
+              className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white disabled:opacity-40"
             >
-              {suggestion}
+              Add screen
             </button>
-          ))}
-        </div>
-        <div className="flex flex-wrap gap-3">
-          <button
-            type="button"
-            disabled={!canGenerate}
-            onClick={handleGenerate}
-            className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white disabled:opacity-40"
-          >
-            Add screen
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              const nextPrompt = pick(PROMPT_SUGGESTIONS)
-              setPrompt(nextPrompt)
-              setScreens([createScreen(0, nextPrompt)])
-            }}
-            className="rounded-lg border border-slate-300 px-4 py-2 text-sm text-slate-800 hover:border-slate-500"
-          >
-            Reset with suggestion
-          </button>
-        </div>
+            <button
+              type="button"
+              disabled={isGenerating}
+              onClick={() => handleResetWithPrompt(pick(PROMPT_SUGGESTIONS))}
+              className="rounded-lg border border-slate-300 px-4 py-2 text-sm text-slate-800 hover:border-slate-500"
+            >
+              Reset with suggestion
+            </button>
+          </div>
       </section>
 
       <section className="max-w-4xl mx-auto space-y-6 rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm">
