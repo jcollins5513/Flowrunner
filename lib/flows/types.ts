@@ -1,7 +1,16 @@
 // Flow Engine Types
 // Types for flow management, screen sequences, and navigation graphs
 
-import type { ScreenDSL, FlowDSL, Palette, Vibe, Component, PatternFamily, PatternVariant } from '../dsl/types'
+import type {
+  ScreenDSL,
+  FlowDSL,
+  Palette,
+  Vibe,
+  Component,
+  PatternFamily,
+  PatternVariant,
+  HeroImage,
+} from '../dsl/types'
 import type { RepositoryLogger } from '../db/repositories'
 
 /**
@@ -166,6 +175,7 @@ export interface NextScreenTriggerContext {
   slotName?: string
   trigger: 'click'
   targetScreenId?: string // For linking to existing screens
+  libraryImage?: HeroImage // Optional: reuse hero image from library
 }
 
 /**

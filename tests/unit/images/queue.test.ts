@@ -113,5 +113,24 @@ describe('ImageGenerationQueue', () => {
     expect(completed).toHaveLength(3)
     expect(completed.every((job) => job.status === 'completed')).toBe(true)
   })
+
+  it('reports health snapshot counts', async () => {
+    const service = new ImageGenerationService({ provider: new MockImageProvider() })
+    const queue = new ImageGenerationQueue(service, { name: 'test-health' })
+
+    const request = imageGenerationRequestSchema.parse({
+      prompt: 'Health check job',
+      aspectRatio: '16:9',
+    })
+
+    const jobId = await queue.requestHeroImage(request)
+    await queue.pollJob(jobId, 5000, 50)
+
+    const snapshot = queue.getHealthSnapshot()
+    expect(snapshot.name).toBe('test-health')
+    expect(snapshot.completed).toBe(1)
+    expect(snapshot.pending).toBe(0)
+    expect(snapshot.failed).toBe(0)
+  })
 })
 

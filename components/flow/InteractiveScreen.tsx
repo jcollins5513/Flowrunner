@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ScreenRenderer, type ComponentInteractionContext } from '@/components/renderer/ScreenRenderer'
-import type { Component, ScreenDSL } from '@/lib/dsl/types'
+import type { Component, ScreenDSL, HeroImage } from '@/lib/dsl/types'
 import { type NextScreenTriggerContext } from '@/lib/flows/types'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -10,7 +10,7 @@ import { GitBranch, LinkIcon, Sparkles, X } from 'lucide-react'
 import { ScreenPickerModal, type ScreenOption } from './ScreenPickerModal'
 import { NavigationConfigModal } from '@/components/editing/NavigationConfigModal'
 import { generateNextScreen } from '@/lib/flows/next-screen-generator'
-import type { GenerateNextScreenResult } from '@/lib/flows/types'
+import { ImageLibraryPicker } from '@/components/editing/ImageLibraryPicker'
 
 const CLICKABLE_COMPONENT_TYPES: Component['type'][] = ['button']
 
@@ -66,6 +66,7 @@ export function InteractiveScreen({
   const [isGenerating, setIsGenerating] = useState(false)
   const [showScreenPicker, setShowScreenPicker] = useState(false)
   const [showNavConfig, setShowNavConfig] = useState(false)
+  const [showLibraryPicker, setShowLibraryPicker] = useState(false)
 
   const interactiveTypes = useMemo(() => {
     return Array.from(new Set(clickableComponentTypes))
@@ -125,7 +126,7 @@ export function InteractiveScreen({
     [disabled, editMode, interactiveTypes],
   )
 
-  const handleGenerateNext = useCallback(async () => {
+  const handleGenerateNext = useCallback(async (libraryImage?: HeroImage) => {
     if (!menuState || isGenerating) {
       return
     }
@@ -138,6 +139,7 @@ export function InteractiveScreen({
         componentType: menuState.componentType,
         slotName: menuState.slotName,
         trigger: 'click' as const,
+        ...(libraryImage ? { libraryImage } : {}),
       }
 
       // If onGenerateNext is provided, use it (for custom handling)
@@ -163,6 +165,14 @@ export function InteractiveScreen({
       setIsGenerating(false)
     }
   }, [closeMenu, isGenerating, menuState, onGenerateNext, screen, screenId])
+
+  const handleLibrarySelection = useCallback(
+    (image: HeroImage) => {
+      handleGenerateNext(image)
+      setShowLibraryPicker(false)
+    },
+    [handleGenerateNext],
+  )
 
   const handleLinkExistingClick = useCallback(() => {
     if (!menuState || !onLinkExisting) return
@@ -235,6 +245,9 @@ export function InteractiveScreen({
         'interactive-screen relative overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-xl transition-shadow',
         className,
       )}
+      data-screen-id={screenId || `screen-${screenIndex ?? 0}`}
+      data-pattern-family={screen.pattern_family}
+      data-hero-image-id={screen.hero_image.id}
     >
       <div className="pointer-events-none absolute inset-x-6 top-6 z-10 flex flex-wrap items-center justify-between gap-3 text-[10px] font-semibold uppercase tracking-[0.25em] text-slate-500">
         <span>Click any primary action to branch the flow</span>
@@ -299,6 +312,16 @@ export function InteractiveScreen({
                   type="button"
                   variant="outline"
                   className="w-full justify-center gap-2"
+                  disabled={!onGenerateNext}
+                  onClick={() => setShowLibraryPicker(true)}
+                >
+                  <Sparkles className="h-4 w-4" />
+                  Use library image
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full justify-center gap-2"
                   disabled={!onLinkExisting}
                   onClick={handleLinkExistingClick}
                 >
@@ -327,6 +350,13 @@ export function InteractiveScreen({
         sourceScreenId={screenId}
         onSelect={handleScreenSelected}
       />
+
+      {showLibraryPicker && (
+        <ImageLibraryPicker
+          onSelect={handleLibrarySelection}
+          onClose={() => setShowLibraryPicker(false)}
+        />
+      )}
 
       {showNavConfig && screenId && componentIndex >= 0 && (
         <NavigationConfigModal

@@ -6,6 +6,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import type { HeroImage as HeroImageType, Vibe, Palette } from '@/lib/dsl/types'
 import { cn } from '@/lib/utils'
+import { Input } from '@/components/ui/input'
 
 export interface ImageLibraryPickerProps {
   onSelect: (image: HeroImageType) => void
@@ -41,6 +42,7 @@ export const ImageLibraryPicker: React.FC<ImageLibraryPickerProps> = ({
   const [selectedVibe, setSelectedVibe] = useState<Vibe | ''>(filters?.vibe || '')
   const [selectedStyle, setSelectedStyle] = useState<string>(filters?.style || '')
   const [selectedDomain, setSelectedDomain] = useState<string>(filters?.domain || '')
+  const [searchQuery, setSearchQuery] = useState('')
 
   const fetchImages = useCallback(async () => {
     setLoading(true)
@@ -51,6 +53,7 @@ export const ImageLibraryPicker: React.FC<ImageLibraryPickerProps> = ({
       if (selectedVibe) params.append('vibe', selectedVibe)
       if (selectedStyle) params.append('style', selectedStyle)
       if (selectedDomain) params.append('domain', selectedDomain)
+      if (searchQuery) params.append('search', searchQuery)
       params.append('limit', '50')
 
       const response = await fetch(`/api/images?${params.toString()}`)
@@ -67,7 +70,7 @@ export const ImageLibraryPicker: React.FC<ImageLibraryPickerProps> = ({
         vibe: img.vibe || undefined,
         style: img.style || undefined,
         domain: img.domain || undefined,
-        palette: undefined, // Will be loaded separately if needed
+        palette: (img.palette || img.extractedPalette) as Palette | undefined,
         createdAt: img.createdAt || new Date().toISOString(),
       }))
       setImages(imageList)
@@ -76,7 +79,7 @@ export const ImageLibraryPicker: React.FC<ImageLibraryPickerProps> = ({
     } finally {
       setLoading(false)
     }
-  }, [selectedVibe, selectedStyle, selectedDomain])
+  }, [searchQuery, selectedVibe, selectedStyle, selectedDomain])
 
   useEffect(() => {
     fetchImages()
@@ -145,6 +148,14 @@ export const ImageLibraryPicker: React.FC<ImageLibraryPickerProps> = ({
 
         {/* Filters */}
         <div className="p-4 border-b bg-gray-50 flex flex-wrap gap-4">
+          <div className="flex-1 min-w-[220px]">
+            <label className="block text-sm font-medium text-gray-700 mb-1">Search</label>
+            <Input
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search prompts, tags, or vibes"
+            />
+          </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Vibe</label>
             <select

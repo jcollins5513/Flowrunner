@@ -16,6 +16,16 @@ export interface ImageGenerationJob {
 export interface QueueOptions {
   maxConcurrent?: number
   dedupeWindowMs?: number
+  name?: string
+}
+
+export interface QueueHealthSnapshot {
+  name: string
+  pending: number
+  processing: number
+  completed: number
+  failed: number
+  lastUpdatedAt: Date | null
 }
 
 const generateJobId = (request: ImageGenerationRequest): string => {
@@ -23,24 +33,29 @@ const generateJobId = (request: ImageGenerationRequest): string => {
   return Buffer.from(key).toString('base64').slice(0, 16)
 }
 
+const queueRegistry: Set<ImageGenerationQueue> = new Set()
+
 export class ImageGenerationQueue {
   private jobs: Map<string, ImageGenerationJob> = new Map()
   private processing: Set<string> = new Set()
   private isProcessingQueue: boolean = false
   private maxConcurrent: number
   private dedupeWindowMs: number
+  private name: string
 
   constructor(
     private service: ImageGenerationService,
-    private options: QueueOptions = {}
+    private options: QueueOptions = {},
   ) {
     this.maxConcurrent = options.maxConcurrent ?? 3
     this.dedupeWindowMs = options.dedupeWindowMs ?? 60000
+    this.name = options.name ?? 'image-generation'
+    queueRegistry.add(this)
   }
 
   async requestHeroImage(
     request: ImageGenerationRequest,
-    options?: { forceNew?: boolean }
+    options?: { forceNew?: boolean },
   ): Promise<string> {
     let jobId = generateJobId(request)
     const existing = this.jobs.get(jobId)
@@ -87,7 +102,7 @@ export class ImageGenerationQueue {
     try {
       while (this.processing.size < this.maxConcurrent) {
         const pending = Array.from(this.jobs.values()).filter(
-          (job) => job.status === 'pending' && !this.processing.has(job.id)
+          (job) => job.status === 'pending' && !this.processing.has(job.id),
         )
 
         if (pending.length === 0) {
@@ -152,5 +167,28 @@ export class ImageGenerationQueue {
       check()
     })
   }
+
+  getHealthSnapshot(): QueueHealthSnapshot {
+    const jobs = Array.from(this.jobs.values())
+    const lastUpdatedAt = jobs.length
+      ? new Date(
+          Math.max(
+            ...jobs.map((job) => job.updatedAt.getTime()),
+            ...jobs.map((job) => job.createdAt.getTime()),
+          ),
+        )
+      : null
+
+    return {
+      name: this.name,
+      pending: jobs.filter((job) => job.status === 'pending').length,
+      processing: jobs.filter((job) => job.status === 'processing').length,
+      completed: jobs.filter((job) => job.status === 'completed').length,
+      failed: jobs.filter((job) => job.status === 'failed').length,
+      lastUpdatedAt,
+    }
+  }
 }
 
+export const getQueueHealthSnapshots = (): QueueHealthSnapshot[] =>
+  Array.from(queueRegistry).map((queue) => queue.getHealthSnapshot())

@@ -81,6 +81,10 @@ export class IntentInterpreter {
     this.cache = options.cache ?? new Map<string, Intent>()
   }
 
+  get providerName(): string {
+    return this.provider.name
+  }
+
   private emit(event: IntentInterpreterEvent) {
     this.options.onEvent?.(event)
   }

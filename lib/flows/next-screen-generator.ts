@@ -7,7 +7,7 @@ import type {
   GenerateNextScreenOptions,
   GenerateNextScreenResult,
 } from './types'
-import type { ScreenDSL, Component, PatternFamily, PatternVariant, Palette, Vibe } from '../dsl/types'
+import type { ScreenDSL, Component, PatternFamily, PatternVariant, Palette, Vibe, HeroImage } from '../dsl/types'
 import { runPromptToTemplatePipeline } from '../ai/intent/pipeline'
 import type { ScreenGenerationPlan } from '../flow/templates/selector'
 import type { HeroImageWithPalette } from '../images/orchestrator'
@@ -16,8 +16,9 @@ import { insertScreen } from './screen-sequence'
 import { ImageOrchestrator } from '../images/orchestrator'
 import { ImageGenerationService } from '../images/generation/service'
 import { MockImageProvider } from '../images/generation/providers/mock'
-import { ALL_PATTERN_FAMILIES } from '../patterns/families'
 import { persistHeroImageMetadata } from '../db/hero-image-persistence'
+import { ImageRepository } from '../images/repository'
+import type { AspectRatio, ImageStyle } from '../images/generation/types'
 
 /**
  * Pattern suggestion heuristics
@@ -36,6 +37,34 @@ const PATTERN_SUGGESTIONS: Partial<Record<PatternFamily, PatternFamily[]>> = {
   PRICING_TABLE: ['ACT_FORM_MINIMAL', 'PRODUCT_DETAIL'],
   TESTIMONIAL_CARD_GRID: ['ACT_FORM_MINIMAL', 'PRODUCT_DETAIL'],
   CTA_SPLIT_SCREEN: ['ACT_FORM_MINIMAL', 'DASHBOARD_OVERVIEW'],
+}
+
+const buildHeroFromLibrary = (
+  libraryImage: HeroImage,
+  plan: ScreenGenerationPlan,
+  context: ScreenContext,
+): HeroImageWithPalette => {
+  const palette = libraryImage.extractedPalette ?? context.palette
+  const aspectRatio = (libraryImage.aspectRatio as AspectRatio | undefined) ?? plan.heroPlan.aspectRatio
+
+  return {
+    image: {
+      url: libraryImage.url,
+      prompt: libraryImage.prompt ?? plan.heroPlan.imagePrompt,
+      seed: libraryImage.seed,
+      style: libraryImage.style as ImageStyle | undefined,
+      aspectRatio,
+      metadata: { provider: 'library', createdAt: new Date() },
+    },
+    palette: {
+      primary: palette.primary || context.palette.primary,
+      secondary: palette.secondary || context.palette.secondary,
+      accent: palette.accent || context.palette.accent,
+      background: palette.background || context.palette.background,
+    },
+    vibe: libraryImage.vibe ?? context.vibe,
+    imageId: libraryImage.id,
+  }
 }
 
 /**
@@ -238,9 +267,9 @@ export async function generateNextScreen(
       throw new Error('No screen plan generated from template')
     }
 
-    // Stage 4: Generate hero image (50%)
+    // Stage 4: Generate or reuse hero image (50%)
     onProgress?.('generating-image', 50)
-    
+
     // Create image orchestrator if not provided
     const orchestrator =
       imageOrchestrator ||
@@ -251,20 +280,30 @@ export async function generateNextScreen(
         autoPersist: true,
       })
 
-    const heroImage = await orchestrator.generateHeroImageWithPalette({
-      prompt: plan.heroPlan.imagePrompt,
-      aspectRatio: plan.heroPlan.aspectRatio,
-      // style is optional - let the orchestrator use defaults or infer from visualTheme
-      visualTheme: screenContext.flowMetadata?.theme,
-    })
+    const heroImage = context.libraryImage
+      ? buildHeroFromLibrary(context.libraryImage, plan, screenContext)
+      : await orchestrator.generateHeroImageWithPalette({
+          prompt: plan.heroPlan.imagePrompt,
+          aspectRatio: plan.heroPlan.aspectRatio,
+          // style is optional - let the orchestrator use defaults or infer from visualTheme
+          visualTheme: screenContext.flowMetadata?.theme,
+        })
 
-    try {
-      await persistHeroImageMetadata(heroImage, {
-        userId: options.userId,
-        domain: screenContext.flowMetadata?.domain ?? pipelineResult.intent.domain,
-      })
-    } catch (error) {
-      console.warn('Unable to persist hero image metadata for next screen generation', error)
+    if (context.libraryImage) {
+      try {
+        await new ImageRepository().incrementUsageCount(context.libraryImage.id)
+      } catch (error) {
+        console.warn('Unable to increment library image usage', error)
+      }
+    } else {
+      try {
+        await persistHeroImageMetadata(heroImage, {
+          userId: options.userId,
+          domain: screenContext.flowMetadata?.domain ?? pipelineResult.intent.domain,
+        })
+      } catch (error) {
+        console.warn('Unable to persist hero image metadata for next screen generation', error)
+      }
     }
 
     // Stage 5: Build DSL (70%)

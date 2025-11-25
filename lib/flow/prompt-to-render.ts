@@ -13,6 +13,7 @@ import { ImageOrchestrator, type HeroImageWithPalette } from '../images/orchestr
 import { persistHeroImageMetadata } from '../db/hero-image-persistence'
 import { createScreenWithValidation } from '../db/dsl-persistence'
 import { validateScreenDSL } from '../dsl/validator'
+import { pipelineTelemetry } from '../telemetry/pipeline'
 
 export interface PromptToRenderOptions {
   screenIndex?: number
@@ -111,15 +112,31 @@ export const assembleScreenFromPrompt = async (
     throw new Error('No screen generation plan produced from prompt')
   }
 
-  const pattern = resolvePattern(plan)
+  const pattern = (await pipelineTelemetry.timeStage(
+    'pattern_resolution',
+    () => Promise.resolve(resolvePattern(plan)),
+    { family: plan.pattern.family, variant: plan.pattern.variant },
+  )) as PatternDefinition
   const orchestrator = options.imageOrchestrator ?? defaultOrchestrator
 
   const heroImage =
     options.prebuiltHeroImage ??
-    (await orchestrator.generateHeroImageWithPalette({
-      prompt: plan.heroPlan.imagePrompt,
-      aspectRatio: plan.heroPlan.aspectRatio,
-    }))
+    ((await pipelineTelemetry.timeStage(
+      'image_generation',
+      () =>
+        orchestrator.generateHeroImageWithPalette({
+          prompt: plan.heroPlan.imagePrompt,
+          aspectRatio: plan.heroPlan.aspectRatio,
+        }),
+      { patternFamily: plan.pattern.family, patternVariant: plan.pattern.variant },
+    )) as HeroImageWithPalette)
+
+  pipelineTelemetry.logStage('palette_and_vibe', 'success', {
+    metadata: {
+      palette: heroImage.palette,
+      vibe: heroImage.vibe ?? 'unknown',
+    },
+  })
 
   let persistedImageId = heroImage.imageId
   try {
@@ -139,42 +156,73 @@ export const assembleScreenFromPrompt = async (
 
   const components = buildComponentsFromPlan(plan, pattern)
 
-  const assembly = await dslAssembler.assemble(
-    {
-      heroImage: heroWithId,
-      patternFamily: plan.pattern.family as PatternFamily,
-      patternVariant: plan.pattern.variant as PatternVariant,
-      components,
-      metadata: {
-        templateId: plan.templateId,
-        planScreenId: plan.screenId,
-      },
-    },
-    { validate: true }
-  )
+  const assembly = (await pipelineTelemetry.timeStage(
+    'dsl_assembly',
+    () =>
+      dslAssembler.assemble(
+        {
+          heroImage: heroWithId,
+          patternFamily: plan.pattern.family as PatternFamily,
+          patternVariant: plan.pattern.variant as PatternVariant,
+          components,
+          metadata: {
+            templateId: plan.templateId,
+            planScreenId: plan.screenId,
+          },
+        },
+        { validate: true },
+      ),
+    { patternFamily: plan.pattern.family, patternVariant: plan.pattern.variant },
+  )) as Awaited<ReturnType<typeof dslAssembler.assemble>>
 
-  const schemaValidation = validateScreenDSL(assembly.dsl)
+  const schemaValidation = (await pipelineTelemetry.timeStage(
+    'validation',
+    () => Promise.resolve(validateScreenDSL(assembly.dsl)),
+    { scope: 'schema' },
+  )) as ReturnType<typeof validateScreenDSL>
   if (!schemaValidation.success) {
+    pipelineTelemetry.logStage('validation', 'error', {
+      message: 'schema_validation_failed',
+      metadata: { issues: schemaValidation.error?.issues ?? [] },
+    })
     throw schemaValidation.error ?? new Error('Screen DSL failed schema validation')
   }
 
   if (!options.skipPatternValidation) {
     const patternValidation = validateDSLAgainstPattern(assembly.dsl, pattern)
     if (!patternValidation.valid) {
+      pipelineTelemetry.logStage('validation', 'error', {
+        message: 'pattern_validation_failed',
+        metadata: { errors: patternValidation.errors },
+      })
       const message = patternValidation.errors.map((err) => `${err.code}:${err.field}`).join(', ')
       throw new Error(`Pattern validation failed: ${message}`)
     }
   }
 
+  pipelineTelemetry.logStage('validation', 'success', {
+    metadata: { schema: true, pattern: options.skipPatternValidation ? 'skipped' : 'passed' },
+  })
+
   let screenId: string | undefined
   const shouldPersist = options.persist ?? Boolean(options.flowId)
 
   if (shouldPersist && options.flowId) {
-    const { screen } = await createScreenWithValidation(options.flowId, assembly.dsl, {
-      heroImageId: heroWithId.imageId,
-      skipPatternValidation: options.skipPatternValidation,
-    })
+    const { screen } = (await pipelineTelemetry.timeStage(
+      'persistence',
+      () =>
+        createScreenWithValidation(options.flowId as string, assembly.dsl, {
+          heroImageId: heroWithId.imageId,
+          skipPatternValidation: options.skipPatternValidation,
+        }),
+      { flowId: options.flowId, persistedHeroImageId: heroWithId.imageId },
+    )) as Awaited<ReturnType<typeof createScreenWithValidation>>
     screenId = screen.id
+  } else {
+    pipelineTelemetry.logStage('persistence', 'success', {
+      message: 'skipped',
+      metadata: { reason: 'no_flow_id' },
+    })
   }
 
   return {
