@@ -11,8 +11,15 @@ if (process.env.NODE_ENV === 'test') {
   const screens: MockRecord[] = []
   const revisions: MockRecord[] = []
   const images: MockRecord[] = []
+  const imageVersions: MockRecord[] = []
 
   const mockPrisma = {
+    $transaction: async <T>(fn: any): Promise<T> => {
+      if (typeof fn === 'function') {
+        return fn(mockPrisma as unknown as PrismaClient)
+      }
+      return Promise.all(fn) as unknown as Promise<T>
+    },
     flow: {
       create: async ({ data }: { data: MockRecord }) => {
         const record = {
@@ -129,13 +136,64 @@ if (process.env.NODE_ENV === 'test') {
         images.push(record)
         return record
       },
-      findUnique: async ({ where }: { where: MockRecord }) => images.find((img) => img.id === where.id) ?? null,
-      findMany: async () => images,
+      findUnique: async ({ where, include }: { where: MockRecord; include?: MockRecord }) => {
+        const image = images.find((img) => img.id === where.id)
+        if (!image) return null
+        if (include?.latestVersion) {
+          const latestVersion = image.latestVersionId
+            ? imageVersions.find((v) => v.id === image.latestVersionId) ?? null
+            : null
+          return { ...image, latestVersion }
+        }
+        return image
+      },
+      findMany: async ({ where, include, orderBy }: { where?: MockRecord; include?: MockRecord; orderBy?: MockRecord } = {}) => {
+        let filtered = [...images]
+
+        if (where?.userId) {
+          filtered = filtered.filter((img) => img.userId === where.userId)
+        }
+        if (where?.id?.in) {
+          filtered = filtered.filter((img) => where.id.in.includes(img.id))
+        }
+        if (orderBy?.createdAt === 'desc') {
+          filtered.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+        }
+        if (orderBy?.createdAt === 'asc') {
+          filtered.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
+        }
+
+        if (include?.latestVersion) {
+          return filtered.map((image) => {
+            const latestVersion = image.latestVersionId
+              ? imageVersions.find((v) => v.id === image.latestVersionId) ?? null
+              : null
+            return { ...image, latestVersion }
+          })
+        }
+
+        return filtered
+      },
       update: async ({ where, data }: { where: MockRecord; data: MockRecord }) => {
         const index = images.findIndex((img) => img.id === where.id)
         if (index === -1) throw new Error('Image not found')
         images[index] = { ...images[index], ...data, updatedAt: new Date() }
         return images[index]
+      },
+    },
+    imageVersion: {
+      create: async ({ data }: { data: MockRecord }) => {
+        const record = { id: data.id ?? createId('imgv'), createdAt: new Date(), ...data }
+        imageVersions.push(record)
+        return record
+      },
+      findMany: async ({ where }: { where?: MockRecord } = {}) => {
+        if (!where) return [...imageVersions]
+        let filtered = [...imageVersions]
+        if (where.imageId) {
+          filtered = filtered.filter((version) => version.imageId === where.imageId)
+        }
+        return filtered
       },
     },
   }

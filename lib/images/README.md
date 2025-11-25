@@ -153,7 +153,7 @@ import { ImageRepository } from './lib/images/repository'
 const repository = new ImageRepository()
 
 // Save an image
-const savedImage = await repository.saveImage({
+const { image, version } = await repository.saveImage({
   url: 'https://example.com/image.jpg',
   prompt: 'A beautiful sunset',
   seed: 12345,
@@ -163,6 +163,9 @@ const savedImage = await repository.saveImage({
   vibe: 'modern',
   userId: 'user-123',
 })
+
+const urls = repository.getRenderableUrls(image, version)
+console.log(urls.url)
 
 // Retrieve by ID
 const image = await repository.getImageById('image-id')
