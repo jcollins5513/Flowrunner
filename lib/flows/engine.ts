@@ -214,7 +214,7 @@ export class FlowEngine {
           domain: sourceFlow.domain,
           theme: sourceFlow.theme,
           style: sourceFlow.style,
-          userId: options.userId ?? null,
+          userId: options.userId ?? sourceFlow.userId ?? null,
           isPublic: false,
         },
         { tx, logger: options.logger }
