@@ -301,7 +301,7 @@ export function InteractiveScreen({
 
               <div className="space-y-2">
                 <Button
-                  onClick={handleGenerateNext}
+                  onClick={() => handleGenerateNext()}
                   disabled={!onGenerateNext || isGenerating}
                   className="w-full justify-center gap-2"
                 >
@@ -372,4 +372,3 @@ export function InteractiveScreen({
     </div>
   )
 }
-
