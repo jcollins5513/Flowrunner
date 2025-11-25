@@ -45,6 +45,7 @@ const nextConfig = {
         : []),
     ],
   },
+  // Webpack configuration (kept for backward compatibility if needed)
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {
@@ -72,6 +73,29 @@ const nextConfig = {
       }
     }
     return config
+  },
+  // Turbopack configuration for client-side module resolution
+  turbopack: {
+    resolveAlias: {
+      // Node.js built-in modules (client-side fallbacks)
+      fs: false,
+      child_process: false,
+      net: false,
+      tls: false,
+      path: false,
+      os: false,
+      // Image processing libraries (client-side disabled)
+      sharp: false,
+      'node-vibrant': false,
+      '@jimp/core': false,
+      '@jimp/custom': false,
+      '@jimp/types': false,
+      '@jimp/gif': false,
+      '@vibrant/image-node': false,
+      gifwrap: false,
+      'detect-libc': false,
+      strtok3: false,
+    },
   },
 }
 
