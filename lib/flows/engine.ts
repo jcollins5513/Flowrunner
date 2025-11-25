@@ -202,9 +202,6 @@ export class FlowEngine {
    */
   static async cloneFlow(flowId: string, options: CloneFlowOptions): Promise<FlowMetadata & { screens: any[] }> {
     const sourceFlow = await this.getFlow(flowId, true)
-    if (!sourceFlow.screens) {
-      throw new Error('Source flow has no screens to clone')
-    }
 
     return withDbTransaction(async (tx) => {
       const newFlow = await flowRepository.create(
@@ -271,7 +268,7 @@ export class FlowEngine {
 
       for (let i = 0; i < clonedScreens.length; i++) {
         const clonedScreen = clonedScreens[i]
-        const originalScreen = sourceFlow.screens[i]
+        const originalScreen = screens[i]
 
         if (originalScreen.navigation) {
           const navigation = JSON.parse(originalScreen.navigation as string)
