@@ -1,5 +1,14 @@
+// Default public URLs so client-side code does not fall back to localhost in production
+const vercelSiteUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined
+const publicSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || vercelSiteUrl
+const publicAssetBaseUrl = process.env.NEXT_PUBLIC_ASSET_BASE_URL || publicSiteUrl
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  env: {
+    NEXT_PUBLIC_SITE_URL: publicSiteUrl,
+    NEXT_PUBLIC_ASSET_BASE_URL: publicAssetBaseUrl,
+  },
   images: {
     remotePatterns: [
       {
@@ -22,6 +31,18 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.cloudinary.com',
       },
+      {
+        protocol: 'https',
+        hostname: '**.vercel.app',
+      },
+      ...(process.env.VERCEL_URL
+        ? [
+            {
+              protocol: 'https',
+              hostname: process.env.VERCEL_URL,
+            },
+          ]
+        : []),
     ],
   },
   webpack: (config, { isServer }) => {
@@ -55,4 +76,3 @@ const nextConfig = {
 }
 
 module.exports = nextConfig
-
