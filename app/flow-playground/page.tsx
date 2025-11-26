@@ -13,6 +13,7 @@ import {
 } from '@/lib/dsl/types'
 import { type NextScreenTriggerContext, type ScreenContext } from '@/lib/flows/types'
 import { buildScreenDSLFromPlan } from '@/lib/flows/build-screen-dsl'
+import { generateNextScreen } from '@/lib/flows/next-screen-generator'
 import { runPromptToTemplatePipeline } from '@/lib/ai/intent/pipeline'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/toast-provider'
