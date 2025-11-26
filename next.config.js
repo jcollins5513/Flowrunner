@@ -45,19 +45,6 @@ const nextConfig = {
         : []),
     ],
   },
-  // Server-only packages (Turbopack handles client-side exclusion automatically)
-  serverComponentsExternalPackages: [
-    'sharp',
-    'node-vibrant',
-    '@jimp/core',
-    '@jimp/custom',
-    '@jimp/types',
-    '@jimp/gif',
-    '@vibrant/image-node',
-    'gifwrap',
-    'detect-libc',
-    'strtok3',
-  ],
 }
 
 module.exports = nextConfig

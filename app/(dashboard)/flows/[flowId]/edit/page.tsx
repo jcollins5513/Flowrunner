@@ -50,8 +50,7 @@ import {
   PatternVariantSelector,
   VibeSelector,
 } from '@/components/editing'
-import { extractPalette } from '@/lib/images/palette'
-import { inferVibe } from '@/lib/images/vibe/infer'
+import type { Palette } from '@/lib/images/palette'
 import { useToast } from '@/components/ui/toast-provider'
 
 const parseMaybeJson = <T,>(value: unknown, fallback?: T): T | undefined => {
@@ -482,23 +481,44 @@ function FlowEditorPageInner() {
     async (screenId: string, screenSnapshot: ScreenDSL, newImage: HeroImageType) => {
       setHeroUpdateLoading(true)
       try {
-        const rawPalette =
-          newImage.extractedPalette ??
-          (await extractPalette({
-            url: newImage.url,
-            fallback: screenSnapshot.palette,
-          }))
+        // Extract palette from API route
+        let rawPalette: Palette = newImage.extractedPalette ?? screenSnapshot.palette
+        if (!newImage.extractedPalette) {
+          const paletteResponse = await fetch('/api/images/extract-palette', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              url: newImage.url,
+              fallback: screenSnapshot.palette,
+            }),
+          })
+          if (!paletteResponse.ok) {
+            throw new Error('Failed to extract palette')
+          }
+          rawPalette = await paletteResponse.json()
+        }
+        
         const palette: ScreenDSL['palette'] = {
           primary: rawPalette.primary ?? screenSnapshot.palette.primary ?? '#3B82F6',
           secondary: rawPalette.secondary ?? screenSnapshot.palette.secondary ?? '#8B5CF6',
           accent: rawPalette.accent ?? screenSnapshot.palette.accent ?? '#F59E0B',
           background: rawPalette.background ?? screenSnapshot.palette.background ?? '#FFFFFF',
         }
-        const vibeAnalysis = await inferVibe({
-          url: newImage.url,
-          palette,
-          includeReasoning: false,
+        
+        // Infer vibe from API route
+        const vibeResponse = await fetch('/api/images/infer-vibe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            url: newImage.url,
+            palette,
+            includeReasoning: false,
+          }),
         })
+        if (!vibeResponse.ok) {
+          throw new Error('Failed to infer vibe')
+        }
+        const vibeAnalysis = await vibeResponse.json()
 
         addHistory({
           screenId,

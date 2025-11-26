@@ -17,9 +17,6 @@ import {
   generateNextScreen,
 } from '@/lib/flows/next-screen-generator'
 import { runPromptToTemplatePipeline } from '@/lib/ai/intent/pipeline'
-import { ImageOrchestrator } from '@/lib/images/orchestrator'
-import { ImageGenerationService } from '@/lib/images/generation/service'
-import { MockImageProvider } from '@/lib/images/generation/providers/mock'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/toast-provider'
 
@@ -56,16 +53,6 @@ export default function FlowPlaygroundPage() {
     [flowName],
   )
 
-  const imageOrchestrator = useMemo(
-    () =>
-      new ImageOrchestrator({
-        service: new ImageGenerationService({ provider: new MockImageProvider() }),
-        autoExtractPalette: true,
-        autoInferVibe: true,
-        autoPersist: true,
-      }),
-    [],
-  )
 
   const createScreen = useCallback(
     async (step: number, promptValue: string): Promise<ScreenDSL> => {
@@ -78,11 +65,25 @@ export default function FlowPlaygroundPage() {
         throw new Error('No screen plan generated from template')
       }
 
-      const heroImage = await imageOrchestrator.generateHeroImageWithPalette({
-        prompt: plan.heroPlan.imagePrompt,
-        aspectRatio: plan.heroPlan.aspectRatio,
-        visualTheme: flowMetadata.theme,
+      // Generate hero image via API route
+      const imageResponse = await fetch('/api/images/generate-with-palette', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: plan.heroPlan.imagePrompt,
+          aspectRatio: plan.heroPlan.aspectRatio,
+          visualTheme: flowMetadata.theme,
+          autoExtractPalette: true,
+          autoInferVibe: true,
+          autoPersist: true,
+        }),
       })
+
+      if (!imageResponse.ok) {
+        throw new Error('Failed to generate hero image')
+      }
+
+      const heroImage = await imageResponse.json()
 
       const vibe: Vibe = (heroImage.vibe as Vibe | undefined) ?? VIBES[0]
       const context: ScreenContext = {
@@ -116,7 +117,7 @@ export default function FlowPlaygroundPage() {
         },
       }
     },
-    [flowMetadata, imageOrchestrator],
+    [flowMetadata],
   )
 
   useEffect(() => {
