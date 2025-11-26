@@ -45,35 +45,6 @@ const nextConfig = {
         : []),
     ],
   },
-  // Webpack configuration (kept for backward compatibility if needed)
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-        child_process: false,
-        net: false,
-        tls: false,
-        path: false,
-        os: false,
-      }
-
-      config.resolve.alias = {
-        ...config.resolve.alias,
-        sharp: false,
-        'node-vibrant': false,
-        '@jimp/core': false,
-        '@jimp/custom': false,
-        '@jimp/types': false,
-        '@jimp/gif': false,
-        '@vibrant/image-node': false,
-        gifwrap: false,
-        'detect-libc': false,
-        strtok3: false,
-      }
-    }
-    return config
-  },
   // Server-only packages (Turbopack handles client-side exclusion automatically)
   serverComponentsExternalPackages: [
     'sharp',
