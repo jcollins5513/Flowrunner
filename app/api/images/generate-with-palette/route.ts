@@ -6,6 +6,13 @@ import type { ImageGenerationRequest } from '@/lib/images/generation/types'
 
 export const dynamic = 'force-dynamic'
 
+const VALID_VISUAL_THEMES = ['illustrated', 'photographic', '3d', 'collage', 'line_art'] as const
+type ValidVisualTheme = (typeof VALID_VISUAL_THEMES)[number]
+
+function isValidVisualTheme(value: string | undefined): value is ValidVisualTheme {
+  return value !== undefined && VALID_VISUAL_THEMES.includes(value as ValidVisualTheme)
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
@@ -32,7 +39,7 @@ export async function POST(request: NextRequest) {
     const requestData: ImageGenerationRequest = {
       prompt,
       aspectRatio: (aspectRatio as any) || '16:9',
-      visualTheme,
+      visualTheme: isValidVisualTheme(visualTheme) ? visualTheme : undefined,
     }
 
     const result = await orchestrator.generateHeroImageWithPalette(requestData)
