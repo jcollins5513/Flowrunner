@@ -13,7 +13,6 @@ import {
 } from '@/lib/dsl/types'
 import { type NextScreenTriggerContext, type ScreenContext } from '@/lib/flows/types'
 import { buildScreenDSLFromPlan } from '@/lib/flows/build-screen-dsl'
-import { generateNextScreen } from '@/lib/flows/next-screen-generator'
 import { runPromptToTemplatePipeline } from '@/lib/ai/intent/pipeline'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/toast-provider'
@@ -222,11 +221,17 @@ export default function FlowPlaygroundPage() {
     async (context: NextScreenTriggerContext) => {
       try {
         setIsGenerating(true)
-        const result = await generateNextScreen(context, {
-          onProgress: (stage, progress) => {
-            console.log(`Generation: ${stage} (${progress}%)`)
-          },
+        const response = await fetch('/api/playground/generate-next-screen', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ context }),
         })
+
+        if (!response.ok) {
+          throw new Error('Failed to generate next screen')
+        }
+
+        const result = await response.json()
         // Add generated screen to local state
         setScreens((current) => {
           const screenIndex = current.findIndex(

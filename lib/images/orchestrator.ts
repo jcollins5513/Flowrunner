@@ -1,3 +1,5 @@
+import 'server-only'
+
 import { ImageGenerationRequest, ImageGenerationResult } from './generation/types'
 import { ImageGenerationService } from './generation/service'
 import { ImageGenerationQueue } from './generation/queue'
@@ -5,6 +7,7 @@ import { extractPalette, Palette } from './palette'
 import { inferVibe, type Vibe, type VibeAnalysis } from './vibe'
 import { ImageRepository } from './repository'
 
+// Re-export the client-safe type from DSL types, but also provide a server-only extended version
 export interface HeroImageWithPalette {
   image: ImageGenerationResult
   palette: Palette

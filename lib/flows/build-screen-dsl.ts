@@ -4,8 +4,8 @@
 import type { ScreenDSL, Component, PatternFamily, PatternVariant, Palette, Vibe } from '../dsl/types'
 import type { ScreenContext } from './types'
 import type { ScreenGenerationPlan } from '../flow/templates/selector'
-// Import type only - this won't pull in server-only modules
-import type { HeroImageWithPalette } from '../images/orchestrator'
+// Import type from DSL types (client-safe, doesn't import server-only modules)
+import type { HeroImageWithPalette } from '../dsl/types'
 import { loadPattern } from '../patterns/loader'
 
 /**

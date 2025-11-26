@@ -85,3 +85,18 @@ export interface FlowDSL {
   screens: ScreenDSL[]
 }
 
+// Minimal type for hero image with palette (client-safe, doesn't import server-only modules)
+// This is a simplified version of HeroImageWithPalette from orchestrator
+export interface HeroImageWithPalette {
+  image: {
+    url: string
+    prompt?: string
+    seed?: number
+    aspectRatio?: string
+    style?: string
+  }
+  palette: Palette
+  vibe?: Vibe
+  imageId?: string
+}
+
