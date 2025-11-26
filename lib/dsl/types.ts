@@ -87,6 +87,7 @@ export interface FlowDSL {
 
 // Minimal type for hero image with palette (client-safe, doesn't import server-only modules)
 // This is a simplified version of HeroImageWithPalette from orchestrator
+// Note: palette fields are optional to match the orchestrator's Palette type
 export interface HeroImageWithPalette {
   image: {
     url: string
@@ -95,7 +96,13 @@ export interface HeroImageWithPalette {
     aspectRatio?: string
     style?: string
   }
-  palette: Palette
+  palette: {
+    primary: string
+    secondary?: string
+    accent?: string
+    background?: string
+    text?: string
+  }
   vibe?: Vibe
   imageId?: string
 }
