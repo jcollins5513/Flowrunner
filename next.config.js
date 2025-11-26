@@ -74,29 +74,19 @@ const nextConfig = {
     }
     return config
   },
-  // Turbopack configuration for client-side module resolution
-  turbopack: {
-    resolveAlias: {
-      // Node.js built-in modules (client-side fallbacks)
-      fs: false,
-      child_process: false,
-      net: false,
-      tls: false,
-      path: false,
-      os: false,
-      // Image processing libraries (client-side disabled)
-      sharp: false,
-      'node-vibrant': false,
-      '@jimp/core': false,
-      '@jimp/custom': false,
-      '@jimp/types': false,
-      '@jimp/gif': false,
-      '@vibrant/image-node': false,
-      gifwrap: false,
-      'detect-libc': false,
-      strtok3: false,
-    },
-  },
+  // Server-only packages (Turbopack handles client-side exclusion automatically)
+  serverComponentsExternalPackages: [
+    'sharp',
+    'node-vibrant',
+    '@jimp/core',
+    '@jimp/custom',
+    '@jimp/types',
+    '@jimp/gif',
+    '@vibrant/image-node',
+    'gifwrap',
+    'detect-libc',
+    'strtok3',
+  ],
 }
 
 module.exports = nextConfig
