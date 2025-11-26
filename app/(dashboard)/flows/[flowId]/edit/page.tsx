@@ -37,7 +37,6 @@ import {
 import type { Component, HeroImage as HeroImageType, ScreenDSL } from '@/lib/dsl/types'
 import type { FlowNavigationGraph, NextScreenTriggerContext } from '@/lib/flows/types'
 import type { ScreenWithId } from '@/lib/flows/diagram-utils'
-import { generateNextScreen } from '@/lib/flows/next-screen-generator'
 import type { ScreenOption } from '@/components/flow/ScreenPickerModal'
 import { cn } from '@/lib/utils'
 import { FlowProvider, useFlow } from '@/lib/flows/flow-context'
@@ -321,18 +320,24 @@ function FlowEditorPageInner() {
           throw new Error('Source screen ID is required')
         }
 
-        const result = await generateNextScreen(
-          {
-            ...context,
-            sourceScreenId,
-          },
-          {
-            flowId,
-            onProgress: (stage, progress) => {
-              console.log(`Generation: ${stage} (${progress}%)`)
+        // Generate next screen via API route
+        const response = await fetch(`/api/flows/${flowId}/generate-next-screen`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            context: {
+              ...context,
+              sourceScreenId,
             },
-          }
-        )
+          }),
+        })
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}))
+          throw new Error(errorData.error || 'Failed to generate next screen')
+        }
+
+        const result = await response.json()
 
         await refreshScreensAndGraph()
         setPendingSelectScreenId(result.screenId)

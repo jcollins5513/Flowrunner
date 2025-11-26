@@ -9,7 +9,6 @@ import { cn } from '@/lib/utils'
 import { GitBranch, LinkIcon, Sparkles, X } from 'lucide-react'
 import { ScreenPickerModal, type ScreenOption } from './ScreenPickerModal'
 import { NavigationConfigModal } from '@/components/editing/NavigationConfigModal'
-import { generateNextScreen } from '@/lib/flows/next-screen-generator'
 import { ImageLibraryPicker } from '@/components/editing/ImageLibraryPicker'
 
 const CLICKABLE_COMPONENT_TYPES: Component['type'][] = ['button']
@@ -142,21 +141,11 @@ export function InteractiveScreen({
         ...(libraryImage ? { libraryImage } : {}),
       }
 
-      // If onGenerateNext is provided, use it (for custom handling)
-      if (onGenerateNext) {
-        await onGenerateNext(context)
-      } else {
-        // Otherwise, use the generator service
-        const result = await generateNextScreen(context, {
-          onProgress: (stage, progress) => {
-            // Could update UI with progress here
-            console.log(`Generation progress: ${stage} (${progress}%)`)
-          },
-        })
-        // Result is available but not automatically added to flow
-        // Caller should handle adding to flow if needed
-        console.log('Generated screen:', result)
+      // onGenerateNext must be provided - generation is handled via API routes
+      if (!onGenerateNext) {
+        throw new Error('onGenerateNext handler is required')
       }
+      await onGenerateNext(context)
       closeMenu()
     } catch (error) {
       console.error('Failed to generate next screen:', error)
