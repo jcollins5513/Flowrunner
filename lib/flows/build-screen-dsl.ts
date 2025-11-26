@@ -4,20 +4,8 @@
 import type { ScreenDSL, Component, PatternFamily, PatternVariant, Palette, Vibe } from '../dsl/types'
 import type { ScreenContext } from './types'
 import type { ScreenGenerationPlan } from '../flow/templates/selector'
-// Note: HeroImageWithPalette is imported as type to avoid pulling in server-only modules
-// This type is also defined in lib/images/orchestrator.ts but we only need the type here
-type HeroImageWithPalette = {
-  image: {
-    url: string
-    prompt?: string
-    seed?: number
-    aspectRatio?: string
-    style?: string
-  }
-  palette: Palette
-  vibe?: Vibe
-  imageId?: string
-}
+// Import type only - this won't pull in server-only modules
+import type { HeroImageWithPalette } from '../images/orchestrator'
 import { loadPattern } from '../patterns/loader'
 
 /**
@@ -220,20 +208,14 @@ export function buildScreenDSLFromPlan(
 
   // Use generated palette if available, otherwise use context palette
   // Ensure all required fields are present (normalize from optional palette)
+  // The orchestrator's Palette has optional fields, so we need to ensure all are present
   const paletteFromImage = heroImage.palette
-  const finalPalette: Palette = paletteFromImage
-    ? {
-        primary: paletteFromImage.primary || palette.primary || '#3B82F6',
-        secondary: paletteFromImage.secondary || palette.secondary || '#8B5CF6',
-        accent: paletteFromImage.accent || palette.accent || '#F59E0B',
-        background: paletteFromImage.background || palette.background || '#FFFFFF',
-      }
-    : {
-        primary: palette.primary || '#3B82F6',
-        secondary: palette.secondary || '#8B5CF6',
-        accent: palette.accent || '#F59E0B',
-        background: palette.background || '#FFFFFF',
-      }
+  const finalPalette: Palette = {
+    primary: (paletteFromImage?.primary ?? palette.primary) || '#3B82F6',
+    secondary: (paletteFromImage?.secondary ?? palette.secondary) || '#8B5CF6',
+    accent: (paletteFromImage?.accent ?? palette.accent) || '#F59E0B',
+    background: (paletteFromImage?.background ?? palette.background) || '#FFFFFF',
+  }
   // Ensure vibe is valid, default to 'modern' if not
   const validVibes: Vibe[] = ['playful', 'professional', 'bold', 'minimal', 'modern', 'retro', 'elegant', 'energetic', 'calm', 'tech', 'creative', 'corporate']
   const finalVibe: Vibe = (heroImage.vibe && validVibes.includes(heroImage.vibe as Vibe)) 
