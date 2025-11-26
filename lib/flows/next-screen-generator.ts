@@ -11,6 +11,7 @@ import type { ScreenDSL, Component, PatternFamily, PatternVariant, Palette, Vibe
 import { runPromptToTemplatePipeline } from '../ai/intent/pipeline'
 import type { ScreenGenerationPlan } from '../flow/templates/selector'
 import type { HeroImageWithPalette } from '../images/orchestrator'
+import type { PatternDefinition } from '../patterns/schema'
 import { FlowEngine } from './engine'
 import { insertScreen } from './screen-sequence'
 import { ImageOrchestrator } from '../images/orchestrator'
