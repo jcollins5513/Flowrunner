@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { AppHeader } from '@/components/navigation/AppHeader'
 import { InteractiveScreen } from '@/components/flow/InteractiveScreen'
@@ -113,6 +113,7 @@ const convertScreenRecordToDSL = (screen: any): ScreenDSL | null => {
 
 function FlowEditorPageInner() {
   const params = useParams()
+  const router = useRouter()
   const flowId = params?.flowId as string
 
   const {
@@ -144,8 +145,6 @@ function FlowEditorPageInner() {
   const [selectedScreenId, setSelectedScreenId] = useState<string | null>(null)
   const [pendingSelectScreenId, setPendingSelectScreenId] = useState<string | null>(null)
   const [isGenerating, setIsGenerating] = useState(false)
-  const [generationPrompt, setGenerationPrompt] = useState('')
-  const [generationProgress, setGenerationProgress] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState('screens')
   const [settingsForm, setSettingsForm] = useState({ name: '', description: '' })
   const [savingSettings, setSavingSettings] = useState(false)
@@ -198,6 +197,19 @@ function FlowEditorPageInner() {
       })
       .filter(Boolean) as ScreenWithId[]
   }, [flowScreens])
+
+  // Redirect to /flows/new if flow has no screens (unless it was just created)
+  useEffect(() => {
+    if (!initializing && currentFlow && screensWithIds.length === 0) {
+      const urlParams = new URLSearchParams(window.location.search)
+      const justCreated = urlParams.get('created') === 'true'
+      
+      if (!justCreated) {
+        // Flow exists but has no screens - redirect to creation page
+        router.push(`/flows/new?flowId=${flowId}`)
+      }
+    }
+  }, [initializing, currentFlow, screensWithIds.length, flowId, router])
 
   useEffect(() => {
     if (screensWithIds.length === 0) {
@@ -260,54 +272,6 @@ function FlowEditorPageInner() {
     await Promise.all([loadFlowScreens(flowId), loadNavigationGraph(flowId)])
   }, [flowId, loadFlowScreens, loadNavigationGraph])
 
-  const handleGenerateFirstScreen = useCallback(async () => {
-    if (!flowId || !generationPrompt.trim() || isGenerating) return
-
-    setIsGenerating(true)
-    setGenerationProgress('Analyzing your prompt...')
-    setPageError(null)
-
-    try {
-      const response = await fetch(`/api/flows/${flowId}/generate-first-screen`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: generationPrompt }),
-      })
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}))
-        throw new Error(errorData.error || 'Failed to generate screen')
-      }
-
-      setGenerationProgress('Selecting layout pattern...')
-      const result = await response.json()
-
-      setGenerationProgress('Generating images...')
-      await new Promise((resolve) => setTimeout(resolve, 500))
-      setGenerationProgress('Assembling screen...')
-
-      await refreshScreensAndGraph()
-      setPendingSelectScreenId(result.screenId)
-      setGenerationPrompt('')
-      setGenerationProgress(null)
-      showToast({
-        title: 'Screen created',
-        description: 'Your first screen is ready to edit.',
-        variant: 'success',
-      })
-    } catch (error) {
-      console.error('Failed to generate first screen:', error)
-      setPageError(error instanceof Error ? error.message : 'Failed to generate screen')
-      setGenerationProgress(null)
-      showToast({
-        title: 'Generation failed',
-        description: error instanceof Error ? error.message : 'Failed to generate screen',
-        variant: 'error',
-      })
-    } finally {
-      setIsGenerating(false)
-    }
-  }, [flowId, generationPrompt, isGenerating, refreshScreensAndGraph, showToast])
 
   const handleGenerateNext = useCallback(
     async (context: NextScreenTriggerContext) => {
@@ -802,46 +766,14 @@ function FlowEditorPageInner() {
             {screens.length === 0 ? (
               <Card>
                 <CardHeader>
-                  <CardTitle>Create Your First Screen</CardTitle>
+                  <CardTitle>No Screens Yet</CardTitle>
                   <CardDescription>
-                    Describe what you&apos;re building and FlowRunner will generate a screen with AI images and layout.
+                    This flow doesn&apos;t have any screens yet. Redirecting you to create your first screen...
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="generation-prompt">What are you building?</Label>
-                    <Textarea
-                      id="generation-prompt"
-                      placeholder="e.g., A landing page for a SaaS product..."
-                      value={generationPrompt}
-                      onChange={(e) => setGenerationPrompt(e.target.value)}
-                      rows={4}
-                      disabled={isGenerating}
-                      className="resize-none"
-                    />
-                    <p className="text-xs text-muted-foreground">
-                      FlowRunner will analyze your prompt, select an appropriate layout pattern, generate AI images, and create your first screen.
-                    </p>
-                  </div>
-
-                  {generationProgress && (
-                    <Alert>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      <AlertDescription>{generationProgress}</AlertDescription>
-                    </Alert>
-                  )}
-
-                  <div className="flex justify-end">
-                    <Button onClick={handleGenerateFirstScreen} disabled={!generationPrompt.trim() || isGenerating}>
-                      {isGenerating ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Generating...
-                        </>
-                      ) : (
-                        'Generate First Screen'
-                      )}
-                    </Button>
+                <CardContent>
+                  <div className="flex items-center justify-center py-8">
+                    <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
                   </div>
                 </CardContent>
               </Card>

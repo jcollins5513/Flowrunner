@@ -35,20 +35,26 @@ export async function POST(request: Request) {
   try {
     const body = await request.json()
     
+    // Auto-generate flow name from prompt if not provided
+    let flowName = body.name?.trim()
+    if (!flowName && body.prompt) {
+      // Generate a simple name from the first 50 characters of the prompt
+      const promptPreview = body.prompt.trim().slice(0, 50)
+      flowName = promptPreview.length < body.prompt.trim().length 
+        ? `${promptPreview}...` 
+        : promptPreview
+    }
+    
     const createOptions: CreateFlowOptions = {
-      name: body.name,
-      description: body.description,
-      domain: body.domain,
-      theme: body.theme,
-      style: body.style,
+      name: flowName || 'Untitled Flow',
+      description: body.description?.trim() || undefined,
+      domain: undefined, // Will be inferred from prompt via Intent Interpreter
+      theme: undefined, // Will be inferred from prompt via Intent Interpreter
+      style: undefined, // Will be inferred from prompt via Intent Interpreter
       userId: body.userId,
-      isPublic: body.isPublic,
+      isPublic: body.isPublic || false,
       initialScreens: body.initialScreens,
       themeConfig: body.themeConfig,
-    }
-
-    if (!createOptions.name) {
-      return NextResponse.json({ error: 'Flow name is required' }, { status: 400 })
     }
 
     const flow = await FlowEngine.createFlow(createOptions)

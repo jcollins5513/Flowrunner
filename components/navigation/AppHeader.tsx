@@ -14,7 +14,6 @@ export function AppHeader() {
     { href: '/', label: 'Home' },
     { href: '/gallery', label: 'Gallery' },
     { href: '/library', label: 'Library' },
-    { href: '/flow-playground', label: 'Playground' },
   ]
 
   return (

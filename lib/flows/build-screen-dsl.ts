@@ -232,7 +232,21 @@ export function buildScreenDSLFromPlan(
 
   // Build components from textPlan
   const patternDefinition = loadPattern(pattern.family as PatternFamily, (pattern.variant as PatternVariant) || 1)
-  const { components } = buildComponentsForPattern(patternDefinition, plan, context, heroImage)
+  let { components } = buildComponentsForPattern(patternDefinition, plan, context, heroImage)
+
+  // Ensure components array is never empty - add fallback title if needed
+  if (components.length === 0) {
+    console.warn('No components generated from pattern, adding fallback title component')
+    components.push({
+      type: 'title',
+      content: plan.name || 'Welcome',
+      props: {
+        fontSize: 'text-4xl',
+        fontWeight: 'font-bold',
+        textAlign: 'text-center',
+      },
+    })
+  }
 
   // Ensure hero_image has required fields
   if (!heroImage.image?.url) {

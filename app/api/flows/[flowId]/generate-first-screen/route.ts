@@ -1,7 +1,6 @@
 // API endpoint to generate the first screen for a flow from a user prompt
 import { NextResponse } from 'next/server'
 import { runPromptToTemplatePipeline } from '@/lib/ai/intent/pipeline'
-import { INTENT_CONSTANTS } from '@/lib/ai/intent/intent.schema'
 import { ImageOrchestrator } from '@/lib/images/orchestrator'
 import { ImageGenerationService } from '@/lib/images/generation/service'
 import { MockImageProvider } from '@/lib/images/generation/providers/mock'
@@ -21,7 +20,7 @@ export async function POST(
   try {
     const { flowId } = await params
     const body = await request.json()
-    const { prompt, guidance } = body
+    const { prompt } = body
 
     if (!prompt || typeof prompt !== 'string' || prompt.trim().length === 0) {
       return NextResponse.json(
@@ -31,31 +30,8 @@ export async function POST(
     }
 
     // Stage 1: Run pipeline to get template/sequence
+    // The Intent Interpreter will infer all fields from the prompt
     const pipelineResult = await runPromptToTemplatePipeline(prompt)
-    
-    // Override intent with guidance fields if provided
-    if (guidance && typeof guidance === 'object') {
-      if (guidance.domain && typeof guidance.domain === 'string' && INTENT_CONSTANTS.DOMAINS.includes(guidance.domain as any)) {
-        pipelineResult.intent.domain = guidance.domain as any
-      }
-      if (guidance.styleCues && Array.isArray(guidance.styleCues) && guidance.styleCues.length > 0) {
-        const validStyles = guidance.styleCues.filter((s: string) =>
-          typeof s === 'string' && INTENT_CONSTANTS.STYLE_CUES.includes(s as any)
-        )
-        if (validStyles.length > 0) {
-          pipelineResult.intent.styleCues = validStyles.slice(0, 3) as any
-        }
-      }
-      if (guidance.visualTheme && typeof guidance.visualTheme === 'string' && INTENT_CONSTANTS.VISUAL_THEMES.includes(guidance.visualTheme as any)) {
-        pipelineResult.intent.visualTheme = guidance.visualTheme as any
-      }
-      if (guidance.tone && typeof guidance.tone === 'string' && INTENT_CONSTANTS.TONES.includes(guidance.tone as any)) {
-        pipelineResult.intent.tone = guidance.tone as any
-      }
-      if (guidance.colorMood && typeof guidance.colorMood === 'string' && INTENT_CONSTANTS.COLOR_MOODS.includes(guidance.colorMood as any)) {
-        pipelineResult.intent.colorMood = guidance.colorMood as any
-      }
-    }
     
     // Select first screen from sequence
     const plan = pipelineResult.sequence[0]
@@ -75,8 +51,8 @@ export async function POST(
     const flow = await FlowEngine.getFlow(flowId)
     const flowTheme = flow?.theme
     
-    // Use guidance visualTheme if provided, otherwise fall back to flow theme or plan
-    const visualTheme = guidance?.visualTheme || flowTheme || plan.heroPlan.colorMood
+    // Use intent visualTheme if available, otherwise fall back to flow theme or plan
+    const visualTheme = pipelineResult.intent.visualTheme || flowTheme || plan.heroPlan.colorMood
 
     const resolveAspectRatio = (value: string | undefined): AspectRatio => {
       if (value && (ASPECT_RATIOS as readonly string[]).includes(value)) {
@@ -144,6 +120,20 @@ export async function POST(
     }
 
     const screenDSL = buildScreenDSLFromPlan(plan, screenContext, heroImage)
+
+    // Ensure components array is never empty before validation
+    if (!screenDSL.components || screenDSL.components.length === 0) {
+      console.warn('Components array is empty, adding fallback title component')
+      screenDSL.components = [{
+        type: 'title',
+        content: plan.name || 'Welcome',
+        props: {
+          fontSize: 'text-4xl',
+          fontWeight: 'font-bold',
+          textAlign: 'text-center',
+        },
+      }]
+    }
 
     // Validate DSL before saving
     console.log('Validating DSL:', JSON.stringify(screenDSL, null, 2))

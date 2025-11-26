@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { AppHeader } from '@/components/navigation/AppHeader'
 import { Button } from '@/components/ui/button'
-import { Sparkles, LayoutGrid, Image as ImageIcon, Play } from 'lucide-react'
+import { Sparkles, LayoutGrid } from 'lucide-react'
 
 export default function Home() {
   return (
@@ -24,7 +24,7 @@ export default function Home() {
               <Link href="/flows/new">
                 <Button size="lg">
                   <Sparkles className="mr-2 h-5 w-5" />
-                  Create New Flow
+                  Generate First Screen
                 </Button>
               </Link>
               <Link href="/gallery">
@@ -36,7 +36,7 @@ export default function Home() {
           </div>
 
           {/* Quick Links */}
-          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-16">
+          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto mt-16">
             <Link
               href="/flows/new"
               className="group rounded-lg border p-6 hover:shadow-lg transition-shadow"
@@ -67,20 +67,6 @@ export default function Home() {
               </p>
             </Link>
 
-            <Link
-              href="/flow-playground"
-              className="group rounded-lg border p-6 hover:shadow-lg transition-shadow"
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                  <Play className="h-5 w-5 text-primary" />
-                </div>
-                <h3 className="text-lg font-semibold">Playground</h3>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Experiment with flow generation and screen creation
-              </p>
-            </Link>
           </div>
         </div>
       </main>

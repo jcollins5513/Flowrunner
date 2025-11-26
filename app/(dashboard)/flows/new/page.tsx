@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import React, { useState, useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { AppHeader } from '@/components/navigation/AppHeader'
 import { Button } from '@/components/ui/button'
@@ -9,161 +9,179 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { ArrowLeft, Loader2 } from 'lucide-react'
-import { INTENT_CONSTANTS } from '@/lib/ai/intent/intent.schema'
 
-const DOMAINS = [
-  { value: 'ecommerce', label: 'E-commerce' },
-  { value: 'saas', label: 'SaaS' },
-  { value: 'mobile_app', label: 'Mobile App' },
-  { value: 'marketing', label: 'Marketing' },
-  { value: 'finance', label: 'Finance' },
-  { value: 'healthcare', label: 'Healthcare' },
-] as const
-
-const STYLES = [
-  { value: 'minimal', label: 'Minimal' },
-  { value: 'modern', label: 'Modern' },
-  { value: 'playful', label: 'Playful' },
-  { value: 'luxury', label: 'Luxury' },
-  { value: 'retro', label: 'Retro' },
-  { value: 'futuristic', label: 'Futuristic' },
-] as const
-
-const VISUAL_THEMES = [
-  { value: 'illustrated', label: 'Illustrated' },
-  { value: 'photographic', label: 'Photographic' },
-  { value: '3d', label: '3D' },
-  { value: 'collage', label: 'Collage' },
-  { value: 'line_art', label: 'Line Art' },
-] as const
-
-const TONES = [
-  { value: 'professional', label: 'Professional' },
-  { value: 'friendly', label: 'Friendly' },
-  { value: 'bold', label: 'Bold' },
-  { value: 'calm', label: 'Calm' },
-  { value: 'energetic', label: 'Energetic' },
-] as const
-
-const COLOR_MOODS = [
-  { value: 'vibrant', label: 'Vibrant' },
-  { value: 'muted', label: 'Muted' },
-  { value: 'warm', label: 'Warm' },
-  { value: 'cool', label: 'Cool' },
-  { value: 'neon', label: 'Neon' },
-  { value: 'monochrome', label: 'Monochrome' },
-] as const
+interface FollowUpQuestion {
+  id: string
+  field: 'domain' | 'styleCues' | 'visualTheme' | 'tone' | 'colorMood'
+  question: string
+  type: 'select' | 'multi-select' | 'text'
+  options?: Array<{ value: string; label: string }>
+  required: boolean
+}
 
 export default function NewFlowPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [progress, setProgress] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     name: '',
-    description: '',
     prompt: '',
-    domain: undefined as string | undefined,
-    style: [] as string[],
-    visualTheme: undefined as string | undefined,
-    tone: undefined as string | undefined,
-    colorMood: undefined as string | undefined,
   })
+  const [followUpQuestions, setFollowUpQuestions] = useState<FollowUpQuestion[]>([])
+  const [questionAnswers, setQuestionAnswers] = useState<Record<string, string | string[]>>({})
+  const [showQuestions, setShowQuestions] = useState(false)
+  const [analyzing, setAnalyzing] = useState(false)
+
+  const analyzePrompt = async (prompt: string): Promise<{ sufficient: boolean; questions?: FollowUpQuestion[] }> => {
+    const response = await fetch('/api/flows/analyze-prompt', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ prompt }),
+    })
+
+    if (!response.ok) {
+      throw new Error('Failed to analyze prompt')
+    }
+
+    return await response.json()
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setError(null)
+
+    if (!formData.prompt.trim()) {
+      setError('Prompt is required to generate the first screen')
+      return
+    }
+
+    // If we're showing questions, user is answering them - proceed with generation
+    if (showQuestions && followUpQuestions.length > 0) {
+      await proceedWithGeneration()
+      return
+    }
+
+    // First, analyze the prompt
+    setAnalyzing(true)
+    setProgress('Analyzing your prompt...')
+
+    try {
+      const analysis = await analyzePrompt(formData.prompt)
+
+      if (!analysis.sufficient && analysis.questions && analysis.questions.length > 0) {
+        // Show follow-up questions
+        setFollowUpQuestions(analysis.questions)
+        setShowQuestions(true)
+        setAnalyzing(false)
+        setProgress(null)
+        return
+      }
+
+      // Prompt is sufficient, proceed with generation
+      await proceedWithGeneration()
+    } catch (err) {
+      console.error('Error analyzing prompt:', err)
+      setError(err instanceof Error ? err.message : 'Failed to analyze prompt')
+      setAnalyzing(false)
+      setProgress(null)
+    }
+  }
+
+  const proceedWithGeneration = async () => {
     setLoading(true)
     setError(null)
     setProgress('Creating flow...')
 
     try {
-      if (!formData.name.trim()) {
-        setError('Flow name is required')
-        setLoading(false)
-        setProgress(null)
-        return
+      // Build enhanced prompt with question answers if available
+      let enhancedPrompt = formData.prompt
+      if (showQuestions && Object.keys(questionAnswers).length > 0) {
+        const answerText = Object.entries(questionAnswers)
+          .map(([field, value]) => {
+            const question = followUpQuestions.find(q => q.id === field)
+            if (!question) return ''
+            const answer = Array.isArray(value) ? value.join(', ') : value
+            return `${question.question}: ${answer}`
+          })
+          .filter(Boolean)
+          .join('. ')
+        enhancedPrompt = `${formData.prompt}. ${answerText}`
       }
 
-      if (!formData.prompt.trim()) {
-        setError('Prompt is required to generate the first screen')
-        setLoading(false)
-        setProgress(null)
-        return
-      }
+      // Step 1: Create the flow (or use existing if redirected from editor)
+      const existingFlowId = searchParams.get('flowId')
+      let flowId: string
 
-      // Step 1: Create the flow
-      setProgress('Creating flow...')
-      const flowResponse = await fetch('/api/flows', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          description: formData.description || undefined,
-          domain: formData.domain || undefined,
-          theme: formData.visualTheme || undefined,
-          style: formData.style.length > 0 ? formData.style[0] : undefined,
-        }),
-      })
+      if (existingFlowId) {
+        // Flow already exists, use it
+        flowId = existingFlowId
+        setProgress('Using existing flow...')
+      } else {
+        // Create new flow
+        setProgress('Creating flow...')
+        const flowResponse = await fetch('/api/flows', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: formData.name.trim() || undefined,
+            prompt: enhancedPrompt,
+          }),
+        })
 
-      if (!flowResponse.ok) {
-        const errorData = await flowResponse.json()
-        throw new Error(errorData.error || 'Failed to create flow')
-      }
+        if (!flowResponse.ok) {
+          const errorData = await flowResponse.json()
+          throw new Error(errorData.error || 'Failed to create flow')
+        }
 
-      const flow = await flowResponse.json()
-      const flowId = flow.id || flow.flow?.id
+        const flow = await flowResponse.json()
+        flowId = flow.id || flow.flow?.id
 
-      if (!flowId) {
-        throw new Error('Flow created but no ID returned')
+        if (!flowId) {
+          throw new Error('Flow created but no ID returned')
+        }
       }
 
       // Step 2: Generate first screen
-      setProgress('Analyzing your prompt...')
+      setProgress('Generating your first screen...')
       const screenResponse = await fetch(`/api/flows/${flowId}/generate-first-screen`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          prompt: formData.prompt,
-          guidance: {
-            ...(formData.domain && { domain: formData.domain }),
-            ...(formData.style.length > 0 && { styleCues: formData.style }),
-            ...(formData.visualTheme && { visualTheme: formData.visualTheme }),
-            ...(formData.tone && { tone: formData.tone }),
-            ...(formData.colorMood && { colorMood: formData.colorMood }),
-          },
+          prompt: enhancedPrompt,
         }),
       })
 
       if (!screenResponse.ok) {
         const errorData = await screenResponse.json()
-        // Flow was created, so redirect to edit page even if screen generation failed
-        // User can retry screen generation there
         console.error('Screen generation failed:', errorData.error, errorData.details)
         router.push(`/flows/${flowId}/edit?error=${encodeURIComponent(errorData.error || 'Screen generation failed')}`)
         return
       }
 
       setProgress('Complete!')
-      // Redirect to editor with success flag
       router.push(`/flows/${flowId}/edit?created=true`)
     } catch (err) {
       console.error('Error creating flow:', err)
@@ -173,21 +191,28 @@ export default function NewFlowPage() {
     }
   }
 
-  const handleChange = (field: string, value: string | string[] | undefined) => {
-    setFormData((prev) => ({ 
-      ...prev, 
-      [field]: value === '' ? undefined : value 
+  const handleQuestionAnswer = (questionId: string, value: string | string[]) => {
+    setQuestionAnswers((prev) => ({
+      ...prev,
+      [questionId]: value,
     }))
   }
 
-  const toggleStyle = (styleValue: string) => {
-    setFormData((prev) => {
-      const currentStyles = prev.style
-      const newStyles = currentStyles.includes(styleValue)
-        ? currentStyles.filter((s) => s !== styleValue)
-        : [...currentStyles, styleValue].slice(0, 3) // Max 3 styles
-      return { ...prev, style: newStyles }
-    })
+  // Check if we have a flowId from query params (redirected from editor)
+  useEffect(() => {
+    const flowId = searchParams.get('flowId')
+    if (flowId) {
+      // Pre-fill flow ID if redirected from editor
+      // The flow already exists, so we'll use it when generating the screen
+      console.log('Pre-filling flow ID:', flowId)
+    }
+  }, [searchParams])
+
+  const handleChange = (field: string, value: string) => {
+    setFormData((prev) => ({ 
+      ...prev, 
+      [field]: value 
+    }))
   }
 
   return (
@@ -203,18 +228,18 @@ export default function NewFlowPage() {
 
           {/* Header */}
           <div className="space-y-2">
-            <h1 className="text-3xl font-bold tracking-tight">Create Your First Screen</h1>
+            <h1 className="text-3xl font-bold tracking-tight">Generate Your First Screen</h1>
             <p className="text-muted-foreground">
-              Describe what you&apos;re building and FlowRunner will generate a screen with AI images and layout.
+              Describe what you&apos;re building and FlowRunner will analyze your prompt, generate a structured specification, and create your first screen with AI images and layout.
             </p>
           </div>
 
           {/* Form */}
           <Card>
             <CardHeader>
-              <CardTitle>Flow Details</CardTitle>
+              <CardTitle>What are you building?</CardTitle>
               <CardDescription>
-                Give your flow a name and describe what you&apos;re building. The optional fields help guide the AI to create better images and layouts.
+                Enter a prompt describing your screen. FlowRunner will analyze it and ask follow-up questions if needed to generate the perfect screen.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -234,32 +259,92 @@ export default function NewFlowPage() {
                   </Alert>
                 )}
 
-                {/* Flow Name */}
+                {/* Follow-Up Questions */}
+                {showQuestions && followUpQuestions.length > 0 && (
+                  <div className="space-y-4 p-4 border rounded-lg bg-muted/50">
+                    <div className="space-y-2">
+                      <h3 className="text-sm font-semibold">A few quick questions to help us generate the perfect screen:</h3>
+                      {followUpQuestions.map((question) => (
+                        <div key={question.id} className="space-y-2">
+                          <Label htmlFor={question.id}>{question.question}</Label>
+                          {question.type === 'select' && question.options && (
+                            <Select
+                              value={questionAnswers[question.id] as string || ''}
+                              onValueChange={(value) => handleQuestionAnswer(question.id, value)}
+                              disabled={loading || analyzing}
+                            >
+                              <SelectTrigger id={question.id}>
+                                <SelectValue placeholder={`Select ${question.field}`} />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {question.options.map((option) => (
+                                  <SelectItem key={option.value} value={option.value}>
+                                    {option.label}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          )}
+                          {question.type === 'multi-select' && question.options && (
+                            <div className="flex flex-wrap gap-2">
+                              {question.options.map((option) => {
+                                const selected = Array.isArray(questionAnswers[question.id])
+                                  ? (questionAnswers[question.id] as string[]).includes(option.value)
+                                  : false
+                                return (
+                                  <button
+                                    key={option.value}
+                                    type="button"
+                                    onClick={() => {
+                                      const current = Array.isArray(questionAnswers[question.id])
+                                        ? (questionAnswers[question.id] as string[])
+                                        : []
+                                      const newValue = selected
+                                        ? current.filter(v => v !== option.value)
+                                        : [...current, option.value].slice(0, 3)
+                                      handleQuestionAnswer(question.id, newValue)
+                                    }}
+                                    disabled={loading || analyzing}
+                                    className={`px-3 py-1.5 rounded-md text-sm border transition-colors ${
+                                      selected
+                                        ? 'bg-primary text-primary-foreground border-primary'
+                                        : 'bg-background hover:bg-muted border-muted-foreground/20'
+                                    }`}
+                                  >
+                                    {option.label}
+                                  </button>
+                                )
+                              })}
+                            </div>
+                          )}
+                          {question.type === 'text' && (
+                            <Input
+                              id={question.id}
+                              value={questionAnswers[question.id] as string || ''}
+                              onChange={(e) => handleQuestionAnswer(question.id, e.target.value)}
+                              placeholder="Enter your answer..."
+                              disabled={loading || analyzing}
+                            />
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Flow Name (Optional) */}
                 <div className="space-y-2">
-                  <Label htmlFor="name">
-                    Flow Name <span className="text-destructive">*</span>
-                  </Label>
+                  <Label htmlFor="name">Flow Name (Optional)</Label>
                   <Input
                     id="name"
                     value={formData.name}
                     onChange={(e) => handleChange('name', e.target.value)}
-                    placeholder="e.g., Onboarding Flow"
-                    required
+                    placeholder="e.g., Onboarding Flow (auto-generated if empty)"
                     disabled={loading}
                   />
-                </div>
-
-                {/* Description */}
-                <div className="space-y-2">
-                  <Label htmlFor="description">Description</Label>
-                  <Textarea
-                    id="description"
-                    value={formData.description}
-                    onChange={(e) => handleChange('description', e.target.value)}
-                    placeholder="Describe what this flow should accomplish..."
-                    rows={3}
-                    disabled={loading}
-                  />
+                  <p className="text-xs text-muted-foreground">
+                    A name will be auto-generated from your prompt if left empty.
+                  </p>
                 </div>
 
                 {/* Prompt */}
@@ -272,134 +357,13 @@ export default function NewFlowPage() {
                     value={formData.prompt}
                     onChange={(e) => handleChange('prompt', e.target.value)}
                     placeholder="e.g., A landing page for a SaaS product that helps teams collaborate, with a hero section showcasing the main value proposition..."
-                    rows={4}
+                    rows={6}
                     required
                     disabled={loading}
                     className="resize-none"
                   />
                   <p className="text-xs text-muted-foreground">
-                    FlowRunner will analyze your prompt, select an appropriate layout pattern, generate AI images based on that layout, and create your first screen.
-                  </p>
-                </div>
-
-                {/* Domain */}
-                <div className="space-y-2">
-                  <Label htmlFor="domain">Domain (Optional)</Label>
-                  <Select
-                    value={formData.domain}
-                    onValueChange={(value) => handleChange('domain', value)}
-                    disabled={loading}
-                  >
-                    <SelectTrigger id="domain">
-                      <SelectValue placeholder="Select a domain (optional)" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {DOMAINS.map((domain) => (
-                        <SelectItem key={domain.value} value={domain.value}>
-                          {domain.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <p className="text-xs text-muted-foreground">
-                    Helps select appropriate flow template and pattern families
-                  </p>
-                </div>
-
-                {/* Style */}
-                <div className="space-y-2">
-                  <Label>Style (Optional - Select up to 3)</Label>
-                  <div className="flex flex-wrap gap-2">
-                    {STYLES.map((style) => (
-                      <button
-                        key={style.value}
-                        type="button"
-                        onClick={() => toggleStyle(style.value)}
-                        disabled={loading}
-                        className={`px-3 py-1.5 rounded-md text-sm border transition-colors ${
-                          formData.style.includes(style.value)
-                            ? 'bg-primary text-primary-foreground border-primary'
-                            : 'bg-background hover:bg-muted border-muted-foreground/20'
-                        }`}
-                      >
-                        {style.label}
-                      </button>
-                    ))}
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    Influences pattern selection and component styling
-                  </p>
-                </div>
-
-                {/* Visual Theme */}
-                <div className="space-y-2">
-                  <Label htmlFor="visualTheme">Visual Theme (Optional)</Label>
-                  <Select
-                    value={formData.visualTheme}
-                    onValueChange={(value) => handleChange('visualTheme', value)}
-                    disabled={loading}
-                  >
-                    <SelectTrigger id="visualTheme">
-                      <SelectValue placeholder="Select visual theme (optional)" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {VISUAL_THEMES.map((theme) => (
-                        <SelectItem key={theme.value} value={theme.value}>
-                          {theme.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <p className="text-xs text-muted-foreground">
-                    Directly affects image generation style (3D, illustrated, etc.)
-                  </p>
-                </div>
-
-                {/* Tone */}
-                <div className="space-y-2">
-                  <Label htmlFor="tone">Tone (Optional)</Label>
-                  <Select
-                    value={formData.tone}
-                    onValueChange={(value) => handleChange('tone', value)}
-                    disabled={loading}
-                  >
-                    <SelectTrigger id="tone">
-                      <SelectValue placeholder="Select tone (optional)" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {TONES.map((tone) => (
-                        <SelectItem key={tone.value} value={tone.value}>
-                          {tone.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <p className="text-xs text-muted-foreground">
-                    Influences text generation and component messaging
-                  </p>
-                </div>
-
-                {/* Color Mood */}
-                <div className="space-y-2">
-                  <Label htmlFor="colorMood">Color Mood (Optional)</Label>
-                  <Select
-                    value={formData.colorMood}
-                    onValueChange={(value) => handleChange('colorMood', value)}
-                    disabled={loading}
-                  >
-                    <SelectTrigger id="colorMood">
-                      <SelectValue placeholder="Select color mood (optional)" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {COLOR_MOODS.map((mood) => (
-                        <SelectItem key={mood.value} value={mood.value}>
-                          {mood.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <p className="text-xs text-muted-foreground">
-                    Affects palette extraction and color scheme
+                    FlowRunner will analyze your prompt and generate a structured specification. If more information is needed, you&apos;ll be asked specific follow-up questions.
                   </p>
                 </div>
 
@@ -410,14 +374,16 @@ export default function NewFlowPage() {
                       Cancel
                     </Button>
                   </Link>
-                  <Button type="submit" disabled={loading || !formData.name.trim() || !formData.prompt.trim()}>
-                    {loading ? (
+                  <Button type="submit" disabled={(loading || analyzing) || !formData.prompt.trim()}>
+                    {loading || analyzing ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Creating...
+                        {analyzing ? 'Analyzing...' : 'Generating...'}
                       </>
+                    ) : showQuestions ? (
+                      'Continue to Generate'
                     ) : (
-                      'Create Flow & Generate First Screen'
+                      'Generate First Screen'
                     )}
                   </Button>
                 </div>
