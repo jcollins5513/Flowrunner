@@ -118,8 +118,8 @@ const buildComponentsForPattern = (
       case 'title':
         components.push({
           type: 'title',
-          content: textPlan.title || plan.name || 'Welcome',
-          style: {
+          content: plan.name || 'Welcome',
+          props: {
             fontSize: slot.style?.fontSize || 'text-4xl',
             fontWeight: slot.style?.fontWeight || 'font-bold',
             textAlign: slot.style?.textAlign || 'text-center',
@@ -130,8 +130,8 @@ const buildComponentsForPattern = (
       case 'subtitle':
         components.push({
           type: 'subtitle',
-          content: textPlan.subtitle || `Built for ${describeAudience(context)}`,
-          style: {
+          content: textPlan.contentFocus || plan.heroPlan.vibe || `Built for ${describeAudience(context)}`,
+          props: {
             fontSize: slot.style?.fontSize || 'text-xl',
             fontWeight: slot.style?.fontWeight || 'font-normal',
             textAlign: slot.style?.textAlign || 'text-center',
@@ -142,8 +142,8 @@ const buildComponentsForPattern = (
       case 'text':
         components.push({
           type: 'text',
-          content: textPlan.description || textPlan.body || 'Discover what makes us different.',
-          style: {
+          content: textPlan.contentFocus || `${textPlan.tone} narrative` || 'Discover what makes us different.',
+          props: {
             fontSize: slot.style?.fontSize || 'text-base',
             fontWeight: slot.style?.fontWeight || 'font-normal',
             textAlign: slot.style?.textAlign || 'text-left',
@@ -155,14 +155,14 @@ const buildComponentsForPattern = (
         const ctaLabel = selectCtaLabel(
           context.flowMetadata?.theme || 'modern',
           plan.pattern.family as PatternFamily,
-          textPlan.ctaLabel
+          textPlan.customFields?.ctaLabel
         )
         buttonLabel = ctaLabel
-        buttonSource = textPlan.ctaLabel ? 'custom' : 'tone'
+        buttonSource = textPlan.customFields?.ctaLabel ? 'custom' : 'tone'
         components.push({
           type: 'button',
           content: ctaLabel,
-          style: {
+          props: {
             variant: slot.style?.variant || 'primary',
             size: slot.style?.size || 'lg',
           },
@@ -171,10 +171,16 @@ const buildComponentsForPattern = (
 
       case 'form':
         hasForm = true
+        const formFields = textPlan.customFields?.formFields 
+          ? JSON.parse(textPlan.customFields.formFields) 
+          : DEFAULT_FORM_FIELDS
         components.push({
           type: 'form',
-          fields: textPlan.formFields || DEFAULT_FORM_FIELDS,
-          submitLabel: textPlan.formSubmitLabel || 'Submit',
+          content: JSON.stringify({ fields: formFields }),
+          props: {
+            fields: formFields,
+            submitLabel: textPlan.customFields?.formSubmitLabel || 'Submit',
+          },
         })
         break
 
