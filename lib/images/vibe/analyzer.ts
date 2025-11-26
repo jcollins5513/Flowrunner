@@ -1,3 +1,5 @@
+import 'server-only'
+
 import sharp from 'sharp'
 import type { Palette } from '../palette'
 import type { CompositionAnalysis, MoodIndicators } from './schema'

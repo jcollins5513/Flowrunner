@@ -1,3 +1,5 @@
+import 'server-only'
+
 import type { Palette } from '../palette'
 import type { Vibe, VibeAnalysis, CompositionAnalysis, MoodIndicators } from './schema'
 import {
