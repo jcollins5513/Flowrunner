@@ -8,7 +8,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/components/ui/button'
 import { RefreshCw } from 'lucide-react'
 import type { Vibe, ScreenDSL } from '@/lib/dsl/types'
-import { inferVibe } from '@/lib/images/vibe/infer'
 import { useEditing } from '@/lib/editing/editing-context'
 import { useFlow } from '@/lib/flows/flow-context'
 
@@ -85,12 +84,22 @@ export function VibeSelector({
   const handleRegenerateFromImage = useCallback(async () => {
     setLoading(true)
     try {
-      const vibeAnalysis = await inferVibe({
-        url: dsl.hero_image.url,
-        palette: dsl.palette,
-        includeReasoning: false,
+      // Infer vibe via API route
+      const response = await fetch('/api/images/infer-vibe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          url: dsl.hero_image.url,
+          palette: dsl.palette,
+          includeReasoning: false,
+        }),
       })
 
+      if (!response.ok) {
+        throw new Error('Failed to infer vibe')
+      }
+
+      const vibeAnalysis = await response.json()
       const inferredVibe = vibeAnalysis.vibe
 
       // Add to history

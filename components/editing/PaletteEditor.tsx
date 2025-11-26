@@ -9,7 +9,6 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RefreshCw } from 'lucide-react'
 import type { Palette, ScreenDSL } from '@/lib/dsl/types'
-import { extractPalette } from '@/lib/images/palette'
 import { useEditing } from '@/lib/editing/editing-context'
 import { useFlow } from '@/lib/flows/flow-context'
 
@@ -66,9 +65,21 @@ export function PaletteEditor({
   const handleRegenerateFromImage = useCallback(async () => {
     setLoading(true)
     try {
-      const extractedPalette = await extractPalette({
-        url: dsl.hero_image.url,
+      // Extract palette via API route
+      const response = await fetch('/api/images/extract-palette', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          url: dsl.hero_image.url,
+          fallback: dsl.palette,
+        }),
       })
+
+      if (!response.ok) {
+        throw new Error('Failed to extract palette')
+      }
+
+      const extractedPalette = await response.json()
 
       // Ensure all required fields are present
       const completePalette: Palette = {

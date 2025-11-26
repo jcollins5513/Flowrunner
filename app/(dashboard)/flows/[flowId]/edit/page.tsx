@@ -50,7 +50,7 @@ import {
   PatternVariantSelector,
   VibeSelector,
 } from '@/components/editing'
-import type { Palette } from '@/lib/images/palette'
+import type { Palette } from '@/lib/dsl/types'
 import { useToast } from '@/components/ui/toast-provider'
 
 const parseMaybeJson = <T,>(value: unknown, fallback?: T): T | undefined => {
