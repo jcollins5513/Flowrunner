@@ -46,7 +46,7 @@ const CTA_TONE_PRESETS: Record<string, string[]> = {
   professional: ['Schedule a demo', 'Book a walkthrough'],
   bold: ['Launch now', 'Unlock access'],
   modern: ['Start exploring', 'Pair with product tour'],
-  playful: ['Jump into the flow', 'Let's go'],
+  playful: ['Jump into the flow', "Let's go"],
   minimal: ['Begin', 'Continue'],
 }
 
