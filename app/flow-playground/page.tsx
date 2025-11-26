@@ -69,7 +69,7 @@ export default function FlowPlaygroundPage() {
         body: JSON.stringify({
           prompt: plan.heroPlan.imagePrompt,
           aspectRatio: plan.heroPlan.aspectRatio,
-          visualTheme: flowMetadata.theme,
+          visualTheme: undefined,
           autoExtractPalette: true,
           autoInferVibe: true,
           autoPersist: true,
