@@ -3,6 +3,12 @@
  * 
  * Intelligently selects library components based on DSL component type,
  * vibe, pattern, slot, and palette context.
+ * 
+ * NOTE: This module imports from component-registry which uses Node.js filesystem APIs.
+ * When used from client components, consider using API routes instead:
+ * - POST /api/library/components/select
+ * - POST /api/library/components/background
+ * - GET /api/library/components/by-slug
  */
 
 import type { ComponentSelectionContext } from './component-types'

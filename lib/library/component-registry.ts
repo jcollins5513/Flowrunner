@@ -3,8 +3,11 @@
  * 
  * Loads and indexes all library components from Magic UI, Aceternity, and components directories.
  * Provides fast lookup by type, slot, vibe, and pattern compatibility.
+ * 
+ * NOTE: This module uses Node.js filesystem APIs and must only be imported in server contexts.
  */
 
+import 'server-only'
 import { readdir, readFile } from 'fs/promises'
 import { join } from 'path'
 import type {
