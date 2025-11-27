@@ -1,0 +1,45 @@
+{
+  "name": "Aceternity UI",
+  "slug": "placeholders-and-vanish-input",
+  "description": "Sliding in placeholders and vanish effect of input on submit",
+  "props": [
+    {
+      "Prop Name": "placeholders",
+      "Type": "string[]",
+      "Description": "An array of strings used as placeholders that cycle in the input field."
+    },
+    {
+      "Prop Name": "onChange",
+      "Type": "(e: React.ChangeEvent<HTMLInputElement>) => void",
+      "Description": "Function called when the input value changes."
+    },
+    {
+      "Prop Name": "onSubmit",
+      "Type": "(e: React.FormEvent<HTMLFormElement>) => void",
+      "Description": "Function called when the form is submitted."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/placeholders-and-vanish-inputCopy",
+  "url": "https://ui.aceternity.com/components/placeholders-and-vanish-input",
+  "type": "form",
+  "subtype": "",
+  "layout_role": "container",
+  "recommended_slots": [
+    "auth",
+    "lead-capture"
+  ],
+  "interaction_profile": "input",
+  "preferred_size": "content-width",
+  "z_index_role": "content",
+  "usage_notes": "Sliding in placeholders and vanish effect of input on submit",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    " \nimport { PlaceholdersAndVanishInput } from \"../ui/placeholders-and-vanish-input\";"
+  ],
+  "dependencies": [],
+  "client_only": true
+}

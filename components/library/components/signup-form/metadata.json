@@ -1,0 +1,57 @@
+{
+  "name": "Aceternity UI",
+  "slug": "signup-form",
+  "description": "A customizable form built on top of shadcn's input and label, with a touch of framer motion",
+  "props": [
+    {
+      "Prop Name": "className",
+      "Type": "string",
+      "Description": "Additional CSS classes to apply to the input component."
+    },
+    {
+      "Prop Name": "type",
+      "Type": "string",
+      "Description": "Specifies the type of input (e.g., \"text\", \"password\"). Inherits all standard HTML input types."
+    },
+    {
+      "Prop Name": "...props",
+      "Type": "React.InputHTMLAttributes<HTMLInputElement>",
+      "Description": "Spreads the rest of the input attributes (e.g., placeholder, disabled, value, etc.) from React's InputHTMLAttributes."
+    },
+    {
+      "Prop Name": "ref",
+      "Type": "React.Ref<HTMLInputElement>",
+      "Description": "Ref forwarding is used to allow parent components to directly access the DOM input element."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/signup-form-demoCopy",
+  "url": "https://ui.aceternity.com/components/signup-form",
+  "type": "form",
+  "subtype": "",
+  "layout_role": "container",
+  "recommended_slots": [
+    "auth",
+    "lead-capture"
+  ],
+  "interaction_profile": "input",
+  "preferred_size": "content-width",
+  "z_index_role": "content",
+  "usage_notes": "A customizable form built on top of shadcn's input and label, with a touch of framer motion",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { Label } from \"../ui/label\";",
+    "import { Input } from \"../ui/input\";",
+    "import { cn } from \"@/lib/utils\";",
+    "import {"
+  ],
+  "dependencies": [
+    "@/lib/utils",
+    "react"
+  ],
+  "client_only": true
+}

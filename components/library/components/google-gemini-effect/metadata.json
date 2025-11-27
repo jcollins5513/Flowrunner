@@ -1,0 +1,54 @@
+{
+  "name": "Aceternity UI",
+  "slug": "google-gemini-effect",
+  "description": "An effect of SVGs as seen on the Google Gemini Website",
+  "props": [
+    {
+      "Prop": "pathLengths",
+      "Type": "MotionValue[]",
+      "Description": "An array of MotionValue objects used to animate the SVG paths."
+    },
+    {
+      "Prop": "title",
+      "Type": "string (optional)",
+      "Description": "The title to be displayed. If not provided, defaults to Build with Aceternity UI."
+    },
+    {
+      "Prop": "description",
+      "Type": "string (optional)",
+      "Description": "The description to be displayed. If not provided, defaults to a predefined string."
+    },
+    {
+      "Prop": "className",
+      "Type": "string (optional)",
+      "Description": "Additional CSS classes that can be applied to the component."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/google-gemini-effectCopy",
+  "url": "https://ui.aceternity.com/components/google-gemini-effect",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "An effect of SVGs as seen on the Google Gemini Website",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import { useScroll, useTransform } from \"motion/react\";",
+    "import React from \"react\";",
+    "import { GoogleGeminiEffect } from \"../ui/google-gemini-effect\";"
+  ],
+  "dependencies": [
+    "motion/react",
+    "react"
+  ],
+  "client_only": true
+}

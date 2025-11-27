@@ -1,0 +1,57 @@
+{
+  "name": "Senior Software Engineer Portfolio Template",
+  "slug": "kyriakosmichael",
+  "description": "A reusable portfolio landing page template designed for senior software engineers to showcase work, skills, career timeline, and contact info with an AI assistant feature.",
+  "tags": [
+    "Landing Page",
+    "Portfolio",
+    "Hero",
+    "Work Showcase",
+    "Skills Marquee",
+    "AI Assistant",
+    "Career Timeline",
+    "Contact",
+    "Tailwind CSS",
+    "Animation"
+  ],
+  "category": "Animation",
+  "installation": "",
+  "url": "https://www.aura.build/share/kyriakosmichael",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "A reusable portfolio landing page template designed for senior software engineers to showcase work, skills, career timeline, and contact info with an AI assistant feature.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [
+    "portfolio"
+  ],
+  "source": "aura",
+  "author": {
+    "name": "Kyriakos Michael",
+    "slug": "user-000e60e0",
+    "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocIP4ZpbLiAUWKisBTzToAYSLSNEB95Xv-tYxII4V5LXE-jOkcR_=s96-c",
+    "featured": false
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/kyriakosmichael.png?t=1763829856486",
+  "aura": {
+    "id": 5421,
+    "views": 369,
+    "forks": 16,
+    "premium": false
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

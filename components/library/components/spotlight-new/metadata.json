@@ -1,0 +1,90 @@
+{
+  "name": "Aceternity UI",
+  "slug": "spotlight-new",
+  "description": "A new spotlight component with left and right spotlight, configurable and customizable.",
+  "props": [
+    {
+      "Prop": "gradientFirst",
+      "Type": "string",
+      "Default": "\"radial-gradient(68.54% 68.72% at 55.02% 31.46%, hsla(210, 100%, 85%, .08) 0, hsla(210, 100%, 55%, .02) 50%, hsla(210, 100%, 45%, 0) 80%)\"",
+      "Description": "First gradient color for the spotlight effect"
+    },
+    {
+      "Prop": "gradientSecond",
+      "Type": "string",
+      "Default": "\"radial-gradient(50% 50% at 50% 50%, hsla(210, 100%, 85%, .06) 0, hsla(210, 100%, 55%, .02) 80%, transparent 100%)\"",
+      "Description": "Second gradient color for the spotlight effect"
+    },
+    {
+      "Prop": "gradientThird",
+      "Type": "string",
+      "Default": "\"radial-gradient(50% 50% at 50% 50%, hsla(210, 100%, 85%, .04) 0, hsla(210, 100%, 45%, .02) 80%, transparent 100%)\"",
+      "Description": "Third gradient color for the spotlight effect"
+    },
+    {
+      "Prop": "translateY",
+      "Type": "number",
+      "Default": "-350",
+      "Description": "Vertical translation offset in pixels"
+    },
+    {
+      "Prop": "width",
+      "Type": "number",
+      "Default": "560",
+      "Description": "Width of the main spotlight element in pixels"
+    },
+    {
+      "Prop": "height",
+      "Type": "number",
+      "Default": "1380",
+      "Description": "Height of the spotlight elements in pixels"
+    },
+    {
+      "Prop": "smallWidth",
+      "Type": "number",
+      "Default": "240",
+      "Description": "Width of the smaller spotlight elements in pixels"
+    },
+    {
+      "Prop": "duration",
+      "Type": "number",
+      "Default": "7",
+      "Description": "Animation duration in seconds"
+    },
+    {
+      "Prop": "xOffset",
+      "Type": "number",
+      "Default": "100",
+      "Description": "Horizontal animation offset in pixels"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/spotlight-newCopy",
+  "url": "https://ui.aceternity.com/components/spotlight-new",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A new spotlight component with left and right spotlight, configurable and customizable.",
+  "theme_requirements": [
+    "light-mode-friendly"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { Spotlight } from \"@/components/ui/spotlight-new\";"
+  ],
+  "dependencies": [
+    "@/components/ui/spotlight-new",
+    "react"
+  ],
+  "client_only": true
+}

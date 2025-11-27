@@ -1,0 +1,46 @@
+{
+  "name": "Aceternity UI",
+  "slug": "container-cover",
+  "description": "A Cover component that wraps any children, providing beams and space effect, hover to reveal speed.",
+  "props": [
+    {
+      "Prop": "children",
+      "Type": "React.ReactNode",
+      "Default": "undefined",
+      "Description": "The content to be wrapped by the Cover component"
+    },
+    {
+      "Prop": "className",
+      "Type": "string",
+      "Default": "undefined",
+      "Description": "Additional CSS classes to apply to the content wrapper"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/coverCopy",
+  "url": "https://ui.aceternity.com/components/container-cover",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "pointer-reactive",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A Cover component that wraps any children, providing beams and space effect, hover to reveal speed.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { Cover } from \"@/components/ui/cover\";"
+  ],
+  "dependencies": [
+    "@/components/ui/cover",
+    "react"
+  ],
+  "client_only": false
+}

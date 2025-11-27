@@ -1,0 +1,58 @@
+{
+  "name": "Influencer Marketing Landing Page Template",
+  "slug": "rhythmstyle",
+  "description": "This reusable influencer marketing landing page template connects brands with talent through a talent-first approach, featuring case studies, services, and contact forms.",
+  "tags": [
+    "Landing Page",
+    "Influencer Marketing",
+    "Talent Network",
+    "Case Studies",
+    "Services",
+    "Contact Form",
+    "Brand Partnerships",
+    "Campaign Results",
+    "Social Media",
+    "Creator Management"
+  ],
+  "category": "Mobile",
+  "installation": "",
+  "url": "https://www.aura.build/share/rhythmstyle",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "This reusable influencer marketing landing page template connects brands with talent through a talent-first approach, featuring case studies, services, and contact forms.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [
+    "saas",
+    "marketing"
+  ],
+  "source": "aura",
+  "author": {
+    "name": "Aksonvady Phomhome",
+    "slug": "aksonvady",
+    "avatar_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/user-avatars/avatars/2e815afb-cac1-4c01-90e1-cf3810246e35-1747968317403.jpg",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/rhythmstyle.png",
+  "aura": {
+    "id": 4941,
+    "views": 774,
+    "forks": 59,
+    "premium": false
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

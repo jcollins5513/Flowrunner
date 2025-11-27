@@ -1,0 +1,56 @@
+{
+  "name": "Aceternity UI",
+  "slug": "apple-cards-carousel",
+  "description": "A sleek and minimal carousel implementation, as seen on apple.com",
+  "props": [
+    {
+      "Prop": "items",
+      "Type": "JSX.Element[]",
+      "Default": "Required",
+      "Description": "Array of JSX elements to be displayed in the carousel"
+    },
+    {
+      "Prop": "initialScroll",
+      "Type": "number",
+      "Default": "0",
+      "Description": "Initial scroll position of the carousel"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/apple-cards-carouselCopy",
+  "url": "https://ui.aceternity.com/components/apple-cards-carousel",
+  "type": "card",
+  "subtype": "",
+  "layout_role": "inline-block",
+  "recommended_slots": [
+    "grid.item",
+    "section.content"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "auto-height",
+  "z_index_role": "content",
+  "usage_notes": "A sleek and minimal carousel implementation, as seen on apple.com",
+  "theme_requirements": [],
+  "data_requirements": [
+    {
+      "name": "items",
+      "fields": [
+        "title",
+        "description",
+        "media"
+      ],
+      "type": "array"
+    }
+  ],
+  "domain_tags": [],
+  "imports": [
+    " \nimport React from \"react\";",
+    "import { Carousel, Card } from \"@/components/ui/apple-cards-carousel\";"
+  ],
+  "dependencies": [
+    "@/components/ui/apple-cards-carousel",
+    "react"
+  ],
+  "client_only": true
+}

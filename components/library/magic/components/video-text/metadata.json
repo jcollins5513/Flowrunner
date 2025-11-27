@@ -1,0 +1,32 @@
+{
+  "name": "Video Text",
+  "slug": "video-text",
+  "description": "Video Text component from Magic UI.",
+  "tags": [],
+  "category": "text",
+  "installation": "",
+  "url": "https://magicui.design/docs/components/video-text",
+  "type": "component",
+  "layout_role": "widget",
+  "recommended_slots": [
+    "section.content",
+    "marketing.feature"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "Magic UI component.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "magic",
+  "client_only": false,
+  "imports": [
+    "import { VideoText } from \"@/registry/magicui/video-text\""
+  ],
+  "dependencies": [
+    "@/registry/magicui/video-text"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "name": "Aceternity UI",
+  "slug": "feature-sections",
+  "description": "A set of feature sections ranging from bento grids to simple layouts",
+  "props": [],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/features-section-demo-1@aceternity/features-section-demo-2@aceternity/features-section-demo-3Copy",
+  "url": "https://ui.aceternity.com/components/feature-sections",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A set of feature sections ranging from bento grids to simple layouts",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { cn } from \"@/lib/utils\";",
+    "import createGlobe from \"cobe\";",
+    "import { useEffect, useRef } from \"react\";",
+    "import { motion } from \"motion/react\";",
+    "import { IconBrandYoutubeFilled } from \"@tabler/icons-react\";"
+  ],
+  "dependencies": [
+    "@/lib/utils",
+    "@tabler/icons-react",
+    "cobe",
+    "motion/react",
+    "react"
+  ],
+  "client_only": false
+}

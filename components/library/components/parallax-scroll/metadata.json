@@ -1,0 +1,40 @@
+{
+  "name": "Aceternity UI",
+  "slug": "parallax-scroll",
+  "description": "A grid where two columns scroll in oposite directions, giving a parallax effect.",
+  "props": [
+    {
+      "Prop name": "className",
+      "Type": "string",
+      "Description": "The class name of the child component."
+    },
+    {
+      "Prop name": "images",
+      "Type": "string[]",
+      "Description": "The array of image URLs for the parallax scroll"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/parallax-scrollparallax-scroll-2Copy",
+  "url": "https://ui.aceternity.com/components/parallax-scroll",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "scroll-reactive",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A grid where two columns scroll in oposite directions, giving a parallax effect.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import { ParallaxScroll } from \"../ui/parallax-scroll\";"
+  ],
+  "dependencies": [],
+  "client_only": true
+}

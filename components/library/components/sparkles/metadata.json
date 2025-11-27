@@ -1,0 +1,78 @@
+{
+  "name": "Aceternity UI",
+  "slug": "sparkles",
+  "description": "A configurable sparkles component that can be used as a background or as a standalone component.",
+  "props": [
+    {
+      "Prop name": "id",
+      "Type": "string",
+      "Description": "The id of the sparkles component."
+    },
+    {
+      "Prop name": "className",
+      "Type": "string",
+      "Description": "The class name of the sparkles component."
+    },
+    {
+      "Prop name": "background",
+      "Type": "string",
+      "Description": "The background color of the sparkles component."
+    },
+    {
+      "Prop name": "particleSize",
+      "Type": "number",
+      "Description": "The size of the particles in the sparkles component."
+    },
+    {
+      "Prop name": "minSize",
+      "Type": "number",
+      "Description": "The minimum size of the particles in the sparkles component."
+    },
+    {
+      "Prop name": "maxSize",
+      "Type": "number",
+      "Description": "The maximum size of the particles in the sparkles component."
+    },
+    {
+      "Prop name": "speed",
+      "Type": "number",
+      "Description": "The speed of the particles in the sparkles component."
+    },
+    {
+      "Prop name": "particleColor",
+      "Type": "string",
+      "Description": "The color of the particles in the sparkles component."
+    },
+    {
+      "Prop name": "particleDensity",
+      "Type": "number",
+      "Description": "The density of the particles in the sparkles component."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/sparklesCopy",
+  "url": "https://ui.aceternity.com/components/sparkles",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A configurable sparkles component that can be used as a background or as a standalone component.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { SparklesCore } from \"../ui/sparkles\";"
+  ],
+  "dependencies": [
+    "react"
+  ],
+  "client_only": true
+}

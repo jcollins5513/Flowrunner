@@ -1,0 +1,49 @@
+{
+  "name": "Aceternity UI",
+  "slug": "sticky-banner",
+  "description": "A banner component that sticks to top, hides when user scrolls down",
+  "props": [
+    {
+      "Prop": "className",
+      "Type": "string",
+      "Default": "undefined",
+      "Description": "Optional CSS class to apply to the banner"
+    },
+    {
+      "Prop": "children",
+      "Type": "React.ReactNode",
+      "Default": "Required",
+      "Description": "Content to display inside the banner"
+    },
+    {
+      "Prop": "hideOnScroll",
+      "Type": "boolean",
+      "Default": "false",
+      "Description": "When true, hides the banner after scrolling down 40px"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/sticky-bannerCopy",
+  "url": "https://ui.aceternity.com/components/sticky-banner",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "scroll-reactive",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A banner component that sticks to top, hides when user scrolls down",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import { StickyBanner } from \"@/components/ui/sticky-banner\";"
+  ],
+  "dependencies": [
+    "@/components/ui/sticky-banner"
+  ],
+  "client_only": false
+}

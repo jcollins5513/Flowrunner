@@ -1,0 +1,32 @@
+{
+  "name": "Hero Video Dialog",
+  "slug": "hero-video-dialog",
+  "description": "Hero Video Dialog component from Magic UI.",
+  "tags": [],
+  "category": "component",
+  "installation": "",
+  "url": "https://magicui.design/docs/components/hero-video-dialog",
+  "type": "component",
+  "layout_role": "widget",
+  "recommended_slots": [
+    "section.content",
+    "marketing.feature"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "Magic UI component.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "magic",
+  "client_only": false,
+  "imports": [
+    "import { HeroVideoDialog } from \"@/registry/magicui/hero-video-dialog\""
+  ],
+  "dependencies": [
+    "@/registry/magicui/hero-video-dialog"
+  ]
+}

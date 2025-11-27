@@ -1,0 +1,38 @@
+{
+  "name": "Aceternity UI",
+  "slug": "hero-parallax",
+  "description": "A scroll effect with rotation, translation and opacity animations.",
+  "props": [
+    {
+      "Prop": "products",
+      "Type": "Array",
+      "Description": "An array of product objects. Each object should have a title (string), link (string), and thumbnail (string)."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/hero-parallaxCopy",
+  "url": "https://ui.aceternity.com/components/hero-parallax",
+  "type": "hero",
+  "subtype": "",
+  "layout_role": "section",
+  "recommended_slots": [
+    "hero.primary",
+    "section.lead"
+  ],
+  "interaction_profile": "scroll-reactive",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "A scroll effect with rotation, translation and opacity animations.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { HeroParallax } from \"../ui/hero-parallax\";"
+  ],
+  "dependencies": [
+    "react"
+  ],
+  "client_only": true
+}

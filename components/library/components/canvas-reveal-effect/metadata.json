@@ -1,0 +1,162 @@
+{
+  "name": "Aceternity UI",
+  "slug": "canvas-reveal-effect",
+  "description": "A dot background that expands on hover, as seen on Clerk's website",
+  "props": [
+    {
+      "Component": "CanvasRevealEffect",
+      "Prop Name": "animationSpeed",
+      "Type": "number",
+      "Default Value": "0.4",
+      "Description": "Animation speed, where 0.1 is slower and 1.0 is faster."
+    },
+    {
+      "Component": "CanvasRevealEffect",
+      "Prop Name": "opacities",
+      "Type": "number[]",
+      "Default Value": "[0.3, 0.3, 0.3, 0.5, 0.5, 0.5, 0.8, 0.8, 0.8, 1]",
+      "Description": "Array of opacities for the effect."
+    },
+    {
+      "Component": "CanvasRevealEffect",
+      "Prop Name": "colors",
+      "Type": "number[][]",
+      "Default Value": "[[0, 255, 255]]",
+      "Description": "Array of RGB color arrays to use in the effect."
+    },
+    {
+      "Component": "CanvasRevealEffect",
+      "Prop Name": "containerClassName",
+      "Type": "string",
+      "Default Value": "",
+      "Description": "Additional class name(s) for the container div."
+    },
+    {
+      "Component": "CanvasRevealEffect",
+      "Prop Name": "dotSize",
+      "Type": "number",
+      "Default Value": "",
+      "Description": "Size of the dots in the effect."
+    },
+    {
+      "Component": "CanvasRevealEffect",
+      "Prop Name": "showGradient",
+      "Type": "boolean",
+      "Default Value": "true",
+      "Description": "Whether to show the gradient overlay effect."
+    },
+    {
+      "Component": "DotMatrix",
+      "Prop Name": "colors",
+      "Type": "number[][]",
+      "Default Value": "[[0, 0, 0]]",
+      "Description": "Array of RGB color arrays for the dots. Default is black."
+    },
+    {
+      "Component": "DotMatrix",
+      "Prop Name": "opacities",
+      "Type": "number[]",
+      "Default Value": "[0.04, 0.04, 0.04, 0.04, 0.04, 0.08, 0.08, 0.08, 0.08, 0.14]",
+      "Description": "Array of opacities for the dots."
+    },
+    {
+      "Component": "DotMatrix",
+      "Prop Name": "totalSize",
+      "Type": "number",
+      "Default Value": "4",
+      "Description": "Total size of the effect area."
+    },
+    {
+      "Component": "DotMatrix",
+      "Prop Name": "dotSize",
+      "Type": "number",
+      "Default Value": "2",
+      "Description": "Size of the individual dots."
+    },
+    {
+      "Component": "DotMatrix",
+      "Prop Name": "shader",
+      "Type": "string",
+      "Default Value": "",
+      "Description": "Custom shader code to apply to the dots."
+    },
+    {
+      "Component": "DotMatrix",
+      "Prop Name": "center",
+      "Type": "(\"x\" | \"y\")[]",
+      "Default Value": "[\"x\", \"y\"]",
+      "Description": "Array indicating whether to center the effect on the x and/or y axis."
+    },
+    {
+      "Component": "ShaderMaterial",
+      "Prop Name": "source",
+      "Type": "string",
+      "Default Value": "",
+      "Description": "GLSL source code for the shader."
+    },
+    {
+      "Component": "ShaderMaterial",
+      "Prop Name": "uniforms",
+      "Type": "Uniforms",
+      "Default Value": "",
+      "Description": "Uniform variables for the shader."
+    },
+    {
+      "Component": "ShaderMaterial",
+      "Prop Name": "maxFps",
+      "Type": "number",
+      "Default Value": "60",
+      "Description": "Maximum frames per second for the shader animation."
+    },
+    {
+      "Component": "Shader",
+      "Prop Name": "source",
+      "Type": "string",
+      "Default Value": "",
+      "Description": "GLSL source code for the shader."
+    },
+    {
+      "Component": "Shader",
+      "Prop Name": "uniforms",
+      "Type": "Uniforms",
+      "Default Value": "",
+      "Description": "Uniform variables for the shader."
+    },
+    {
+      "Component": "Shader",
+      "Prop Name": "maxFps",
+      "Type": "number",
+      "Default Value": "60",
+      "Description": "Maximum frames per second for the shader animation."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/canvas-reveal-effectCopy",
+  "url": "https://ui.aceternity.com/components/canvas-reveal-effect",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "pointer-reactive",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A dot background that expands on hover, as seen on Clerk's website",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    " \nimport { AnimatePresence, motion } from \"motion/react\";",
+    "import { CanvasRevealEffect } from \"@/components/ui/canvas-reveal-effect\";"
+  ],
+  "dependencies": [
+    "@/components/ui/canvas-reveal-effect",
+    "motion/react",
+    "react"
+  ],
+  "client_only": true
+}

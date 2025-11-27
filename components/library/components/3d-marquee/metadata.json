@@ -1,0 +1,46 @@
+{
+  "name": "Aceternity UI",
+  "slug": "3d-marquee",
+  "description": "A 3D Marquee effect with grid, good for showcasing testimonials and hero sections",
+  "props": [
+    {
+      "Prop": "images",
+      "Type": "string[]",
+      "Required": "Yes",
+      "Default": "-",
+      "Description": "Array of image URLs to display in the 3D marquee. The component automatically splits these images into 4 columns."
+    },
+    {
+      "Prop": "className",
+      "Type": "string",
+      "Required": "No",
+      "Default": "undefined",
+      "Description": "Additional CSS classes to apply to the 3D marquee container."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/3d-marqueeCopy",
+  "url": "https://ui.aceternity.com/components/3d-marquee",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A 3D Marquee effect with grid, good for showcasing testimonials and hero sections",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import { ThreeDMarquee } from \"@/components/ui/3d-marquee\";"
+  ],
+  "dependencies": [
+    "@/components/ui/3d-marquee"
+  ],
+  "client_only": true
+}

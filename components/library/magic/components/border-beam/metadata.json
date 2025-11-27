@@ -1,0 +1,37 @@
+{
+  "name": "Border Beam",
+  "slug": "border-beam",
+  "description": "Border Beam component from Magic UI.",
+  "tags": [],
+  "category": "component",
+  "installation": "",
+  "url": "https://magicui.design/docs/components/border-beam",
+  "type": "component",
+  "layout_role": "widget",
+  "recommended_slots": [
+    "section.content",
+    "marketing.feature"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "Magic UI component.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "magic",
+  "client_only": false,
+  "imports": [
+    "import { Play, SkipBack, SkipForward } from \"lucide-react\"",
+    "\nimport { Button } from \"@/components/ui/button\"",
+    "import {",
+    "import { BorderBeam } from \"@/registry/magicui/border-beam\""
+  ],
+  "dependencies": [
+    "@/components/ui/button",
+    "@/registry/magicui/border-beam",
+    "lucide-react"
+  ]
+}

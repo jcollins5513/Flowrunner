@@ -1,0 +1,44 @@
+{
+  "name": "Aceternity UI",
+  "slug": "typewriter-effect",
+  "description": "Text generates as if it is being typed on the screen.",
+  "props": [
+    {
+      "Prop name": "className",
+      "Type": "string",
+      "Description": "The class name of the container component."
+    },
+    {
+      "Prop name": "words",
+      "Type": "Array<{text: string; className: string;}>",
+      "Description": "Every word with a className that you can define"
+    },
+    {
+      "Prop name": "cursorClassName",
+      "Type": "string",
+      "Description": "The className of the cursor component"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/typewriter-effectCopy",
+  "url": "https://ui.aceternity.com/components/typewriter-effect",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "Text generates as if it is being typed on the screen.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import { TypewriterEffectSmooth } from \"../ui/typewriter-effect\";"
+  ],
+  "dependencies": [],
+  "client_only": true
+}

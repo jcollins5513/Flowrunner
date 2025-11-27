@@ -1,0 +1,72 @@
+{
+  "name": "Aceternity UI",
+  "slug": "focus-cards",
+  "description": "Hover over the card to focus on it, blurring the rest of the cards.",
+  "props": [
+    {
+      "Component": "Card",
+      "Prop": "card",
+      "Type": "Card",
+      "Description": "The card object containing title and src properties"
+    },
+    {
+      "Component": "Card",
+      "Prop": "index",
+      "Type": "number",
+      "Description": "The index of the card in the array"
+    },
+    {
+      "Component": "Card",
+      "Prop": "hovered",
+      "Type": "number | null",
+      "Description": "The index of the currently hovered card, or null if no card is hovered"
+    },
+    {
+      "Component": "Card",
+      "Prop": "setHovered",
+      "Type": "React.Dispatch<React.SetStateAction<number | null>>",
+      "Description": "Function to update the hovered state"
+    },
+    {
+      "Component": "FocusCards",
+      "Prop": "cards",
+      "Type": "Card[]",
+      "Description": "An array of Card objects to be rendered"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/focus-cardsCopy",
+  "url": "https://ui.aceternity.com/components/focus-cards",
+  "type": "card",
+  "subtype": "",
+  "layout_role": "inline-block",
+  "recommended_slots": [
+    "grid.item",
+    "section.content"
+  ],
+  "interaction_profile": "pointer-reactive",
+  "preferred_size": "auto-height",
+  "z_index_role": "content",
+  "usage_notes": "Hover over the card to focus on it, blurring the rest of the cards.",
+  "theme_requirements": [],
+  "data_requirements": [
+    {
+      "name": "items",
+      "fields": [
+        "title",
+        "description",
+        "media"
+      ],
+      "type": "array"
+    }
+  ],
+  "domain_tags": [],
+  "imports": [
+    "import { FocusCards } from \"@/components/ui/focus-cards\";"
+  ],
+  "dependencies": [
+    "@/components/ui/focus-cards"
+  ],
+  "client_only": false
+}

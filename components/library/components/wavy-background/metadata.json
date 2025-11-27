@@ -1,0 +1,93 @@
+{
+  "name": "Aceternity UI",
+  "slug": "wavy-background",
+  "description": "A cool background effect with waves that move.",
+  "props": [
+    {
+      "Prop": "children",
+      "Type": "any",
+      "Default": "-",
+      "Description": "The content to be displayed on top of the wavy background."
+    },
+    {
+      "Prop": "className",
+      "Type": "string",
+      "Default": "-",
+      "Description": "The CSS class to apply to the content container."
+    },
+    {
+      "Prop": "containerClassName",
+      "Type": "string",
+      "Default": "-",
+      "Description": "The CSS class to apply to the main container."
+    },
+    {
+      "Prop": "colors",
+      "Type": "string[]",
+      "Default": "[\"#38bdf8\", \"#818cf8\", \"#c084fc\", \"#e879f9\", \"#22d3ee\"]",
+      "Description": "The colors of the waves."
+    },
+    {
+      "Prop": "waveWidth",
+      "Type": "number",
+      "Default": "50",
+      "Description": "The width of the waves."
+    },
+    {
+      "Prop": "backgroundFill",
+      "Type": "string",
+      "Default": "\"black\"",
+      "Description": "The background color."
+    },
+    {
+      "Prop": "blur",
+      "Type": "number",
+      "Default": "10",
+      "Description": "The blur effect applied to the waves."
+    },
+    {
+      "Prop": "speed",
+      "Type": "\"slow\" | \"fast\"",
+      "Default": "\"fast\"",
+      "Description": "The speed of the wave animation."
+    },
+    {
+      "Prop": "waveOpacity",
+      "Type": "number",
+      "Default": "0.5",
+      "Description": "The opacity of the waves."
+    },
+    {
+      "Prop": "[key: string]",
+      "Type": "any",
+      "Default": "-",
+      "Description": "Any other props not listed above."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/wavy-backgroundCopy",
+  "url": "https://ui.aceternity.com/components/wavy-background",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A cool background effect with waves that move.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { WavyBackground } from \"../ui/wavy-background\";"
+  ],
+  "dependencies": [
+    "react"
+  ],
+  "client_only": true
+}

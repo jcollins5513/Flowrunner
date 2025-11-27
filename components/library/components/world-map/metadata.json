@@ -1,0 +1,45 @@
+{
+  "name": "Aceternity UI",
+  "slug": "world-map",
+  "description": "A world map with animated lines and dots, programatically generated.",
+  "props": [
+    {
+      "Prop": "dots",
+      "Type": "Array<{start: Point, end: Point}>",
+      "Default": "[]",
+      "Description": "Array of coordinate pairs representing connections on the map"
+    },
+    {
+      "Prop": "lineColor",
+      "Type": "string",
+      "Default": "#0ea5e9",
+      "Description": "Color of the lines connecting the dots"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/world-mapCopy",
+  "url": "https://ui.aceternity.com/components/world-map",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A world map with animated lines and dots, programatically generated.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import WorldMap from \"@/components/ui/world-map\";",
+    "import { motion } from \"motion/react\";"
+  ],
+  "dependencies": [
+    "@/components/ui/world-map",
+    "motion/react"
+  ],
+  "client_only": true
+}

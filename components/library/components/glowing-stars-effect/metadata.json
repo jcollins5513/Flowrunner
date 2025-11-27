@@ -1,0 +1,38 @@
+{
+  "name": "Aceternity UI",
+  "slug": "glowing-stars-effect",
+  "description": "Card background stars that animate on hover and animate anyway",
+  "props": [
+    {
+      "Prop name": "className",
+      "Type": "string",
+      "Description": "The class name of the GlowingStars component."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/glowing-starsCopy",
+  "url": "https://ui.aceternity.com/components/glowing-stars-effect",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "pointer-reactive",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "Card background stars that animate on hover and animate anyway",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import {"
+  ],
+  "dependencies": [
+    "react"
+  ],
+  "client_only": true
+}

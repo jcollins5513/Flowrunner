@@ -1,0 +1,40 @@
+{
+  "name": "Aceternity UI",
+  "slug": "timeline",
+  "description": "A timeline component with sticky header and scroll beam follow.",
+  "props": [
+    {
+      "Prop": "data",
+      "Type": "TimelineEntry[]",
+      "Required": "Yes",
+      "Description": "An array of timeline entries."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/timelineCopy",
+  "url": "https://ui.aceternity.com/components/timeline",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "scroll-reactive",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A timeline component with sticky header and scroll beam follow.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { Timeline } from \"@/components/ui/timeline\";"
+  ],
+  "dependencies": [
+    "@/components/ui/timeline",
+    "react"
+  ],
+  "client_only": false
+}

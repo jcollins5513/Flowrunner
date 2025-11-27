@@ -1,0 +1,70 @@
+{
+  "name": "Aceternity UI",
+  "slug": "comet-card",
+  "description": "A perspective, 3D, Tilt card as seen on Perplexity Comet's website.",
+  "props": [
+    {
+      "Prop": "rotateDepth",
+      "Type": "number",
+      "Default": "17.5",
+      "Description": "Controls the depth of 3D rotation effect on mouse movement. Higher values create more dramatic rotation.",
+      "Required": "No"
+    },
+    {
+      "Prop": "translateDepth",
+      "Type": "number",
+      "Default": "20",
+      "Description": "Controls the depth of translation (movement) effect on mouse movement. Higher values create more dramatic movement.",
+      "Required": "No"
+    },
+    {
+      "Prop": "className",
+      "Type": "string",
+      "Default": "undefined",
+      "Description": "Additional CSS classes to apply to the card container.",
+      "Required": "No"
+    },
+    {
+      "Prop": "children",
+      "Type": "React.ReactNode",
+      "Default": "-",
+      "Description": "The content to be rendered inside the card.",
+      "Required": "Yes"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/comet-cardCopy",
+  "url": "https://ui.aceternity.com/components/comet-card",
+  "type": "card",
+  "subtype": "",
+  "layout_role": "inline-block",
+  "recommended_slots": [
+    "grid.item",
+    "section.content"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "auto-height",
+  "z_index_role": "content",
+  "usage_notes": "A perspective, 3D, Tilt card as seen on Perplexity Comet's website.",
+  "theme_requirements": [],
+  "data_requirements": [
+    {
+      "name": "items",
+      "fields": [
+        "title",
+        "description",
+        "media"
+      ],
+      "type": "array"
+    }
+  ],
+  "domain_tags": [],
+  "imports": [
+    "import { CometCard } from \"@/components/ui/comet-card\";"
+  ],
+  "dependencies": [
+    "@/components/ui/comet-card"
+  ],
+  "client_only": false
+}

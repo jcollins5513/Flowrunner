@@ -1,0 +1,58 @@
+{
+  "name": "Aceternity UI",
+  "slug": "sidebar",
+  "description": "Expandable sidebar that expands on hover, mobile responsive and dark mode support",
+  "props": [
+    {
+      "Prop Name": "children",
+      "Type": "React.ReactNode",
+      "Default": "-",
+      "Description": "The content to be rendered inside the provider."
+    },
+    {
+      "Prop Name": "open",
+      "Type": "boolean",
+      "Default": "false",
+      "Description": "Controls the open state of the sidebar."
+    },
+    {
+      "Prop Name": "setOpen",
+      "Type": "React.Dispatch<React.SetStateAction<boolean>>",
+      "Default": "-",
+      "Description": "Function to set the open state of the sidebar."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/sidebarCopy",
+  "url": "https://ui.aceternity.com/components/sidebar",
+  "type": "navigation",
+  "subtype": "",
+  "layout_role": "sticky",
+  "recommended_slots": [
+    "header",
+    "sidebar"
+  ],
+  "interaction_profile": "pointer-reactive",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "Expandable sidebar that expands on hover, mobile responsive and dark mode support",
+  "theme_requirements": [
+    "dark-mode-friendly"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React, { useState } from \"react\";",
+    "import { Sidebar, SidebarBody, SidebarLink } from \"../ui/sidebar\";",
+    "import {",
+    "import { motion } from \"motion/react\";",
+    "import { cn } from \"@/lib/utils\";"
+  ],
+  "dependencies": [
+    "@/lib/utils",
+    "motion/react",
+    "react"
+  ],
+  "client_only": true
+}

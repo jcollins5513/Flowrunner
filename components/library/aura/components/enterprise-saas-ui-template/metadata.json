@@ -1,0 +1,57 @@
+{
+  "name": "Enterprise SaaS UI Template",
+  "slug": "gemini-3-0-svg-20",
+  "description": "A versatile, reusable template featuring an enterprise-grade SaaS icon system, advanced data visualization charts, kinetic interaction library, decorative assets, UI components, and a premium product showcase.",
+  "tags": [
+    "Landing Page",
+    "SaaS",
+    "Icons",
+    "Data Visualization",
+    "Interaction Library",
+    "UI Components",
+    "Decorative Patterns",
+    "Animation",
+    "Dashboard",
+    "Product Showcase"
+  ],
+  "category": "Animation",
+  "installation": "",
+  "url": "https://www.aura.build/share/gemini-3-0-svg-20",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "A versatile, reusable template featuring an enterprise-grade SaaS icon system, advanced data visualization charts, kinetic interaction library, decorative assets, UI components, and a premium product showcase.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [
+    "saas"
+  ],
+  "source": "aura",
+  "author": {
+    "name": "Vannarot Roeung",
+    "slug": "vannarot-roeung",
+    "avatar_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/user-avatars/avatars/1a62ed4c-6d0d-4900-8de2-1f3139579949-1747963009671.jpg",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/gemini-3-0-svg-20.png",
+  "aura": {
+    "id": 5357,
+    "views": 607,
+    "forks": 17,
+    "premium": false
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

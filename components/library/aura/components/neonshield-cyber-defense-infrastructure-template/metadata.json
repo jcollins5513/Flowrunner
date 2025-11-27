@@ -1,0 +1,55 @@
+{
+  "name": "NeonShield Cyber Defense Infrastructure Template",
+  "slug": "neonshield-cyber",
+  "description": "This reusable landing page template is designed for cybersecurity platforms, showcasing infrastructure security features, integrations, developer tools, and live monitoring.",
+  "tags": [
+    "Landing Page",
+    "Cybersecurity",
+    "Infrastructure Security",
+    "Features",
+    "Integrations",
+    "Developer Tools",
+    "Analytics",
+    "Live Monitoring",
+    "CTA",
+    "UI Dashboard"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/neonshield-cyber",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "This reusable landing page template is designed for cybersecurity platforms, showcasing infrastructure security features, integrations, developer tools, and live monitoring.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "aura",
+  "author": {
+    "name": "Sourany Phomhome",
+    "slug": "sourany",
+    "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocLoQZePAiZWIthvCKEU9ojH9gXKvKMsh4bHnXIlpUcwrvUFJO9F=s96-c",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/neonshield-cyber.png",
+  "aura": {
+    "id": 5567,
+    "views": 664,
+    "forks": 8,
+    "premium": true
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

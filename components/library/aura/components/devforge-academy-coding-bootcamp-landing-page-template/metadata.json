@@ -1,0 +1,55 @@
+{
+  "name": "DevForge Academy Coding Bootcamp Landing Page Template",
+  "slug": "devforge",
+  "description": "This template provides a sleek, modern landing page for coding bootcamps, showcasing curriculum, mentorship, student outcomes, and calls to action for prospective students.",
+  "tags": [
+    "Landing Page",
+    "Hero",
+    "Features",
+    "Curriculum",
+    "Mentorship",
+    "Testimonials",
+    "Projects",
+    "CTA",
+    "Tech Stack",
+    "Education"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/devforge",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "This template provides a sleek, modern landing page for coding bootcamps, showcasing curriculum, mentorship, student outcomes, and calls to action for prospective students.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "aura",
+  "author": {
+    "name": "Meng To",
+    "slug": "meng",
+    "avatar_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/user-avatars/avatars/9109ecbb-cdc4-4815-981e-2ea83be13765-1747961036177.png",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/devforge.png",
+  "aura": {
+    "id": 5480,
+    "views": 1210,
+    "forks": 16,
+    "premium": true
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

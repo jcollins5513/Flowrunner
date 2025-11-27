@@ -1,0 +1,45 @@
+{
+  "name": "Aceternity UI",
+  "slug": "resizable-navbar",
+  "description": "A navbar that changes width on scroll, responsive and animated.",
+  "props": [
+    {
+      "Prop": "children",
+      "Type": "React.ReactNode",
+      "Default": "-",
+      "Description": "Child elements to render inside the navbar"
+    },
+    {
+      "Prop": "className",
+      "Type": "string",
+      "Default": "-",
+      "Description": "Additional CSS classes to apply to the navbar"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/resizable-navbarCopy",
+  "url": "https://ui.aceternity.com/components/resizable-navbar",
+  "type": "navigation",
+  "subtype": "",
+  "layout_role": "sticky",
+  "recommended_slots": [
+    "header",
+    "sidebar"
+  ],
+  "interaction_profile": "scroll-reactive",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "A navbar that changes width on scroll, responsive and animated.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import {",
+    "import { useState } from \"react\";"
+  ],
+  "dependencies": [
+    "react"
+  ],
+  "client_only": true
+}

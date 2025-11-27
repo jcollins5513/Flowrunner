@@ -1,0 +1,45 @@
+{
+  "name": "Aceternity UI",
+  "slug": "floating-navbar",
+  "description": "A sticky Navbar that hides on scroll, reveals when scrolled up.",
+  "props": [
+    {
+      "Prop name": "className",
+      "Type": "string",
+      "Description": "The class name of the child component."
+    },
+    {
+      "Prop name": "navItems",
+      "Type": "{name: string, link: string, icon: ReactNode}",
+      "Description": "The navigation items you want to render in the navbar"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/floating-navbarCopy",
+  "url": "https://ui.aceternity.com/components/floating-navbar",
+  "type": "navigation",
+  "subtype": "",
+  "layout_role": "sticky",
+  "recommended_slots": [
+    "header",
+    "sidebar"
+  ],
+  "interaction_profile": "scroll-reactive",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "A sticky Navbar that hides on scroll, reveals when scrolled up.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { FloatingNav } from \"../ui/floating-navbar\";",
+    "import { IconHome, IconMessage, IconUser } from \"@tabler/icons-react\";"
+  ],
+  "dependencies": [
+    "@tabler/icons-react",
+    "react"
+  ],
+  "client_only": true
+}

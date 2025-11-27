@@ -1,0 +1,57 @@
+{
+  "name": "Developer Portfolio Landing Page Template",
+  "slug": "dev-pranta-saha",
+  "description": "This reusable template showcases a developer portfolio focused on interactive web experiences using React and TypeScript, ideal for frontend technologists.",
+  "tags": [
+    "Landing Page",
+    "Portfolio",
+    "React",
+    "TypeScript",
+    "Motion Design",
+    "Performance",
+    "Accessibility",
+    "Developer",
+    "Interactive UI",
+    "Contact"
+  ],
+  "category": "Animation",
+  "installation": "",
+  "url": "https://www.aura.build/share/dev-pranta-saha",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "This reusable template showcases a developer portfolio focused on interactive web experiences using React and TypeScript, ideal for frontend technologists.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [
+    "portfolio"
+  ],
+  "source": "aura",
+  "author": {
+    "name": "Pranta Saha",
+    "slug": "sahapranta",
+    "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJEQ8aB0TCJPgrTyDC6T-7b1IWZjYoyaz5twAL1yGfp1-7ArZcZ=s96-c",
+    "featured": false
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/dev-pranta-saha.png",
+  "aura": {
+    "id": 5318,
+    "views": 271,
+    "forks": 7,
+    "premium": false
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

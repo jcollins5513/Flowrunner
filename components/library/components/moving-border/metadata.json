@@ -1,0 +1,73 @@
+{
+  "name": "Aceternity UI",
+  "slug": "moving-border",
+  "description": "A border that moves around the container. Perfect for making your buttons stand out.",
+  "props": [
+    {
+      "Prop": "borderRadius",
+      "Type": "string",
+      "Description": "Optional. Defines the border radius of the button. Default value is \"1.75rem\"."
+    },
+    {
+      "Prop": "children",
+      "Type": "React.ReactNode",
+      "Description": "Required. The content to be displayed inside the button."
+    },
+    {
+      "Prop": "as",
+      "Type": "any",
+      "Description": "Optional. Defines the HTML element or React component that will be used for the button. Default is \"button\"."
+    },
+    {
+      "Prop": "containerClassName",
+      "Type": "string",
+      "Description": "Optional. Additional CSS classes to be applied to the button container."
+    },
+    {
+      "Prop": "borderClassName",
+      "Type": "string",
+      "Description": "Optional. Additional CSS classes to be applied to the button border."
+    },
+    {
+      "Prop": "duration",
+      "Type": "number",
+      "Description": "Optional. Duration for the moving border animation in milliseconds. Default is 2000."
+    },
+    {
+      "Prop": "className",
+      "Type": "string",
+      "Description": "Optional. Additional CSS classes to be applied to the button."
+    },
+    {
+      "Prop": "[key: string]",
+      "Type": "any",
+      "Description": "Optional. Any other props that should be passed to the button."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/moving-borderCopy",
+  "url": "https://ui.aceternity.com/components/moving-border",
+  "type": "button",
+  "subtype": "",
+  "layout_role": "inline",
+  "recommended_slots": [
+    "cta.primary",
+    "cta.secondary"
+  ],
+  "interaction_profile": "interactive",
+  "preferred_size": "inline",
+  "z_index_role": "content",
+  "usage_notes": "A border that moves around the container. Perfect for making your buttons stand out.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { Button } from \"../ui/moving-border\";"
+  ],
+  "dependencies": [
+    "react"
+  ],
+  "client_only": true
+}

@@ -1,0 +1,42 @@
+{
+  "name": "Aceternity UI",
+  "slug": "sticky-scroll-reveal",
+  "description": "A sticky container that sticks while scrolling, text reveals on scroll",
+  "props": [
+    {
+      "Prop name": "content",
+      "Type": "Array<{title: string, description: string, content: React.ReactNode}>",
+      "Description": "content object that renders the children inside sticky scroll component ."
+    },
+    {
+      "Prop name": "contentClassName",
+      "Type": "string",
+      "Description": "className for the right side container that sticks to the top ."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/sticky-scroll-revealCopy",
+  "url": "https://ui.aceternity.com/components/sticky-scroll-reveal",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "scroll-reactive",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A sticky container that sticks while scrolling, text reveals on scroll",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { StickyScroll } from \"../ui/sticky-scroll-reveal\";"
+  ],
+  "dependencies": [
+    "react"
+  ],
+  "client_only": true
+}

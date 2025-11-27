@@ -1,0 +1,65 @@
+{
+  "name": "Aceternity UI",
+  "slug": "code-block",
+  "description": "A configurable code block component built on top of react-syntax-highlighter.",
+  "props": [
+    {
+      "Prop": "language",
+      "Type": "string",
+      "Required": "Yes",
+      "Description": "The programming language for syntax highlighting"
+    },
+    {
+      "Prop": "filename",
+      "Type": "string",
+      "Required": "Yes",
+      "Description": "The name of the file to display"
+    },
+    {
+      "Prop": "highlightLines",
+      "Type": "number[]",
+      "Required": "No",
+      "Description": "Array of line numbers to highlight. Defaults to []"
+    },
+    {
+      "Prop": "code",
+      "Type": "string",
+      "Required": "Conditional",
+      "Description": "The code content to display"
+    },
+    {
+      "Prop": "tabs",
+      "Type": "Array<TabConfig>",
+      "Required": "Conditional",
+      "Description": "Array of tab configurations"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/code-blockCopy",
+  "url": "https://ui.aceternity.com/components/code-block",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A configurable code block component built on top of react-syntax-highlighter.",
+  "theme_requirements": [
+    "light-mode-friendly"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    " \nimport React from \"react\";",
+    " \nimport { CodeBlock } from \"@/components/ui/code-block\";"
+  ],
+  "dependencies": [
+    "@/components/ui/code-block",
+    "react"
+  ],
+  "client_only": true
+}

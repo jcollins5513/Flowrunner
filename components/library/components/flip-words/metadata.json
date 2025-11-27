@@ -1,0 +1,50 @@
+{
+  "name": "Aceternity UI",
+  "slug": "flip-words",
+  "description": "A component that flips through a list of words",
+  "props": [
+    {
+      "Prop": "words",
+      "Type": "string[]",
+      "Default": "N/A",
+      "Description": "An array of words to be displayed and animated."
+    },
+    {
+      "Prop": "duration",
+      "Type": "number",
+      "Default": "3000",
+      "Description": "Duration (in milliseconds) for each word to be displayed before flipping to the next word."
+    },
+    {
+      "Prop": "className",
+      "Type": "string",
+      "Default": "N/A",
+      "Description": "Additional CSS classes to apply to the component."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/flip-wordsCopy",
+  "url": "https://ui.aceternity.com/components/flip-words",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A component that flips through a list of words",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { FlipWords } from \"../ui/flip-words\";"
+  ],
+  "dependencies": [
+    "react"
+  ],
+  "client_only": false
+}

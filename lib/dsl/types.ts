@@ -52,7 +52,21 @@ export interface HeroImage {
 export interface Component {
   type: 'title' | 'subtitle' | 'button' | 'form' | 'text' | 'image'
   content: string
-  props?: Record<string, unknown>
+  props?: {
+    // Existing props
+    variant?: string
+    size?: string
+    fields?: Array<Record<string, unknown>>
+    description?: string
+    submitLabel?: string
+    onSubmit?: (data: Record<string, unknown>) => void | Promise<void>
+    url?: string
+    id?: string
+    // Library component props (optional)
+    libraryComponent?: string // e.g., "animated-gradient-text", "rainbow-button"
+    libraryProps?: Record<string, any> // Component-specific props for library component
+    [key: string]: unknown // Allow other props
+  }
 }
 
 export interface Navigation {

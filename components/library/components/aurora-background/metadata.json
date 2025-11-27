@@ -1,0 +1,61 @@
+{
+  "name": "Aceternity UI",
+  "slug": "aurora-background",
+  "description": "A subtle Aurora or Southern Lights background for your website.",
+  "props": [
+    {
+      "Prop": "children",
+      "Type": "ReactNode",
+      "Default": "N/A",
+      "Description": "The content to be displayed within the AuroraBackground component."
+    },
+    {
+      "Prop": "className",
+      "Type": "string",
+      "Default": "N/A",
+      "Description": "Additional CSS classes to apply to the component for styling."
+    },
+    {
+      "Prop": "showRadialGradient",
+      "Type": "boolean",
+      "Default": "true",
+      "Description": "Determines whether a radial gradient effect is applied to the background."
+    },
+    {
+      "Prop": "...props",
+      "Type": "object",
+      "Default": "N/A",
+      "Description": "Any other props that should be passed to the div element of the component."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/aurora-backgroundCopy",
+  "url": "https://ui.aceternity.com/components/aurora-background",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A subtle Aurora or Southern Lights background for your website.",
+  "theme_requirements": [
+    "light-mode-friendly"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    " \nimport { motion } from \"motion/react\";",
+    "import React from \"react\";",
+    "import { AuroraBackground } from \"../ui/aurora-background\";"
+  ],
+  "dependencies": [
+    "motion/react",
+    "react"
+  ],
+  "client_only": true
+}

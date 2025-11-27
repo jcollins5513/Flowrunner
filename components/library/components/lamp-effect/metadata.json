@@ -1,0 +1,45 @@
+{
+  "name": "Aceternity UI",
+  "slug": "lamp-effect",
+  "description": "A lamp effect as seen on linear, great for section headers.",
+  "props": [
+    {
+      "Prop": "children",
+      "Type": "React Node",
+      "Description": "Children that can be passed to the component"
+    },
+    {
+      "Prop": "className",
+      "Type": "string",
+      "Description": "Classname for the container"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/lampCopy",
+  "url": "https://ui.aceternity.com/components/lamp-effect",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A lamp effect as seen on linear, great for section headers.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { motion } from \"motion/react\";",
+    "import { LampContainer } from \"../ui/lamp\";"
+  ],
+  "dependencies": [
+    "motion/react",
+    "react"
+  ],
+  "client_only": true
+}

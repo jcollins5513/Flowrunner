@@ -1,0 +1,56 @@
+{
+  "name": "Educational Workshop & Course Overview Template",
+  "slug": "interactive-learning",
+  "description": "A reusable landing page template designed for showcasing live workshops, course details, and instructor profiles for educational platforms.",
+  "tags": [
+    "Landing Page",
+    "Workshop",
+    "Course Overview",
+    "Instructor Profile",
+    "Live Session",
+    "Schedule",
+    "Projects",
+    "Enrollment",
+    "Education"
+  ],
+  "category": "Mobile",
+  "installation": "",
+  "url": "https://www.aura.build/share/interactive-learning",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "A reusable landing page template designed for showcasing live workshops, course details, and instructor profiles for educational platforms.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [
+    "ecommerce"
+  ],
+  "source": "aura",
+  "author": {
+    "name": "Meng To",
+    "slug": "meng",
+    "avatar_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/user-avatars/avatars/9109ecbb-cdc4-4815-981e-2ea83be13765-1747961036177.png",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/interactive-learning.png",
+  "aura": {
+    "id": 4923,
+    "views": 5661,
+    "forks": 10,
+    "premium": true
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

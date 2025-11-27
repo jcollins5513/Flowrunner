@@ -1,0 +1,57 @@
+{
+  "name": "FinTrax Financial Dashboard Template",
+  "slug": "financial-dashboard",
+  "description": "This FinTrax Financial Dashboard Template provides a sleek, modern design for tracking transactions, credit scores, and cryptocurrency exchange, ideal for fintech and crypto apps.",
+  "tags": [
+    "Landing Page",
+    "Dashboard",
+    "Finance",
+    "Cryptocurrency",
+    "Exchange",
+    "Credit Score",
+    "Analytics",
+    "UI",
+    "Dark Mode",
+    "Responsive"
+  ],
+  "category": "Mobile",
+  "installation": "",
+  "url": "https://www.aura.build/share/financial-dashboard",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "This FinTrax Financial Dashboard Template provides a sleek, modern design for tracking transactions, credit scores, and cryptocurrency exchange, ideal for fintech and crypto apps.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [
+    "saas"
+  ],
+  "source": "aura",
+  "author": {
+    "name": "Meng To",
+    "slug": "meng",
+    "avatar_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/user-avatars/avatars/9109ecbb-cdc4-4815-981e-2ea83be13765-1747961036177.png",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/financial-dashboard.png",
+  "aura": {
+    "id": 5353,
+    "views": 1240,
+    "forks": 9,
+    "premium": true
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

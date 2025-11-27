@@ -1,0 +1,958 @@
+{
+  "total_components": 50,
+  "components": [
+    {
+      "name": "Marquee",
+      "sanitized_name": "marquee",
+      "url": "https://magicui.design/docs/components/marquee",
+      "description": "Marquee component from Magic UI.",
+      "category": "component",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Terminal",
+      "sanitized_name": "terminal",
+      "url": "https://magicui.design/docs/components/terminal",
+      "description": "Terminal component from Magic UI.",
+      "category": "component",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Hero Video Dialog",
+      "sanitized_name": "hero-video-dialog",
+      "url": "https://magicui.design/docs/components/hero-video-dialog",
+      "description": "Hero Video Dialog component from Magic UI.",
+      "category": "component",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Bento Grid",
+      "sanitized_name": "bento-grid",
+      "url": "https://magicui.design/docs/components/bento-grid",
+      "description": "Bento Grid component from Magic UI.",
+      "category": "layout",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Animated List",
+      "sanitized_name": "animated-list",
+      "url": "https://magicui.design/docs/components/animated-list",
+      "description": "Animated List component from Magic UI.",
+      "category": "animation",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Dock",
+      "sanitized_name": "dock",
+      "url": "https://magicui.design/docs/components/dock",
+      "description": "Dock component from Magic UI.",
+      "category": "layout",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Globe",
+      "sanitized_name": "globe",
+      "url": "https://magicui.design/docs/components/globe",
+      "description": "Globe component from Magic UI.",
+      "category": "component",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Tweet Card",
+      "sanitized_name": "tweet-card",
+      "url": "https://magicui.design/docs/components/tweet-card",
+      "description": "Tweet Card component from Magic UI.",
+      "category": "component",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Orbiting Circles",
+      "sanitized_name": "orbiting-circles",
+      "url": "https://magicui.design/docs/components/orbiting-circles",
+      "description": "Orbiting Circles component from Magic UI.",
+      "category": "component",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Avatar Circles",
+      "sanitized_name": "avatar-circles",
+      "url": "https://magicui.design/docs/components/avatar-circles",
+      "description": "Avatar Circles component from Magic UI.",
+      "category": "component",
+      "tags": [
+        "+99"
+      ],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Icon Cloud",
+      "sanitized_name": "icon-cloud",
+      "url": "https://magicui.design/docs/components/icon-cloud",
+      "description": "Icon Cloud component from Magic UI.",
+      "category": "component",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Lens",
+      "sanitized_name": "lens",
+      "url": "https://magicui.design/docs/components/lens",
+      "description": "Lens component from Magic UI.",
+      "category": "component",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Pointer",
+      "sanitized_name": "pointer",
+      "url": "https://magicui.design/docs/components/pointer",
+      "description": "Pointer component from Magic UI.",
+      "category": "component",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Smooth Cursor",
+      "sanitized_name": "smooth-cursor",
+      "url": "https://magicui.design/docs/components/smooth-cursor",
+      "description": "Smooth Cursor component from Magic UI.",
+      "category": "component",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Progressive Blur",
+      "sanitized_name": "progressive-blur",
+      "url": "https://magicui.design/docs/components/progressive-blur",
+      "description": "Progressive Blur component from Magic UI.",
+      "category": "component",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Dotted MapNew",
+      "sanitized_name": "dotted-mapnew",
+      "url": "https://magicui.design/docs/components/dotted-map",
+      "description": "Dotted MapNew component from Magic UI.",
+      "category": "component",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Animated Beam",
+      "sanitized_name": "animated-beam",
+      "url": "https://magicui.design/docs/components/animated-beam",
+      "description": "Animated Beam component from Magic UI.",
+      "category": "animation",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Border Beam",
+      "sanitized_name": "border-beam",
+      "url": "https://magicui.design/docs/components/border-beam",
+      "description": "Border Beam component from Magic UI.",
+      "category": "component",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Shine Border",
+      "sanitized_name": "shine-border",
+      "url": "https://magicui.design/docs/components/shine-border",
+      "description": "Shine Border component from Magic UI.",
+      "category": "component",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Magic Card",
+      "sanitized_name": "magic-card",
+      "url": "https://magicui.design/docs/components/magic-card",
+      "description": "Magic Card component from Magic UI.",
+      "category": "component",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Meteors",
+      "sanitized_name": "meteors",
+      "url": "https://magicui.design/docs/components/meteors",
+      "description": "Meteors component from Magic UI.",
+      "category": "component",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Confetti",
+      "sanitized_name": "confetti",
+      "url": "https://magicui.design/docs/components/confetti",
+      "description": "Confetti component from Magic UI.",
+      "category": "component",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Particles",
+      "sanitized_name": "particles",
+      "url": "https://magicui.design/docs/components/particles",
+      "description": "Particles component from Magic UI.",
+      "category": "component",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Animated Theme TogglerNew",
+      "sanitized_name": "animated-theme-togglernew",
+      "url": "https://magicui.design/docs/components/animated-theme-toggler",
+      "description": "Animated Theme TogglerNew component from Magic UI.",
+      "category": "animation",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Blur Fade",
+      "sanitized_name": "blur-fade",
+      "url": "https://magicui.design/docs/components/blur-fade",
+      "description": "Blur Fade component from Magic UI.",
+      "category": "component",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Text Animate",
+      "sanitized_name": "text-animate",
+      "url": "https://magicui.design/docs/components/text-animate",
+      "description": "Text Animate component from Magic UI.",
+      "category": "text",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Typing AnimationNew",
+      "sanitized_name": "typing-animationnew",
+      "url": "https://magicui.design/docs/components/typing-animation",
+      "description": "Typing AnimationNew component from Magic UI.",
+      "category": "animation",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Line Shadow Text",
+      "sanitized_name": "line-shadow-text",
+      "url": "https://magicui.design/docs/components/line-shadow-text",
+      "description": "Line Shadow Text component from Magic UI.",
+      "category": "text",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Aurora Text",
+      "sanitized_name": "aurora-text",
+      "url": "https://magicui.design/docs/components/aurora-text",
+      "description": "Aurora Text component from Magic UI.",
+      "category": "text",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Video Text",
+      "sanitized_name": "video-text",
+      "url": "https://magicui.design/docs/components/video-text",
+      "description": "Video Text component from Magic UI.",
+      "category": "text",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Number Ticker",
+      "sanitized_name": "number-ticker",
+      "url": "https://magicui.design/docs/components/number-ticker",
+      "description": "Number Ticker component from Magic UI.",
+      "category": "component",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Animated Shiny Text",
+      "sanitized_name": "animated-shiny-text",
+      "url": "https://magicui.design/docs/components/animated-shiny-text",
+      "description": "Animated Shiny Text component from Magic UI.",
+      "category": "text",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Animated Gradient Text",
+      "sanitized_name": "animated-gradient-text",
+      "url": "https://magicui.design/docs/components/animated-gradient-text",
+      "description": "Animated Gradient Text component from Magic UI.",
+      "category": "text",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Text Reveal",
+      "sanitized_name": "text-reveal",
+      "url": "https://magicui.design/docs/components/text-reveal",
+      "description": "Text Reveal component from Magic UI.",
+      "category": "text",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Hyper Text",
+      "sanitized_name": "hyper-text",
+      "url": "https://magicui.design/docs/components/hyper-text",
+      "description": "Hyper Text component from Magic UI.",
+      "category": "text",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Word Rotate",
+      "sanitized_name": "word-rotate",
+      "url": "https://magicui.design/docs/components/word-rotate",
+      "description": "Word Rotate component from Magic UI.",
+      "category": "component",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Scroll Based Velocity",
+      "sanitized_name": "scroll-based-velocity",
+      "url": "https://magicui.design/docs/components/scroll-based-velocity",
+      "description": "Scroll Based Velocity component from Magic UI.",
+      "category": "component",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Sparkles Text",
+      "sanitized_name": "sparkles-text",
+      "url": "https://magicui.design/docs/components/sparkles-text",
+      "description": "Sparkles Text component from Magic UI.",
+      "category": "text",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Morphing Text",
+      "sanitized_name": "morphing-text",
+      "url": "https://magicui.design/docs/components/morphing-text",
+      "description": "Morphing Text component from Magic UI.",
+      "category": "text",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Spinning Text",
+      "sanitized_name": "spinning-text",
+      "url": "https://magicui.design/docs/components/spinning-text",
+      "description": "Spinning Text component from Magic UI.",
+      "category": "text",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Text HighlighterNew",
+      "sanitized_name": "text-highlighternew",
+      "url": "https://magicui.design/docs/components/highlighter",
+      "description": "Text HighlighterNew component from Magic UI.",
+      "category": "component",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Safari",
+      "sanitized_name": "safari",
+      "url": "https://magicui.design/docs/components/safari",
+      "description": "Safari component from Magic UI.",
+      "category": "device",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "iPhone",
+      "sanitized_name": "iphone",
+      "url": "https://magicui.design/docs/components/iphone",
+      "description": "iPhone component from Magic UI.",
+      "category": "device",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Android",
+      "sanitized_name": "android",
+      "url": "https://magicui.design/docs/components/android",
+      "description": "Android component from Magic UI.",
+      "category": "device",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Rainbow Button",
+      "sanitized_name": "rainbow-button",
+      "url": "https://magicui.design/docs/components/rainbow-button",
+      "description": "Rainbow Button component from Magic UI.",
+      "category": "button",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Shimmer Button",
+      "sanitized_name": "shimmer-button",
+      "url": "https://magicui.design/docs/components/shimmer-button",
+      "description": "Shimmer Button component from Magic UI.",
+      "category": "button",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Ripple Button",
+      "sanitized_name": "ripple-button",
+      "url": "https://magicui.design/docs/components/ripple-button",
+      "description": "Ripple Button component from Magic UI.",
+      "category": "button",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Flickering Grid",
+      "sanitized_name": "flickering-grid",
+      "url": "https://magicui.design/docs/components/flickering-grid",
+      "description": "Flickering Grid component from Magic UI.",
+      "category": "layout",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Animated Grid Pattern",
+      "sanitized_name": "animated-grid-pattern",
+      "url": "https://magicui.design/docs/components/animated-grid-pattern",
+      "description": "Animated Grid Pattern component from Magic UI.",
+      "category": "animation",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    },
+    {
+      "name": "Retro Grid",
+      "sanitized_name": "retro-grid",
+      "url": "https://magicui.design/docs/components/retro-grid",
+      "description": "Retro Grid component from Magic UI.",
+      "category": "layout",
+      "tags": [],
+      "type": "component",
+      "recommended_slots": [
+        "section.content",
+        "marketing.feature"
+      ],
+      "source": "magic",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": false
+      }
+    }
+  ],
+  "generated_at": "2025-11-26 07:27:16"
+}

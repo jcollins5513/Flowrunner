@@ -1,0 +1,59 @@
+{
+  "name": "Aceternity UI",
+  "slug": "3d-card-effect",
+  "description": "A card perspective effect, hover over the card to elevate card elements.",
+  "props": [
+    {
+      "Prop": "children",
+      "Type": "React.ReactNode",
+      "Description": "The child elements to be rendered within the container."
+    },
+    {
+      "Prop": "className",
+      "Type": "string",
+      "Description": "The CSS class to be applied to the container."
+    },
+    {
+      "Prop": "containerClassName",
+      "Type": "string",
+      "Description": "The CSS class to be applied to the outer container."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/3d-cardCopy",
+  "url": "https://ui.aceternity.com/components/3d-card-effect",
+  "type": "card",
+  "subtype": "",
+  "layout_role": "inline-block",
+  "recommended_slots": [
+    "grid.item",
+    "section.content"
+  ],
+  "interaction_profile": "pointer-reactive",
+  "preferred_size": "auto-height",
+  "z_index_role": "content",
+  "usage_notes": "A card perspective effect, hover over the card to elevate card elements.",
+  "theme_requirements": [],
+  "data_requirements": [
+    {
+      "name": "items",
+      "fields": [
+        "title",
+        "description",
+        "media"
+      ],
+      "type": "array"
+    }
+  ],
+  "domain_tags": [],
+  "imports": [
+    " \nimport React from \"react\";",
+    "import { CardBody, CardContainer, CardItem } from \"@/components/ui/3d-card\";"
+  ],
+  "dependencies": [
+    "@/components/ui/3d-card",
+    "react"
+  ],
+  "client_only": true
+}

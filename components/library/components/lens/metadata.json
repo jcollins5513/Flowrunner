@@ -1,0 +1,84 @@
+{
+  "name": "Aceternity UI",
+  "slug": "lens",
+  "description": "A lens component to zoom into images, videos, or practically anything.",
+  "props": [
+    {
+      "Prop": "children",
+      "Type": "React.ReactNode",
+      "Default": "Required",
+      "Description": "The content to be displayed inside the lens"
+    },
+    {
+      "Prop": "zoomFactor",
+      "Type": "number",
+      "Default": "1.5",
+      "Description": "The magnification factor for the lens"
+    },
+    {
+      "Prop": "lensSize",
+      "Type": "number",
+      "Default": "170",
+      "Description": "The diameter of the lens in pixels"
+    },
+    {
+      "Prop": "position",
+      "Type": "{ x: number, y: number }",
+      "Default": "{ x: 200, y: 150 }",
+      "Description": "The static position of the lens (when isStatic is true)"
+    },
+    {
+      "Prop": "isStatic",
+      "Type": "boolean",
+      "Default": "false",
+      "Description": "If true, the lens stays in a fixed position; if false, it follows the mouse"
+    },
+    {
+      "Prop": "isFocusing",
+      "Type": "() => void",
+      "Default": "-",
+      "Description": "Callback function when the lens is focusing (not used in current implementation)"
+    },
+    {
+      "Prop": "hovering",
+      "Type": "boolean",
+      "Default": "-",
+      "Description": "External control for the hover state"
+    },
+    {
+      "Prop": "setHovering",
+      "Type": "(hovering: boolean) => void",
+      "Default": "-",
+      "Description": "External setter for the hover state"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/lensCopy",
+  "url": "https://ui.aceternity.com/components/lens",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A lens component to zoom into images, videos, or practically anything.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import { useState } from \"react\";",
+    "import { Lens } from \"../ui/lens\";",
+    " \nimport { motion } from \"motion/react\";",
+    "import { cn } from \"@/lib/utils\";"
+  ],
+  "dependencies": [
+    "@/lib/utils",
+    "motion/react",
+    "react"
+  ],
+  "client_only": true
+}

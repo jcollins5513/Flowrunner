@@ -1,0 +1,55 @@
+{
+  "name": "Aceternity UI",
+  "slug": "tabs",
+  "description": "Tabs to switch content, click on a tab to check background animation.",
+  "props": [
+    {
+      "Prop": "tabs",
+      "Type": "Tab[]",
+      "Description": "An array of Tab objects. Each Tab object has title, value, and content properties."
+    },
+    {
+      "Prop": "containerClassName",
+      "Type": "string",
+      "Description": "Optional. CSS class name for the container div."
+    },
+    {
+      "Prop": "activeTabClassName",
+      "Type": "string",
+      "Description": "Optional. CSS class name for the active tab."
+    },
+    {
+      "Prop": "tabClassName",
+      "Type": "string",
+      "Description": "Optional. CSS class name for the tab."
+    },
+    {
+      "Prop": "contentClassName",
+      "Type": "string",
+      "Description": "Optional. CSS class name for the content div."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/tabsCopy",
+  "url": "https://ui.aceternity.com/components/tabs",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "Tabs to switch content, click on a tab to check background animation.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    " \nimport { Tabs } from \"../ui/tabs\";"
+  ],
+  "dependencies": [],
+  "client_only": true
+}

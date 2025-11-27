@@ -1,0 +1,37 @@
+{
+  "name": "Aceternity UI",
+  "slug": "animated-tooltip",
+  "description": "A cool tooltip that reveals on hover, follows mouse pointer",
+  "props": [
+    {
+      "Prop name": "items",
+      "Type": "Array<{id: number, name: string, designation: string, image: string}>",
+      "Description": "An array of objects, each representing an item. Each object in the array should have the following properties:id,name,designation,image"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/animated-tooltipCopy",
+  "url": "https://ui.aceternity.com/components/animated-tooltip",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "pointer-reactive",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A cool tooltip that reveals on hover, follows mouse pointer",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { AnimatedTooltip } from \"../ui/animated-tooltip\";"
+  ],
+  "dependencies": [
+    "react"
+  ],
+  "client_only": true
+}

@@ -1,0 +1,38 @@
+{
+  "name": "Aceternity UI",
+  "slug": "tailwindcss-buttons",
+  "description": "A curated list of awesome, battle tested Tailwind CSS buttons components",
+  "props": [],
+  "category": "",
+  "tags": [],
+  "installation": "npmimotionclsxtailwind-mergereact-element-to-jsx-stringCopy",
+  "url": "https://ui.aceternity.com/components/tailwindcss-buttons",
+  "type": "button",
+  "subtype": "",
+  "layout_role": "inline",
+  "recommended_slots": [
+    "cta.primary",
+    "cta.secondary"
+  ],
+  "interaction_profile": "interactive",
+  "preferred_size": "inline",
+  "z_index_role": "content",
+  "usage_notes": "A curated list of awesome, battle tested Tailwind CSS buttons components",
+  "theme_requirements": [
+    "tailwind-classes"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import reactElementToJSXString from \"react-element-to-jsx-string\";",
+    "import { toast, Toaster } from \"sonner\";",
+    "import { ButtonsCard } from \"../ui/tailwindcss-buttons\";"
+  ],
+  "dependencies": [
+    "react",
+    "react-element-to-jsx-string",
+    "sonner"
+  ],
+  "client_only": true
+}

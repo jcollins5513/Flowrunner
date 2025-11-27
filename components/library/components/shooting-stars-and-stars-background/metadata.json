@@ -1,0 +1,90 @@
+{
+  "name": "Aceternity UI",
+  "slug": "shooting-stars-and-stars-background",
+  "description": "A shooting star animation on top of a starry background, as seen on figmaplug.in",
+  "props": [
+    {
+      "Prop": "minSpeed",
+      "Type": "number",
+      "Default": "10",
+      "Description": "Minimum speed of the shooting stars"
+    },
+    {
+      "Prop": "maxSpeed",
+      "Type": "number",
+      "Default": "30",
+      "Description": "Maximum speed of the shooting stars"
+    },
+    {
+      "Prop": "minDelay",
+      "Type": "number",
+      "Default": "4200",
+      "Description": "Minimum delay between shooting stars (in milliseconds)"
+    },
+    {
+      "Prop": "maxDelay",
+      "Type": "number",
+      "Default": "8700",
+      "Description": "Maximum delay between shooting stars (in milliseconds)"
+    },
+    {
+      "Prop": "starColor",
+      "Type": "string",
+      "Default": "\"#9E00FF\"",
+      "Description": "Color of the star (end of the gradient)"
+    },
+    {
+      "Prop": "trailColor",
+      "Type": "string",
+      "Default": "\"#2EB9DF\"",
+      "Description": "Color of the star's trail (start of the gradient)"
+    },
+    {
+      "Prop": "starWidth",
+      "Type": "number",
+      "Default": "10",
+      "Description": "Width of the shooting star"
+    },
+    {
+      "Prop": "starHeight",
+      "Type": "number",
+      "Default": "1",
+      "Description": "Height of the shooting star"
+    },
+    {
+      "Prop": "className",
+      "Type": "string",
+      "Default": "undefined",
+      "Description": "Additional CSS classes to apply to the SVG container"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/shooting-starsstars-backgroundCopy",
+  "url": "https://ui.aceternity.com/components/shooting-stars-and-stars-background",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A shooting star animation on top of a starry background, as seen on figmaplug.in",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { ShootingStars } from \"@/components/ui/shooting-stars\";",
+    "import { StarsBackground } from \"@/components/ui/stars-background\";"
+  ],
+  "dependencies": [
+    "@/components/ui/shooting-stars",
+    "@/components/ui/stars-background",
+    "react"
+  ],
+  "client_only": true
+}

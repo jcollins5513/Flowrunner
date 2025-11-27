@@ -1,0 +1,1489 @@
+<html lang="en" class="scroll-smooth"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAKURA - Predictive Architecture</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body { font-family: 'Inter', sans-serif; }
+/* Grid definitions */
+:root {
+--gx-1: 6%;
+--gx-2: 28%;
+--gx-3: 62%;
+--gx-4: 94%;
+--gy-1: 100px;
+--gy-2: 62vh; /* Adjusted for flow */
+--gy-3: 94vh;
+}
+.grid-line-v {
+position: absolute;
+top: 0;
+bottom: 0;
+width: 1px;
+background: rgba(255, 255, 255, 0.06);
+z-index: 0;
+}
+.grid-line-h {
+position: absolute;
+left: 0;
+right: 0;
+height: 1px;
+background: rgba(255, 255, 255, 0.06);
+z-index: 0;
+}
+.marker {
+position: absolute;
+width: 5px;
+height: 5px;
+background-color: white;
+z-index: 30;
+opacity: 0;
+animation: fade-in 0.5s ease-out 1s forwards;
+}
+/* Animations */
+@keyframes reveal-up {
+0% { clip-path: inset(100% 0 0 0); transform: translateY(40px); opacity: 0; }
+100% { clip-path: inset(0 0 0 0); transform: translateY(0); opacity: 1; }
+}
+@keyframes fade-in {
+0% { opacity: 0; }
+100% { opacity: 1; }
+}
+.animate-reveal {
+opacity: 0;
+animation: reveal-up 1.0s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+/* Scroll Triggered Animation Class */
+.scroll-reveal {
+opacity: 0;
+transform: translateY(40px);
+transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.scroll-reveal.is-visible {
+opacity: 1;
+transform: translateY(0);
+}
+.delay-100 { animation-delay: 0.1s; transition-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; transition-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; transition-delay: 0.3s; }
+.delay-500 { animation-delay: 0.5s; transition-delay: 0.5s; }
+/* Beams */
+@keyframes beam-h {
+0% { left: -200px; opacity: 0; }
+10% { opacity: 1; }
+90% { opacity: 1; }
+100% { left: 100%; opacity: 0; }
+}
+@keyframes beam-v {
+0% { top: -200px; opacity: 0; }
+10% { opacity: 1; }
+90% { opacity: 1; }
+100% { top: 100%; opacity: 0; }
+}
+.beam-h {
+position: absolute;
+height: 1px;
+width: 200px;
+background: linear-gradient(90deg, transparent, #a855f7, transparent);
+z-index: 10;
+opacity: 0;
+}
+.beam-v {
+position: absolute;
+width: 1px;
+height: 200px;
+background: linear-gradient(180deg, transparent, #a855f7, transparent);
+z-index: 10;
+opacity: 0;
+}
+/* Mobile Menu Transition */
+#mobile-menu {
+transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+#mobile-menu.hidden-menu {
+transform: translateY(-20px);
+opacity: 0;
+pointer-events: none;
+}
+#mobile-menu.visible-menu {
+transform: translateY(0);
+opacity: 1;
+pointer-events: auto;
+}
+</style><link id="all-fonts-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist">.font-geist { font-family: 'Geist', sans-serif !important; }</style><link id="all-fonts-link-font-roboto" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-roboto">.font-roboto { font-family: 'Roboto', sans-serif !important; }</style><link id="all-fonts-link-font-montserrat" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-montserrat">.font-montserrat { font-family: 'Montserrat', sans-serif !important; }</style><link id="all-fonts-link-font-poppins" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-poppins">.font-poppins { font-family: 'Poppins', sans-serif !important; }</style><link id="all-fonts-link-font-playfair" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&amp;display=swap"><style id="all-fonts-style-font-playfair">.font-playfair { font-family: 'Playfair Display', serif !important; }</style><link id="all-fonts-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-instrument-serif">.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }</style><link id="all-fonts-link-font-merriweather" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;display=swap"><style id="all-fonts-style-font-merriweather">.font-merriweather { font-family: 'Merriweather', serif !important; }</style><link id="all-fonts-link-font-bricolage" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-bricolage">.font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }</style><link id="all-fonts-link-font-jakarta" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-jakarta">.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }</style><link id="all-fonts-link-font-manrope" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-manrope">.font-manrope { font-family: 'Manrope', sans-serif !important; }</style><link id="all-fonts-link-font-space-grotesk" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-space-grotesk">.font-space-grotesk { font-family: 'Space Grotesk', sans-serif !important; }</style><link id="all-fonts-link-font-work-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-work-sans">.font-work-sans { font-family: 'Work Sans', sans-serif !important; }</style><link id="all-fonts-link-font-pt-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-pt-serif">.font-pt-serif { font-family: 'PT Serif', serif !important; }</style><link id="all-fonts-link-font-geist-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist-mono">.font-geist-mono { font-family: 'Geist Mono', monospace !important; }</style><link id="all-fonts-link-font-space-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-space-mono">.font-space-mono { font-family: 'Space Mono', monospace !important; }</style><link id="all-fonts-link-font-quicksand" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-quicksand">.font-quicksand { font-family: 'Quicksand', sans-serif !important; }</style><link id="all-fonts-link-font-nunito" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-nunito">.font-nunito { font-family: 'Nunito', sans-serif !important; }</style><link id="all-fonts-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist">.font-geist { font-family: 'Geist', sans-serif !important; }</style><link id="all-fonts-link-font-roboto" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-roboto">.font-roboto { font-family: 'Roboto', sans-serif !important; }</style><link id="all-fonts-link-font-montserrat" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-montserrat">.font-montserrat { font-family: 'Montserrat', sans-serif !important; }</style><link id="all-fonts-link-font-poppins" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-poppins">.font-poppins { font-family: 'Poppins', sans-serif !important; }</style><link id="all-fonts-link-font-playfair" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&amp;display=swap"><style id="all-fonts-style-font-playfair">.font-playfair { font-family: 'Playfair Display', serif !important; }</style><link id="all-fonts-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-instrument-serif">.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }</style><link id="all-fonts-link-font-merriweather" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;display=swap"><style id="all-fonts-style-font-merriweather">.font-merriweather { font-family: 'Merriweather', serif !important; }</style><link id="all-fonts-link-font-bricolage" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-bricolage">.font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }</style><link id="all-fonts-link-font-jakarta" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-jakarta">.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }</style><link id="all-fonts-link-font-manrope" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-manrope">.font-manrope { font-family: 'Manrope', sans-serif !important; }</style><link id="all-fonts-link-font-space-grotesk" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-space-grotesk">.font-space-grotesk { font-family: 'Space Grotesk', sans-serif !important; }</style><link id="all-fonts-link-font-work-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-work-sans">.font-work-sans { font-family: 'Work Sans', sans-serif !important; }</style><link id="all-fonts-link-font-pt-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-pt-serif">.font-pt-serif { font-family: 'PT Serif', serif !important; }</style><link id="all-fonts-link-font-geist-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist-mono">.font-geist-mono { font-family: 'Geist Mono', monospace !important; }</style><link id="all-fonts-link-font-space-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-space-mono">.font-space-mono { font-family: 'Space Mono', monospace !important; }</style><link id="all-fonts-link-font-quicksand" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-quicksand">.font-quicksand { font-family: 'Quicksand', sans-serif !important; }</style><link id="all-fonts-link-font-nunito" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-nunito">.font-nunito { font-family: 'Nunito', sans-serif !important; }</style><style id="border-gradient-shared-style">
+[style*="--border-gradient"]::before {
+content: "";
+position: absolute;
+inset: 0;
+padding: 1px;
+border-radius: var(--border-radius-before, inherit);
+-webkit-mask: linear-gradient(#fff 0 0) content-box,
+linear-gradient(#fff 0 0);
+-webkit-mask-composite: xor;
+mask-composite: exclude;
+background: var(--border-gradient);
+pointer-events: none;
+}</style></head>
+<body class="bg-[#0a051e] text-white min-h-screen w-full selection:bg-purple-500 selection:text-white relative overflow-x-hidden">
+
+    <!-- Background (component) added by Aura -->
+<div class="aura-background-component top-0 w-full h-screen z-10 saturate-0 pointer-events-none mix-blend-screen fixed" data-alpha-mask="80" style="; mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent)"><div class="aura-background-component top-0 w-full -z-10 absolute h-full">
+  <div data-us-project="8G9qTlSBPboaCMb8UV64" class="absolute w-full h-full left-0 top-0 -z-10"></div>
+  <script type="text/javascript">
+    !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head || document.body).appendChild(i)}}();
+  </script>
+</div></div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 z-[60] bg-[#0a051e]/95 backdrop-blur-xl hidden-menu flex flex-col pt-32 px-8">
+        <button id="close-menu" class="absolute top-8 right-6 text-white/70 hover:text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" class="lucide lucide-x w-8 h-8"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+        </button>
+        <nav class="flex flex-col gap-8 text-2xl font-medium tracking-tight">
+            <a href="#" class="hover:text-purple-400 transition-colors border-b border-white/10 pb-4">Platform</a>
+            <a href="#" class="hover:text-purple-400 transition-colors border-b border-white/10 pb-4">Solutions</a>
+            <a href="#" class="hover:text-purple-400 transition-colors border-b border-white/10 pb-4">Research</a>
+            <a href="#" class="hover:text-purple-400 transition-colors border-b border-white/10 pb-4">Pricing</a>
+        </nav>
+        <div class="mt-auto mb-12">
+            <a href="#" class="flex w-full items-center justify-center gap-2 text-sm font-bold uppercase tracking-wider bg-white text-black py-4 rounded-sm hover:bg-purple-50 transition-colors">
+                Get Started
+            </a>
+        </div>
+    </div>
+
+    <!-- Ambient Background -->
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#0e0725] via-[#050211] to-black"></div>
+        <div class="absolute top-[-10%] right-[-10%] w-[600px] lg:w-[900px] h-[600px] lg:h-[900px] bg-purple-900/10 rounded-full blur-[80px] lg:blur-[120px]"></div>
+        <div class="absolute bottom-[-10%] left-[-10%] w-[500px] lg:w-[700px] h-[500px] lg:h-[700px] bg-indigo-900/10 rounded-full blur-[80px] lg:blur-[120px]"></div>
+    </div>
+
+    <!-- Global Grid System (Fixed Background) -->
+    <div class="fixed inset-0 z-0 pointer-events-none hidden lg:block h-screen">
+        <div class="grid-line-v" style="left: var(--gx-1)"></div>
+        <div class="grid-line-v" style="left: var(--gx-2)">
+            <div class="beam-v" style="animation: beam-v 6s infinite 1s;"></div>
+        </div>
+        <div class="grid-line-v" style="left: var(--gx-3)">
+            <div class="beam-v" style="animation: beam-v 7s infinite 3s;"></div>
+        </div>
+        <div class="grid-line-v" style="left: var(--gx-4)"></div>
+        
+        <div class="grid-line-h" style="top: var(--gy-1)"></div>
+        <!-- Adjusted grid lines for aesthetic spacing -->
+        <div class="grid-line-h" style="top: 35%"></div> 
+        <div class="grid-line-h" style="top: 75%"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="relative z-50 w-full h-[80px] lg:h-[100px] flex items-center justify-between px-6 lg:px-[6%] border-b border-white/5 bg-[#0a051e]/80 backdrop-blur-md animate-reveal sticky top-0">
+        <div class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="color: rgb(192, 132, 252); width: 24px; height: 24px" class="iconify text-purple-400 iconify--solar text-2xl w-[24px] h-[24px]" aria-hidden="true" role="img" data-icon="solar:atom-bold-duotone" data-solar="share-circle-bold-duotone" data-icon-set="solar" data-icon-replaced="true" stroke-width="2"><path fill="#c084fc" d="M7.205 7.562a.75.75 0 0 0-.993-1.124A8.73 8.73 0 0 0 3.25 13a.75.75 0 0 0 1.5 0a7.23 7.23 0 0 1 2.455-5.438m10.583-1.124a.75.75 0 0 0-.993 1.124A7.23 7.23 0 0 1 19.25 13a.75.75 0 0 0 1.5 0a8.73 8.73 0 0 0-2.962-6.562m-7.601 13.584a.75.75 0 1 0-.374 1.452a8.8 8.8 0 0 0 4.374 0a.75.75 0 1 0-.374-1.452A7.3 7.3 0 0 1 12 20.25a7.3 7.3 0 0 1-1.813-.228" opacity=".5"></path><path fill="#c084fc" d="M9 6a3 3 0 1 0 6 0a3 3 0 0 0-6 0M2.5 18a3 3 0 1 0 6 0a3 3 0 0 0-6 0m16 3a3 3 0 1 1 0-6a3 3 0 0 1 0 6"></path></svg>
+            <span class="text-lg font-semibold tracking-tight text-white">SAKURA</span>
+        </div>
+
+        <div class="hidden md:flex uppercase text-sm font-medium text-white/60 gap-x-8 items-center">
+            <a href="#" class="hover:text-white transition-colors">Platform</a>
+            <a href="#" class="hover:text-white transition-colors">Solutions</a>
+            <a href="#" class="hover:text-white transition-colors">Research</a>
+            <a href="#" class="hover:text-white transition-colors">Pricing</a>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <a href="#" class="hidden md:flex items-center gap-2 text-xs font-bold uppercase tracking-wider bg-white text-black py-2.5 px-5 rounded-sm hover:bg-purple-50 transition-colors">
+                Get Started
+            </a>
+            <!-- Mobile Menu Icon -->
+            <button id="open-menu" class="md:hidden text-white/70 hover:text-white transition-colors">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="menu" class="lucide lucide-menu w-6 h-6"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Hero Section -->
+    <!-- Changed to min-h to allow scrolling content below -->
+    <section class="flex flex-col lg:block lg:h-[calc(100vh-100px)] z-10 w-full relative">
+
+    <!-- 2. Hero Text Area (Mobile: Order 1, Desktop: Center Block) -->
+    <div class="order-1 flex flex-col lg:py-0 lg:absolute lg:top-0 lg:right-[38%] lg:bottom-[6%] lg:left-[28%] lg:pr-12 lg:pl-12 z-20 pointer-events-none pt-20 pr-12 pb-12 pl-12 relative justify-center">
+        <!-- Responsive Typography: Fluid sizes -->
+        <h1 class="sm:text-7xl md:text-8xl lg:text-[4rem] xl:text-[5.7rem] leading-[0.9] lg:leading-[0.8] lg:text-left text-6xl font-medium text-white tracking-tighter text-center mix-blend-normal">
+            <span class="block animate-reveal delay-100">Global</span>
+            <span class="block text-white/40 lg:ml-[1em] animate-reveal delay-200">Scale</span>
+            <span class="block text-white/80 animate-reveal delay-300">Systems</span>
+        </h1>
+
+        <div class="flex animate-reveal delay-500 lg:justify-start lg:pl-2 lg:mt-24 pointer-events-auto mt-12 pl-2 gap-x-6 gap-y-6 items-center justify-center">
+            <button class="group flex items-center gap-3 pl-6 pr-2 py-2 bg-white/5 hover:bg-white/10 border border-white/10 backdrop-blur-md rounded-full transition-all">
+                    <span class="text-sm font-medium">Start building</span>
+                    <div class="w-9 h-9 bg-white rounded-full flex items-center justify-center text-black group-hover:scale-110 transition-transform">
+                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="solar:arrow-right-bold-duotone" class="iconify text-lg iconify--solar"><path fill="currentColor" fill-rule="evenodd" d="M3.25 12a.75.75 0 0 1 .75-.75h9.25v1.5H4a.75.75 0 0 1-.75-.75" clip-rule="evenodd" opacity=".5"></path><path fill="currentColor" d="M13.25 12.75V18a.75.75 0 0 0 1.28.53l6-6a.75.75 0 0 0 0-1.06l-6-6a.75.75 0 0 0-1.28.53z"></path></svg>
+                    </div>
+                </button>
+            <span class="text-xs text-white/40 font-mono">v2.4.0 REL</span>
+        </div>
+    </div>
+
+    <!-- 1. Sidebar Area (Mobile: Order 2, Desktop: Left Col) -->
+    <div class="relative order-2 w-full px-6 py-12 border-y border-white/5 lg:border-y-0 lg:border-r lg:absolute lg:left-[6%] lg:top-0 lg:bottom-[6%] lg:w-[22%] lg:px-0 lg:py-0 flex flex-col">
+
+        <!-- Intro Text -->
+        <div class="lg:pt-12 lg:pr-8 lg:absolute lg:top-0 lg:h-[62%] lg:w-full animate-reveal delay-200">
+            <p class="leading-relaxed lg:text-left lg:mx-0 text-lg font-light text-white/50 text-center max-w-md mx-auto">
+                SAKURA provides the foundational architecture for next-generation predictive modeling and retention
+                analytics.
+            </p>
+        </div>
+
+        <!-- Trusted By Box (Mobile: stacked, Desktop: Absolute Bottom) -->
+        <div class="mt-12 lg:mt-0 lg:absolute lg:top-[62%] lg:bottom-0 lg:left-0 lg:right-0 lg:border-t border-white/10 lg:pt-6 flex flex-col justify-between animate-reveal delay-300 items-center lg:items-start">
+            <!-- Markers (Desktop Only) -->
+            <div class="hidden lg:block marker -top-[2.5px] -left-[2.5px]"></div>
+            <div class="hidden lg:block marker -top-[2.5px] -right-[2.5px]"></div>
+            <div class="hidden lg:block marker -bottom-[2.5px] -left-[2.5px]"></div>
+            <div class="hidden lg:block marker -bottom-[2.5px] -right-[2.5px]"></div>
+
+            <!-- Beam (Desktop Only) -->
+            <div class="absolute top-[-1px] left-0 right-0 h-[1px] overflow-hidden hidden lg:block">
+                <div class="beam-h" style="animation: beam-h 5s infinite;"></div>
+            </div>
+
+            <div class="lg:text-left text-center w-full overflow-hidden">
+                <style>
+                    @keyframes marquee-scroll {
+                        0% {
+                            transform: translateX(0);
+                        }
+
+                        100% {
+                            transform: translateX(-50%);
+                        }
+                    }
+
+                    .animate-marquee {
+                        animation: marquee-scroll 30s linear infinite;
+                    }
+
+                    .animate-marquee:hover {
+                        animation-play-state: paused;
+                    }
+                </style>
+                <p class="text-[10px] font-semibold tracking-widest text-white/30 uppercase mb-6 pl-1">Trusted By</p>
+                <div class="relative w-full max-w-[320px] lg:max-w-[360px] mx-auto lg:mx-0 h-[72px] flex items-center" style="mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);">
+                    <div class="flex gap-12 items-center w-max animate-marquee will-change-transform">
+                        <!-- Set 1 -->
+                        <div class="opacity-50 hover:opacity-100 transition-all duration-500 grayscale hover:grayscale-0 cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="96" height="72" viewBox="0 0 512 95" style="width: 96px; height: 72px;" class="iconify w-[96px] h-[72px]" aria-hidden="true" role="img" stroke-width="2">
+                                <path fill="#ffffff" d="M102.607 46.54c0-25.695-20.21-46.54-46.54-46.54c-17.495 0-32.682 9.585-40.65 23.847L38.11 46.54c0-9.932 8.372-17.958 17.957-17.958c10.163 0 17.958 8.026 17.958 17.958s-7.853 17.958-17.958 17.958H17.38C7.795 64.498 0 72.293 0 81.878V93.08h56.067c26.157 0 46.54-20.845 46.54-46.54">
+                                </path>
+                                <path fill="#ffffff" d="M314.635 41.054h21.711c8.43 0 12.819-3.984 12.819-11.432c0-7.565-4.389-11.549-12.819-11.549h-21.71zm12.53 18.131h-12.53V93.08h-19.459V10.45c0-5.774 4.677-10.451 10.51-10.451h31.238c20.151 0 32.393 12.126 32.393 29.506c0 13.974-7.853 24.598-21.48 28.351l24.251 35.223h-23.327zm184.832 31.412c-3.811 2.483-8.315 4.215-13.165 4.215c-13.396 0-19.69-9.18-19.69-22.23V4.85l18.42-4.388v72.293c0 3.637 1.79 5.89 5.023 5.89c.981 0 2.079-.232 3.118-.694zm-32.162 0c-3.811 2.483-8.315 4.215-13.166 4.215c-13.396 0-19.69-9.18-19.69-22.23V12.53l18.42-4.562v64.787c0 3.637 1.79 5.89 5.024 5.89c.981 0 2.078-.232 3.118-.694zm-57.8-31.18c0-10.798-6.929-18.247-17.323-18.247s-17.322 7.333-17.322 18.246c0 10.914 6.929 18.247 17.322 18.247c10.394 0 17.323-7.333 17.323-18.247m-53.469 0c0-20.729 15.186-35.222 36.146-35.222s36.262 14.378 36.262 35.222c0 20.903-15.359 35.396-36.262 35.396c-20.96 0-36.146-14.493-36.146-35.396M156.307 55.49l13.28-35.57l13.281 35.57zm-.693-48.907L121.547 93.08h20.671l7.276-19.517h40.13L196.9 93.08h20.671L180.905 0h-15.532a10.54 10.54 0 0 0-9.759 6.583m95.101 71.08c-10.278 0-17.323-7.333-17.323-18.247s7.045-18.246 17.323-18.246s17.323 7.333 17.323 18.246c0 11.202-7.218 18.247-17.323 18.247m16.11-45.097c-4.562-5.312-11.49-8.372-19.863-8.372c-18.016 0-32.393 14.378-32.393 35.107c0 20.902 14.377 35.511 31.873 35.511c9.354 0 16.688-4.1 21.365-10.913l.808 9.18h16.514V0h-7.795c-5.774 0-10.509 4.677-10.509 10.451z" class=""></path>
+                            </svg>
+                        </div>
+                        <div class="opacity-50 hover:opacity-100 transition-all duration-500 grayscale hover:grayscale-0 cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="96" height="72" viewBox="0 0 512 209" style="width: 96px; height: 72px;" class="iconify w-[96px] h-[72px]" aria-hidden="true" role="img" stroke-width="2">
+                                <path fill="#ffffff" d="M156.166 152.93h-20.86l18.07-36.587h.224zm.892 16.621l1.227 14.501h22.979l-7.697-84.44h-34.245l-43.169 84.44h23.425l7.25-14.5zm56.331-22.532h3.458l16.509-22.198h21.082l-22.755 28.333l14.055 30.675h-22.533l-9.147-23.87h-3.234l-5.132 23.87h-19.52l17.847-84.106h19.41zm65.924 12.493c6.358 0 10.597.446 9.37 5.354c-1.45 6.358-4.015 7.25-12.158 7.25c-3.012 0-8.478 0-7.028-6.357c1.116-5.355 5.131-6.247 9.816-6.247m5.355 24.317h19.186l7.696-36.81c4.462-20.413-3.57-22.756-23.201-22.756c-13.832 0-27.218-.223-31.234 18.294h19.187c1.227-5.354 4.461-6.358 9.146-6.358c8.478 0 8.255 3.57 6.805 8.923l-1.897 9.37h-.892c-.67-6.804-9.147-6.58-14.724-6.58c-14.055 0-22.31 4.461-25.321 18.516c-3.235 15.059 4.015 18.294 17.401 18.294c6.804 0 15.728-1.45 18.963-9.37h.67zm58.45-59.008l-1.673 8.477h.67c3.792-7.027 11.488-8.923 18.07-8.923c8.477 0 16.62 1.45 15.505 11.49h.892c2.789-8.479 11.49-11.49 18.963-11.49c13.609 0 19.41 5.577 16.397 19.186l-8.7 40.38h-19.186l7.25-34.245c.893-6.358 1.897-10.82-5.354-10.82c-7.25 0-10.04 4.908-11.266 11.266l-7.028 33.576h-19.186l7.474-35.695c.892-5.355 1.45-9.147-5.354-9.147c-7.92 0-10.374 4.239-11.713 11.266l-7.027 33.576h-19.186l12.716-59.12h17.848v.223zm99.165 34.691c6.358 0 10.597.446 9.37 5.354c-1.227 6.358-4.016 7.25-12.158 7.25c-2.79 0-8.478 0-7.028-6.357c1.116-5.355 4.908-6.247 9.816-6.247m5.131 24.317H466.6l7.697-36.81c4.462-20.413-3.57-22.756-23.202-22.756c-13.831 0-27.217-.223-31.233 18.294h19.186c1.227-5.354 4.462-6.358 9.147-6.358c8.478 0 8.255 3.57 6.805 8.923l-1.897 9.37h-.892c-.67-6.804-9.147-6.58-14.724-6.58c-14.055 0-22.31 4.461-25.321 18.516c-3.235 15.059 4.015 18.294 17.4 18.294c6.805 0 15.729-1.45 18.964-9.37h.67zm47.408 0h-19.186l12.381-59.12h19.186zm16.843-75.182c0 5.912-4.908 10.82-10.82 10.82s-10.82-4.908-10.82-10.82c0-6.135 4.908-10.82 10.82-10.82s10.82 4.685 10.82 10.82" class=""></path>
+                                <path fill="#ffffff" d="M106.193 204.242c-42.946-13.162-74.068-52.761-74.068-99.388c0-47.407 31.903-87.23 75.518-100.169c4.462-1.227 3.235-4.239-2.12-4.239C47.631.446.446 47.073.446 104.52s46.85 104.074 105.077 104.074c5.355.334 5.578-2.678.67-4.35m-54.1-75.294c-.224-2.789-.447-5.577-.447-8.477c0-45.735 37.034-82.768 82.768-82.768c43.169 0 56.331 19.186 57.67 18.07c1.673-1.45-15.728-39.599-66.37-39.599c-45.735 0-82.768 37.034-82.768 82.768c0 10.597 2.119 20.636 5.577 30.006c1.45 4.016 3.792 4.016 3.57 0M86.56 69.382c21.306-9.37 48.523-9.593 75.071-.446c17.848 6.358 28.11 15.059 29.114 14.724c1.45-.67-10.374-19.186-31.68-27.217c-25.767-9.593-53.43-4.685-73.62 11.266c-2.231 1.673-1.562 2.9 1.115 1.673" class=""></path>
+                            </svg>
+                        </div>
+                        <div class="opacity-50 hover:opacity-100 transition-all duration-500 grayscale hover:grayscale-0 cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="96" height="72" viewBox="0 0 512 94" style="color: rgb(255, 255, 255); width: 96px; height: 72px" class="iconify w-[96px] h-[72px]" aria-hidden="true" role="img" stroke-width="2">
+                                <defs></defs>
+                                <path fill="#ffffff" d="M139.049 31.254c5.189 0 10.617 1.207 14.962 3.739v16.529c-4.103-2.895-8.327-4.342-12.911-4.342c-9.17 0-16.168 6.394-16.168 15.443c0 8.929 6.877 15.443 16.168 15.443c4.705 0 9.292-1.93 13.032-4.584v16.65c-4.826 2.653-10.136 3.861-15.325 3.861c-18.338 0-31.611-12.669-31.611-31.37c0-17.978 13.152-31.369 31.853-31.369m50.181 0c18.462 0 32.337 13.633 32.337 31.369s-13.875 31.37-32.337 31.37c-18.459 0-32.335-13.634-32.335-31.37s13.876-31.369 32.335-31.369m0 46.694c8.205 0 14.961-6.759 14.961-15.325s-6.756-15.322-14.961-15.322c-8.203 0-14.962 6.757-14.962 15.322c0 8.566 6.759 15.325 14.962 15.325M290.272 7.969v84.456h-17.497v-7.963c-4.1 6.033-11.461 9.41-19.303 9.41c-16.048 0-28.232-13.513-28.232-31.249c0-17.615 12.184-31.248 28.232-31.248c7.842 0 15.203 3.016 19.303 9.168V7.969Zm-32.217 70.097c8.569 0 15.325-6.877 15.325-15.443s-6.756-15.443-15.325-15.443c-8.565 0-15.321 6.878-15.321 15.443c0 8.566 6.756 15.443 15.321 15.443m40.384 14.359V32.821h17.615v59.604Zm64.6-59.604h17.615v59.604h-17.615v-7.6c-3.501 5.67-9.534 9.168-17.376 9.168c-13.513 0-21.836-9.41-21.836-24.372v-36.8h17.615v32.577c0 7.842 3.86 12.429 10.496 12.429c6.756 0 11.101-5.068 11.101-13.515Zm43.4 59.604h-17.615V32.821h17.615v7.482c3.137-5.431 8.928-9.049 16.771-9.049c8.084 0 14.238 3.86 17.497 10.375c3.739-6.273 10.495-10.375 19.182-10.375c13.633 0 21.355 9.289 21.355 23.769v37.402h-17.615v-33.3c0-7.361-3.377-11.824-9.531-11.824c-6.033 0-10.136 4.947-10.257 12.911v32.213h-17.615v-33.06c0-7.601-3.376-12.064-9.409-12.064c-6.275 0-10.378 5.066-10.378 13.271ZM502.09 8.802v19.072h-5.522v-2.546c-1.312 1.931-3.667 3.011-6.178 3.011c-5.135 0-9.033-4.325-9.033-10.001c0-5.635 3.898-9.998 9.033-9.998c2.511 0 4.866.965 6.178 2.933V8.802Zm-10.232 14.48c2.742 0 4.904-2.201 4.904-4.944c0-2.739-2.162-4.941-4.904-4.941s-4.904 2.202-4.904 4.941c0 2.743 2.162 4.944 4.904 4.944m14.042 4.592V8.802h5.638v19.072Zm2.82-21.311c-1.815 0-3.283-1.506-3.283-3.28c0-1.777 1.468-3.283 3.283-3.283S512 1.506 512 3.283c0 1.774-1.465 3.28-3.28 3.28M307.247 7.842c5.67 0 10.254 4.708 10.254 10.257s-4.584 10.254-10.254 10.254s-10.257-4.705-10.257-10.254s4.587-10.257 10.257-10.257">
+                                </path>
+                                <path fill="#ffffff" d="M31.187 31.67c4.479 0 8.726.947 12.574 2.649c-8.526 4.836-14.475 15.792-14.475 28.538c0 12.744 5.955 23.702 14.475 28.538a31 31 0 0 1-12.574 2.649C13.964 94.044 0 80.08 0 62.857S13.964 31.67 31.187 31.67">
+                                </path>
+                                <path fill="#ffffff" d="M55.781 43.691a31.3 31.3 0 0 0-12.023-9.372c2.995-1.702 6.302-2.649 9.781-2.649c3.282 0 6.42.847 9.272 2.366c-2.788 2.076-5.207 5.431-7.035 9.655z">
+                                </path>
+                                <path fill="#ffffff" d="M55.776 82.023c1.828 4.224 4.247 7.571 7.035 9.655c-2.858 1.524-5.99 2.366-9.272 2.366c-3.485 0-6.791-.947-9.781-2.649a31.36 31.36 0 0 0 12.023-9.372z">
+                                </path>
+                                <path fill="#ffffff" d="M29.283 62.857c0-12.746 5.955-23.702 14.475-28.538a31.36 31.36 0 0 1 12.023 9.372c-2.296 5.291-3.662 11.939-3.662 19.166c0 7.224 1.371 13.875 3.662 19.164a31.3 31.3 0 0 1-12.023 9.374c-8.525-4.836-14.475-15.794-14.475-28.538">
+                                </path>
+                                <path fill="#ffffff" d="M74.673 78.152c.882 4.702 2.159 8.646 3.699 11.429c-2.605 2.831-5.659 4.46-8.931 4.46c-2.347 0-4.584-.842-6.627-2.366c5.033-2.678 9.205-7.474 11.859-13.515z">
+                                </path>
+                                <path fill="#ffffff" d="M62.814 34.036c2.043-1.524 4.28-2.366 6.627-2.366c3.267 0 6.321 1.63 8.931 4.461c-1.535 2.782-2.812 6.724-3.699 11.426c-2.654-6.044-6.826-10.838-11.859-13.515z">
+                                </path>
+                                <path fill="#ffffff" d="M55.781 82.018a31.06 31.06 0 0 0 6.589-19.164a31.06 31.06 0 0 0-6.589-19.163c1.831-4.221 4.248-7.574 7.038-9.657c5.031 2.677 9.203 7.474 11.857 13.515c-.853 4.519-1.336 9.74-1.336 15.3s.489 10.778 1.336 15.298c-2.654 6.043-6.826 10.84-11.857 13.517c-2.79-2.078-5.207-5.43-7.038-9.657z">
+                                </path>
+                                <path fill="#ffffff" d="M55.778 82.023c-2.293-5.291-3.659-11.939-3.659-19.166c0-7.224 1.371-13.873 3.659-19.164a31.05 31.05 0 0 1 6.592 19.164a31.05 31.05 0 0 1-6.592 19.166">
+                                </path>
+                                <path fill="#ffffff" d="M78.372 36.131c1.565-2.831 3.396-4.461 5.361-4.461c5.743 0 10.397 13.965 10.397 31.187s-4.654 31.187-10.397 31.187c-1.96 0-3.796-1.632-5.361-4.461c5.031-5.46 8.397-15.38 8.397-26.726s-3.366-21.271-8.397-26.726">
+                                </path>
+                                <path fill="#ffffff" d="M78.372 36.131c1.565-2.831 3.396-4.461 5.361-4.461c5.743 0 10.397 13.965 10.397 31.187s-4.654 31.187-10.397 31.187c-1.96 0-3.796-1.632-5.361-4.461c5.031-5.46 8.397-15.38 8.397-26.726s-3.366-21.271-8.397-26.726">
+                                </path>
+                                <path fill="#ffffff" d="M77.797 62.86c0-5.563-1.135-10.781-3.124-15.3c.882-4.703 2.159-8.644 3.702-11.427c5.03 5.455 8.396 15.387 8.396 26.727c0 11.337-3.366 21.271-8.396 26.726c-1.538-2.785-2.812-6.727-3.702-11.429c1.984-4.519 3.124-9.737 3.124-15.297">
+                                </path>
+                                <path fill="#ffffff" d="M74.673 78.155c-.852-4.52-1.336-9.738-1.336-15.298c0-5.562.489-10.781 1.336-15.3c1.984 4.519 3.124 9.738 3.124 15.3c0 5.56-1.135 10.778-3.124 15.298">
+                                </path>
+                            </svg>
+                        </div>
+
+                        <!-- Duplicate Set for Infinite Loop -->
+                        <div class="opacity-50 hover:opacity-100 transition-all duration-500 grayscale hover:grayscale-0 cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="96" height="72" viewBox="0 0 512 95" style="width: 96px; height: 72px;" class="iconify w-[96px] h-[72px]" aria-hidden="true" role="img" stroke-width="2">
+                                <path fill="#ffffff" d="M102.607 46.54c0-25.695-20.21-46.54-46.54-46.54c-17.495 0-32.682 9.585-40.65 23.847L38.11 46.54c0-9.932 8.372-17.958 17.957-17.958c10.163 0 17.958 8.026 17.958 17.958s-7.853 17.958-17.958 17.958H17.38C7.795 64.498 0 72.293 0 81.878V93.08h56.067c26.157 0 46.54-20.845 46.54-46.54">
+                                </path>
+                                <path fill="#ffffff" d="M314.635 41.054h21.711c8.43 0 12.819-3.984 12.819-11.432c0-7.565-4.389-11.549-12.819-11.549h-21.71zm12.53 18.131h-12.53V93.08h-19.459V10.45c0-5.774 4.677-10.451 10.51-10.451h31.238c20.151 0 32.393 12.126 32.393 29.506c0 13.974-7.853 24.598-21.48 28.351l24.251 35.223h-23.327zm184.832 31.412c-3.811 2.483-8.315 4.215-13.165 4.215c-13.396 0-19.69-9.18-19.69-22.23V4.85l18.42-4.388v72.293c0 3.637 1.79 5.89 5.023 5.89c.981 0 2.079-.232 3.118-.694zm-32.162 0c-3.811 2.483-8.315 4.215-13.166 4.215c-13.396 0-19.69-9.18-19.69-22.23V12.53l18.42-4.562v64.787c0 3.637 1.79 5.89 5.024 5.89c.981 0 2.078-.232 3.118-.694zm-57.8-31.18c0-10.798-6.929-18.247-17.323-18.247s-17.322 7.333-17.322 18.246c0 10.914 6.929 18.247 17.322 18.247c10.394 0 17.323-7.333 17.323-18.247m-53.469 0c0-20.729 15.186-35.222 36.146-35.222s36.262 14.378 36.262 35.222c0 20.903-15.359 35.396-36.262 35.396c-20.96 0-36.146-14.493-36.146-35.396M156.307 55.49l13.28-35.57l13.281 35.57zm-.693-48.907L121.547 93.08h20.671l7.276-19.517h40.13L196.9 93.08h20.671L180.905 0h-15.532a10.54 10.54 0 0 0-9.759 6.583m95.101 71.08c-10.278 0-17.323-7.333-17.323-18.247s7.045-18.246 17.323-18.246s17.323 7.333 17.323 18.246c0 11.202-7.218 18.247-17.323 18.247m16.11-45.097c-4.562-5.312-11.49-8.372-19.863-8.372c-18.016 0-32.393 14.378-32.393 35.107c0 20.902 14.377 35.511 31.873 35.511c9.354 0 16.688-4.1 21.365-10.913l.808 9.18h16.514V0h-7.795c-5.774 0-10.509 4.677-10.509 10.451z" class=""></path>
+                            </svg>
+                        </div>
+                        <div class="opacity-50 hover:opacity-100 transition-all duration-500 grayscale hover:grayscale-0 cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="96" height="72" viewBox="0 0 512 209" style="width: 96px; height: 72px;" class="iconify w-[96px] h-[72px]" aria-hidden="true" role="img" stroke-width="2">
+                                <path fill="#ffffff" d="M156.166 152.93h-20.86l18.07-36.587h.224zm.892 16.621l1.227 14.501h22.979l-7.697-84.44h-34.245l-43.169 84.44h23.425l7.25-14.5zm56.331-22.532h3.458l16.509-22.198h21.082l-22.755 28.333l14.055 30.675h-22.533l-9.147-23.87h-3.234l-5.132 23.87h-19.52l17.847-84.106h19.41zm65.924 12.493c6.358 0 10.597.446 9.37 5.354c-1.45 6.358-4.015 7.25-12.158 7.25c-3.012 0-8.478 0-7.028-6.357c1.116-5.355 5.131-6.247 9.816-6.247m5.355 24.317h19.186l7.696-36.81c4.462-20.413-3.57-22.756-23.201-22.756c-13.832 0-27.218-.223-31.234 18.294h19.187c1.227-5.354 4.461-6.358 9.146-6.358c8.478 0 8.255 3.57 6.805 8.923l-1.897 9.37h-.892c-.67-6.804-9.147-6.58-14.724-6.58c-14.055 0-22.31 4.461-25.321 18.516c-3.235 15.059 4.015 18.294 17.401 18.294c6.804 0 15.728-1.45 18.963-9.37h.67zm58.45-59.008l-1.673 8.477h.67c3.792-7.027 11.488-8.923 18.07-8.923c8.477 0 16.62 1.45 15.505 11.49h.892c2.789-8.479 11.49-11.49 18.963-11.49c13.609 0 19.41 5.577 16.397 19.186l-8.7 40.38h-19.186l7.25-34.245c.893-6.358 1.897-10.82-5.354-10.82c-7.25 0-10.04 4.908-11.266 11.266l-7.028 33.576h-19.186l7.474-35.695c.892-5.355 1.45-9.147-5.354-9.147c-7.92 0-10.374 4.239-11.713 11.266l-7.027 33.576h-19.186l12.716-59.12h17.848v.223zm99.165 34.691c6.358 0 10.597.446 9.37 5.354c-1.227 6.358-4.016 7.25-12.158 7.25c-2.79 0-8.478 0-7.028-6.357c1.116-5.355 4.908-6.247 9.816-6.247m5.131 24.317H466.6l7.697-36.81c4.462-20.413-3.57-22.756-23.202-22.756c-13.831 0-27.217-.223-31.233 18.294h19.186c1.227-5.354 4.462-6.358 9.147-6.358c8.478 0 8.255 3.57 6.805 8.923l-1.897 9.37h-.892c-.67-6.804-9.147-6.58-14.724-6.58c-14.055 0-22.31 4.461-25.321 18.516c-3.235 15.059 4.015 18.294 17.4 18.294c6.805 0 15.729-1.45 18.964-9.37h.67zm47.408 0h-19.186l12.381-59.12h19.186zm16.843-75.182c0 5.912-4.908 10.82-10.82 10.82s-10.82-4.908-10.82-10.82c0-6.135 4.908-10.82 10.82-10.82s10.82 4.685 10.82 10.82" class=""></path>
+                                <path fill="#ffffff" d="M106.193 204.242c-42.946-13.162-74.068-52.761-74.068-99.388c0-47.407 31.903-87.23 75.518-100.169c4.462-1.227 3.235-4.239-2.12-4.239C47.631.446.446 47.073.446 104.52s46.85 104.074 105.077 104.074c5.355.334 5.578-2.678.67-4.35m-54.1-75.294c-.224-2.789-.447-5.577-.447-8.477c0-45.735 37.034-82.768 82.768-82.768c43.169 0 56.331 19.186 57.67 18.07c1.673-1.45-15.728-39.599-66.37-39.599c-45.735 0-82.768 37.034-82.768 82.768c0 10.597 2.119 20.636 5.577 30.006c1.45 4.016 3.792 4.016 3.57 0M86.56 69.382c21.306-9.37 48.523-9.593 75.071-.446c17.848 6.358 28.11 15.059 29.114 14.724c1.45-.67-10.374-19.186-31.68-27.217c-25.767-9.593-53.43-4.685-73.62 11.266c-2.231 1.673-1.562 2.9 1.115 1.673">
+                                </path>
+                            </svg>
+                        </div>
+                        <div class="opacity-50 hover:opacity-100 transition-all duration-500 grayscale hover:grayscale-0 cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="96" height="72" viewBox="0 0 512 94" style="color: rgb(255, 255, 255); width: 96px; height: 72px" class="iconify w-[96px] h-[72px]" aria-hidden="true" role="img" stroke-width="2">
+                                <defs></defs>
+                                <path fill="#ffffff" d="M139.049 31.254c5.189 0 10.617 1.207 14.962 3.739v16.529c-4.103-2.895-8.327-4.342-12.911-4.342c-9.17 0-16.168 6.394-16.168 15.443c0 8.929 6.877 15.443 16.168 15.443c4.705 0 9.292-1.93 13.032-4.584v16.65c-4.826 2.653-10.136 3.861-15.325 3.861c-18.338 0-31.611-12.669-31.611-31.37c0-17.978 13.152-31.369 31.853-31.369m50.181 0c18.462 0 32.337 13.633 32.337 31.369s-13.875 31.37-32.337 31.37c-18.459 0-32.335-13.634-32.335-31.37s13.876-31.369 32.335-31.369m0 46.694c8.205 0 14.961-6.759 14.961-15.325s-6.756-15.322-14.961-15.322c-8.203 0-14.962 6.757-14.962 15.322c0 8.566 6.759 15.325 14.962 15.325M290.272 7.969v84.456h-17.497v-7.963c-4.1 6.033-11.461 9.41-19.303 9.41c-16.048 0-28.232-13.513-28.232-31.249c0-17.615 12.184-31.248 28.232-31.248c7.842 0 15.203 3.016 19.303 9.168V7.969Zm-32.217 70.097c8.569 0 15.325-6.877 15.325-15.443s-6.756-15.443-15.325-15.443c-8.565 0-15.321 6.878-15.321 15.443c0 8.566 6.756 15.443 15.321 15.443m40.384 14.359V32.821h17.615v59.604Zm64.6-59.604h17.615v59.604h-17.615v-7.6c-3.501 5.67-9.534 9.168-17.376 9.168c-13.513 0-21.836-9.41-21.836-24.372v-36.8h17.615v32.577c0 7.842 3.86 12.429 10.496 12.429c6.756 0 11.101-5.068 11.101-13.515Zm43.4 59.604h-17.615V32.821h17.615v7.482c3.137-5.431 8.928-9.049 16.771-9.049c8.084 0 14.238 3.86 17.497 10.375c3.739-6.273 10.495-10.375 19.182-10.375c13.633 0 21.355 9.289 21.355 23.769v37.402h-17.615v-33.3c0-7.361-3.377-11.824-9.531-11.824c-6.033 0-10.136 4.947-10.257 12.911v32.213h-17.615v-33.06c0-7.601-3.376-12.064-9.409-12.064c-6.275 0-10.378 5.066-10.378 13.271ZM502.09 8.802v19.072h-5.522v-2.546c-1.312 1.931-3.667 3.011-6.178 3.011c-5.135 0-9.033-4.325-9.033-10.001c0-5.635 3.898-9.998 9.033-9.998c2.511 0 4.866.965 6.178 2.933V8.802Zm-10.232 14.48c2.742 0 4.904-2.201 4.904-4.944c0-2.739-2.162-4.941-4.904-4.941s-4.904 2.202-4.904 4.941c0 2.743 2.162 4.944 4.904 4.944m14.042 4.592V8.802h5.638v19.072Zm2.82-21.311c-1.815 0-3.283-1.506-3.283-3.28c0-1.777 1.468-3.283 3.283-3.283S512 1.506 512 3.283c0 1.774-1.465 3.28-3.28 3.28M307.247 7.842c5.67 0 10.254 4.708 10.254 10.257s-4.584 10.254-10.254 10.254s-10.257-4.705-10.257-10.254s4.587-10.257 10.257-10.257">
+                                </path>
+                                <path fill="#ffffff" d="M31.187 31.67c4.479 0 8.726.947 12.574 2.649c-8.526 4.836-14.475 15.792-14.475 28.538c0 12.744 5.955 23.702 14.475 28.538a31 31 0 0 1-12.574 2.649C13.964 94.044 0 80.08 0 62.857S13.964 31.67 31.187 31.67">
+                                </path>
+                                <path fill="#ffffff" d="M55.781 43.691a31.3 31.3 0 0 0-12.023-9.372c2.995-1.702 6.302-2.649 9.781-2.649c3.282 0 6.42.847 9.272 2.366c-2.788 2.076-5.207 5.431-7.035 9.655z">
+                                </path>
+                                <path fill="#ffffff" d="M55.776 82.023c1.828 4.224 4.247 7.571 7.035 9.655c-2.858 1.524-5.99 2.366-9.272 2.366c-3.485 0-6.791-.947-9.781-2.649a31.36 31.36 0 0 0 12.023-9.372z">
+                                </path>
+                                <path fill="#ffffff" d="M29.283 62.857c0-12.746 5.955-23.702 14.475-28.538a31.36 31.36 0 0 1 12.023 9.372c-2.296 5.291-3.662 11.939-3.662 19.166c0 7.224 1.371 13.875 3.662 19.164a31.3 31.3 0 0 1-12.023 9.374c-8.525-4.836-14.475-15.794-14.475-28.538">
+                                </path>
+                                <path fill="#ffffff" d="M74.673 78.152c.882 4.702 2.159 8.646 3.699 11.429c-2.605 2.831-5.659 4.46-8.931 4.46c-2.347 0-4.584-.842-6.627-2.366c5.033-2.678 9.205-7.474 11.859-13.515z">
+                                </path>
+                                <path fill="#ffffff" d="M62.814 34.036c2.043-1.524 4.28-2.366 6.627-2.366c3.267 0 6.321 1.63 8.931 4.461c-1.535 2.782-2.812 6.724-3.699 11.426c-2.654-6.044-6.826-10.838-11.859-13.515z">
+                                </path>
+                                <path fill="#ffffff" d="M55.781 82.018a31.06 31.06 0 0 0 6.589-19.164a31.06 31.06 0 0 0-6.589-19.163c1.831-4.221 4.248-7.574 7.038-9.657c5.031 2.677 9.203 7.474 11.857 13.515c-.853 4.519-1.336 9.74-1.336 15.3s.489 10.778 1.336 15.298c-2.654 6.043-6.826 10.84-11.857 13.517c-2.79-2.078-5.207-5.43-7.038-9.657z">
+                                </path>
+                                <path fill="#ffffff" d="M55.778 82.023c-2.293-5.291-3.659-11.939-3.659-19.166c0-7.224 1.371-13.873 3.659-19.164a31.05 31.05 0 0 1 6.592 19.164a31.05 31.05 0 0 1-6.592 19.166">
+                                </path>
+                                <path fill="#ffffff" d="M78.372 36.131c1.565-2.831 3.396-4.461 5.361-4.461c5.743 0 10.397 13.965 10.397 31.187s-4.654 31.187-10.397 31.187c-1.96 0-3.796-1.632-5.361-4.461c5.031-5.46 8.397-15.38 8.397-26.726s-3.366-21.271-8.397-26.726">
+                                </path>
+                                <path fill="#ffffff" d="M78.372 36.131c1.565-2.831 3.396-4.461 5.361-4.461c5.743 0 10.397 13.965 10.397 31.187s-4.654 31.187-10.397 31.187c-1.96 0-3.796-1.632-5.361-4.461c5.031-5.46 8.397-15.38 8.397-26.726s-3.366-21.271-8.397-26.726">
+                                </path>
+                                <path fill="#ffffff" d="M77.797 62.86c0-5.563-1.135-10.781-3.124-15.3c.882-4.703 2.159-8.644 3.702-11.427c5.03 5.455 8.396 15.387 8.396 26.727c0 11.337-3.366 21.271-8.396 26.726c-1.538-2.785-2.812-6.727-3.702-11.429c1.984-4.519 3.124-9.737 3.124-15.297">
+                                </path>
+                                <path fill="#ffffff" d="M74.673 78.155c-.852-4.52-1.336-9.738-1.336-15.298c0-5.562.489-10.781 1.336-15.3c1.984 4.519 3.124 9.738 3.124 15.3c0 5.56-1.135 10.778-3.124 15.298">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pb-1 mt-6 lg:mt-0">
+                <div class="flex items-center gap-2 mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="solar:check-circle-bold-duotone" class="iconify text-emerald-400 text-sm iconify--solar">
+                        <path fill="currentColor" d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10" opacity=".5">
+                        </path>
+                        <path fill="currentColor" d="M16.03 8.97a.75.75 0 0 1 0 1.06l-5 5a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 1 1 1.06-1.06l1.47 1.47l2.235-2.235L14.97 8.97a.75.75 0 0 1 1.06 0">
+                        </path>
+                    </svg>
+                    <span class="text-xs text-white/60">System Operational</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Image Grid Cell (Mobile: Order 3, Desktop: Top Right) -->
+    <div class="relative order-3 w-full h-64 sm:h-80 lg:absolute lg:left-[62%] lg:right-[6%] lg:top-0 lg:h-[62%] lg:border-l lg:w-auto border-white/10 overflow-hidden group animate-reveal delay-200">
+        <!-- Beam (Desktop Only) -->
+        <div class="absolute top-0 bottom-0 left-[-1px] w-[1px] overflow-hidden z-20 hidden lg:block">
+            <div class="beam-v" style="animation: beam-v 4s infinite;"></div>
+        </div>
+
+        <!-- Markers (Desktop Only) -->
+        <div class="hidden lg:block marker -top-[2.5px] -left-[2.5px]"></div>
+        <div class="hidden lg:block marker -top-[2.5px] -right-[2.5px]"></div>
+
+        <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/2cd4b4af-fea6-4fa5-a9c4-c0c963623db7_1600w.png" alt="Abstract Form" class="contrast-125 group-hover:scale-105 transition-transform duration-1000 ease-out opacity-60 mix-blend-lighten w-full h-full object-cover grayscale">
+
+        <div class="absolute inset-0 z-10 pointer-events-none bg-cover bg-center bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/32ec2ecf-e699-440d-9f1c-f0a2515b3040_1600w.png)]" style="">
+        </div>
+
+        <div class="absolute bottom-4 left-4 z-20">
+            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="solar:scanner-bold-duotone" class="iconify text-white/80 text-3xl iconify--solar">
+                <path fill="currentColor" d="M3.464 3.464C2 4.93 2 7.286 2 12s0 7.071 1.464 8.535C4.93 22 7.286 22 12 22s7.071 0 8.535-1.465C22 19.072 22 16.714 22 12s0-7.071-1.465-8.536C19.072 2 16.714 2 12 2S4.929 2 3.464 3.464" opacity=".5"></path>
+                <path fill="currentColor" d="M10.004 5.752a.75.75 0 1 0-.008-1.5c-1.082.006-1.98.03-2.713.159c-.752.131-1.395.382-1.922.883c-.455.433-.76.872-.925 1.503c-.15.572-.177 1.275-.184 2.198a.75.75 0 1 0 1.5.011c.008-.949.04-1.466.135-1.828c.08-.303.206-.51.509-.798c.242-.23.572-.392 1.145-.492c.592-.103 1.37-.13 2.463-.136m4-1.5a.75.75 0 0 0-.008 1.5c1.093.006 1.871.033 2.463.136c.573.1.903.262 1.145.492c.303.289.43.495.509.798c.095.362.128.88.135 1.828a.75.75 0 0 0 1.5-.011c-.007-.923-.034-1.626-.184-2.198c-.166-.63-.47-1.07-.925-1.503c-.527-.501-1.17-.752-1.922-.883c-.733-.129-1.631-.153-2.713-.159M5 11.25a.75.75 0 0 0 0 1.5h14a.75.75 0 0 0 0-1.5zm.752 3.745a.75.75 0 1 0-1.5.011c.007.923.034 1.626.184 2.198c.166.63.47 1.07.925 1.503c.527.5 1.17.751 1.922.883c.733.128 1.631.153 2.713.159a.75.75 0 0 0 .008-1.5c-1.093-.006-1.871-.033-2.463-.137c-.573-.1-.903-.261-1.145-.492c-.303-.288-.43-.495-.509-.797c-.095-.362-.127-.88-.135-1.828m13.996.011a.75.75 0 1 0-1.5-.011c-.008.948-.04 1.466-.135 1.828c-.08.302-.206.509-.509.797c-.242.23-.572.392-1.145.492c-.592.104-1.37.13-2.463.137a.75.75 0 1 0 .008 1.5c1.082-.006 1.98-.03 2.713-.16c.752-.13 1.395-.381 1.922-.882c.455-.434.76-.873.925-1.503c.15-.572.177-1.275.184-2.198">
+                </path>
+            </svg>
+        </div>
+    </div>
+
+    <!-- 4. White Card Container (Mobile: Order 4, Desktop: Bottom Right) -->
+    <div class="relative order-4 p-6 flex items-center justify-center animate-reveal delay-300 lg:p-0 lg:absolute lg:right-[6%] lg:top-[62%] lg:bottom-[6%] lg:border-l lg:border-t lg:border-white/10 lg:left-[62%]">
+
+        <!-- Beams (Desktop Only) -->
+        <div class="absolute top-[-1px] left-0 right-0 h-[1px] overflow-hidden z-20 hidden lg:block">
+            <div class="beam-h" style="animation: beam-h 6s infinite reverse;"></div>
+        </div>
+        <div class="absolute top-0 bottom-0 left-[-1px] w-[1px] overflow-hidden z-20 hidden lg:block">
+            <div class="beam-v" style="animation: beam-v 6s infinite 2s;"></div>
+        </div>
+
+        <!-- Markers (Desktop Only) -->
+        <div class="hidden lg:block marker -top-[2.5px] -left-[2.5px]"></div>
+        <div class="hidden lg:block marker -top-[2.5px] -right-[2.5px]"></div>
+        <div class="hidden lg:block marker -bottom-[2.5px] -left-[2.5px]"></div>
+        <div class="hidden lg:block marker -bottom-[2.5px] -right-[2.5px]"></div>
+
+        <!-- Card -->
+        <div class="flex flex-col shadow-purple-900/20 group overflow-hidden lg:rounded-none text-black bg-white w-full h-full rounded-sm pt-6 pr-6 pb-6 pl-6 relative shadow-2xl justify-between transition-all duration-500" id="card-wrapper-aura">
+
+            <!-- Header -->
+            <div class="flex items-start justify-between relative z-10 min-h-[60px]">
+                <div class="transition-all duration-300 ease-out" id="card-header-aura">
+                    <div class="flex items-center gap-2 text-purple-600 mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trophy opacity-60">
+                            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                            <path d="M4 22h16"></path>
+                            <path d="M10 14.66V17"></path>
+                            <path d="M14 14.66V17"></path>
+                            <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                            <path d="M8.5 22v-2.05"></path>
+                            <path d="M15.5 22v-2.05"></path>
+                        </svg>
+                        <span id="card-badge-aura" class="text-[10px] font-semibold uppercase tracking-widest">Leader</span>
+                    </div>
+                    <h3 id="card-title-aura" class="text-xl font-semibold leading-tight tracking-tight">
+                        PredictiveArchitecture</h3>
+                </div>
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-medal absolute -top-2 -right-2 rotate-12 text-black/5 text-5xl">
+                    <path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15">
+                    </path>
+                    <path d="M11 12 5.12 2.2"></path>
+                    <path d="m13 12 5.88-9.8"></path>
+                    <path d="M8 7h8"></path>
+                    <circle cx="12" cy="17" r="5"></circle>
+                    <path d="M12 18v-2h-.5"></path>
+                </svg>
+            </div>
+
+            <!-- Description -->
+            <div class="relative z-10 flex flex-col justify-end flex-1 mt-8">
+                <div class="min-h-[72px]">
+                    <p id="card-desc-aura" class="text-sm text-gray-500 font-medium leading-relaxed mb-4 border-l-2 border-purple-200 pl-3 transition-all duration-300 ease-out transform translate-y-0">
+                        Awarded for highest reliability in enterprise AI deployment sectors.
+                    </p>
+                </div>
+
+                <!-- Pagination / Status -->
+                <div class="flex items-center justify-between border-t border-gray-100 pt-3">
+                    <div class="flex gap-1" id="card-dots-aura">
+                        <div class="w-1.5 h-1.5 bg-black rounded-full transition-all duration-300"></div>
+                        <div class="w-1.5 h-1.5 bg-gray-300 rounded-full transition-all duration-300"></div>
+                        <div class="w-1.5 h-1.5 bg-gray-300 rounded-full transition-all duration-300"></div>
+                    </div>
+                    <button id="card-btn-aura" class="group/btn p-2 -mr-2 cursor-pointer rounded-full hover:bg-purple-50 transition-colors outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right text-gray-400 group-hover/btn:text-purple-600 transition-colors"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </button>
+                </div>
+            </div>
+
+            <script>
+                (function() {
+            const wrapper = document.getElementById('card-wrapper-aura');
+            if (!wrapper) return;
+
+            const items = [
+                {
+                    badge: "Leader",
+                    title: "PredictiveArchitecture",
+                    desc: "Awarded for highest reliability in enterprise AI deployment sectors."
+                },
+                {
+                    badge: "Visionary",
+                    title: "NeuralComputation",
+                    desc: "Self-optimizing learning pathways for autonomous system evolution."
+                },
+                {
+                    badge: "Innovator",
+                    title: "QuantumLattice",
+                    desc: "Next-generation decentralized consensus for high-velocity data."
+                }
+            ];
+
+            let currentIndex = 0;
+            const btn = document.getElementById('card-btn-aura');
+            const titleEl = document.getElementById('card-title-aura');
+            const badgeEl = document.getElementById('card-badge-aura');
+            const descEl = document.getElementById('card-desc-aura');
+            const dotsContainer = document.getElementById('card-dots-aura');
+            const headerEl = document.getElementById('card-header-aura');
+
+            if (btn) {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent edit mode selection issues
+                    
+                    currentIndex = (currentIndex + 1) % items.length;
+                    
+                    // Animate Out
+                    descEl.style.opacity = '0';
+                    descEl.style.transform = 'translateY(4px)';
+                    headerEl.style.opacity = '0.5';
+
+                    setTimeout(() => {
+                        // Update Content
+                        const item = items[currentIndex];
+                        titleEl.textContent = item.title;
+                        badgeEl.textContent = item.badge;
+                        descEl.textContent = item.desc;
+
+                        // Update Dots
+                        Array.from(dotsContainer.children).forEach((dot, idx) => {
+                            if (idx === currentIndex) {
+                                dot.className = 'w-1.5 h-1.5 bg-black rounded-full transition-all duration-300';
+                            } else {
+                                dot.className = 'w-1.5 h-1.5 bg-gray-300 rounded-full transition-all duration-300';
+                            }
+                        });
+
+                        // Animate In
+                        descEl.style.opacity = '1';
+                        descEl.style.transform = 'translateY(0)';
+                        headerEl.style.opacity = '1';
+                    }, 200);
+                });
+            }
+        })();
+            </script>
+        </div>
+    </div>
+
+</section>
+
+    <!-- 2. Feature Section with Scroll Animations -->
+    <section class="z-10 lg:py-32 bg-indigo-950/20 w-full border-white/5 border-t pt-24 pb-24 relative">
+    
+    <!-- Background Grid & Beams -->
+    <div class="absolute inset-0 pointer-events-none hidden lg:block z-0">
+        <!-- V Line 1 -->
+        <div class="absolute top-0 bottom-0 left-[6%] w-[1px] bg-white/5"></div>
+        
+        <!-- V Line 2 with Beam -->
+        <div class="absolute top-0 bottom-0 left-[28%] w-[1px] bg-white/5">
+            <div class="beam-v" style="animation: beam-v 7s infinite linear;"></div>
+        </div>
+
+        <!-- V Line 3 with Beam -->
+        <div class="absolute top-0 bottom-0 left-[62%] w-[1px] bg-white/5">
+             <div class="beam-v" style="animation: beam-v 5s infinite 2s linear;"></div>
+        </div>
+
+        <!-- V Line 4 -->
+        <div class="absolute top-0 bottom-0 right-[6%] w-[1px] bg-white/5"></div>
+    </div>
+
+    <!-- Top Beams/Grid for continuity (Existing) -->
+    <div class="absolute top-0 left-[6%] right-[6%] h-[1px] bg-white/5 hidden lg:block z-10"></div>
+    
+    <div class="relative z-10 lg:px-[6%] max-w-[1600px] mr-auto ml-auto pr-6 pl-6">
+        
+        <!-- Section Header -->
+        <div class="mb-20 lg:mb-24 max-w-4xl">
+            <h2 class="lg:text-8xl text-4xl font-normal text-white tracking-tight mb-8" style="animation: reveal-up 1s cubic-bezier(0.16, 1, 0.3, 1) both;">
+                Intelligence Scale 
+                <span class="text-white/30">Infrastructure.</span>
+            </h2>
+            <div class="delay-100 grid grid-cols-1 lg:grid-cols-2 gap-12" style="animation: reveal-up 1s cubic-bezier(0.16, 1, 0.3, 1) both;">
+                <p class="text-lg text-white/60 font-light leading-relaxed">
+                    Deploy autonomous agents that recursively optimize your data pipelines. 
+                    SAKURA bridges the gap between predictive generation and structural reliability.
+                </p>
+                <div class="flex gap-4 items-center lg:justify-end">
+                        <div class="h-[1px] w-12 bg-white/20"></div>
+                        <span class="text-xs font-mono text-white/40 uppercase">Architecture v2.0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grid Layout -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 gap-x-6 gap-y-6" onmousemove="for(const card of this.children){const rect=card.getBoundingClientRect(),x=event.clientX-rect.left,y=event.clientY-rect.top;card.style.setProperty('--mouse-x', x + 'px');card.style.setProperty('--mouse-y', y + 'px');}">
+
+            <!-- Card 1: Semantic Generation -->
+            <div class="delay-200 col-span-1 lg:col-span-2 group hover:bg-white/[0.04] transition-all duration-500 flex flex-col hover:border-white/10 h-full border-white/5 border rounded-sm pt-8 pr-8 pb-8 pl-8 relative backdrop-blur-lg justify-between overflow-hidden" style="animation: 1s cubic-bezier(0.16, 1, 0.3, 1) 0s 1 normal both running reveal-up; --mouse-x: 284.3671875px; --mouse-y: 223px;">
+                <div class="pointer-events-none absolute -inset-px rounded-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%); z-index: 0;"></div>
+                <div class="pointer-events-none absolute -inset-px rounded-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.4), transparent 40%); z-index: 0; -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; padding: 1px;"></div>
+                
+                <div class="h-48 mb-8 relative flex items-center justify-center bg-black/20 rounded-sm border border-white/5 overflow-hidden z-10">
+                    <!-- Abstract UI -->
+                    <div class="w-3/4 p-4 border border-white/10 bg-[#0e0829] rounded-sm shadow-2xl transform group-hover:-translate-y-1 transition-transform duration-500">
+                        <div class="flex gap-1.5 mb-3 opacity-50">
+                            <div class="w-1 h-1 rounded-full bg-white"></div>
+                            <div class="w-1 h-1 rounded-full bg-white"></div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="h-1 w-full bg-white/10 rounded-full"></div>
+                            <div class="h-1 w-2/3 bg-white/10 rounded-full"></div>
+                            <div class="h-1 w-5/6 bg-purple-500/40 rounded-full animate-pulse"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative z-10">
+                    <h3 class="text-lg font-medium text-white mb-3 tracking-tight flex items-center gap-2">
+                        Semantic Generation
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="sparkles" class="lucide lucide-sparkles w-4 h-4 text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg>
+                    </h3>
+                    <p class="text-sm text-white/50 font-light leading-relaxed">Convert unstructured data streams into professionally structured reports instantaneously.</p>
+                </div>
+            </div>
+
+            <!-- Card 2: Centralized Storage -->
+            <div class="delay-300 col-span-1 lg:col-span-2 group hover:bg-white/[0.04] transition-all duration-500 flex flex-col hover:border-white/10 h-full border-white/5 border rounded-sm pt-8 pr-8 pb-8 pl-8 relative backdrop-blur-lg justify-between overflow-hidden" style="animation: 1s cubic-bezier(0.16, 1, 0.3, 1) 0s 1 normal both running reveal-up; --mouse-x: -190.2109375px; --mouse-y: 223px;">
+                <div class="pointer-events-none absolute -inset-px rounded-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%); z-index: 0;"></div>
+                <div class="pointer-events-none absolute -inset-px rounded-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.4), transparent 40%); z-index: 0; -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; padding: 1px;"></div>
+                
+                <div class="h-48 mb-8 relative flex items-center justify-center overflow-hidden z-10">
+                        <div class="absolute inset-0 bg-gradient-to-t from-purple-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                        <div class="relative z-10 grid grid-cols-2 gap-4 opacity-60 group-hover:opacity-100 transition-opacity">
+                            <div class="bg-white/5 border-white/5 border rounded pt-3 pr-3 pb-3 pl-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 134" style="color: rgb(255, 255, 255); width: 24px; height: 24px;" class="iconify iconify--cib w-[24px] h-[24px]" aria-hidden="true" role="img" data-icon="cib:google-cloud" data-logos="adobe" data-icon-set="logos" data-icon-replaced="true" stroke-width="2"><path fill="#ffffff" d="m221.02 88.874l-5.524 17.025c-.152.567-.68.952-1.266.921h-13.327c-.805 0-1.033-.46-.922-1.149l23.005-66.373a20.9 20.9 0 0 0 1.155-7.02a.766.766 0 0 1 .689-.804h18.408c.555 0 .805.116.922.688l26.098 73.626c.228.555.117 1.032-.555 1.032h-14.954a1.16 1.16 0 0 1-1.266-.805l-5.864-17.141zm4.138-14.377h18.18l-1.75-5.633c-2.411-7.66-5.621-17.629-7.34-24.047h-.117c-1.838 7.708-5.98 20.363-8.973 29.68m46.932 4.232c-.005-16.448 12.3-30.252 33.356-30.252c.917 0 2.072.116 3.799.227V26.043a.727.727 0 0 1 .587-.797l14.71-.008c.556 0 .695.227.695.688V93.91a65 65 0 0 0 .46 8.402c0 .444-.074.693-.456.89l-.348.142a57.8 57.8 0 0 1-22.662 4.604c-17.025 0-30.14-9.662-30.14-29.22m37.155-16.337a11.9 11.9 0 0 0-4.26-.555a15.35 15.35 0 0 0-16.465 15.007l.018 1.096c0 11.389 6.558 16.337 15.298 16.337a16.2 16.2 0 0 0 5.409-.689zm81.83 14.32l.041 1.206c0 18.063-11.733 30.024-28.32 30.024c-19.673 0-28.414-14.837-28.414-29.68a28.147 28.147 0 0 1 28.642-29.791c18.044 0 27.574 13.211 28.051 28.24m-40.473 1.306c0 10.123 4.715 16.564 12.422 16.564c6.664 0 11.733-5.753 11.733-16.337c0-8.973-3.681-16.447-12.421-16.447c-6.664 0-11.734 5.98-11.734 16.22m50.654-52.78l14.032-.006c.921 0 1.15.117 1.15.922v23.583a37 37 0 0 1 7.706-1.217l1.955-.049a26.326 26.326 0 0 1 27.63 25.998l-.021 1.383c0 21.512-17.025 32.096-34.506 32.096a60.2 60.2 0 0 1-18.063-2.643a1.36 1.36 0 0 1-.689-1.15v-78.11c0-.555.228-.805.806-.805m22.959 36.79l-.987.014a23.4 23.4 0 0 0-6.785.922v31.174c.93.215 1.876.356 2.828.42l1.43.04a15.83 15.83 0 0 0 16.66-17.252a13.516 13.516 0 0 0-13.146-15.317m51.97 20.371c.555 6.558 5.175 11.966 16.448 11.966c4.847.09 9.662-.811 14.148-2.648c.35-.228.694-.117.694.555V103.2c0 .805-.227 1.15-.805 1.383a38.65 38.65 0 0 1-15.79 3.374l-1.812-.043c-21.623 0-29.22-14.837-29.22-29.102c0-15.479 9.296-29.643 26.498-30.342l1.339-.027a23.455 23.455 0 0 1 24.272 24.85a37 37 0 0 1-.556 7.707a.994.994 0 0 1-.921.921q-4.433.42-8.884.47zm14.954-11.156a37.5 37.5 0 0 0 5.753-.227v-.806a9.357 9.357 0 0 0-9.779-9.09a10.9 10.9 0 0 0-11.045 10.123zM75.314 49.137l35.466 84.148H87.535l-10.611-26.798H50.97zM150.599 0v133.269L94.921 0zM55.701 0L0 133.269V0z"></path></svg></div>
+                            <div class="bg-white/5 border-white/5 border rounded pt-3 pr-3 pb-3 pl-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 190" style="width: 24px; height: 24px; color: rgb(255, 255, 255);" class="iconify iconify--cib w-[24px] h-[24px]" aria-hidden="true" role="img" data-icon="cib:amazon-aws" data-logos="100tb" data-icon-set="logos" data-icon-replaced="true" stroke-width="2"><path fill="#ffffff" d="M49.443 2.097L0 53.65l24.447 22.173l17.732-13.288v124.449h52.724V2.097zM463.23 129.49c-24.64 15.924-51.29 18.097-78.75 9.195c-13.879-4.498-24.781-14.266-35.255-24.114c-16.028-15.071-28.943-32.876-42.716-49.894c-14.355-17.738-29.482-34.505-49.029-46.764C241.287 7.758 224.06 1.336 204.834 1.11c-30.155-.355-55.344 10.976-74.93 33.9c-5.06 5.925-9.21 12.38-12.28 19.36c-1.983 4.512-6.73 15.991-7.598 22.3c.727-1.35 4.509-10.81 5.226-12.166c1.873-4.24 3.75-6.58 5.974-9.544c3.954-5.262 8.746-9.751 14.897-12.989c26.35-13.867 62.484-8.882 84.706 11.351c19.539 17.79 35.749 38.612 53.588 57.95c16.669 18.068 32.417 37.058 50.956 53.289c17.986 15.748 38.67 24.898 63.209 24.648c42.714-.433 79.796-28.72 90.857-70.087c1.251-4.682 2.699-10.498 2.162-16.896c-4.034 11.293-9.368 21.445-18.37 27.264m-232.4-5.54c-9.996 7.35-20.26 14.244-33.772 10.996c-16.879-4.059-28.097-14.325-31.747-31.3c-3.409-15.857 1.376-29.586 14.102-40.126c5.729-4.745 12.08-7.509 18.963-8.71c3.545-.619 8.4-.06 12.215.093c-12.672-9.379-28.157-13.146-43.473-12.93c-26.162.37-42.295 11.057-52.012 35.365c-3.913 9.79-7.21 19.998-6.031 30.71c3.732 25.069 15.342 46.011 35.66 61.3c28.513 21.45 59.877 26.051 93.165 12.708c21.056-8.44 37.556-26.373 52.866-42.317l-35.072-39.894c-6.794 7.668-16.574 18.011-24.863 24.105M438.91 38.463c0-7.09 1.712-13.776 4.728-19.685c-21.443-15.525-48.936-21.726-75.03-15.78c-26.017 5.93-46.467 20.994-65.183 39.115c-1.951 1.89-4.18 4.743-4.18 4.743l35.73 43.381l3.45-3.488c9.041-9.908 18.415-19.503 30.06-26.478c4.76-2.852 9.697-5.527 15.344-5.706c16.842-.537 29.775 6.675 37.749 21.349c7.908 14.554 6.51 29.113-2.764 42.847c-5.035 7.457-12.369 11.924-20.508 15.61c18.328 3.038 36.092 2.064 53.173-5.844c20.176-9.34 30.027-30.268 29.56-46.719c-23.378-.662-42.129-19.807-42.129-43.345"></path><path fill="#ffffff" d="M479.529 20.28v8.311h-8.368v29.223h-8.794V28.591h-8.557V20.28zm18.473 29.204c1.423 0 2.532-.429 3.321-1.234c.792-.805 1.214-1.876 1.214-3.163c0-1.34-.422-1.413-1.266-2.164s-1.951-1.127-3.27-1.127h-5.272v7.688zm-.739-14.498v-.107c1.107 0 2.057-.322 2.795-.966c.739-.642 1.107-1.501 1.107-2.52q0-1.608-1.107-2.574c-.738-.642-1.688-.964-2.795-.964h-4.534v7.131zm1.32-14.692l.157-.161c1.634 0 3.164.268 4.535.75q2.058.725 3.48 2.092a9.7 9.7 0 0 1 2.215 3.218a9.8 9.8 0 0 1 .792 3.914c0 .965.227 2.282-.09 3.087a9.2 9.2 0 0 1-1.159 2.144a7.6 7.6 0 0 1-1.583 1.61c-.58.428-1.107.696-1.58.857v.054c.842.214 1.3.184 2.092.72a8.2 8.2 0 0 1 2.056 1.984q.87 1.207 1.424 2.735c.368 1.018.58 2.038.58 3.11c0 1.662-.265 3.163-.791 4.558a9.66 9.66 0 0 1-2.374 3.592c-1.055 1.019-2.372 1.824-4.008 2.413c-1.634.59-3.532.858-5.747.858H484.08V20.294z"></path></svg></div>
+                            <div class="bg-white/5 border-white/5 border rounded pt-3 pr-3 pb-3 pl-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 207" style="color: rgb(255, 255, 255); width: 24px; height: 24px" class="iconify iconify--cib w-[24px] h-[24px]" aria-hidden="true" role="img" data-icon="cib:amazon-aws" data-logos="aix" data-icon-set="logos" data-icon-replaced="true" stroke-width="2"><defs></defs><path fill="#ffffff" d="m142.163 206.178l-14.595-49.03H59.544l-14.596 49.03H0L67.147.045h54.874l66.27 206.133zM93.991 40.79h-1.46l-22.48 78.274h46.7z"></path><path fill="#ffffff" d="M208.731 206.178v-35.739h26.27v-134.7h-26.27V0h96.909v35.739h-26.27v134.7h26.27v35.739z"></path><path fill="#ffffff" d="M512 206.178h-51.382l-44.086-75.913h-.876l-42.912 75.913h-47.875l65.393-106.63L328.078 0h51.664l39.703 69.703h.876L460.603 0h47.875l-62.763 100.435z"></path></svg></div>
+                            <div class="p-3 bg-white/5 rounded border border-white/5"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 391" style="color: rgb(255, 255, 255); width: 24px; height: 24px;" class="lucide lucide-database w-[24px] h-[24px]" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" data-logos="active-campaign-icon" data-icon-set="logos" data-icon-replaced="true" stroke-width="2"><path fill="#ffffff" d="m1.273 0l3.049 2.142c9.488 6.603 232.185 161.826 238.397 166.475c8.795 6.174 13.281 13.81 13.281 22.668v4.397c-.1 6.842-2.558 16.469-13.28 24.52l-.039.026c-5.166 3.692-57.747 40.12-113.415 78.701c-4.9 3.397-9.858 6.832-14.827 10.275l-3.314 2.297C61.96 345.572 12.62 379.777 5.947 384.498v6.136l-3.641-6.124c-.177-.315-.34-.58-.151-1.008H2.04v-32.03c0-10.924 1.21-16.178 13.37-24.28c5.179-3.33 49.529-33.955 94.578-65.128l5.3-3.668c41.513-28.73 82.338-57.033 92.364-63.974C186.484 179.718 27.796 69.554 16.923 61.59l-1.286-.932C7.598 54.836 1.273 50.25 1.273 38.128zM21.86 111.361c10.736 6.905 114.562 78.954 115.608 79.697l2.356 1.626l-2.394 1.6s-7.018 4.675-14.805 10.118c-6.666 4.889-12.903 7.333-19.102 7.333c-5.506 0-10.962-1.915-16.708-5.733c-6.12-4.086-23.363-15.98-40.816-28.064l-2.38-1.648A27213 27213 0 0 1 .832 146.592l-.832-.58v-24.47c0-5.62 2.42-10.067 6.666-12.222c4.548-2.318 10.231-1.562 15.195 2.041"></path></svg></div>
+                        </div>
+                </div>
+                <div class="relative z-10">
+                    <h3 class="text-lg font-medium text-white mb-3 tracking-tight">Unified Data Nexus</h3>
+                    <p class="text-sm text-white/50 font-light leading-relaxed">A centralized substrate collecting telemetry from hyperscale providers to edge nodes.</p>
+                </div>
+            </div>
+
+            <!-- Card 3: Holistic View -->
+            <div class="delay-500 col-span-1 lg:col-span-2 group hover:bg-white/[0.04] transition-all duration-500 flex flex-col hover:border-white/10 h-full border-white/5 border rounded-sm pt-8 pr-8 pb-8 pl-8 relative backdrop-blur-lg justify-between overflow-hidden" style="animation: 1s cubic-bezier(0.16, 1, 0.3, 1) 0s 1 normal both running reveal-up; --mouse-x: -664.7890625px; --mouse-y: 223px;">
+                <div class="pointer-events-none absolute -inset-px rounded-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%); z-index: 0;"></div>
+                <div class="pointer-events-none absolute -inset-px rounded-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.4), transparent 40%); z-index: 0; -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; padding: 1px;"></div>
+
+                <div class="h-48 mb-8 relative flex items-center justify-center overflow-hidden z-10">
+                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:16px_16px]"></div>
+                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="solar:widget-2-bold-duotone" class="iconify text-6xl text-white/20 group-hover:text-purple-400/80 transition-colors duration-500 iconify--solar"><path fill="currentColor" fill-rule="evenodd" d="M2 6.634a4.634 4.634 0 1 1 9.268 0a4.634 4.634 0 0 1-9.268 0" clip-rule="evenodd"></path><path fill="currentColor" fill-rule="evenodd" d="M12.732 17.366a4.634 4.634 0 1 1 9.269 0a4.634 4.634 0 0 1-9.269 0" clip-rule="evenodd" opacity=".5"></path><path fill="currentColor" d="M2 17.5c0-2.121 0-3.182.659-3.841S4.379 13 6.5 13s3.182 0 3.841.659S11 15.379 11 17.5s0 3.182-.659 3.841S8.621 22 6.5 22s-3.182 0-3.841-.659S2 19.621 2 17.5"></path><path fill="currentColor" d="M13 6.5c0-2.121 0-3.182.659-3.841S15.379 2 17.5 2s3.182 0 3.841.659S22 4.379 22 6.5s0 3.182-.659 3.841S19.621 11 17.5 11s-3.182 0-3.841-.659S13 8.621 13 6.5" opacity=".5"></path></svg>
+                </div>
+                <div class="relative z-10">
+                    <h3 class="text-lg font-medium text-white mb-3 tracking-tight">Holistic Observability</h3>
+                    <p class="text-sm text-white/50 font-light leading-relaxed">Synthesize fragmented metrics into a single, coherent system operational view.</p>
+                </div>
+            </div>
+
+            <!-- Card 4: Wide Analysis -->
+            <div class="delay-200 col-span-1 lg:col-span-3 group hover:bg-white/[0.04] transition-all duration-500 flex flex-col min-h-[320px] hover:border-white/10 border-white/5 border rounded-sm pt-8 pr-8 pb-8 pl-8 relative backdrop-blur-lg justify-between overflow-hidden" style="animation: 1s cubic-bezier(0.16, 1, 0.3, 1) 0s 1 normal both running reveal-up; --mouse-x: 284.3671875px; --mouse-y: -176.5px;">
+                    <div class="pointer-events-none absolute -inset-px rounded-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%); z-index: 0;"></div>
+                    <div class="pointer-events-none absolute -inset-px rounded-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.4), transparent 40%); z-index: 0; -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; padding: 1px;"></div>
+
+                    <div class="absolute top-0 right-0 p-6 opacity-20 group-hover:opacity-50 transition-opacity z-10">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" data-lucide="scan-search" class="lucide lucide-scan-search w-[32px] h-[32px]" data-icon-replaced="true" style="width: 32px; height: 32px; color: rgb(255, 255, 255);"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><circle cx="12" cy="12" r="3"></circle><path d="m16 16-1.9-1.9"></path></svg>
+                    </div>
+                    <div class="mt-auto relative z-10">
+                    <h3 class="text-xl font-medium text-white mb-3 tracking-tight">Deep Neural Inspection</h3>
+                    <p class="text-sm text-white/50 font-light leading-relaxed max-w-md">
+                        Our AI recursively scans unstructured data to surface hidden correlations and critical anomalies before they impact production.
+                        The system learns from historical incidents to predict future outages.
+                    </p>
+                    <div class="mt-8 flex items-center gap-4">
+                        <div class="text-xs font-mono text-purple-400 bg-purple-400/10 px-2 py-1 rounded">98% Accuracy</div>
+                        <div class="text-xs font-mono text-white/40">Real-time Analysis</div>
+                    </div>
+                    </div>
+            </div>
+
+            <!-- Card 5: Wide Dispatch -->
+            <div class="delay-300 col-span-1 lg:col-span-3 group hover:bg-white/[0.04] transition-all duration-500 flex flex-col min-h-[320px] hover:border-white/10 border-white/5 border rounded-sm pt-8 pr-8 pb-8 pl-8 relative backdrop-blur-lg justify-between overflow-hidden" style="animation: 1s cubic-bezier(0.16, 1, 0.3, 1) 0s 1 normal both running reveal-up; --mouse-x: -427.5px; --mouse-y: -176.5px;">
+                    <div class="pointer-events-none absolute -inset-px rounded-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%); z-index: 0;"></div>
+                    <div class="pointer-events-none absolute -inset-px rounded-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.4), transparent 40%); z-index: 0; -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; padding: 1px;"></div>
+
+                    <div class="absolute top-0 right-0 p-6 opacity-20 group-hover:opacity-50 transition-opacity z-10">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" data-lucide="mail-check" class="lucide lucide-mail-check w-[32px] h-[32px]" data-icon-replaced="true" style="width: 32px; height: 32px; color: rgb(255, 255, 255)"><path d="M22 13V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h8"></path><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path><path d="m16 19 2 2 4-4"></path></svg>
+                    </div>
+                    <div class="mt-auto relative z-10">
+                    <h3 class="text-xl font-medium text-white mb-3 tracking-tight">Autonomous Dispatch</h3>
+                    <p class="text-sm text-white/50 font-light leading-relaxed max-w-md">
+                        Intelligent routing of actionable insights to stakeholders via personalized, context-aware communication channels.
+                        Reduce noise by ensuring only relevant alerts reach the engineering team.
+                    </p>
+                    <div class="mt-8 flex -space-x-2 overflow-hidden">
+                        <div class="inline-block h-6 w-6 rounded-full ring-2 ring-[#0a051e] bg-gray-600"></div>
+                        <div class="inline-block h-6 w-6 rounded-full ring-2 ring-[#0a051e] bg-gray-500"></div>
+                        <div class="inline-block h-6 w-6 rounded-full ring-2 ring-[#0a051e] bg-gray-400"></div>
+                        <div class="inline-block h-6 w-6 rounded-full ring-2 ring-[#0a051e] bg-white/10 flex items-center justify-center text-[9px] font-mono text-white">+12</div>
+                    </div>
+                    </div>
+            </div>
+
+        </div>
+    </div>
+</section><section class="overflow-hidden lg:py-32 text-white w-full z-20 pt-24 pb-24 relative">
+
+  <!-- Background Grid Lines (Hero Style) -->
+  <div class="absolute inset-0 w-full h-full pointer-events-none hidden lg:block">
+    <div class="absolute top-0 bottom-0 w-[1px] bg-white/5 left-[6%]"></div>
+    <div class="absolute top-0 bottom-0 w-[1px] bg-white/5 left-[28%]">
+      <div class="absolute w-[1px] h-[200px] bg-gradient-to-b from-transparent via-purple-500/50 to-transparent beam-v" style="animation: beam-v 7s infinite;"></div>
+    </div>
+    <div class="absolute top-0 bottom-0 w-[1px] bg-white/5 left-[62%]">
+      <div class="absolute w-[1px] h-[200px] bg-gradient-to-b from-transparent via-purple-500/50 to-transparent beam-v" style="animation: beam-v 5s infinite 2s;"></div>
+    </div>
+    <div class="absolute top-0 bottom-0 w-[1px] bg-white/5 right-[6%]"></div>
+    <!-- Horizontal Lines -->
+    <div class="absolute left-0 right-0 h-[1px] bg-white/5 top-0"></div>
+    <div class="absolute left-0 right-0 h-[1px] bg-white/5 bottom-0"></div>
+  </div>
+
+  <div class="lg:px-[6%] z-10 max-w-[1600px] mr-auto ml-auto pr-6 pl-6 relative">
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 mb-8 gap-x-8 gap-y-8" onmousemove="const cards = this.querySelectorAll('.group'); for(const card of cards){ const rect = card.getBoundingClientRect(); const x = event.clientX - rect.left; const y = event.clientY - rect.top; card.style.setProperty('--mouse-x', x + 'px'); card.style.setProperty('--mouse-y', y + 'px'); }">
+
+      <!-- Left Column: Header + Feature Image -->
+      <div class="lg:col-span-7 flex flex-col gap-6 gap-x-6 gap-y-6">
+        <!-- Header Block -->
+        <div class="group hover:bg-white/[0.04] transition-all duration-500 border border-white/5 hover:border-white/10 rounded-sm backdrop-blur-lg p-10 lg:p-12 relative overflow-hidden flex flex-col justify-center min-h-[240px]" style="--mouse-x: 298.3671875px; --mouse-y: 644.5px;">
+          <!-- Flashlight Effect -->
+          <div class="pointer-events-none absolute -inset-px rounded-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%); z-index: 0;"></div>
+          <div class="pointer-events-none absolute -inset-px rounded-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.4), transparent 40%); z-index: 0; -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; padding: 1px;"></div>
+
+          <h2 class="leading-[0.95] lg:text-6xl text-4xl font-medium text-white tracking-tighter z-10 mb-2 relative">
+            Validation from Global
+            <span class="text-white/30">Infrastructure Leaders.</span>
+          </h2>
+          <!-- Decorative Background Icon -->
+          <div class="absolute -top-6 -right-6 opacity-[0.03] text-white">
+            <iconify-icon icon="solar:chat-square-like-bold-duotone" width="240"></iconify-icon>
+          </div>
+        </div>
+
+        <!-- Main Image Block with Stat -->
+        <div class="lg:h-[500px] overflow-hidden group h-[420px] border-white/5 hover:border-white/10 border rounded-sm relative backdrop-blur-lg transition-all duration-500 shadow-sm" style="--mouse-x: 298.3671875px; --mouse-y: 380.5px;">
+  <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/b5326861-9214-4075-b2d4-dedfcf9cc3ea_1600w.webp" alt="Data Network Structure" class="transition-transform duration-1000 group-hover:scale-105 filter group-hover:saturate-100 w-full h-full object-cover absolute top-0 right-0 bottom-0 left-0">
+  <div class="bg-gradient-to-t from-black/60 via-black/20 to-transparent absolute top-0 right-0 bottom-0 left-0"></div>
+
+  <div class="absolute bottom-10 right-10 text-right">
+    <span class="block text-6xl lg:text-8xl font-semibold text-white tracking-tighter shadow-black/20 drop-shadow-lg">99.99%</span>
+    <span class="block text-white/80 font-mono text-sm uppercase tracking-widest mt-0">Uptime Guaranteed</span>
+  </div>
+
+  <!-- Decorative tag -->
+  <div class="absolute top-8 left-8 bg-white/10 backdrop-blur-md border border-white/20 text-white px-3 py-1.5 rounded-sm text-[10px] font-mono uppercase tracking-wider flex items-center gap-2">
+    <span class="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse"></span>
+    Live Metrics
+  </div>
+</div>
+      </div>
+
+      <!-- Right Column: Testimonials Stack -->
+      <div class="lg:col-span-5 flex flex-col gap-6">
+
+        <!-- Card 1 -->
+        <div class="hover:bg-white/[0.04] text-white p-10 rounded-sm transform transition-all duration-500 hover:-translate-y-1 relative overflow-hidden group h-full flex flex-col justify-between border border-white/5 hover:border-white/10 backdrop-blur-lg" style="--mouse-x: -536.8046875px; --mouse-y: 644.5px;">
+          <!-- Flashlight Effect -->
+          <div class="pointer-events-none absolute -inset-px rounded-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%); z-index: 0;"></div>
+          <div class="pointer-events-none absolute -inset-px rounded-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.4), transparent 40%); z-index: 0; -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; padding: 1px;"></div>
+
+          <!-- Subtle gradient blob -->
+          <div class="absolute top-0 right-0 w-64 h-64 bg-purple-600/20 rounded-full blur-[80px] -mr-20 -mt-20 pointer-events-none">
+          </div>
+
+          <div class="relative z-10">
+            <div class="flex gap-1 text-purple-400 mb-8">
+              <iconify-icon icon="solar:star-bold-duotone" width="20"></iconify-icon>
+              <iconify-icon icon="solar:star-bold-duotone" width="20"></iconify-icon>
+              <iconify-icon icon="solar:star-bold-duotone" width="20"></iconify-icon>
+              <iconify-icon icon="solar:star-bold-duotone" width="20"></iconify-icon>
+              <iconify-icon icon="solar:star-bold-duotone" width="20"></iconify-icon>
+            </div>
+
+            <p class="text-xl font-light leading-relaxed mb-10 text-white/90">
+              "SAKURA's predictive modeling slashed our latency by 40% in just two weeks. The recursive optimization
+              agents are basically magic for our devops pipeline."
+            </p>
+          </div>
+
+          <div class="flex items-center justify-between border-t border-white/10 pt-6 relative z-10">
+            <div class="flex items-center gap-4">
+              <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/dc6dc108-07ea-4b25-98fb-c8196765a394_320w.webp" alt="Elena Rostova" class="w-12 h-12 rounded-full border-2 border-white/10 grayscale group-hover:grayscale-0 transition-all object-cover" style="">
+              <div class="">
+                <h4 class="font-medium text-white text-base">Elena Rostova</h4>
+                <div class="flex items-center gap-2 text-xs text-white/40 mt-1">
+                  <span class="uppercase tracking-wide">CTO</span>
+                  <span class="w-1 h-1 bg-white/30 rounded-full"></span>
+                  <iconify-icon icon="simple-icons:openai" width="14" class="opacity-60"></iconify-icon>
+                </div>
+              </div>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60 group-hover:bg-purple-500 group-hover:text-white transition-all cursor-pointer">
+              <iconify-icon icon="solar:arrow-right-up-bold-duotone" width="20"></iconify-icon>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="hover:bg-white/[0.04] p-8 rounded-sm border border-white/5 hover:border-white/10 transform transition-all duration-500 hover:-translate-y-1 relative group text-white backdrop-blur-lg" style="--mouse-x: -536.8046875px; --mouse-y: 263.5px;">
+          <!-- Flashlight Effect -->
+          <div class="pointer-events-none absolute -inset-px rounded-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%); z-index: 0;"></div>
+          <div class="pointer-events-none absolute -inset-px rounded-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.4), transparent 40%); z-index: 0; -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; padding: 1px;"></div>
+          
+          <div class="flex gap-1 text-purple-400 mb-6 relative z-10">
+            <iconify-icon icon="solar:star-bold-duotone" width="18"></iconify-icon>
+            <iconify-icon icon="solar:star-bold-duotone" width="18"></iconify-icon>
+            <iconify-icon icon="solar:star-bold-duotone" width="18"></iconify-icon>
+            <iconify-icon icon="solar:star-bold-duotone" width="18"></iconify-icon>
+            <iconify-icon icon="solar:star-bold-duotone" width="18"></iconify-icon>
+          </div>
+
+          <p class="text-base font-normal leading-relaxed mb-8 text-slate-400 relative z-10">
+            "The centralized storage substrate is incredibly robust. We migrated 5PB of data without a single packet
+            loss. Absolutely essential infrastructure."
+          </p>
+
+          <div class="flex items-center justify-between border-t border-white/10 pt-6 relative z-10">
+            <div class="flex items-center gap-4">
+              <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Marcus Chen" class="w-10 h-10 rounded-full border border-white/10 grayscale group-hover:grayscale-0 transition-all" style="">
+              <div class="">
+                <h4 class="font-medium text-white text-sm">Marcus Chen</h4>
+                <div class="flex items-center gap-2 text-xs text-slate-500 mt-0.5">
+                  <span>VP Eng</span>
+                  <span class="w-1 h-1 bg-slate-700 rounded-full"></span>
+                  <iconify-icon icon="simple-icons:vercel" width="14"></iconify-icon>
+                </div>
+              </div>
+            </div>
+            <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-500 group-hover:bg-purple-600 group-hover:text-white transition-all cursor-pointer">
+              <iconify-icon icon="solar:arrow-right-up-bold-duotone" width="16"></iconify-icon>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="hover:bg-white/[0.04] p-8 rounded-sm border border-white/5 hover:border-white/10 transform transition-all duration-500 hover:-translate-y-1 relative group backdrop-blur-lg" style="--mouse-x: -536.8046875px; --mouse-y: -25.5px;">
+          <!-- Flashlight Effect -->
+          <div class="pointer-events-none absolute -inset-px rounded-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%); z-index: 0;"></div>
+          <div class="pointer-events-none absolute -inset-px rounded-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.4), transparent 40%); z-index: 0; -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; padding: 1px;"></div>
+
+          <div class="flex gap-1 text-purple-400 mb-6 relative z-10">
+            <iconify-icon icon="solar:star-bold-duotone" width="18"></iconify-icon>
+            <iconify-icon icon="solar:star-bold-duotone" width="18"></iconify-icon>
+            <iconify-icon icon="solar:star-bold-duotone" width="18"></iconify-icon>
+            <iconify-icon icon="solar:star-bold-duotone" width="18"></iconify-icon>
+            <iconify-icon icon="solar:star-bold-duotone" width="18"></iconify-icon>
+          </div>
+
+          <p class="text-base font-normal leading-relaxed mb-8 text-slate-400 relative z-10">
+            "Finally, observability that actually makes sense. The holistic view dashboard saved our ops team hundreds
+            of hours in Q3 alone."
+          </p>
+
+          <div class="flex items-center justify-between border-t border-white/10 pt-6 relative z-10">
+            <div class="flex items-center gap-4">
+              <img src="https://i.pravatar.cc/150?u=a04258114e29026702d" alt="Sarah Jenkins" class="w-10 h-10 rounded-full border border-white/10 grayscale group-hover:grayscale-0 transition-all" style="">
+              <div>
+                <h4 class="font-medium text-white text-sm">Sarah Jenkins</h4>
+                <div class="flex items-center gap-2 text-xs text-slate-500 mt-0.5">
+                  <span>DevRel</span>
+                  <span class="w-1 h-1 bg-slate-700 rounded-full"></span>
+                  <iconify-icon icon="simple-icons:stripe" width="14"></iconify-icon>
+                </div>
+              </div>
+            </div>
+            <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-500 group-hover:bg-purple-600 group-hover:text-white transition-all cursor-pointer">
+              <iconify-icon icon="solar:arrow-right-up-bold-duotone" width="16"></iconify-icon>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bottom Banner CTA -->
+    <div class="hover:bg-white/[0.04] rounded-sm p-8 lg:px-12 lg:py-10 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden group border border-white/5 hover:border-white/10 backdrop-blur-lg transition-all duration-500">
+      <!-- Background Gradients -->
+      <div class="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(68,33,128,0.2)_50%,transparent_75%,transparent_100%)] bg-[length:250%_250%,100%_100%] bg-[position:0_0,0_0] transition-all duration-1000 group-hover:bg-[position:100%_100%,0_0]">
+      </div>
+
+      <div class="relative z-10 text-center md:text-left">
+        <h3 class="text-3xl lg:text-4xl font-medium text-white tracking-tight mb-2">Ready to scale your intelligence?
+        </h3>
+        <p class="text-white/50 text-base font-light">Join 10,000+ engineers building on SAKURA.</p>
+      </div>
+
+      <button class="relative z-10 bg-white text-black pl-8 pr-6 py-4 rounded-sm font-semibold text-xs uppercase tracking-widest hover:bg-purple-50 transition-all transform flex items-center gap-4 group/btn">
+                Deploy Sakura
+                <div class="w-6 h-6 bg-black text-white rounded-full flex items-center justify-center group-hover/btn:scale-110 transition-transform">
+                     <iconify-icon icon="solar:arrow-right-bold-duotone" class="text-sm"></iconify-icon>
+                </div>
+            </button>
+    </div>
+
+  </div>
+</section><section class="relative w-full py-24 lg:py-32 overflow-hidden z-20 border-t border-white/5">
+  
+  <!-- Background Effects -->
+  <div class="absolute inset-0 w-full h-full pointer-events-none">
+    <!-- Gradient Fade for the grid bottom -->
+    <div class="absolute bottom-0 left-0 right-0 h-[400px] bg-gradient-to-t from-[#0a051e] via-[#0a051e]/80 to-transparent z-10"></div>
+    <!-- Grid lines -->
+    <div class="absolute left-[6%] right-[6%] top-0 bottom-0 border-l border-r border-white/5 hidden lg:block"></div>
+  </div>
+
+  <div class="relative z-10 px-6 lg:px-[6%] max-w-[1600px] mx-auto">
+    
+    <!-- Floating Staggered Grid of Leaders -->
+    <div class="relative w-full overflow-hidden mb-20 lg:mb-24" style="mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);">
+  <style>
+    @keyframes marquee-scroll-slow {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-marquee-slow {
+      animation: marquee-scroll-slow 80s linear infinite;
+    }
+    .animate-marquee-slow:hover {
+      animation-play-state: paused;
+    }
+  </style>
+  
+  <div class="flex w-max gap-6 animate-marquee-slow items-start">
+    
+    <!-- Set 1 -->
+    <!-- Column 1 (Lower) -->
+    <div class="flex flex-col gap-6 mt-12 lg:mt-24 w-[280px] sm:w-[320px] flex-shrink-0">
+      <div class="bg-white/[0.03] backdrop-blur-md border border-white/5 p-6 rounded-sm hover:bg-white/[0.06] transition-all hover:-translate-y-1 group">
+        <div class="flex items-center gap-4 mb-4">
+          <img src="https://i.pravatar.cc/150?u=a042581f4e29026024d" alt="User" class="w-10 h-10 rounded-full grayscale group-hover:grayscale-0 transition-all border border-white/10">
+          <div>
+            <h4 class="text-sm font-medium text-white leading-none">Dr. Aris Thorne</h4>
+            <p class="text-xs text-white/40 mt-1 font-mono">Chief Architect</p>
+          </div>
+        </div>
+        <p class="text-sm text-white/70 font-light leading-relaxed mb-4">"The recursive latency optimization is unlike anything we've deployed before."</p>
+        <div class="flex justify-between items-center border-t border-white/5 pt-4">
+          <iconify-icon icon="simple-icons:nvidia" class="text-white/30 text-lg"></iconify-icon>
+          <iconify-icon icon="solar:star-bold-duotone" class="text-purple-400 text-sm"></iconify-icon>
+        </div>
+      </div>
+      <div class="bg-white/[0.03] backdrop-blur-md border border-white/5 p-6 rounded-sm hover:bg-white/[0.06] transition-all hover:-translate-y-1 group">
+        <div class="flex items-center gap-4 mb-4">
+          <img src="https://i.pravatar.cc/150?u=a042581f4e29026704b" alt="User" class="w-10 h-10 rounded-full grayscale group-hover:grayscale-0 transition-all border border-white/10">
+          <div>
+            <h4 class="text-sm font-medium text-white leading-none">Lena Vosh</h4>
+            <p class="text-xs text-white/40 mt-1 font-mono">VP Engineering</p>
+          </div>
+        </div>
+        <div class="flex justify-between items-center border-t border-white/5 pt-4 mt-4">
+          <iconify-icon icon="simple-icons:ibm" class="text-white/30 text-xl"></iconify-icon>
+           <div class="flex gap-0.5 text-purple-400/60">
+             <iconify-icon icon="solar:star-bold-duotone" class="text-xs"></iconify-icon>
+             <iconify-icon icon="solar:star-bold-duotone" class="text-xs"></iconify-icon>
+             <iconify-icon icon="solar:star-bold-duotone" class="text-xs"></iconify-icon>
+           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column 2 (Higher) -->
+    <div class="flex flex-col gap-6 mt-0 w-[280px] sm:w-[320px] flex-shrink-0">
+      <div class="bg-white/[0.03] backdrop-blur-md border border-white/5 p-6 rounded-sm hover:bg-white/[0.06] transition-all hover:-translate-y-1 group h-min">
+         <div class="mb-4 text-purple-400/80">
+            <iconify-icon icon="solar:quote-up-square-bold-duotone" class="text-2xl"></iconify-icon>
+         </div>
+         <p class="text-base text-white/90 font-light leading-relaxed mb-6">"We migrated 40PB of training data to SAKURA's substrate in 48 hours. Zero downtime. Pure efficiency."</p>
+         <div class="flex items-center gap-3">
+            <img src="https://i.pravatar.cc/150?u=23" class="w-8 h-8 rounded-full grayscale border border-white/10">
+            <div class="flex flex-col">
+               <span class="text-xs font-medium text-white">Marcus Reid</span>
+               <span class="text-[10px] uppercase tracking-wider text-white/40">Anthropic</span>
+            </div>
+            <iconify-icon icon="simple-icons:anthropic" class="ml-auto text-white/30 text-lg"></iconify-icon>
+         </div>
+      </div>
+      <div class="bg-gradient-to-br from-purple-900/20 to-transparent backdrop-blur-md border border-purple-500/20 p-6 rounded-sm relative group">
+         <div class="absolute top-4 right-4">
+            <iconify-icon icon="solar:verified-check-bold-duotone" class="text-purple-400 text-xl"></iconify-icon>
+         </div>
+         <div class="flex items-center gap-4 mb-3">
+           <img src="https://i.pravatar.cc/150?u=12" class="w-10 h-10 rounded-full grayscale group-hover:grayscale-0 transition-all border border-white/10">
+           <div>
+             <h4 class="text-sm font-medium text-white">Sarah Chen</h4>
+             <p class="text-xs text-white/40 font-mono">Director of AI</p>
+           </div>
+         </div>
+         <div class="mt-4 pt-4 border-t border-white/5 flex justify-between items-center">
+            <span class="text-xs text-white/50">Enterprise Plan</span>
+            <iconify-icon icon="simple-icons:openai" class="text-white/30 text-lg"></iconify-icon>
+         </div>
+      </div>
+    </div>
+
+    <!-- Column 3 (Middle Offset) -->
+    <div class="flex flex-col gap-6 mt-6 lg:mt-12 w-[280px] sm:w-[320px] flex-shrink-0">
+       <div class="bg-white/[0.03] backdrop-blur-md border border-white/5 p-6 rounded-sm hover:bg-white/[0.06] transition-all hover:-translate-y-1 group">
+          <div class="flex justify-between mb-4">
+              <div class="flex gap-1">
+                <iconify-icon icon="solar:star-bold-duotone" class="text-purple-400 text-xs"></iconify-icon>
+                <iconify-icon icon="solar:star-bold-duotone" class="text-purple-400 text-xs"></iconify-icon>
+                <iconify-icon icon="solar:star-bold-duotone" class="text-purple-400 text-xs"></iconify-icon>
+                <iconify-icon icon="solar:star-bold-duotone" class="text-purple-400 text-xs"></iconify-icon>
+                <iconify-icon icon="solar:star-bold-duotone" class="text-purple-400 text-xs"></iconify-icon>
+              </div>
+              <span class="text-[10px] font-mono text-white/30">v2.4 Verified</span>
+          </div>
+          <p class="text-sm text-white/80 font-light mb-4">"Predictive scaling saved us 6-figures in compute costs last quarter alone."</p>
+          <div class="flex items-center gap-3">
+             <img src="https://i.pravatar.cc/150?u=54" class="w-8 h-8 rounded-full grayscale border border-white/10">
+             <div class="">
+                <h4 class="text-xs font-medium text-white">Elias K.</h4>
+                <p class="text-[10px] text-white/40 uppercase">SpaceX</p>
+             </div>
+             <iconify-icon icon="simple-icons:spacex" class="ml-auto text-white/30 text-sm"></iconify-icon>
+          </div>
+       </div>
+       <div class="relative h-40 rounded-sm overflow-hidden border border-white/5 group">
+          <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/c6fe7f3d-bf69-4eff-a8b0-25beb3a0d389_800w.webp" class="absolute inset-0 w-full h-full object-cover grayscale opacity-60 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700">
+          <div class="bg-gradient-to-t from-black/80 to-transparent absolute top-0 right-0 bottom-0 left-0"></div>
+          <div class="absolute bottom-4 left-4">
+             <p class="text-xs font-medium text-white">Engineering Teams</p>
+             <p class="text-[10px] text-white/50 font-mono">Global Deployment</p>
+          </div>
+       </div>
+    </div>
+
+    <!-- Column 4 (Higher) -->
+    <div class="flex flex-col gap-6 mt-0 w-[280px] sm:w-[320px] flex-shrink-0">
+       <div class="bg-white/[0.03] backdrop-blur-md border border-white/5 p-6 rounded-sm hover:bg-white/[0.06] transition-all hover:-translate-y-1 group">
+           <div class="flex items-center gap-4 mb-4">
+             <img src="https://i.pravatar.cc/150?u=88" class="w-10 h-10 rounded-full grayscale group-hover:grayscale-0 transition-all border border-white/10">
+             <div>
+               <h4 class="text-sm font-medium text-white">David Park</h4>
+               <p class="text-xs text-white/40 mt-1 font-mono">CISO</p>
+             </div>
+           </div>
+           <p class="text-sm text-white/70 font-light leading-relaxed mb-4">"The security protocols embedded in the neural lattice are state-of-the-art."</p>
+           <div class="flex justify-between items-center border-t border-white/5 pt-4">
+             <iconify-icon icon="simple-icons:googlecloud" class="text-white/30 text-lg"></iconify-icon>
+           </div>
+       </div>
+       <div class="bg-white/[0.03] backdrop-blur-md border border-white/5 p-4 rounded-sm flex items-center gap-4 hover:bg-white/[0.06] transition-all">
+           <div class="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-400">
+              <iconify-icon icon="solar:graph-new-up-bold-duotone" class="text-xl"></iconify-icon>
+           </div>
+           <div>
+              <div class="text-xl font-semibold text-white tracking-tight">99.9%</div>
+              <div class="text-[10px] font-mono text-white/40 uppercase">Uptime Stat</div>
+           </div>
+       </div>
+    </div>
+
+    <!-- Column 5 (Lower) -->
+    <div class="flex flex-col gap-6 mt-12 lg:mt-24 w-[280px] sm:w-[320px] flex-shrink-0">
+       <div class="bg-white/[0.03] backdrop-blur-md border border-white/5 p-6 rounded-sm hover:bg-white/[0.06] transition-all hover:-translate-y-1 group">
+          <div class="flex items-center gap-3 mb-4">
+             <img src="https://i.pravatar.cc/150?u=33" class="w-9 h-9 rounded-full grayscale border border-white/10">
+             <div>
+                <h4 class="text-sm font-medium text-white">Jessica Wu</h4>
+                <p class="text-[10px] font-mono text-white/40">Linear</p>
+             </div>
+          </div>
+          <p class="text-sm text-white/70 font-light">"Integration took less than an hour. The API is purely intuitive."</p>
+          <div class="mt-4 pt-4 border-t border-white/5 flex justify-end">
+              <iconify-icon icon="simple-icons:linear" class="text-white/30 text-lg"></iconify-icon>
+          </div>
+       </div>
+       <div class="bg-white/[0.03] border border-white/5 p-6 rounded-sm text-center">
+          <p class="text-xs font-mono text-white/40 mb-2">TRUSTED BY</p>
+          <div class="flex justify-center gap-4 opacity-40">
+             <iconify-icon icon="simple-icons:amazon" class="text-xl"></iconify-icon>
+             <iconify-icon icon="simple-icons:meta" class="text-xl"></iconify-icon>
+             <iconify-icon icon="simple-icons:netflix" class="text-xl"></iconify-icon>
+          </div>
+       </div>
+    </div>
+
+    <!-- DUPLICATE CONTENT FOR MARQUEE -->
+    
+    <!-- Column 1 (Lower) -->
+    <div class="flex flex-col gap-6 mt-12 lg:mt-24 w-[280px] sm:w-[320px] flex-shrink-0">
+      <div class="bg-white/[0.03] backdrop-blur-md border border-white/5 p-6 rounded-sm hover:bg-white/[0.06] transition-all hover:-translate-y-1 group">
+        <div class="flex items-center gap-4 mb-4">
+          <img src="https://i.pravatar.cc/150?u=a042581f4e29026024d" alt="User" class="w-10 h-10 rounded-full grayscale group-hover:grayscale-0 transition-all border border-white/10">
+          <div>
+            <h4 class="text-sm font-medium text-white leading-none">Dr. Aris Thorne</h4>
+            <p class="text-xs text-white/40 mt-1 font-mono">Chief Architect</p>
+          </div>
+        </div>
+        <p class="text-sm text-white/70 font-light leading-relaxed mb-4">"The recursive latency optimization is unlike anything we've deployed before."</p>
+        <div class="flex justify-between items-center border-t border-white/5 pt-4">
+          <iconify-icon icon="simple-icons:nvidia" class="text-white/30 text-lg"></iconify-icon>
+          <iconify-icon icon="solar:star-bold-duotone" class="text-purple-400 text-sm"></iconify-icon>
+        </div>
+      </div>
+      <div class="bg-white/[0.03] backdrop-blur-md border border-white/5 p-6 rounded-sm hover:bg-white/[0.06] transition-all hover:-translate-y-1 group">
+        <div class="flex items-center gap-4 mb-4">
+          <img src="https://i.pravatar.cc/150?u=a042581f4e29026704b" alt="User" class="w-10 h-10 rounded-full grayscale group-hover:grayscale-0 transition-all border border-white/10">
+          <div>
+            <h4 class="text-sm font-medium text-white leading-none">Lena Vosh</h4>
+            <p class="text-xs text-white/40 mt-1 font-mono">VP Engineering</p>
+          </div>
+        </div>
+        <div class="flex justify-between items-center border-t border-white/5 pt-4 mt-4">
+          <iconify-icon icon="simple-icons:ibm" class="text-white/30 text-xl"></iconify-icon>
+           <div class="flex gap-0.5 text-purple-400/60">
+             <iconify-icon icon="solar:star-bold-duotone" class="text-xs"></iconify-icon>
+             <iconify-icon icon="solar:star-bold-duotone" class="text-xs"></iconify-icon>
+             <iconify-icon icon="solar:star-bold-duotone" class="text-xs"></iconify-icon>
+           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column 2 (Higher) -->
+    <div class="flex flex-col gap-6 mt-0 w-[280px] sm:w-[320px] flex-shrink-0">
+      <div class="bg-white/[0.03] backdrop-blur-md border border-white/5 p-6 rounded-sm hover:bg-white/[0.06] transition-all hover:-translate-y-1 group h-min">
+         <div class="mb-4 text-purple-400/80">
+            <iconify-icon icon="solar:quote-up-square-bold-duotone" class="text-2xl"></iconify-icon>
+         </div>
+         <p class="text-base text-white/90 font-light leading-relaxed mb-6">"We migrated 40PB of training data to SAKURA's substrate in 48 hours. Zero downtime. Pure efficiency."</p>
+         <div class="flex items-center gap-3">
+            <img src="https://i.pravatar.cc/150?u=23" class="w-8 h-8 rounded-full grayscale border border-white/10">
+            <div class="flex flex-col">
+               <span class="text-xs font-medium text-white">Marcus Reid</span>
+               <span class="text-[10px] uppercase tracking-wider text-white/40">Anthropic</span>
+            </div>
+            <iconify-icon icon="simple-icons:anthropic" class="ml-auto text-white/30 text-lg"></iconify-icon>
+         </div>
+      </div>
+      <div class="bg-gradient-to-br from-purple-900/20 to-transparent backdrop-blur-md border border-purple-500/20 p-6 rounded-sm relative group">
+         <div class="absolute top-4 right-4">
+            <iconify-icon icon="solar:verified-check-bold-duotone" class="text-purple-400 text-xl"></iconify-icon>
+         </div>
+         <div class="flex items-center gap-4 mb-3">
+           <img src="https://i.pravatar.cc/150?u=12" class="w-10 h-10 rounded-full grayscale group-hover:grayscale-0 transition-all border border-white/10">
+           <div>
+             <h4 class="text-sm font-medium text-white">Sarah Chen</h4>
+             <p class="text-xs text-white/40 font-mono">Director of AI</p>
+           </div>
+         </div>
+         <div class="mt-4 pt-4 border-t border-white/5 flex justify-between items-center">
+            <span class="text-xs text-white/50">Enterprise Plan</span>
+            <iconify-icon icon="simple-icons:openai" class="text-white/30 text-lg"></iconify-icon>
+         </div>
+      </div>
+    </div>
+
+    <!-- Column 3 (Middle Offset) -->
+    <div class="flex flex-col gap-6 mt-6 lg:mt-12 w-[280px] sm:w-[320px] flex-shrink-0">
+       <div class="bg-white/[0.03] backdrop-blur-md border border-white/5 p-6 rounded-sm hover:bg-white/[0.06] transition-all hover:-translate-y-1 group">
+          <div class="flex justify-between mb-4">
+              <div class="flex gap-1">
+                <iconify-icon icon="solar:star-bold-duotone" class="text-purple-400 text-xs"></iconify-icon>
+                <iconify-icon icon="solar:star-bold-duotone" class="text-purple-400 text-xs"></iconify-icon>
+                <iconify-icon icon="solar:star-bold-duotone" class="text-purple-400 text-xs"></iconify-icon>
+                <iconify-icon icon="solar:star-bold-duotone" class="text-purple-400 text-xs"></iconify-icon>
+                <iconify-icon icon="solar:star-bold-duotone" class="text-purple-400 text-xs"></iconify-icon>
+              </div>
+              <span class="text-[10px] font-mono text-white/30">v2.4 Verified</span>
+          </div>
+          <p class="text-sm text-white/80 font-light mb-4">"Predictive scaling saved us 6-figures in compute costs last quarter alone."</p>
+          <div class="flex items-center gap-3">
+             <img src="https://i.pravatar.cc/150?u=54" class="w-8 h-8 rounded-full grayscale border border-white/10">
+             <div class="">
+                <h4 class="text-xs font-medium text-white">Elias K.</h4>
+                <p class="text-[10px] text-white/40 uppercase">SpaceX</p>
+             </div>
+             <iconify-icon icon="simple-icons:spacex" class="ml-auto text-white/30 text-sm"></iconify-icon>
+          </div>
+       </div>
+       <div class="relative h-40 rounded-sm overflow-hidden border border-white/5 group">
+          <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/c6fe7f3d-bf69-4eff-a8b0-25beb3a0d389_800w.webp" class="absolute inset-0 w-full h-full object-cover grayscale opacity-60 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700">
+          <div class="bg-gradient-to-t from-black/80 to-transparent absolute top-0 right-0 bottom-0 left-0"></div>
+          <div class="absolute bottom-4 left-4">
+             <p class="text-xs font-medium text-white">Engineering Teams</p>
+             <p class="text-[10px] text-white/50 font-mono">Global Deployment</p>
+          </div>
+       </div>
+    </div>
+
+    <!-- Column 4 (Higher) -->
+    <div class="flex flex-col gap-6 mt-0 w-[280px] sm:w-[320px] flex-shrink-0">
+       <div class="bg-white/[0.03] backdrop-blur-md border border-white/5 p-6 rounded-sm hover:bg-white/[0.06] transition-all hover:-translate-y-1 group">
+           <div class="flex items-center gap-4 mb-4">
+             <img src="https://i.pravatar.cc/150?u=88" class="w-10 h-10 rounded-full grayscale group-hover:grayscale-0 transition-all border border-white/10">
+             <div>
+               <h4 class="text-sm font-medium text-white">David Park</h4>
+               <p class="text-xs text-white/40 mt-1 font-mono">CISO</p>
+             </div>
+           </div>
+           <p class="text-sm text-white/70 font-light leading-relaxed mb-4">"The security protocols embedded in the neural lattice are state-of-the-art."</p>
+           <div class="flex justify-between items-center border-t border-white/5 pt-4">
+             <iconify-icon icon="simple-icons:googlecloud" class="text-white/30 text-lg"></iconify-icon>
+           </div>
+       </div>
+       <div class="bg-white/[0.03] backdrop-blur-md border border-white/5 p-4 rounded-sm flex items-center gap-4 hover:bg-white/[0.06] transition-all">
+           <div class="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-400">
+              <iconify-icon icon="solar:graph-new-up-bold-duotone" class="text-xl"></iconify-icon>
+           </div>
+           <div>
+              <div class="text-xl font-semibold text-white tracking-tight">99.9%</div>
+              <div class="text-[10px] font-mono text-white/40 uppercase">Uptime Stat</div>
+           </div>
+       </div>
+    </div>
+
+    <!-- Column 5 (Lower) -->
+    <div class="flex flex-col gap-6 mt-12 lg:mt-24 w-[280px] sm:w-[320px] flex-shrink-0">
+       <div class="bg-white/[0.03] backdrop-blur-md border border-white/5 p-6 rounded-sm hover:bg-white/[0.06] transition-all hover:-translate-y-1 group">
+          <div class="flex items-center gap-3 mb-4">
+             <img src="https://i.pravatar.cc/150?u=33" class="w-9 h-9 rounded-full grayscale border border-white/10">
+             <div>
+                <h4 class="text-sm font-medium text-white">Jessica Wu</h4>
+                <p class="text-[10px] font-mono text-white/40">Linear</p>
+             </div>
+          </div>
+          <p class="text-sm text-white/70 font-light">"Integration took less than an hour. The API is purely intuitive."</p>
+          <div class="mt-4 pt-4 border-t border-white/5 flex justify-end">
+              <iconify-icon icon="simple-icons:linear" class="text-white/30 text-lg"></iconify-icon>
+          </div>
+       </div>
+       <div class="bg-white/[0.03] border border-white/5 p-6 rounded-sm text-center">
+          <p class="text-xs font-mono text-white/40 mb-2">TRUSTED BY</p>
+          <div class="flex justify-center gap-4 opacity-40">
+             <iconify-icon icon="simple-icons:amazon" class="text-xl"></iconify-icon>
+             <iconify-icon icon="simple-icons:meta" class="text-xl"></iconify-icon>
+             <iconify-icon icon="simple-icons:netflix" class="text-xl"></iconify-icon>
+          </div>
+       </div>
+    </div>
+    
+  </div>
+</div>
+
+    <!-- Central Text Content -->
+    <div class="relative z-20 text-center max-w-3xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-sm mb-8 animate-reveal">
+         <span class="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse"></span>
+         <span class="text-[10px] font-mono uppercase tracking-widest text-white/70">Testimonials</span>
+      </div>
+      
+      <h2 class="leading-[1.1] animate-reveal delay-100 md:text-5xl lg:text-7xl text-4xl font-medium text-white tracking-tight mb-6">
+         Validated by architects across
+         <span class="text-white/30">high-scale industries.</span>
+      </h2>
+      
+      <p class="text-lg text-white/50 font-light leading-relaxed mb-10 animate-reveal delay-200">
+         Join 10,000+ engineers and systems architects relying on SAKURA to complete their autonomous customer journeys.
+      </p>
+      
+      <button class="group relative inline-flex items-center gap-3 px-8 py-4 bg-white text-black rounded-sm font-semibold text-xs uppercase tracking-widest hover:bg-purple-50 transition-all animate-reveal delay-300">
+         <span>Read Engineering Case Studies</span>
+         <iconify-icon icon="solar:arrow-right-bold-duotone" class="text-lg transition-transform group-hover:translate-x-1"></iconify-icon>
+      </button>
+    </div>
+
+  </div>
+</section><section class="z-20 w-full border-white/5 border-t relative">
+  <div class="lg:px-[6%] max-w-[1600px] mr-auto ml-auto pr-6 pl-6">
+    
+    <!-- FAQ Segment -->
+    <div class="max-w-3xl pt-24 pb-24">
+      <div class="space-y-0">
+        <!-- FAQ Item 1 -->
+        <div class="group border-white/5 border-b">
+          <button class="w-full pt-8 pb-8 flex items-center justify-between cursor-pointer text-left focus:outline-none" onclick="const ans = this.nextElementSibling; const icon = this.querySelector('iconify-icon'); ans.classList.toggle('hidden'); icon.classList.toggle('rotate-45');">
+            <h3 class="text-lg font-light text-white/90 group-hover:text-white transition-colors">Can you guarantee 99.99% recursive uptime?</h3>
+            <iconify-icon icon="solar:add-circle-bold-duotone" class="text-2xl text-white/30 group-hover:text-purple-400 transition-all duration-300"></iconify-icon>
+          </button>
+          <div class="hidden pb-8 text-white/60 font-light leading-relaxed animate-reveal">
+            Our recursive neural topology autonomously reroutes data streams through redundant nodes, ensuring continuous availability even during catastrophic localized failures.
+          </div>
+        </div>
+        
+        <!-- FAQ Item 2 -->
+        <div class="group border-b border-white/5">
+          <button class="w-full pt-8 pb-8 flex items-center justify-between cursor-pointer text-left focus:outline-none" onclick="const ans = this.nextElementSibling; const icon = this.querySelector('iconify-icon'); ans.classList.toggle('hidden'); icon.classList.toggle('rotate-45');">
+            <h3 class="text-lg font-light text-white/90 group-hover:text-white transition-colors">Where are the neural data nodes geographically located?</h3>
+            <iconify-icon icon="solar:add-circle-bold-duotone" class="text-2xl text-white/30 group-hover:text-purple-400 transition-all duration-300"></iconify-icon>
+          </button>
+          <div class="hidden pb-8 text-white/60 font-light leading-relaxed animate-reveal">
+             Nodes are distributed across 40+ tier-4 data centers globally, with primary clusters in Tokyo, Frankfurt, and Northern Virginia to minimize signal latency.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Banner with Flashlight Effect -->
+    <div class="overflow-hidden w-full rounded-sm mb-32 relative group" onmousemove="const rect=this.getBoundingClientRect(); const x=event.clientX - rect.left; const y=event.clientY - rect.top; this.style.setProperty('--mouse-x', x + 'px'); this.style.setProperty('--mouse-y', y + 'px');" style="--mouse-x: 1092.3671875px; --mouse-y: 299px;">
+        
+        <!-- Flashlight Overlay -->
+        <div class="pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-20 mix-blend-screen" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.15), transparent 40%);"></div>
+
+        <!-- Abstract Lines -->
+        <svg class="absolute top-0 right-0 h-full w-full opacity-20 pointer-events-none z-0" viewBox="0 0 1000 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="850" cy="200" r="150" stroke="white" stroke-width="1" stroke-dasharray="4 4"></circle>
+            <circle cx="850" cy="200" r="280" stroke="white" stroke-width="0.5" opacity="0.5"></circle>
+            <path d="M0 400 C 300 400, 600 200, 1000 200" stroke="white" stroke-width="0.5" fill="none"></path>
+            <circle cx="750" cy="300" r="2" fill="white"></circle>
+        </svg>
+
+        <div class="lg:px-16 lg:py-20 flex flex-col lg:flex-row lg:items-end bg-center bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/1a5c78a4-2c8f-45ca-be6a-164d15d324bc_3840w.webp)] bg-cover z-10 pt-16 pr-8 pb-16 pl-8 relative gap-x-12 gap-y-12 items-start justify-between" style="position: relative; --border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1))">
+            <div class="max-w-xl relative z-30">
+                <h2 class="text-4xl lg:text-5xl font-medium text-white tracking-tight mb-12 leading-[1.1]">
+                    Unsure of the optimal
+                    <span class="opacity-70">topology for you?</span>
+                </h2>
+
+                <!-- Glass Boxed CTA Button -->
+                <a href="#" class="group relative inline-flex flex-col justify-between w-64 h-28 border border-white/10 bg-white/[0.02] backdrop-blur-xl hover:bg-white/[0.08] hover:border-white/30 hover:shadow-[0_0_40px_-10px_rgba(255,255,255,0.1)] transition-all duration-500 rounded-sm p-5 overflow-hidden">
+                     <div class="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-50 group-hover:opacity-80 transition-opacity"></div>
+                     <div class="w-full flex justify-end relative z-10">
+                        <iconify-icon icon="solar:arrow-right-up-linear" class="text-xl text-white/70 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></iconify-icon>
+                     </div>
+                     <span class="text-sm font-medium uppercase tracking-wider text-white relative z-10">Initiate Consult</span>
+                </a>
+            </div>
+
+            <div class="max-w-sm pb-2 relative z-30">
+                <p class="text-lg text-white/80 font-light leading-relaxed">
+                    Our dedicated architecture team is standing by to assist with custom deployment strategies and recursive
+                    scaling.
+                </p>
+            </div>
+        </div>
+    </div>
+
+  </div>
+</section><footer class="relative w-full border-t border-white/5 bg-[#0a051e] z-20 pt-24 pb-12">
+  <div class="max-w-[1600px] mx-auto px-6 lg:px-[6%]">
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-24">
+      
+      <!-- Logo Column -->
+      <div class="lg:col-span-2">
+        <div class="flex items-center gap-2 text-white mb-6">
+           <iconify-icon icon="solar:atom-bold-duotone" class="text-purple-400 text-2xl"></iconify-icon>
+           <span class="font-bold tracking-tight">SAKURA</span>
+        </div>
+      </div>
+
+      <!-- Links Columns -->
+      <div class="lg:col-span-2">
+        <h4 class="text-xs font-mono text-white/40 uppercase mb-6">Developers</h4>
+        <ul class="space-y-4">
+          <li class=""><a href="#" class="text-sm text-white/60 hover:text-white transition-colors">Documentation</a></li>
+          <li><a href="#" class="text-sm text-white/60 hover:text-white transition-colors">API Reference</a></li>
+          <li><a href="#" class="text-sm text-white/60 hover:text-white transition-colors">System Status</a> <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 ml-1"></span></li>
+          <li><a href="#" class="text-sm text-white/60 hover:text-white transition-colors">Open Source</a></li>
+        </ul>
+      </div>
+
+      <div class="lg:col-span-2">
+        <h4 class="text-xs font-mono text-white/40 uppercase mb-6">Company</h4>
+        <ul class="space-y-4">
+          <li><a href="#" class="text-sm text-white/60 hover:text-white transition-colors">About</a></li>
+          <li><a href="#" class="text-sm text-white/60 hover:text-white transition-colors">Research</a></li>
+          <li><a href="#" class="text-sm text-white/60 hover:text-white transition-colors">Careers</a></li>
+          <li><a href="#" class="text-sm text-white/60 hover:text-white transition-colors">Legal</a></li>
+        </ul>
+      </div>
+
+      <div class="lg:col-span-2">
+        <h4 class="text-xs font-mono text-white/40 uppercase mb-6">Connect</h4>
+        <ul class="space-y-4">
+          <li>
+            <a href="#" class="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
+              <iconify-icon icon="simple-icons:x" class="text-xs"></iconify-icon> Twitter
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
+              <iconify-icon icon="simple-icons:github" class="text-xs"></iconify-icon> GitHub
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
+              <iconify-icon icon="simple-icons:discord" class="text-xs"></iconify-icon> Discord
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Contact Boxes -->
+      <div class="lg:col-span-4 flex flex-col sm:flex-row gap-4 lg:justify-end">
+        <a href="#" class="group flex flex-col justify-between p-6 w-full sm:w-48 h-32 border border-white/10 hover:bg-white/[0.03] hover:border-white/20 transition-all rounded-sm">
+          <div class="w-full flex justify-end">
+             <iconify-icon icon="solar:arrow-right-up-linear" class="text-white/40 group-hover:text-purple-400 transition-colors"></iconify-icon>
+          </div>
+          <div>
+            <span class="block text-xs font-mono text-white/40 mb-1">Enterprise</span>
+            <span class="block text-sm font-medium text-white">Contact Sales</span>
+          </div>
+        </a>
+        
+        <a href="#" class="group flex flex-col justify-between p-6 w-full sm:w-48 h-32 border border-white/10 hover:bg-white/[0.03] hover:border-white/20 transition-all rounded-sm">
+          <div class="w-full flex justify-end">
+             <iconify-icon icon="solar:arrow-right-up-linear" class="text-white/40 group-hover:text-purple-400 transition-colors"></iconify-icon>
+          </div>
+          <div>
+            <span class="block text-xs font-mono text-white/40 mb-1">Technical</span>
+            <span class="block text-sm font-medium text-white">Get Support</span>
+          </div>
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-white/5 gap-4">
+       <p class="text-xs text-white/30">© 2024 SAKURA Systems Inc. All rights reserved.</p>
+       <div class="flex gap-6">
+          <a href="#" class="text-xs text-white/30 hover:text-white transition-colors">Privacy Policy</a>
+          <a href="#" class="text-xs text-white/30 hover:text-white transition-colors">Terms of Service</a>
+       </div>
+    </div>
+
+  </div>
+</footer>
+
+    <!-- Script for Icons, Mobile Menu, and Animations -->
+    <script>
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('open-menu');
+        const closeBtn = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const body = document.body;
+
+        function toggleMenu() {
+            const isHidden = mobileMenu.classList.contains('hidden-menu');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden-menu');
+                mobileMenu.classList.add('visible-menu');
+                body.style.overflow = 'hidden'; // Prevent background scroll
+            } else {
+                mobileMenu.classList.remove('visible-menu');
+                mobileMenu.classList.add('hidden-menu');
+                body.style.overflow = ''; // Restore scroll
+            }
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+
+        // Scroll Animation Observer
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // Only animate once
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+
+
+</body></html>

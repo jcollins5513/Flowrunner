@@ -1,0 +1,57 @@
+{
+  "name": "NovaCash Financial Dashboard Landing Page Template",
+  "slug": "personal-finance",
+  "description": "A reusable landing page template designed for personal finance and budgeting apps to showcase spending lanes, cashflow insights, and growth tracking.",
+  "tags": [
+    "Landing Page",
+    "Finance",
+    "Dashboard",
+    "Spending Lanes",
+    "Cashflow",
+    "Budgeting",
+    "Analytics",
+    "Growth Tracking",
+    "Mobile Mockup",
+    "Responsive"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/personal-finance",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "A reusable landing page template designed for personal finance and budgeting apps to showcase spending lanes, cashflow insights, and growth tracking.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [
+    "saas"
+  ],
+  "source": "aura",
+  "author": {
+    "name": "Meng To",
+    "slug": "meng",
+    "avatar_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/user-avatars/avatars/9109ecbb-cdc4-4815-981e-2ea83be13765-1747961036177.png",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/personal-finance.png?t=1763484102531",
+  "aura": {
+    "id": 5103,
+    "views": 1213,
+    "forks": 9,
+    "premium": true
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

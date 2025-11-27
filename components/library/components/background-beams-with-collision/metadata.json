@@ -1,0 +1,46 @@
+{
+  "name": "Aceternity UI",
+  "slug": "background-beams-with-collision",
+  "description": "Exploding beams in the background",
+  "props": [
+    {
+      "Prop Name": "children",
+      "Type": "React.ReactNode",
+      "Description": "The content to be rendered inside the component",
+      "Default": "Required"
+    },
+    {
+      "Prop Name": "className",
+      "Type": "string?",
+      "Description": "Additional CSS classes to be applied to the container",
+      "Default": "undefined"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/background-beams-with-collisionCopy",
+  "url": "https://ui.aceternity.com/components/background-beams-with-collision",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "Exploding beams in the background",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { BackgroundBeamsWithCollision } from \"@/components/ui/background-beams-with-collision\";"
+  ],
+  "dependencies": [
+    "@/components/ui/background-beams-with-collision",
+    "react"
+  ],
+  "client_only": false
+}

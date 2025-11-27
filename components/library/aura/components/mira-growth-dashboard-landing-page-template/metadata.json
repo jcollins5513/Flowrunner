@@ -1,0 +1,57 @@
+{
+  "name": "Mira Growth Dashboard Landing Page Template",
+  "slug": "mira-growth-dashboard",
+  "description": "This reusable landing page template is designed for SaaS growth and revenue teams to showcase a data-driven client expansion dashboard with AI-powered insights.",
+  "tags": [
+    "Landing Page",
+    "Hero",
+    "Features",
+    "Pricing",
+    "Testimonials",
+    "Dashboard",
+    "AI Assistant",
+    "SaaS",
+    "Growth",
+    "Revenue"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/mira-growth-dashboard",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "This reusable landing page template is designed for SaaS growth and revenue teams to showcase a data-driven client expansion dashboard with AI-powered insights.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [
+    "saas"
+  ],
+  "source": "aura",
+  "author": {
+    "name": "Sourasith Phomhome",
+    "slug": "sourasith-p",
+    "avatar_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/sign/user-avatars/avatar-72F3F2F6-BE51-407F-BF04-996779B6D953.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InN0b3JhZ2UtdXJsLXNpZ25pbmcta2V5X2M5NTc0NmE2LWNiMDYtNGYzYS1iYzEyLWM4MjBjYmU5ZjNhNiJ9.eyJ1cmwiOiJ1c2VyLWF2YXRhcnMvYXZhdGFyLTcyRjNGMkY2LUJFNTEtNDA3Ri1CRjA0LTk5Njc3OUI2RDk1My5qcGciLCJpYXQiOjE3NDYwNjk2NjMsImV4cCI6MjA2MTQyOTY2M30.9UsfCVsS9O6m3QAfT63HBjI9jGkuUDIj5rX_0BpKzO0",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/mira-growth-dashboard.png",
+  "aura": {
+    "id": 4947,
+    "views": 2755,
+    "forks": 41,
+    "premium": true
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

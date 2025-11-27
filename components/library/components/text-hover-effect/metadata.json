@@ -1,0 +1,45 @@
+{
+  "name": "Aceternity UI",
+  "slug": "text-hover-effect",
+  "description": "A text hover effect that animates and outlines gradient on hover, as seen on x.ai",
+  "props": [
+    {
+      "Prop": "text",
+      "Type": "string",
+      "Default": "Required",
+      "Description": "The text to be displayed with the hover effect"
+    },
+    {
+      "Prop": "duration",
+      "Type": "number",
+      "Default": "0",
+      "Description": "The duration of the mask transition animation in seconds"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/text-hover-effectCopy",
+  "url": "https://ui.aceternity.com/components/text-hover-effect",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "pointer-reactive",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A text hover effect that animates and outlines gradient on hover, as seen on x.ai",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { TextHoverEffect } from \"@/components/ui/text-hover-effect\";"
+  ],
+  "dependencies": [
+    "@/components/ui/text-hover-effect",
+    "react"
+  ],
+  "client_only": false
+}

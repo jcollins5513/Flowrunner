@@ -1,0 +1,54 @@
+Rogers{
+  "name": "Astria Autonomous Agents Landing Page Template",
+  "slug": "astria-saas-landing-page",
+  "description": "This reusable landing page template showcases Astria, a platform for deploying and managing autonomous AI agents to automate workflows across product, growth, and support.",
+  "tags": [
+    "Landing Page",
+    "Hero",
+    "Features",
+    "Pricing",
+    "Testimonials",
+    "Video",
+    "Changelog",
+    "Trust Logos",
+    "CTA"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/astria-saas-landing-page",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "This reusable landing page template showcases Astria, a platform for deploying and managing autonomous AI agents to automate workflows across product, growth, and support.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "aura",
+  "author": {
+    "name": "Sourany Phomhome",
+    "slug": "sourany",
+    "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocLoQZePAiZWIthvCKEU9ojH9gXKvKMsh4bHnXIlpUcwrvUFJO9F=s96-c",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/astria-saas-landing-page.png",
+  "aura": {
+    "id": 5007,
+    "views": 1240,
+    "forks": 10,
+    "premium": true
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

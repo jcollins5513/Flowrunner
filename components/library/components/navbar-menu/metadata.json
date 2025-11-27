@@ -1,0 +1,40 @@
+{
+  "name": "Aceternity UI",
+  "slug": "navbar-menu",
+  "description": "A navbar menu that animates its children on hover, makes a beautiful bignav",
+  "props": [
+    {
+      "Prop name": "className",
+      "Type": "string",
+      "Description": "The class name of the child component."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/navbar-menuCopy",
+  "url": "https://ui.aceternity.com/components/navbar-menu",
+  "type": "navigation",
+  "subtype": "",
+  "layout_role": "sticky",
+  "recommended_slots": [
+    "header",
+    "sidebar"
+  ],
+  "interaction_profile": "pointer-reactive",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "A navbar menu that animates its children on hover, makes a beautiful bignav",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React, { useState } from \"react\";",
+    "import { HoveredLink, Menu, MenuItem, ProductItem } from \"../ui/navbar-menu\";",
+    "import { cn } from \"@/lib/utils\";"
+  ],
+  "dependencies": [
+    "@/lib/utils",
+    "react"
+  ],
+  "client_only": true
+}

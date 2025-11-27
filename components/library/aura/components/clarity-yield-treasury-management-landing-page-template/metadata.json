@@ -1,0 +1,55 @@
+{
+  "name": "Clarity Yield Treasury Management Landing Page Template",
+  "slug": "clarity-yield",
+  "description": "This template offers a modern landing page design for treasury management platforms, showcasing features, solutions, and program deployments to drive user engagement.",
+  "tags": [
+    "Landing Page",
+    "Treasury Management",
+    "Features",
+    "Solutions",
+    "Integrations",
+    "Pricing",
+    "Demo",
+    "Programs",
+    "Risk Management",
+    "Compliance"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/clarity-yield",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "This template offers a modern landing page design for treasury management platforms, showcasing features, solutions, and program deployments to drive user engagement.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "aura",
+  "author": {
+    "name": "Meng To",
+    "slug": "meng",
+    "avatar_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/user-avatars/avatars/9109ecbb-cdc4-4815-981e-2ea83be13765-1747961036177.png",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/clarity-yield.png",
+  "aura": {
+    "id": 5501,
+    "views": 1065,
+    "forks": 6,
+    "premium": true
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

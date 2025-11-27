@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><title>Pranta Saha – Developer & Creative Technologist</title>
+<meta charset="UTF-8" />
+<meta
+name="description"
+content="Portfolio of Pranta Saha – developer and creative technologist crafting interactive, performant web experiences with React, TypeScript, and modern tooling."
+/>
+<meta
+name="keywords"
+content="Pranta, Saha, developer, software engineer, frontend, React, TypeScript, portfolio"
+/>
+<meta name="author" content="Pranta Saha" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- Open Graph / Social -->
+<meta property="og:title" content="Pranta Saha – Developer & Creative Technologist" />
+<meta
+property="og:description"
+content="Modern web experiences, interactive stories, and performant interfaces."
+/>
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://sahapranta.github.io/" />
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Lucide Icons CDN -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<!-- Font -->
+<link rel="preconnect" href="https://rsms.me" />
+<link rel="stylesheet" href="https://rsms.me/inter/inter.css" /></head>
+  <body
+    class="min-h-screen bg-slate-950 text-slate-50 antialiased selection:bg-indigo-400/40 selection:text-slate-900"
+  >
+    <div class="flex min-h-screen flex-col">
+      <!-- Page Shell -->
+      <div
+        class="relative flex-1 bg-gradient-to-b from-slate-950 via-slate-950 to-slate-950/95"
+      >
+        <!-- Glow / Grid Background -->
+        <div class="pointer-events-none absolute inset-0 overflow-hidden">
+          <div
+            class="absolute inset-x-0 top-[-10%] mx-auto h-[24rem] max-w-4xl rounded-full bg-indigo-500/20 blur-3xl"
+          ></div>
+          <div
+            class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(148,163,184,0.12),_transparent_55%),radial-gradient(circle_at_bottom,_rgba(56,189,248,0.1),_transparent_55%)]"
+          ></div>
+          <div
+            class="absolute inset-0 bg-[linear-gradient(to_right,rgba(148,163,184,0.16)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.12)_1px,transparent_1px)] bg-[size:24px_24px] opacity-20"
+          ></div>
+        </div>
+
+        <!-- Header -->
+        <header
+          class="relative z-20 mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 pt-6 sm:px-6 lg:px-8"
+        >
+          <!-- Logo -->
+          <a
+            href="#top"
+            aria-label="Pranta home"
+            class="group inline-flex items-center gap-2"
+          >
+            <div
+              class="flex h-9 w-9 items-center justify-center rounded-full border border-slate-800 bg-slate-900/70 shadow-sm shadow-black/40 ring-1 ring-black/50 backdrop-blur"
+            >
+              <span
+                class="text-sm font-semibold tracking-tight text-slate-50 group-hover:text-indigo-300"
+              >
+                PS
+              </span>
+            </div>
+            <span
+              class="hidden text-sm font-medium tracking-tight text-slate-300 sm:inline-flex"
+            >
+              pranta.saha
+            </span>
+          </a>
+
+          <!-- Nav -->
+          <nav
+            class="flex items-center gap-1 rounded-full border border-slate-800/80 bg-slate-950/70 px-1.5 py-1 text-xs text-slate-300 shadow-sm shadow-black/40 backdrop-blur"
+            aria-label="Primary"
+          >
+            <a
+              href="#work"
+              class="rounded-full px-3 py-1.5 font-medium tracking-tight text-slate-300 hover:bg-slate-800/80 hover:text-slate-50"
+            >
+              Work
+            </a>
+            <a
+              href="#about"
+              class="rounded-full px-3 py-1.5 font-medium tracking-tight text-slate-300 hover:bg-slate-800/80 hover:text-slate-50"
+            >
+              About
+            </a>
+            <a
+              href="#experiments"
+              class="hidden rounded-full px-3 py-1.5 font-medium tracking-tight text-slate-300 hover:bg-slate-800/80 hover:text-slate-50 sm:inline-flex"
+            >
+              Experiments
+            </a>
+            <a
+              href="#contact"
+              class="hidden rounded-full px-3 py-1.5 font-medium tracking-tight text-slate-300 hover:bg-slate-800/80 hover:text-slate-50 md:inline-flex"
+            >
+              Contact
+            </a>
+
+            <!-- Theme Toggle -->
+            <button
+              id="theme-toggle"
+              type="button"
+              aria-label="Toggle theme"
+              class="ml-1 inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-700 bg-slate-900/80 text-slate-300 shadow-sm shadow-black/40 hover:bg-slate-800"
+            >
+              <i id="theme-icon" data-lucide="moon" class="h-3.5 w-3.5"></i>
+            </button>
+          </nav>
+        </header>
+
+        <!-- Hero -->
+        <main
+          id="top"
+          class="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col gap-16 px-4 pb-16 pt-14 sm:px-6 sm:pt-20 lg:flex-row lg:items-center lg:gap-20 lg:px-8 lg:pb-20"
+        >
+          <!-- Left / Intro -->
+          <section class="w-full space-y-10 lg:max-w-xl" aria-labelledby="hero-heading">
+            <div class="space-y-6">
+              <p class="text-xs font-medium uppercase tracking-[0.22em] text-slate-400">
+                Developer & Creative Technologist
+              </p>
+
+              <h1
+                id="hero-heading"
+                class="text-4xl font-semibold tracking-tight text-slate-50 sm:text-5xl lg:text-6xl"
+              >
+                I build
+                <span class="text-indigo-300">interactive</span> experiences for the modern web.
+              </h1>
+
+              <p class="max-w-xl text-base font-medium text-slate-300">
+                I’m Pranta, a developer focused on expressive interfaces, thoughtful motion, and
+                fast, accessible products. I work primarily with
+                <span class="text-sky-300">React</span>,
+                <span class="text-emerald-300">TypeScript</span>, and modern tooling.
+              </p>
+            </div>
+
+            <!-- CTA Row -->
+            <div class="flex flex-wrap items-center gap-3">
+              <a
+                href="#work"
+                class="inline-flex items-center gap-2 rounded-full bg-slate-50 px-4 py-2.5 text-xs font-medium tracking-tight text-slate-950 shadow-sm shadow-slate-900/60 ring-1 ring-slate-200 hover:bg-slate-100"
+              >
+                <span>View Selected Work</span>
+                <i data-lucide="arrow-right" class="h-3.5 w-3.5"></i>
+              </a>
+
+              <a
+                href="mailto:prantasaha.dev@gmail.com"
+                class="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-950/40 px-3.5 py-2 text-xs font-medium tracking-tight text-slate-200 hover:border-slate-500 hover:bg-slate-900/70"
+              >
+                <i data-lucide="send" class="h-3.5 w-3.5"></i>
+                <span>Open to collaborations</span>
+              </a>
+            </div>
+
+            <!-- Meta -->
+            <div
+              class="grid gap-4 rounded-2xl border border-slate-800/80 bg-slate-950/50 p-4 text-xs text-slate-300 shadow-sm shadow-black/40 backdrop-blur sm:grid-cols-3"
+            >
+              <div class="space-y-1">
+                <p class="font-medium tracking-tight text-slate-400">Currently</p>
+                <p class="font-semibold tracking-tight text-slate-100">
+                  Building React experiences
+                </p>
+                <p class="text-[0.7rem] text-slate-400">Freelance & personal projects</p>
+              </div>
+              <div class="space-y-1">
+                <p class="font-medium tracking-tight text-slate-400">Focus</p>
+                <p class="font-semibold tracking-tight text-slate-100">
+                  Frontend, UX, Motion
+                </p>
+                <p class="text-[0.7rem] text-slate-400">Performance & accessibility first</p>
+              </div>
+              <div class="space-y-1">
+                <p class="font-medium tracking-tight text-slate-400">Stack</p>
+                <p class="font-semibold tracking-tight text-slate-100">
+                  React, TS, Node, WebGL
+                </p>
+                <p class="text-[0.7rem] text-slate-400">Open to exploring new tools</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Right / Feature Panel -->
+          <section
+            aria-label="Featured visual"
+            class="w-full lg:flex lg:flex-1 lg:justify-end"
+          >
+            <div
+              class="relative mx-auto mt-2 w-full max-w-xl rounded-3xl border border-slate-800/80 bg-slate-950/80 p-4 shadow-[0_24px_120px_rgba(0,0,0,0.85)] backdrop-blur-xl sm:p-5 lg:mt-0"
+            >
+              <!-- Status -->
+              <div class="mb-3 flex items-center justify-between gap-3">
+                <div class="flex items-center gap-2 text-xs font-medium text-slate-300">
+                  <span
+                    class="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400 ring-4 ring-emerald-400/20"
+                  ></span>
+                  <span class="tracking-tight">Available for select projects</span>
+                </div>
+                <div
+                  class="flex items-center gap-1 rounded-full border border-slate-800 bg-slate-950/80 px-2 py-1 text-[0.7rem] text-slate-400"
+                >
+                  <span class="inline-flex h-1 w-1 rounded-full bg-indigo-400"></span>
+                  <span>Last updated 2025</span>
+                </div>
+              </div>
+
+              <!-- "Window" -->
+              <div
+                class="relative overflow-hidden rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-950"
+              >
+                <!-- Window Top -->
+                <div
+                  class="flex items-center justify-between border-b border-slate-800/90 bg-slate-950/80 px-3 py-2"
+                >
+                  <div class="flex items-center gap-1.5">
+                    <span
+                      class="inline-flex h-2.5 w-2.5 rounded-full bg-rose-500/90"
+                    ></span>
+                    <span
+                      class="inline-flex h-2.5 w-2.5 rounded-full bg-amber-400/90"
+                    ></span>
+                    <span
+                      class="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400/90"
+                    ></span>
+                  </div>
+                  <p class="text-[0.7rem] font-medium tracking-tight text-slate-400">
+                    sahapranta.dev / portfolio.tsx
+                  </p>
+                  <div class="flex items-center gap-1 text-[0.7rem] text-slate-500">
+                    <i data-lucide="circle" class="h-2.5 w-2.5"></i>
+                    <i data-lucide="square" class="h-2.5 w-2.5"></i>
+                  </div>
+                </div>
+
+                <!-- Code & preview split -->
+                <div class="grid gap-0 border-t border-slate-900/60 sm:grid-cols-5">
+                  <!-- Code block -->
+                  <div
+                    class="relative col-span-3 border-r border-slate-900/60 bg-slate-950/90 p-3 sm:p-4"
+                  >
+                    <div
+                      class="mb-2 flex items-center justify-between text-[0.7rem] text-slate-400"
+                    >
+                      <div class="flex items-center gap-1.5">
+                        <i data-lucide="code-2" class="h-3.5 w-3.5"></i>
+                        <span class="font-medium tracking-tight">React · TypeScript</span>
+                      </div>
+                      <span class="rounded-full bg-slate-900/90 px-2 py-0.5 font-medium">
+                        src/portfolio.tsx
+                      </span>
+                    </div>
+
+                    <pre
+                      class="overflow-x-auto rounded-xl bg-gradient-to-br from-slate-950/80 via-slate-950/95 to-slate-950 p-3 text-[0.68rem] leading-relaxed text-slate-300 ring-1 ring-slate-900/80"
+                    ><code>// typed by pranta
+
+const Hero = () =&gt; {
+  return (
+    &lt;section className="min-h-[60vh] flex flex-col justify-center"&gt;
+      &lt;h1 className="text-4xl sm:text-5xl font-semibold tracking-tight"&gt;
+        I build expressive web experiences
+      &lt;/h1&gt;
+      &lt;p className="mt-3 text-base text-slate-300"&gt;
+        Focused on React, TypeScript, motion and performance.
+      &lt;/p&gt;
+    &lt;/section&gt;
+  )
+}</code></pre>
+                  </div>
+
+                  <!-- Preview / stack -->
+                  <div
+                    class="col-span-2 flex flex-col justify-between gap-3 bg-slate-950/70 p-3 sm:p-4"
+                  >
+                    <div class="space-y-2">
+                      <p class="text-[0.7rem] font-medium tracking-tight text-slate-400">
+                        Tooling
+                      </p>
+                      <div class="flex flex-wrap gap-1.5">
+                        <span
+                          class="inline-flex items-center rounded-full bg-slate-900/90 px-2.5 py-1 text-[0.7rem] font-medium tracking-tight text-sky-200 ring-1 ring-sky-500/40"
+                        >
+                          <i data-lucide="react" class="mr-1.5 h-3.5 w-3.5"></i>
+                          React
+                        </span>
+                        <span
+                          class="inline-flex items-center rounded-full bg-slate-900/90 px-2.5 py-1 text-[0.7rem] font-medium tracking-tight text-indigo-200 ring-1 ring-indigo-500/40"
+                        >
+                          <i data-lucide="file-code" class="mr-1.5 h-3.5 w-3.5"></i>
+                          TypeScript
+                        </span>
+                        <span
+                          class="inline-flex items-center rounded-full bg-slate-900/90 px-2.5 py-1 text-[0.7rem] font-medium tracking-tight text-emerald-200 ring-1 ring-emerald-500/40"
+                        >
+                          <i data-lucide="framer" class="mr-1.5 h-3.5 w-3.5"></i>
+                          Motion
+                        </span>
+                        <span
+                          class="inline-flex items-center rounded-full bg-slate-900/90 px-2.5 py-1 text-[0.7rem] font-medium tracking-tight text-slate-200 ring-1 ring-slate-700/60"
+                        >
+                          <i data-lucide="cpu" class="mr-1.5 h-3.5 w-3.5"></i>
+                          Performance
+                        </span>
+                      </div>
+                    </div>
+
+                    <div
+                      class="mt-1 rounded-xl border border-slate-800 bg-gradient-to-br from-slate-900/90 via-slate-950 to-slate-950 p-3"
+                    >
+                      <p class="text-[0.7rem] font-medium tracking-tight text-slate-400">
+                        Craft
+                      </p>
+                      <p class="mt-1 text-xs font-medium text-slate-200">
+                        Motion as a design tool, not a distraction.
+                      </p>
+                      <p class="mt-1 text-[0.7rem] text-slate-400">
+                        I obsess over the details: easing curves, micro-interactions, and how
+                        performance feels—not just how it measures.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Small footer -->
+              <div class="mt-3 flex items-center justify-between text-[0.7rem] text-slate-500">
+                <div class="flex items-center gap-1.5">
+                  <i data-lucide="activity" class="h-3 w-3"></i>
+                  <span>Built for the web. Shipped with care.</span>
+                </div>
+                <div class="hidden items-center gap-1 sm:flex">
+                  <span class="h-1 w-6 rounded-full bg-gradient-to-r from-emerald-400 to-sky-400">
+                  </span>
+                  <span>Optimized & accessible</span>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+
+      <!-- Content Sections -->
+      <section
+        id="work"
+        class="relative border-t border-slate-800/80 bg-slate-950/95"
+        aria-label="Selected work"
+      >
+        <div
+          class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.08),_transparent_55%)]"
+        ></div>
+
+        <div
+          class="relative mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 py-12 sm:px-6 lg:px-8 lg:py-16"
+        >
+          <div class="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+            <div class="space-y-2">
+              <h2
+                class="text-2xl font-semibold tracking-tight text-slate-50 sm:text-3xl"
+              >
+                Selected work
+              </h2>
+              <p class="max-w-md text-base font-medium text-slate-300">
+                A few projects that highlight my approach to interaction, structure, and
+                performance on the web.
+              </p>
+            </div>
+            <a
+              href="https://github.com/sahapranta"
+              target="_blank"
+              rel="noreferrer"
+              class="inline-flex items-center gap-2 text-xs font-medium tracking-tight text-slate-300 hover:text-slate-50"
+            >
+              <i data-lucide="github" class="h-3.5 w-3.5"></i>
+              <span>Browse full project archive</span>
+            </a>
+          </div>
+
+          <!-- Projects Grid -->
+          <div class="grid gap-5 md:grid-cols-2">
+            <!-- Project 1 -->
+            <article
+              class="group flex flex-col justify-between rounded-2xl border border-slate-800/80 bg-slate-950/60 p-4 shadow-sm shadow-black/40 transition hover:border-slate-600/80 hover:bg-slate-900/80"
+            >
+              <div class="space-y-3">
+                <div class="flex items-center gap-2 text-xs text-slate-400">
+                  <span
+                    class="inline-flex items-center rounded-full bg-slate-900/90 px-2 py-0.5 font-medium tracking-tight text-emerald-300 ring-1 ring-emerald-500/40"
+                  >
+                    Live
+                  </span>
+                  <span>Interactive Web App</span>
+                </div>
+                <h3
+                  class="text-lg font-semibold tracking-tight text-slate-50"
+                >
+                  Motion-driven portfolio experience
+                </h3>
+                <p class="text-sm font-medium text-slate-300">
+                  A React-based portfolio with scroll-linked animations, route transitions,
+                  and highly tuned micro‑interactions.
+                </p>
+              </div>
+              <div
+                class="mt-4 flex items-center justify-between gap-3 border-t border-slate-800/80 pt-3 text-[0.7rem] text-slate-400"
+              >
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <span
+                    class="rounded-full bg-slate-900/90 px-2 py-0.5 font-medium tracking-tight"
+                  >
+                    React
+                  </span>
+                  <span
+                    class="rounded-full bg-slate-900/90 px-2 py-0.5 font-medium tracking-tight"
+                  >
+                    TypeScript
+                  </span>
+                  <span
+                    class="rounded-full bg-slate-900/90 px-2 py-0.5 font-medium tracking-tight"
+                  >
+                    Motion
+                  </span>
+                </div>
+                <a
+                  href="https://sahapranta.github.io/"
+                  target="_blank"
+                  rel="noreferrer"
+                  class="inline-flex items-center gap-1 text-xs font-medium tracking-tight text-slate-300 group-hover:text-slate-50"
+                >
+                  <span>Visit</span>
+                  <i
+                    data-lucide="arrow-up-right"
+                    class="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  ></i>
+                </a>
+              </div>
+            </article>
+
+            <!-- Project 2 -->
+            <article
+              class="group flex flex-col justify-between rounded-2xl border border-slate-800/80 bg-slate-950/60 p-4 shadow-sm shadow-black/40 transition hover:border-slate-600/80 hover:bg-slate-900/80"
+            >
+              <div class="space-y-3">
+                <div class="flex items-center gap-2 text-xs text-slate-400">
+                  <span
+                    class="inline-flex items-center rounded-full bg-slate-900/90 px-2 py-0.5 font-medium tracking-tight text-sky-300 ring-1 ring-sky-500/40"
+                  >
+                    In progress
+                  </span>
+                  <span>Experimental UI Lab</span>
+                </div>
+                <h3
+                  class="text-lg font-semibold tracking-tight text-slate-50"
+                >
+                  Web experiments & micro‑interactions
+                </h3>
+                <p class="text-sm font-medium text-slate-300">
+                  A growing collection of small front-end explorations: scroll stories, shader
+                  sketches, and interface experiments.
+                </p>
+              </div>
+              <div
+                class="mt-4 flex items-center justify-between gap-3 border-t border-slate-800/80 pt-3 text-[0.7rem] text-slate-400"
+              >
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <span class="rounded-full bg-slate-900/90 px-2 py-0.5 font-medium tracking-tight">
+                    Canvas / WebGL
+                  </span>
+                  <span class="rounded-full bg-slate-900/90 px-2 py-0.5 font-medium tracking-tight">
+                    Framer Motion
+                  </span>
+                </div>
+                <button
+                  class="inline-flex items-center gap-1 text-xs font-medium tracking-tight text-slate-400 group-hover:text-slate-100"
+                >
+                  <span>Coming soon</span>
+                  <i data-lucide="clock" class="h-3.5 w-3.5"></i>
+                </button>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section
+        id="about"
+        class="relative border-t border-slate-800/80 bg-slate-950"
+        aria-label="About"
+      >
+        <div
+          class="absolute inset-0 bg-[radial-gradient(circle_at_bottom,_rgba(129,140,248,0.08),_transparent_55%)]"
+        ></div>
+
+        <div
+          class="relative mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 py-12 sm:px-6 lg:flex-row lg:gap-16 lg:px-8 lg:py-16"
+        >
+          <div class="w-full space-y-3 lg:max-w-md">
+            <h2
+              class="text-2xl font-semibold tracking-tight text-slate-50 sm:text-3xl"
+            >
+              A bit about me
+            </h2>
+            <p class="text-base font-medium text-slate-300">
+              I enjoy moving between design and engineering—taking ideas from sketch to
+              prototype to production. My work leans towards clean layouts, meaningful motion,
+              and systems that scale.
+            </p>
+            <p class="text-base font-medium text-slate-300">
+              On the technical side I focus on front-end architecture, design systems, and the
+              details that make interfaces feel alive.
+            </p>
+          </div>
+
+          <div class="w-full space-y-6 lg:flex-1">
+            <div
+              class="grid gap-4 rounded-2xl border border-slate-800/80 bg-slate-950/60 p-4 shadow-sm shadow-black/40 sm:grid-cols-2"
+            >
+              <div class="space-y-2">
+                <p class="text-xs font-medium tracking-tight text-slate-400">
+                  Capabilities
+                </p>
+                <ul class="space-y-1.5 text-sm font-medium text-slate-300">
+                  <li class="flex items-center gap-2">
+                    <span class="h-1 w-3 rounded-full bg-emerald-400"></span>
+                    Interface engineering & systems
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="h-1 w-3 rounded-full bg-sky-400"></span>
+                    Interaction & motion design
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="h-1 w-3 rounded-full bg-indigo-400"></span>
+                    Performance & accessibility
+                  </li>
+                </ul>
+              </div>
+              <div class="space-y-2">
+                <p class="text-xs font-medium tracking-tight text-slate-400">
+                  Interested in
+                </p>
+                <ul class="space-y-1.5 text-sm font-medium text-slate-300">
+                  <li>Creative tools & editors</li>
+                  <li>Developer experience</li>
+                  <li>Data-driven storytelling</li>
+                  <li>Experimental interfaces</li>
+                </ul>
+              </div>
+            </div>
+
+            <div
+              id="experiments"
+              class="space-y-3 rounded-2xl border border-slate-800/80 bg-slate-950/60 p-4 shadow-sm shadow-black/40"
+            >
+              <div class="flex items-center justify-between gap-2">
+                <p class="text-xs font-medium tracking-tight text-slate-400">
+                  Experiments
+                </p>
+                <span
+                  class="inline-flex items-center gap-1 rounded-full bg-slate-900/80 px-2 py-0.5 text-[0.7rem] font-medium tracking-tight text-slate-300"
+                >
+                  <i data-lucide="flask-conical" class="h-3 w-3"></i>
+                  <span>Small things often</span>
+                </span>
+              </div>
+              <p class="text-sm font-medium text-slate-300">
+                I keep a running collection of prototypes exploring scrolling narratives,
+                unconventional navigation, and techniques that don’t always fit into shipped
+                products—but teach me something new.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section
+        id="contact"
+        class="relative border-t border-slate-800/80 bg-slate-950"
+        aria-label="Contact"
+      >
+        <div
+          class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(52,211,153,0.12),_transparent_50%)]"
+        ></div>
+
+        <div
+          class="relative mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-10 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8 lg:py-12"
+        >
+          <div class="space-y-3">
+            <h2
+              class="text-2xl font-semibold tracking-tight text-slate-50 sm:text-3xl"
+            >
+              Let’s build something together
+            </h2>
+            <p class="max-w-xl text-base font-medium text-slate-300">
+              I’m open to freelance work, collaborations, and front-end roles where design and
+              engineering sit close together. Short notes are welcome.
+            </p>
+          </div>
+
+          <div class="space-y-3">
+            <a
+              href="mailto:prantasaha.dev@gmail.com"
+              class="inline-flex items-center justify-between gap-4 rounded-2xl border border-emerald-400/60 bg-emerald-400/10 px-4 py-3 text-sm font-medium tracking-tight text-emerald-50 shadow-sm shadow-emerald-500/30 hover:bg-emerald-400/20"
+            >
+              <div class="flex flex-col">
+                <span class="text-xs uppercase tracking-[0.22em] text-emerald-200">
+                  Primary channel
+                </span>
+                <span class="text-sm font-semibold tracking-tight">
+                  prantasaha.dev<span class="text-emerald-200">@gmail.com</span>
+                </span>
+              </div>
+              <i
+                data-lucide="arrow-up-right"
+                class="h-4 w-4 shrink-0"
+              ></i>
+            </a>
+
+            <div class="flex flex-wrap items-center gap-3 text-xs font-medium text-slate-300">
+              <a
+                href="https://github.com/sahapranta"
+                target="_blank"
+                rel="noreferrer"
+                class="inline-flex items-center gap-1.5 rounded-full border border-slate-800 bg-slate-950/80 px-3 py-1.5 hover:border-slate-600 hover:bg-slate-900"
+              >
+                <i data-lucide="github" class="h-3.5 w-3.5"></i>
+                <span>GitHub</span>
+              </a>
+              <a
+                href="https://www.linkedin.com"
+                target="_blank"
+                rel="noreferrer"
+                class="inline-flex items-center gap-1.5 rounded-full border border-slate-800 bg-slate-950/80 px-3 py-1.5 hover:border-slate-600 hover:bg-slate-900"
+              >
+                <i data-lucide="linkedin" class="h-3.5 w-3.5"></i>
+                <span>LinkedIn</span>
+              </a>
+              <a
+                href="https://sahapranta.github.io/"
+                target="_blank"
+                rel="noreferrer"
+                class="inline-flex items-center gap-1.5 rounded-full border border-slate-800 bg-slate-950/80 px-3 py-1.5 hover:border-slate-600 hover:bg-slate-900"
+              >
+                <i data-lucide="globe-2" class="h-3.5 w-3.5"></i>
+                <span>Current site</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer
+        class="border-t border-slate-800/80 bg-slate-950/95 text-[0.7rem] text-slate-500"
+      >
+        <div
+          class="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8"
+        >
+          <p class="font-medium tracking-tight">
+            © <span id="year"></span> Pranta Saha. Crafted for the web.
+          </p>
+          <p class="text-slate-500">
+            Built with React, thoughtful motion, and a focus on performance.
+          </p>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      // Load Lucide icons
+      document.addEventListener("DOMContentLoaded", function () {
+        if (window.lucide) {
+          lucide.createIcons({ attrs: { "stroke-width": 1.5 } });
+        }
+      });
+
+      // Theme toggle with localStorage + prefers-color-scheme
+      (function () {
+        const root = document.documentElement;
+        const toggle = document.getElementById("theme-toggle");
+        const icon = document.getElementById("theme-icon");
+        const stored =
+          typeof window !== "undefined"
+            ? window.localStorage.getItem("theme")
+            : null;
+
+        const prefersDark =
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+        const initial =
+          stored || (prefersDark ? "dark" : "light");
+
+        function applyTheme(theme) {
+          if (theme === "dark") {
+            root.classList.add("dark");
+            document.body.classList.remove("bg-white", "text-slate-900");
+            document.body.classList.add("bg-slate-950", "text-slate-50");
+            icon && icon.setAttribute("data-lucide", "moon");
+          } else {
+            root.classList.remove("dark");
+            document.body.classList.remove("bg-slate-950", "text-slate-50");
+            document.body.classList.add("bg-white", "text-slate-900");
+            icon && icon.setAttribute("data-lucide", "sun");
+          }
+          if (window.lucide) {
+            lucide.createIcons({ attrs: { "stroke-width": 1.5 } });
+          }
+        }
+
+        applyTheme(initial);
+
+        if (toggle) {
+          toggle.addEventListener("click", function () {
+            const current = root.classList.contains("dark")
+              ? "dark"
+              : "light";
+            const next = current === "dark" ? "light" : "dark";
+            window.localStorage.setItem("theme", next);
+            applyTheme(next);
+          });
+        }
+      })();
+
+      // Dynamic year
+      document.addEventListener("DOMContentLoaded", function () {
+        const yearEl = document.getElementById("year");
+        if (yearEl) yearEl.textContent = new Date().getFullYear();
+      });
+    </script>
+  </body>
+</html>

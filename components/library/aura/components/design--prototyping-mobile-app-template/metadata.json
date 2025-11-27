@@ -1,0 +1,56 @@
+{
+  "name": "Design & Prototyping Mobile App Template",
+  "slug": "mobile-app-design",
+  "description": "A reusable mobile app design template showcasing event timelines, immersive sessions, and course details for UX and interaction design projects.",
+  "tags": [
+    "Mobile App",
+    "UX Research",
+    "Event Timeline",
+    "Prototyping",
+    "Interaction Design",
+    "Course Schedule",
+    "User Persona",
+    "Team Collaboration",
+    "UI Components"
+  ],
+  "category": "Mobile",
+  "installation": "",
+  "url": "https://www.aura.build/share/mobile-app-design",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "A reusable mobile app design template showcasing event timelines, immersive sessions, and course details for UX and interaction design projects.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [
+    "saas"
+  ],
+  "source": "aura",
+  "author": {
+    "name": "Meng To",
+    "slug": "meng",
+    "avatar_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/user-avatars/avatars/9109ecbb-cdc4-4815-981e-2ea83be13765-1747961036177.png",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/mobile-app-design.png",
+  "aura": {
+    "id": 5173,
+    "views": 4912,
+    "forks": 10,
+    "premium": true
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

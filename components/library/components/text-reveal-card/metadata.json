@@ -1,0 +1,63 @@
+{
+  "name": "Aceternity UI",
+  "slug": "text-reveal-card",
+  "description": "Mousemove effect to reveal text content at the bottom of the card.",
+  "props": [
+    {
+      "Prop name": "className",
+      "Type": "string",
+      "Description": "The class name of the TextReveal component."
+    },
+    {
+      "Prop name": "text",
+      "Type": "string",
+      "Description": "Piece of text that stays on the card"
+    },
+    {
+      "Prop name": "revealText",
+      "Type": "string",
+      "Description": "Text that reveals when hovered over the card"
+    },
+    {
+      "Prop name": "children",
+      "Type": "React Node",
+      "Description": "Title and Descriptions for the Card"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/text-reveal-cardCopy",
+  "url": "https://ui.aceternity.com/components/text-reveal-card",
+  "type": "card",
+  "subtype": "",
+  "layout_role": "inline-block",
+  "recommended_slots": [
+    "grid.item",
+    "section.content"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "auto-height",
+  "z_index_role": "content",
+  "usage_notes": "Mousemove effect to reveal text content at the bottom of the card.",
+  "theme_requirements": [],
+  "data_requirements": [
+    {
+      "name": "items",
+      "fields": [
+        "title",
+        "description",
+        "media"
+      ],
+      "type": "array"
+    }
+  ],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import {"
+  ],
+  "dependencies": [
+    "react"
+  ],
+  "client_only": true
+}

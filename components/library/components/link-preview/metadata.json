@@ -1,0 +1,89 @@
+{
+  "name": "Aceternity UI",
+  "slug": "link-preview",
+  "description": "Dynamic link previews for your anchor tags",
+  "props": [
+    {
+      "Prop Name": "children",
+      "Type": "React.ReactNode",
+      "Default Value": "None",
+      "Description": "The content to be displayed inside the link component."
+    },
+    {
+      "Prop Name": "url",
+      "Type": "string",
+      "Default Value": "None",
+      "Description": "The URL for the link and for generating the preview image if isStatic is false."
+    },
+    {
+      "Prop Name": "className",
+      "Type": "string",
+      "Default Value": "None",
+      "Description": "Additional CSS classes to apply to the link component."
+    },
+    {
+      "Prop Name": "width",
+      "Type": "number",
+      "Default Value": "200",
+      "Description": "Width of the preview image."
+    },
+    {
+      "Prop Name": "height",
+      "Type": "number",
+      "Default Value": "125",
+      "Description": "Height of the preview image."
+    },
+    {
+      "Prop Name": "quality",
+      "Type": "number",
+      "Default Value": "50",
+      "Description": "Quality of the preview image."
+    },
+    {
+      "Prop Name": "layout",
+      "Type": "string",
+      "Default Value": "\"fixed\"",
+      "Description": "Layout type of the image, affects how the image resizes."
+    },
+    {
+      "Prop Name": "isStatic",
+      "Type": "boolean",
+      "Default Value": "false",
+      "Description": "Determines if the image source is static or dynamically generated from the URL."
+    },
+    {
+      "Prop Name": "imageSrc",
+      "Type": "string",
+      "Default Value": "\"\"",
+      "Description": "Source of the image when isStatic is true. If isStatic is false, this prop should not be used."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/link-previewCopy",
+  "url": "https://ui.aceternity.com/components/link-preview",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "Dynamic link previews for your anchor tags",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { motion } from \"motion/react\";",
+    "import { LinkPreview } from \"@/components/ui/link-preview\";"
+  ],
+  "dependencies": [
+    "@/components/ui/link-preview",
+    "motion/react",
+    "react"
+  ],
+  "client_only": true
+}

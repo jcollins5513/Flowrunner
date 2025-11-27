@@ -1,0 +1,57 @@
+{
+  "name": "Personal Portfolio Landing Page Template",
+  "slug": "tech-community-39",
+  "description": "This is a reusable personal portfolio landing page template designed for product designers to showcase their experience, projects, and contact info.",
+  "tags": [
+    "Landing Page",
+    "Portfolio",
+    "Hero",
+    "Projects",
+    "About",
+    "Experience",
+    "Contact",
+    "Resume",
+    "UI/UX",
+    "Designer"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/tech-community-39",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "This is a reusable personal portfolio landing page template designed for product designers to showcase their experience, projects, and contact info.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [
+    "portfolio"
+  ],
+  "source": "aura",
+  "author": {
+    "name": "Adam Parish",
+    "slug": "user-dd0a80f7",
+    "avatar_url": null,
+    "featured": false
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/tech-community-39.png",
+  "aura": {
+    "id": 5377,
+    "views": 291,
+    "forks": 9,
+    "premium": false
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

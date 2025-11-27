@@ -1,0 +1,56 @@
+{
+  "name": "Planet Explorer 3D Solar System Template",
+  "slug": "planet-explorer-by-kavindi",
+  "description": "A reusable interactive 3D solar system template for educational and exploration purposes, featuring planet details, animations, and gamified UI elements.",
+  "tags": [
+    "Landing Page",
+    "3D Visualization",
+    "Solar System",
+    "Interactive",
+    "Education",
+    "Gamification",
+    "Planet Details",
+    "Animation",
+    "AR Mode",
+    "Quiz"
+  ],
+  "category": "Animation",
+  "installation": "",
+  "url": "https://www.aura.build/share/planet-explorer-by-kavindi",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "A reusable interactive 3D solar system template for educational and exploration purposes, featuring planet details, animations, and gamified UI elements.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "aura",
+  "author": {
+    "name": "Kavindi Rajapakshe",
+    "slug": "kavindirajapaksha",
+    "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocKJ0wjfwQYx4_AnXQslzZ6p5_5DeSujAd8pUnGzh8qfRjb4XTZNOw=s96-c",
+    "featured": false
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/planet-explorer-by-kavindi.png?t=1764057930743",
+  "aura": {
+    "id": 5613,
+    "views": 405,
+    "forks": 4,
+    "premium": false
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss",
+    "three"
+  ]
+}

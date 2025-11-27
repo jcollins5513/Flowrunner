@@ -43,6 +43,9 @@ export interface ScreenRendererProps {
   onStartEdit?: (componentIndex: number) => void
   onSaveEdit?: (componentIndex: number, updatedComponent: ScreenDSL['components'][0]) => void
   interactiveComponentTypes?: Component['type'][]
+  // Library component props (optional)
+  userId?: string | null
+  enableLibraryComponents?: boolean
 }
 
 const BREAKPOINT_ORDER: Breakpoint[] = ['mobile', 'tablet', 'desktop']
@@ -60,16 +63,77 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
   onStartEdit,
   onSaveEdit,
   interactiveComponentTypes,
+  userId,
+  enableLibraryComponents = true,
 }) => {
   const [pattern, setPattern] = useState<PatternDefinition | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [validationError, setValidationError] = useState<string | null>(null)
+  const [hasLibraryAccess, setHasLibraryAccess] = useState(false)
+  const [backgroundComponent, setBackgroundComponent] = useState<any>(null)
   const viewportBreakpoint = useResponsiveBreakpoint()
   const containerBreakpoint = useContainerBreakpoint()
   
   // Prefer container breakpoint, fallback to viewport
   const breakpoint: Breakpoint = containerBreakpoint || viewportBreakpoint
+
+  // Check library component access
+  useEffect(() => {
+    if (!enableLibraryComponents) {
+      setHasLibraryAccess(false)
+      return
+    }
+
+    let cancelled = false
+
+    canUseLibraryComponents(userId || null)
+      .then((hasAccess) => {
+        if (!cancelled) {
+          setHasLibraryAccess(hasAccess)
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setHasLibraryAccess(false)
+        }
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [userId, enableLibraryComponents])
+
+  // Select background component if access is available
+  useEffect(() => {
+    if (!hasLibraryAccess || !pattern) {
+      setBackgroundComponent(null)
+      return
+    }
+
+    let cancelled = false
+
+    selectBackgroundComponent({
+      vibe: dsl.vibe,
+      pattern: dsl.pattern_family,
+      slot: 'hero.background',
+      hasAccess: hasLibraryAccess,
+    })
+      .then((comp) => {
+        if (!cancelled) {
+          setBackgroundComponent(comp)
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setBackgroundComponent(null)
+        }
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [hasLibraryAccess, pattern, dsl.vibe, dsl.pattern_family])
 
   // Validate DSL before rendering
   useEffect(() => {
@@ -269,6 +333,16 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
       </div>
     ) : null
 
+  // Create library context for component factory
+  const libraryContext: LibraryContext | undefined = enableLibraryComponents
+    ? {
+        vibe: dsl.vibe,
+        palette: dsl.palette,
+        pattern: dsl.pattern_family,
+        hasAccess: hasLibraryAccess,
+      }
+    : undefined
+
   return (
     <div
       className={className}
@@ -280,6 +354,25 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
         position: 'relative',
       }}
     >
+      {/* Background effect layer */}
+      {backgroundComponent && hasLibraryAccess && (
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 0,
+            pointerEvents: 'none',
+          }}
+        >
+          <BackgroundWrapper
+            libraryComponent={backgroundComponent}
+            palette={dsl.palette}
+            vibe={dsl.vibe}
+            style={{ width: '100%', height: '100%' }}
+          />
+        </div>
+      )}
+
       <div
         style={{
           display: pattern.layout.structure === 'grid' ? 'grid' : 'flex',
@@ -381,6 +474,12 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
                   screenId,
                   onStartEdit,
                   onSaveEdit,
+                  libraryContext: libraryContext
+                    ? {
+                        ...libraryContext,
+                        slot: slotName,
+                      }
+                    : undefined,
                 })}
               </ComponentRendererErrorBoundary>
             </div>

@@ -1,0 +1,208 @@
+{
+  "name": "Aceternity UI",
+  "slug": "pixelated-canvas",
+  "description": "Convert any image to a pixelated canvas mouse distortion effects, as seen on Tailwind CSS Website.",
+  "props": [
+    {
+      "Prop": "src",
+      "Type": "string",
+      "Default": "-",
+      "Description": "Source image URL to sample and render.",
+      "Required": "Yes"
+    },
+    {
+      "Prop": "width",
+      "Type": "number",
+      "Default": "400",
+      "Description": "Canvas display width in CSS pixels.",
+      "Required": "No"
+    },
+    {
+      "Prop": "height",
+      "Type": "number",
+      "Default": "500",
+      "Description": "Canvas display height in CSS pixels.",
+      "Required": "No"
+    },
+    {
+      "Prop": "cellSize",
+      "Type": "number",
+      "Default": "3",
+      "Description": "Size of each sampling cell in CSS pixels.",
+      "Required": "No"
+    },
+    {
+      "Prop": "dotScale",
+      "Type": "number",
+      "Default": "0.9",
+      "Description": "Dot size as a fraction of cell size (0..1).",
+      "Required": "No"
+    },
+    {
+      "Prop": "shape",
+      "Type": "\"circle\" | \"square\"",
+      "Default": "\"square\"",
+      "Description": "Shape of the dot drawn for each sample.",
+      "Required": "No"
+    },
+    {
+      "Prop": "backgroundColor",
+      "Type": "string",
+      "Default": "\"#000000\"",
+      "Description": "Background color to clear the canvas before drawing.",
+      "Required": "No"
+    },
+    {
+      "Prop": "grayscale",
+      "Type": "boolean",
+      "Default": "false",
+      "Description": "Convert colors to grayscale before drawing.",
+      "Required": "No"
+    },
+    {
+      "Prop": "className",
+      "Type": "string",
+      "Default": "undefined",
+      "Description": "Additional CSS classes applied to the canvas element.",
+      "Required": "No"
+    },
+    {
+      "Prop": "responsive",
+      "Type": "boolean",
+      "Default": "false",
+      "Description": "Redraw on window resize using the provided width/height.",
+      "Required": "No"
+    },
+    {
+      "Prop": "dropoutStrength",
+      "Type": "number",
+      "Default": "0.4",
+      "Description": "0..1; removes dots in low-contrast regions.",
+      "Required": "No"
+    },
+    {
+      "Prop": "interactive",
+      "Type": "boolean",
+      "Default": "true",
+      "Description": "Enable interactive pointer distortion animation.",
+      "Required": "No"
+    },
+    {
+      "Prop": "distortionStrength",
+      "Type": "number",
+      "Default": "3",
+      "Description": "Max per-dot offset (px) due to distortion.",
+      "Required": "No"
+    },
+    {
+      "Prop": "distortionRadius",
+      "Type": "number",
+      "Default": "80",
+      "Description": "Radius (px) around pointer influencing distortion.",
+      "Required": "No"
+    },
+    {
+      "Prop": "distortionMode",
+      "Type": "\"repel\" | \"attract\" | \"swirl\"",
+      "Default": "\"swirl\"",
+      "Description": "How pixels move near the pointer.",
+      "Required": "No"
+    },
+    {
+      "Prop": "followSpeed",
+      "Type": "number",
+      "Default": "0.2",
+      "Description": "0..1 smoothing factor for pointer follow.",
+      "Required": "No"
+    },
+    {
+      "Prop": "sampleAverage",
+      "Type": "boolean",
+      "Default": "true",
+      "Description": "Average multiple samples per cell instead of single center.",
+      "Required": "No"
+    },
+    {
+      "Prop": "tintColor",
+      "Type": "string",
+      "Default": "\"#FFFFFF\"",
+      "Description": "Color tint applied to samples.",
+      "Required": "No"
+    },
+    {
+      "Prop": "tintStrength",
+      "Type": "number",
+      "Default": "0.2",
+      "Description": "0..1 tint mix amount with original colors.",
+      "Required": "No"
+    },
+    {
+      "Prop": "maxFps",
+      "Type": "number",
+      "Default": "60",
+      "Description": "Cap animation frame rate to improve performance.",
+      "Required": "No"
+    },
+    {
+      "Prop": "objectFit",
+      "Type": "\"cover\" | \"contain\" | \"fill\" | \"none\"",
+      "Default": "\"cover\"",
+      "Description": "Object-fit behavior for the source image within the canvas.",
+      "Required": "No"
+    },
+    {
+      "Prop": "jitterStrength",
+      "Type": "number",
+      "Default": "4",
+      "Description": "Random motion amplitude for dots near the pointer.",
+      "Required": "No"
+    },
+    {
+      "Prop": "jitterSpeed",
+      "Type": "number",
+      "Default": "4",
+      "Description": "Speed factor for the random motion.",
+      "Required": "No"
+    },
+    {
+      "Prop": "fadeOnLeave",
+      "Type": "boolean",
+      "Default": "true",
+      "Description": "Smoothly fade the distortion when the pointer leaves.",
+      "Required": "No"
+    },
+    {
+      "Prop": "fadeSpeed",
+      "Type": "number",
+      "Default": "0.1",
+      "Description": "0..1 smoothing factor for leave fade. Higher = faster fade.",
+      "Required": "No"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/pixelated-canvasCopy",
+  "url": "https://ui.aceternity.com/components/pixelated-canvas",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "Convert any image to a pixelated canvas mouse distortion effects, as seen on Tailwind CSS Website.",
+  "theme_requirements": [
+    "tailwind-classes"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import { PixelatedCanvas } from \"@/components/ui/pixelated-canvas\";"
+  ],
+  "dependencies": [
+    "@/components/ui/pixelated-canvas"
+  ],
+  "client_only": true
+}

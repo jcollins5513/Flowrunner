@@ -1,0 +1,37 @@
+{
+  "name": "Aceternity UI",
+  "slug": "carousel",
+  "description": "A customizable carousel with microinteractions and slider.",
+  "props": [
+    {
+      "Prop": "slides",
+      "Type": "SlideData[]",
+      "Required": "Yes",
+      "Description": "Array of slide objects containing title, button text, and image source"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/carouselCopy",
+  "url": "https://ui.aceternity.com/components/carousel",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A customizable carousel with microinteractions and slider.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    " \nimport Carousel from \"@/components/ui/carousel\";"
+  ],
+  "dependencies": [
+    "@/components/ui/carousel"
+  ],
+  "client_only": true
+}

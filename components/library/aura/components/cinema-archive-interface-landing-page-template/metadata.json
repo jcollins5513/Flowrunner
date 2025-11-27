@@ -1,0 +1,55 @@
+{
+  "name": "Cinema Archive Interface Landing Page Template",
+  "slug": "cinema-archive-12",
+  "description": "A reusable landing page template designed to showcase a vintage cinema archive collection with interactive 3D carousel and detailed movie info.",
+  "tags": [
+    "Landing Page",
+    "Carousel",
+    "3D Effects",
+    "Vintage",
+    "Movie Archive",
+    "Interactive",
+    "Filter Navigation",
+    "Responsive",
+    "TailwindCSS",
+    "Animation"
+  ],
+  "category": "Animation",
+  "installation": "",
+  "url": "https://www.aura.build/share/cinema-archive-12",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "A reusable landing page template designed to showcase a vintage cinema archive collection with interactive 3D carousel and detailed movie info.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "aura",
+  "author": {
+    "name": "Actual Human",
+    "slug": "user-4c6461f2",
+    "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocKa5h7gPdWhgCYiiOX7r0XKNftGehYl2rx50RWLqj4cx1yY5I9g=s96-c",
+    "featured": false
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/cinema-archive-12.png?t=1764072590367",
+  "aura": {
+    "id": 5604,
+    "views": 435,
+    "forks": 11,
+    "premium": false
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

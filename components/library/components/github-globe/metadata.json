@@ -1,0 +1,135 @@
+{
+  "name": "Aceternity UI",
+  "slug": "github-globe",
+  "description": "A globe animation as seen on GitHub's homepage. Interactive and customizable.",
+  "props": [
+    {
+      "Prop": "pointSize",
+      "Type": "number",
+      "Description": "Optional. Size of the points on the globe."
+    },
+    {
+      "Prop": "globeColor",
+      "Type": "string",
+      "Description": "Optional. Color of the globe."
+    },
+    {
+      "Prop": "showAtmosphere",
+      "Type": "boolean",
+      "Description": "Optional. Whether to show the atmosphere layer."
+    },
+    {
+      "Prop": "atmosphereColor",
+      "Type": "string",
+      "Description": "Optional. Color of the atmosphere."
+    },
+    {
+      "Prop": "atmosphereAltitude",
+      "Type": "number",
+      "Description": "Optional. Altitude of the atmosphere layer."
+    },
+    {
+      "Prop": "emissive",
+      "Type": "string",
+      "Description": "Optional. Emissive color of the globe material."
+    },
+    {
+      "Prop": "emissiveIntensity",
+      "Type": "number",
+      "Description": "Optional. Intensity of the emissive color."
+    },
+    {
+      "Prop": "shininess",
+      "Type": "number",
+      "Description": "Optional. Shininess of the globe material."
+    },
+    {
+      "Prop": "polygonColor",
+      "Type": "string",
+      "Description": "Optional. Color of the polygons on the globe."
+    },
+    {
+      "Prop": "ambientLight",
+      "Type": "string",
+      "Description": "Optional. Color of the ambient light in the scene."
+    },
+    {
+      "Prop": "directionalLeftLight",
+      "Type": "string",
+      "Description": "Optional. Color of the directional light from the left."
+    },
+    {
+      "Prop": "directionalTopLight",
+      "Type": "string",
+      "Description": "Optional. Color of the directional light from the top."
+    },
+    {
+      "Prop": "pointLight",
+      "Type": "string",
+      "Description": "Optional. Color of the point light in the scene."
+    },
+    {
+      "Prop": "arcTime",
+      "Type": "number",
+      "Description": "Optional. Animation time for the arcs."
+    },
+    {
+      "Prop": "arcLength",
+      "Type": "number",
+      "Description": "Optional. Length of the dash in the arc animations."
+    },
+    {
+      "Prop": "rings",
+      "Type": "number",
+      "Description": "Optional. Number of rings to display initially."
+    },
+    {
+      "Prop": "maxRings",
+      "Type": "number",
+      "Description": "Optional. Maximum number of rings that can be displayed."
+    },
+    {
+      "Prop": "initialPosition",
+      "Type": "Object",
+      "Description": "Optional. Initial position of the globe. Containslatandlngfields."
+    },
+    {
+      "Prop": "autoRotate",
+      "Type": "boolean",
+      "Description": "Optional. Whether the globe should auto-rotate."
+    },
+    {
+      "Prop": "autoRotateSpeed",
+      "Type": "number",
+      "Description": "Optional. Speed of the auto-rotation."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/globeCopy",
+  "url": "https://ui.aceternity.com/components/github-globe",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A globe animation as seen on GitHub's homepage. Interactive and customizable.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { motion } from \"motion/react\";",
+    "import dynamic from \"next/dynamic\";"
+  ],
+  "dependencies": [
+    "motion/react",
+    "next/dynamic",
+    "react"
+  ],
+  "client_only": true
+}

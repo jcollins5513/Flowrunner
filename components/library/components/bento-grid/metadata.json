@@ -1,0 +1,46 @@
+{
+  "name": "Aceternity UI",
+  "slug": "bento-grid",
+  "description": "A skewed grid layout with Title, description and a header component",
+  "props": [
+    {
+      "Prop name": "className",
+      "Type": "string",
+      "Description": "The class name of the child component."
+    },
+    {
+      "Prop name": "items",
+      "Type": "{title: string, description: string, header: ReactNode, icon: ReactNode}",
+      "Description": "items that you can map through, passed as props to the BentoGridItem component"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/bento-gridCopy",
+  "url": "https://ui.aceternity.com/components/bento-grid",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A skewed grid layout with Title, description and a header component",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import { cn } from \"@/lib/utils\";",
+    "import React from \"react\";",
+    "import { BentoGrid, BentoGridItem } from \"../ui/bento-grid\";",
+    "import {"
+  ],
+  "dependencies": [
+    "@/lib/utils",
+    "react"
+  ],
+  "client_only": false
+}

@@ -1,0 +1,55 @@
+{
+  "name": "NeuroDesk AI Workspace Landing Page Template",
+  "slug": "neurodesk-ai",
+  "description": "This template provides a sleek AI-powered workspace landing page designed to showcase workflow automation, team collaboration, and product offerings for tech and product teams.",
+  "tags": [
+    "Landing Page",
+    "Hero",
+    "Features",
+    "Pricing",
+    "Testimonials",
+    "FAQ",
+    "Signup Form",
+    "AI Workspace",
+    "Workflow Automation",
+    "Team Collaboration"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/neurodesk-ai",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "This template provides a sleek AI-powered workspace landing page designed to showcase workflow automation, team collaboration, and product offerings for tech and product teams.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "aura",
+  "author": {
+    "name": "Sourasith Phomhome",
+    "slug": "sourasith-p",
+    "avatar_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/sign/user-avatars/avatar-72F3F2F6-BE51-407F-BF04-996779B6D953.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InN0b3JhZ2UtdXJsLXNpZ25pbmcta2V5X2M5NTc0NmE2LWNiMDYtNGYzYS1iYzEyLWM4MjBjYmU5ZjNhNiJ9.eyJ1cmwiOiJ1c2VyLWF2YXRhcnMvYXZhdGFyLTcyRjNGMkY2LUJFNTEtNDA3Ri1CRjA0LTk5Njc3OUI2RDk1My5qcGciLCJpYXQiOjE3NDYwNjk2NjMsImV4cCI6MjA2MTQyOTY2M30.9UsfCVsS9O6m3QAfT63HBjI9jGkuUDIj5rX_0BpKzO0",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/neurodesk-ai.png",
+  "aura": {
+    "id": 5191,
+    "views": 1415,
+    "forks": 22,
+    "premium": true
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

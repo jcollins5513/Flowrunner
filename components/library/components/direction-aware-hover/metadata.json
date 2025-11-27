@@ -1,0 +1,51 @@
+{
+  "name": "Aceternity UI",
+  "slug": "direction-aware-hover",
+  "description": "A direction aware hover effect using Framer Motion, Tailwindcss and good old javascript.",
+  "props": [
+    {
+      "Prop": "imageUrl",
+      "Type": "string",
+      "Description": "The URL of the image to be displayed."
+    },
+    {
+      "Prop": "children",
+      "Type": "React.ReactNode or string",
+      "Description": "The content to be displayed over the image."
+    },
+    {
+      "Prop": "childrenClassName",
+      "Type": "string (optional)",
+      "Description": "The CSS class to be applied to the children."
+    },
+    {
+      "Prop": "imageClassName",
+      "Type": "string (optional)",
+      "Description": "The CSS class to be applied to the image."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/direction-aware-hoverCopy",
+  "url": "https://ui.aceternity.com/components/direction-aware-hover",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "pointer-reactive",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A direction aware hover effect using Framer Motion, Tailwindcss and good old javascript.",
+  "theme_requirements": [
+    "tailwind-classes"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import { DirectionAwareHover } from \"../ui/direction-aware-hover\";"
+  ],
+  "dependencies": [],
+  "client_only": true
+}

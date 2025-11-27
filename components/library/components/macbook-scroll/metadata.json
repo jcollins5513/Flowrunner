@@ -1,0 +1,57 @@
+{
+  "name": "Aceternity UI",
+  "slug": "macbook-scroll",
+  "description": "Scroll through the page and see the image come out of the screen, as seen on Fey.com website.",
+  "props": [
+    {
+      "Prop": "src",
+      "Type": "string",
+      "Description": "Source URL for the MacBook screen image.",
+      "Default Value": "undefined"
+    },
+    {
+      "Prop": "showGradient",
+      "Type": "boolean",
+      "Description": "Flag to show/hide the gradient overlay.",
+      "Default Value": "undefined"
+    },
+    {
+      "Prop": "title",
+      "Type": "string | ReactNode",
+      "Description": "Title text or React node displayed above the MacBook.",
+      "Default Value": "undefined"
+    },
+    {
+      "Prop": "badge",
+      "Type": "ReactNode",
+      "Description": "Sticker displayed at the bottom left of the Macbook",
+      "Default Value": "undefined"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/macbook-scrollCopy",
+  "url": "https://ui.aceternity.com/components/macbook-scroll",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "scroll-reactive",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "Scroll through the page and see the image come out of the screen, as seen on Fey.com website.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { MacbookScroll } from \"@/components/ui/macbook-scroll\";"
+  ],
+  "dependencies": [
+    "@/components/ui/macbook-scroll",
+    "react"
+  ],
+  "client_only": false
+}

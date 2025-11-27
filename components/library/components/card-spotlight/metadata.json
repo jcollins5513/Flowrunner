@@ -1,0 +1,58 @@
+{
+  "name": "Aceternity UI",
+  "slug": "card-spotlight",
+  "description": "A card component with a spotlight effect revealing a radial gradient background",
+  "props": [
+    {
+      "Prop Name": "children",
+      "Type": "React.ReactNode",
+      "Default Value": "Required",
+      "Description": "The content to be rendered inside the card."
+    },
+    {
+      "Prop Name": "radius",
+      "Type": "number",
+      "Default Value": "350",
+      "Description": "The radius of the spotlight effect in pixels."
+    },
+    {
+      "Prop Name": "color",
+      "Type": "string",
+      "Default Value": "\"#262626\"",
+      "Description": "The background color of the spotlight effect."
+    },
+    {
+      "Prop Name": "className",
+      "Type": "string",
+      "Default Value": "undefined",
+      "Description": "Additional CSS classes to be applied to the con"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/card-spotlightCopy",
+  "url": "https://ui.aceternity.com/components/card-spotlight",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A card component with a spotlight effect revealing a radial gradient background",
+  "theme_requirements": [
+    "light-mode-friendly"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import { CardSpotlight } from \"@/components/ui/card-spotlight\";"
+  ],
+  "dependencies": [
+    "@/components/ui/card-spotlight"
+  ],
+  "client_only": false
+}

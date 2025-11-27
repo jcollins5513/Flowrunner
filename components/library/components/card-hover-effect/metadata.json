@@ -1,0 +1,55 @@
+{
+  "name": "Aceternity UI",
+  "slug": "card-hover-effect",
+  "description": "Hover over the cards and the effect slides to the currently hovered card.",
+  "props": [
+    {
+      "Prop name": "className",
+      "Type": "string",
+      "Description": "The class name of the child component."
+    },
+    {
+      "Prop name": "items",
+      "Type": "{title: string, description: string, link: ReactNode}",
+      "Description": "items that you can map through, passed as props to the HoverEffect component"
+    },
+    {
+      "Prop name": "children",
+      "Type": "ReactNode",
+      "Description": "Children to theCardCardTitleandCardDescriptioncomponent"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/card-hover-effectCopy",
+  "url": "https://ui.aceternity.com/components/card-hover-effect",
+  "type": "card",
+  "subtype": "",
+  "layout_role": "inline-block",
+  "recommended_slots": [
+    "grid.item",
+    "section.content"
+  ],
+  "interaction_profile": "pointer-reactive",
+  "preferred_size": "auto-height",
+  "z_index_role": "content",
+  "usage_notes": "Hover over the cards and the effect slides to the currently hovered card.",
+  "theme_requirements": [],
+  "data_requirements": [
+    {
+      "name": "items",
+      "fields": [
+        "title",
+        "description",
+        "media"
+      ],
+      "type": "array"
+    }
+  ],
+  "domain_tags": [],
+  "imports": [
+    "import { HoverEffect } from \"../ui/card-hover-effect\";"
+  ],
+  "dependencies": [],
+  "client_only": false
+}

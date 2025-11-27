@@ -1,0 +1,1176 @@
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DesignForge AI - Where Creativity Meets Intelligence</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+@keyframes float {
+0%, 100% { transform: translateY(0px); }
+50% { transform: translateY(-20px); }
+}
+@keyframes slideInLeft {
+from { opacity: 0; transform: translateX(-40px); }
+to { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInRight {
+from { opacity: 0; transform: translateX(40px); }
+to { opacity: 1; transform: translateX(0); }
+}
+@keyframes scaleIn {
+from { opacity: 0; transform: scale(0.9); }
+to { opacity: 1; transform: scale(1); }
+}
+@keyframes shimmer {
+0% { background-position: -1000px 0; }
+100% { background-position: 1000px 0; }
+}
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-slide-in-left { animation: slideInLeft 0.8s ease-out; }
+.animate-slide-in-right { animation: slideInRight 0.8s ease-out; }
+.animate-scale-in { animation: scaleIn 0.6s ease-out; }
+.shimmer {
+background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+background-size: 1000px 100%;
+animation: shimmer 3s infinite;
+}
+.grid-pattern {
+background-image:
+linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+background-size: 50px 50px;
+}
+/* Intersection Observer animations */
+.fade-in-up {
+opacity: 0;
+transform: translateY(30px);
+transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.fade-in-up.animated {
+opacity: 1;
+transform: translateY(0);
+}
+.fade-in-left {
+opacity: 0;
+transform: translateX(-40px);
+transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.fade-in-left.animated {
+opacity: 1;
+transform: translateX(0);
+}
+.fade-in-right {
+opacity: 0;
+transform: translateX(40px);
+transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.fade-in-right.animated {
+opacity: 1;
+transform: translateX(0);
+}
+.fade-in {
+opacity: 0;
+transition: opacity 0.8s ease-out;
+}
+.fade-in.animated {
+opacity: 1;
+}
+.blur-in {
+opacity: 0;
+filter: blur(10px);
+transition: opacity 0.8s ease-out, filter 0.8s ease-out;
+}
+.blur-in.animated {
+opacity: 1;
+filter: blur(0);
+}
+.scale-in {
+opacity: 0;
+transform: scale(0.9);
+transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.scale-in.animated {
+opacity: 1;
+transform: scale(1);
+}
+/* Stagger delays */
+.delay-100 { transition-delay: 0.1s; }
+.delay-200 { transition-delay: 0.2s; }
+.delay-300 { transition-delay: 0.3s; }
+.delay-400 { transition-delay: 0.4s; }
+.delay-500 { transition-delay: 0.5s; }
+.delay-600 { transition-delay: 0.6s; }
+.delay-700 { transition-delay: 0.7s; }
+.delay-800 { transition-delay: 0.8s; }
+</style>
+<link id="all-fonts-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist">.font-geist { font-family: 'Geist', sans-serif !important; }</style><link id="all-fonts-link-font-roboto" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-roboto">.font-roboto { font-family: 'Roboto', sans-serif !important; }</style><link id="all-fonts-link-font-montserrat" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-montserrat">.font-montserrat { font-family: 'Montserrat', sans-serif !important; }</style><link id="all-fonts-link-font-poppins" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-poppins">.font-poppins { font-family: 'Poppins', sans-serif !important; }</style><link id="all-fonts-link-font-playfair" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&amp;display=swap"><style id="all-fonts-style-font-playfair">.font-playfair { font-family: 'Playfair Display', serif !important; }</style><link id="all-fonts-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-instrument-serif">.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }</style><link id="all-fonts-link-font-merriweather" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;display=swap"><style id="all-fonts-style-font-merriweather">.font-merriweather { font-family: 'Merriweather', serif !important; }</style><link id="all-fonts-link-font-bricolage" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-bricolage">.font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }</style><link id="all-fonts-link-font-jakarta" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-jakarta">.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }</style><link id="all-fonts-link-font-manrope" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-manrope">.font-manrope { font-family: 'Manrope', sans-serif !important; }</style><link id="all-fonts-link-font-space-grotesk" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-space-grotesk">.font-space-grotesk { font-family: 'Space Grotesk', sans-serif !important; }</style><link id="all-fonts-link-font-work-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-work-sans">.font-work-sans { font-family: 'Work Sans', sans-serif !important; }</style><link id="all-fonts-link-font-pt-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-pt-serif">.font-pt-serif { font-family: 'PT Serif', serif !important; }</style><link id="all-fonts-link-font-geist-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist-mono">.font-geist-mono { font-family: 'Geist Mono', monospace !important; }</style><link id="all-fonts-link-font-space-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-space-mono">.font-space-mono { font-family: 'Space Mono', monospace !important; }</style><link id="all-fonts-link-font-quicksand" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-quicksand">.font-quicksand { font-family: 'Quicksand', sans-serif !important; }</style><link id="all-fonts-link-font-nunito" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-nunito">.font-nunito { font-family: 'Nunito', sans-serif !important; }</style><style id="border-gradient-shared-style">
+[style*="--border-gradient"]::before {
+content: "";
+position: absolute;
+inset: 0;
+padding: 1px;
+border-radius: var(--border-radius-before, inherit);
+-webkit-mask: linear-gradient(#fff 0 0) content-box,
+linear-gradient(#fff 0 0);
+-webkit-mask-composite: xor;
+mask-composite: exclude;
+background: var(--border-gradient);
+pointer-events: none;
+}</style>  <style>
+/* 3D Transform utilities */
+.rotate-x-5 { --tw-rotate-x: 5deg; transform: translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0)) rotateX(var(--tw-rotate-x, 0)) rotateY(var(--tw-rotate-y, 0)) rotateZ(var(--tw-rotate-z, 0)) skewX(var(--tw-skew-x, 0)) skewY(var(--tw-skew-y, 0)) scaleX(var(--tw-scale-x, 1)) scaleY(var(--tw-scale-y, 1)) !important; }
+.perspective-none { perspective: none !important; }
+</style>
+<script>
+// Configure Tailwind to include our custom 3D transform utilities
+tailwind.config = {
+theme: {
+extend: {
+// Add any custom theme extensions here if needed
+}
+},
+plugins: [
+function({ addUtilities }) {
+const rotateXUtilities = {};
+const rotateYUtilities = {};
+const rotateZUtilities = {};
+const rotateValues = [0, 5, 10, 15, 20, 30, 45, 75];
+// Generate rotate-x utilities
+rotateValues.forEach((value) => {
+rotateXUtilities[`.rotate-x-${value}`] = {
+'--tw-rotate-x': `${value}deg`,
+transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+};
+if (value !== 0) {
+rotateXUtilities[`.-rotate-x-${value}`] = {
+'--tw-rotate-x': `-${value}deg`,
+transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+};
+}
+});
+// Generate rotate-y utilities
+rotateValues.forEach((value) => {
+rotateYUtilities[`.rotate-y-${value}`] = {
+'--tw-rotate-y': `${value}deg`,
+transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+};
+if (value !== 0) {
+rotateYUtilities[`.-rotate-y-${value}`] = {
+'--tw-rotate-y': `-${value}deg`,
+transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+};
+}
+});
+// Generate rotate-z utilities
+rotateValues.forEach((value) => {
+rotateZUtilities[`.rotate-z-${value}`] = {
+'--tw-rotate-z': `${value}deg`,
+transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+};
+if (value !== 0) {
+rotateZUtilities[`.-rotate-z-${value}`] = {
+'--tw-rotate-z': `-${value}deg`,
+transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+};
+}
+});
+// Perspective utilities
+const perspectiveUtilities = {
+".perspective-none": { perspective: "none" },
+".perspective-dramatic": { perspective: "100px" },
+".perspective-near": { perspective: "300px" },
+".perspective-normal": { perspective: "500px" },
+".perspective-midrange": { perspective: "800px" },
+".perspective-distant": { perspective: "1200px" },
+};
+// Transform style utilities
+const transformStyleUtilities = {
+".transform-style-preserve-3d": { "transform-style": "preserve-3d" },
+".transform-style-flat": { "transform-style": "flat" },
+};
+addUtilities({
+...rotateXUtilities,
+...rotateYUtilities,
+...rotateZUtilities,
+...perspectiveUtilities,
+...transformStyleUtilities,
+});
+}
+]
+};
+</script></head>
+<body class="bg-black text-white antialiased overflow-x-hidden">
+
+<!-- Background (component) added by Aura -->
+<div class="aura-background-component top-0 w-full h-screen -z-10 absolute" data-alpha-mask="80" style="; mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent)"><div class="aura-background-component top-0 w-full h-screen -z-10 absolute" data-alpha-mask="100" style="; mask-image: linear-gradient(to bottom, transparent, black 0%, black 100%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 0%, black 100%, transparent)"><div data-us-project="ZPruWnhzwuk5Tf6nc1q0" class="absolute w-full h-full left-0 top-0 -z-10"></div><script type="text/javascript">!function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head || document.body).appendChild(i)}}();</script></div></div>
+
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 backdrop-blur-xl bg-black/50 border-b border-white/5">
+  <div class="flex max-w-7xl mr-auto ml-auto pt-0 pr-6 pb-0 pl-6 items-center justify-between">
+    <div class="flex items-center gap-2">
+      
+      <span class="bg-center text-xl font-semibold tracking-tight bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/6506f57d-d763-4f65-be30-e4db135775b2_1600w.png)] bg-cover pt-10 pr-12 pb-10 pl-12"></span>
+    </div>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#features" class="text-sm text-slate-400 hover:text-white transition-all duration-300 hover:scale-105">Features</a>
+      <a href="#showcase" class="text-sm text-slate-400 hover:text-white transition-all duration-300 hover:scale-105">Showcase</a>
+      <a href="#workflow" class="text-sm text-slate-400 hover:text-white transition-all duration-300 hover:scale-105">Workflow</a>
+      <a href="#pricing" class="text-sm text-slate-400 hover:text-white transition-all duration-300 hover:scale-105">Pricing</a>
+    </div>
+    <button class="px-4 py-2 bg-white text-black rounded-lg text-sm font-medium hover:bg-white/90 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+      Get Started
+    </button>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+  <div class="absolute inset-0 grid-pattern"></div>
+  <div class="bg-gradient-to-b from-violet-500/10 via-transparent to-transparent absolute top-0 right-0 bottom-0 left-0"></div>
+  
+
+  
+  <div class="relative z-10 max-w-6xl mx-auto px-6 text-center">
+    <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full mb-8 animate-scale-in hover:bg-white/10 transition-all duration-300 hover:scale-105">
+      <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+      <span class="text-sm text-slate-300">Now with real-time AI collaboration</span>
+    </div>
+    
+    <h1 class="md:text-8xl bg-clip-text text-6xl font-bold text-transparent tracking-tighter bg-gradient-to-r from-white via-violet-200 to-fuchsia-200 mb-6" style="mask-image: linear-gradient(90deg, transparent, black 50%, black 50%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, black 50%, black 50%, transparent);">
+      Design Beyond<br>Imagination
+    </h1>
+    
+    <p class="text-xl text-slate-400 max-w-2xl mx-auto mb-12">
+      Transform concepts into breathtaking designs with AI-powered creative intelligence. Generate, iterate, and perfect in real-time.
+    </p>
+    
+    <div class="flex items-center justify-center gap-4">
+      <button class="px-8 py-4 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl font-medium hover:shadow-lg hover:shadow-violet-500/50 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
+        Start Creating Free
+      </button>
+      <button class="hover:bg-white/10 transition-all duration-300 hover:scale-105 flex font-medium bg-white/5 border-white/10 border rounded-xl pt-4 pr-8 pb-4 pl-8 backdrop-blur-md gap-x-2 gap-y-2 items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="play-circle" class="lucide lucide-play-circle w-5 h-5"><path d="M9 9.003a1 1 0 0 1 1.517-.859l4.997 2.997a1 1 0 0 1 0 1.718l-4.997 2.997A1 1 0 0 1 9 14.996z"></path><circle cx="12" cy="12" r="10"></circle></svg>
+        Watch Demo
+      </button>
+    </div>
+    
+    <div class="mt-20 grid grid-cols-3 gap-8 max-w-3xl mx-auto">
+      <div class="text-center fade-in-up delay-100 animated">
+        <div class="text-3xl font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">2M+</div>
+        <div class="text-sm text-slate-500 mt-1">Designs Created</div>
+      </div>
+      <div class="text-center fade-in-up delay-200 animated">
+        <div class="text-3xl font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">50K+</div>
+        <div class="text-sm text-slate-500 mt-1">Active Creators</div>
+      </div>
+      <div class="text-center fade-in-up delay-300 animated">
+        <div class="text-3xl font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">99.9%</div>
+        <div class="text-sm text-slate-500 mt-1">Satisfaction Rate</div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- FEATURES -->
+<div class="flex xl:pt-0 xl:pb-0 sm:pl-4 sm:pr-4 sm:pt-20 w-screen h-1000 pt-20 pr-2 pb-40 pl-2 scale-100 rotate-x-5 items-center justify-center blur-in" style="mask-image: linear-gradient(180deg, transparent, black 0%, black 1%, transparent); -webkit-mask-image: linear-gradient(180deg, transparent, black 0%, black 1%, transparent);">
+  <div class="flex flex-col overflow-hidden xl:bg-neutral-900/20 bg-neutral-900 w-full h-[700px] max-w-7xl max-h-[95vh] border-white/10 border rounded-2xl shadow-2xl backdrop-blur-xl perspective-none transition-all duration-300 hover:border-white/20">
+
+    <!-- App Header: DesignForge Project Overview -->
+    <div class="flex items-center justify-between border-b border-white/10 px-5 py-3 bg-black/60 backdrop-blur">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center justify-center h-8 w-8 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 text-xs font-medium tracking-tight hover:scale-110 transition-transform duration-300">
+          DF
+        </div>
+        <div>
+          <h2 class="text-sm font-semibold tracking-tight">DesignForge Workspace</h2>
+          <p class="text-xs text-neutral-400">Portfolio overview · Last updated 2 mins ago</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button class="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs text-neutral-300 border border-white/10 hover:bg-white/5 transition-all duration-300 hover:scale-105">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </svg>
+          Search
+        </button>
+        <button class="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs text-neutral-300 border border-white/10 hover:bg-white/5 transition-all duration-300 hover:scale-105">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 21a8 8 0 1 0-12.9 0"></path>
+            <circle cx="12" cy="11" r="4"></circle>
+          </svg>
+          Share
+        </button>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="flex-1 flex overflow-hidden">
+
+      <!-- Left: Navigation / Projects -->
+      <aside class="hidden md:flex md:flex-col w-64 border-r border-white/5 bg-black/50">
+        <div class="px-4 py-3 border-b border-white/5">
+          <p class="text-[11px] uppercase tracking-wide text-neutral-500 mb-1">Workspace</p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="text-[11px] px-2 py-1 rounded-full bg-white/5 text-neutral-300 border border-white/10 hover:bg-white/10 transition-colors cursor-pointer">All projects</span>
+            <span class="text-[11px] px-2 py-1 rounded-full bg-transparent text-neutral-400 border border-white/5 hover:bg-white/5 transition-colors cursor-pointer">Client work</span>
+          </div>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto px-3 py-3 space-y-5">
+          <!-- Primary nav -->
+          <div>
+            <p class="text-[11px] uppercase tracking-wide text-neutral-500 mb-2 px-1">Overview</p>
+            <div class="space-y-1">
+              <button class="flex w-full items-center gap-2 rounded-md px-2.5 py-1.5 text-xs text-white bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300">
+                <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+                Dashboard
+              </button>
+              <button class="flex w-full items-center gap-2 rounded-md px-2.5 py-1.5 text-xs text-neutral-300 hover:bg-white/5 transition-all duration-300">
+                <span class="h-1.5 w-1.5 rounded-full bg-neutral-500"></span>
+                Gallery
+              </button>
+              <button class="flex w-full items-center gap-2 rounded-md px-2.5 py-1.5 text-xs text-neutral-300 hover:bg-white/5 transition-all duration-300">
+                <span class="h-1.5 w-1.5 rounded-full bg-neutral-500"></span>
+                Workflows
+              </button>
+            </div>
+          </div>
+
+          <!-- Recent projects -->
+          <div>
+            <p class="text-[11px] uppercase tracking-wide text-neutral-500 mb-2 px-1">Recent projects</p>
+            <div class="space-y-1">
+              <button class="flex flex-col w-full rounded-md px-2.5 py-2 text-xs text-neutral-300 hover:bg-white/5 border border-white/5 transition-all duration-300 hover:border-white/10">
+                <span class="text-neutral-100">Bankify mobile UI</span>
+                <span class="text-[11px] text-neutral-500 mt-0.5">Product design · 18 screens</span>
+              </button>
+              <button class="flex flex-col w-full rounded-md px-2.5 py-2 text-xs text-neutral-300 hover:bg-white/5 border border-transparent transition-all duration-300 hover:border-white/10">
+                <span class="text-neutral-100">Lux photography site</span>
+                <span class="text-[11px] text-neutral-500 mt-0.5">Marketing · Web</span>
+              </button>
+              <button class="flex flex-col w-full rounded-md px-2.5 py-2 text-xs text-neutral-300 hover:bg-white/5 border border-transparent transition-all duration-300 hover:border-white/10">
+                <span class="text-neutral-100">DesignForge hero visuals</span>
+                <span class="text-[11px] text-neutral-500 mt-0.5">Brand · Landing page</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- System -->
+          <div>
+            <p class="text-[11px] uppercase tracking-wide text-neutral-500 mb-2 px-1">System</p>
+            <div class="space-y-1">
+              <button class="flex w-full items-center justify-between rounded-md px-2.5 py-1.5 text-xs text-neutral-300 hover:bg-white/5 transition-all duration-300">
+                <span class="flex items-center gap-1.5">
+                  <span class="h-1.5 w-1.5 rounded-full bg-neutral-500"></span>
+                  Settings
+                </span>
+                <span class="text-[11px] text-neutral-500">⌘,</span>
+              </button>
+              <button class="flex w-full items-center justify-between rounded-md px-2.5 py-1.5 text-xs text-neutral-300 hover:bg-white/5 transition-all duration-300">
+                <span class="flex items-center gap-1.5">
+                  <span class="h-1.5 w-1.5 rounded-full bg-neutral-500"></span>
+                  Changelog
+                </span>
+                <span class="text-[11px] text-neutral-500">7.3</span>
+              </button>
+            </div>
+          </div>
+        </nav>
+
+        <!-- Usage -->
+        <div class="border-t border-white/5 px-4 py-3">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs text-neutral-400">Render credits</span>
+            <span class="text-xs font-medium text-white">1,280 / 2,000</span>
+          </div>
+          <div class="w-full h-1.5 bg-neutral-900 rounded-full overflow-hidden mb-1">
+            <div class="h-full bg-gradient-to-r from-violet-500 to-fuchsia-500 transition-all duration-500" style="width: 64%;"></div>
+          </div>
+          <p class="text-[11px] text-neutral-500 mb-2">Resets in 11 days</p>
+          <button class="w-full rounded-md px-3 py-1.5 text-xs font-medium text-white bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300 hover:scale-105">
+            Upgrade workspace
+          </button>
+        </div>
+      </aside>
+
+      <!-- Center: Highlights & Activity -->
+      <main class="flex-1 flex flex-col xl:bg-neutral-950/80 bg-neutral-950/60">
+        <!-- Sub-header -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-white/5 px-5 py-3 bg-black/50">
+          <div>
+            <h1 class="text-lg font-semibold tracking-tight">Creative overview</h1>
+            <p class="text-xs text-neutral-400 mt-0.5">Track your DesignForge output at a glance</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button class="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs text-neutral-300 border border-white/10 hover:bg-white/5 transition-all duration-300">
+              Last 7 days
+            </button>
+            <button class="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs text-white bg-white text-black hover:bg-white/90 transition-all duration-300 hover:scale-105">
+              New project
+            </button>
+          </div>
+        </div>
+
+        <!-- Main grid -->
+        <div class="flex-1 overflow-y-auto p-5 space-y-5">
+          <!-- Stats row -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="rounded-xl border border-white/10 bg-black/60 px-4 py-3 hover:border-violet-500/50 transition-all duration-300 hover:scale-105 cursor-pointer">
+              <p class="text-[11px] uppercase tracking-wide text-neutral-500 mb-1">Generations</p>
+              <div class="flex items-baseline gap-2">
+                <span class="text-2xl font-semibold tracking-tight">486</span>
+                <span class="text-[11px] text-emerald-400">+23% vs last week</span>
+              </div>
+              <p class="text-[11px] text-neutral-500 mt-1">Across 14 projects</p>
+            </div>
+            <div class="rounded-xl border border-white/10 bg-black/60 px-4 py-3 hover:border-violet-500/50 transition-all duration-300 hover:scale-105 cursor-pointer">
+              <p class="text-[11px] uppercase tracking-wide text-neutral-500 mb-1">Accepted designs</p>
+              <div class="flex items-baseline gap-2">
+                <span class="text-2xl font-semibold tracking-tight">72%</span>
+                <span class="text-[11px] text-emerald-400">+8% quality lift</span>
+              </div>
+              <p class="text-[11px] text-neutral-500 mt-1">After manual edits</p>
+            </div>
+            <div class="rounded-xl border border-white/10 bg-black/60 px-4 py-3 hover:border-violet-500/50 transition-all duration-300 hover:scale-105 cursor-pointer">
+              <p class="text-[11px] uppercase tracking-wide text-neutral-500 mb-1">Time saved</p>
+              <div class="flex items-baseline gap-2">
+                <span class="text-2xl font-semibold tracking-tight">39h</span>
+                <span class="text-[11px] text-emerald-400">This month</span>
+              </div>
+              <p class="text-[11px] text-neutral-500 mt-1">vs manual workflows</p>
+            </div>
+          </div>
+
+          <!-- Middle: Gallery + Prompt -->
+          <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
+            <!-- Gallery -->
+            <div class="lg:col-span-3 rounded-xl border border-white/10 bg-black/60 p-4 hover:border-white/20 transition-all duration-300">
+              <div class="flex items-center justify-between mb-3">
+                <div>
+                  <p class="text-xs font-medium text-neutral-300">Latest outputs</p>
+                  <p class="text-[11px] text-neutral-500 mt-0.5">From "Bankify mobile UI" workflow</p>
+                </div>
+                <button class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[11px] text-neutral-300 border border-white/10 hover:bg-white/5 transition-all duration-300">
+                  View gallery
+                </button>
+              </div>
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <div class="relative overflow-hidden rounded-lg border border-white/10 bg-cover bg-center aspect-square bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/a2df0305-406b-4c70-bd26-98c6e9b0205d_800w.webp)] hover:scale-105 transition-transform duration-300 cursor-pointer">
+                  <div class="bg-gradient-to-t from-black/80 via-black/0 to-black/0 absolute top-0 right-0 bottom-0 left-0"></div>
+                  <div class="absolute bottom-2 left-2 right-2 flex items-center justify-between">
+                    <p class="text-[11px] text-neutral-200 truncate">Onboarding screen</p>
+                    <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-black/60 border border-white/10 text-neutral-300">v3</span>
+                  </div>
+                </div>
+                <div class="relative overflow-hidden rounded-lg border border-white/10 bg-cover bg-center aspect-square bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/ed79ea39-f11e-4cb6-a686-f04fa4f7acb0_320w.webp)] hover:scale-105 transition-transform duration-300 cursor-pointer">
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-black/0"></div>
+                  <div class="absolute bottom-2 left-2 right-2 flex items-center justify-between">
+                    <p class="text-[11px] text-neutral-200 truncate">Analytics summary</p>
+                    <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-black/60 border border-white/10 text-neutral-300">v2</span>
+                  </div>
+                </div>
+                <div class="relative overflow-hidden rounded-lg border border-white/10 bg-cover bg-center aspect-square hidden sm:block bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/34e5cb91-cea6-44d5-bd39-8a2ece326073_320w.webp)] hover:scale-105 transition-transform duration-300 cursor-pointer">
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-black/0"></div>
+                  <div class="absolute bottom-2 left-2 right-2 flex items-center justify-between">
+                    <p class="text-[11px] text-neutral-200 truncate">Cards overview</p>
+                    <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-black/60 border border-white/10 text-neutral-300">v1</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Prompt inspector -->
+            <div class="lg:col-span-2 rounded-xl border border-white/10 bg-black/60 p-4 flex flex-col hover:border-white/20 transition-all duration-300">
+              <div class="flex items-center justify-between mb-2">
+                <div>
+                  <p class="text-xs font-medium text-neutral-300">Prompt inspector</p>
+                  <p class="text-[11px] text-neutral-500 mt-0.5">Current generation recipe</p>
+                </div>
+                <button class="px-2 py-1 rounded-md text-[11px] text-neutral-300 border border-white/10 hover:bg-white/5 transition-all duration-300">
+                  Copy
+                </button>
+              </div>
+              <div class="flex-1 rounded-lg border border-white/10 bg-black/50 px-3 py-2">
+                <p class="text-[11px] text-neutral-400 leading-relaxed">
+                  "Design a clean, modern finance dashboard for a mobile app. Emphasize clarity, soft gradients, and ample whitespace. Include a hero balance card, recent transactions, and a compact analytics summary. Style consistent with DesignForge hero visuals."
+                </p>
+              </div>
+              <div class="flex flex-wrap gap-1.5 mt-3">
+                <span class="text-[11px] px-2 py-1 rounded-full bg-white/5 border border-white/10 text-neutral-300 hover:bg-white/10 transition-colors cursor-pointer">Aspect: 9:16</span>
+                <span class="text-[11px] px-2 py-1 rounded-full bg-white/5 border border-white/10 text-neutral-300 hover:bg-white/10 transition-colors cursor-pointer">Style: Product UI</span>
+                <span class="text-[11px] px-2 py-1 rounded-full bg-white/5 border border-white/10 text-neutral-300 hover:bg-white/10 transition-colors cursor-pointer">Quality: High</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom: Prompt input -->
+          <div class="rounded-xl border border-white/10 bg-black/70 p-4 hover:border-violet-500/30 transition-all duration-300">
+            <div class="flex flex-col md:flex-row md:items-end gap-3">
+              <div class="flex-1">
+                <label class="text-[11px] uppercase tracking-wide text-neutral-500 mb-1 block">New prompt</label>
+                <div class="rounded-lg border border-white/10 bg-black/60 focus-within:border-violet-500/50 transition-colors">
+                  <textarea class="w-full bg-transparent text-xs placeholder-neutral-500 focus:outline-none resize-none px-3 py-2" rows="3" placeholder="Describe the next DesignForge visual you want to generate…"></textarea>
+                </div>
+              </div>
+              <div class="flex flex-col gap-2 md:w-52">
+                <div class="flex items-center gap-1.5">
+                  <button class="flex-1 flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-md text-[11px] text-neutral-300 border border-white/10 bg-black/60 hover:bg-white/5 transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                      <path d="m9 9 6 6"></path>
+                      <path d="m15 9-6 6"></path>
+                    </svg>
+                    Random idea
+                  </button>
+                  <button class="flex-1 flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-md text-[11px] text-neutral-300 border border-white/10 bg-black/60 hover:bg-white/5 transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+                      <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+                      <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+                      <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+                    </svg>
+                    Use preset
+                  </button>
+                </div>
+                <button class="flex items-center justify-center gap-1.5 rounded-md px-3 py-2 text-xs font-medium text-black bg-white hover:bg-white/90 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2l4 4-4 4"></path>
+                    <path d="M2 12h20"></path>
+                    <path d="M12 14l4 4-4 4"></path>
+                  </svg>
+                  Generate with DesignForge
+                </button>
+                <p class="text-[11px] text-neutral-500 text-right">4 credits · AuraGen High</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Right: Session insights -->
+      <aside class="hidden lg:flex flex-col w-72 border-l border-white/5 bg-black/60">
+        <div class="px-4 py-3 border-b border-white/5">
+          <p class="text-sm font-semibold tracking-tight">Session insights</p>
+          <p class="text-[11px] text-neutral-500 mt-0.5">How today compares to your usual workflow</p>
+        </div>
+
+        <div class="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+          <!-- Mini metric -->
+          <div class="rounded-lg border border-white/10 bg-black/60 px-3 py-3 hover:border-violet-500/50 transition-all duration-300 cursor-pointer">
+            <p class="text-[11px] uppercase tracking-wide text-neutral-500 mb-1">Focus time</p>
+            <p class="text-xl font-semibold tracking-tight">2h 14m</p>
+            <p class="text-[11px] text-neutral-500 mt-0.5">You're in the top 20% of creators today.</p>
+          </div>
+
+          <!-- Activity list -->
+          <div class="space-y-2">
+            <p class="text-[11px] uppercase tracking-wide text-neutral-500">Recent activity</p>
+            <div class="space-y-1.5">
+              <div class="flex items-start gap-2 p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer">
+                <span class="mt-1 h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+                <div>
+                  <p class="text-xs text-neutral-200">Generated 6 mobile screens for "Bankify"</p>
+                  <p class="text-[11px] text-neutral-500">2 mins ago · 18 credits</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-2 p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer">
+                <span class="mt-1 h-1.5 w-1.5 rounded-full bg-violet-400"></span>
+                <div>
+                  <p class="text-xs text-neutral-200">Updated prompt preset "Product UI · Soft"</p>
+                  <p class="text-[11px] text-neutral-500">23 mins ago</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-2 p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer">
+                <span class="mt-1 h-1.5 w-1.5 rounded-full bg-neutral-500"></span>
+                <div>
+                  <p class="text-xs text-neutral-200">Imported reference board "DesignForge hero"</p>
+                  <p class="text-[11px] text-neutral-500">1h 04m ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shortcuts -->
+          <div>
+            <p class="text-[11px] uppercase tracking-wide text-neutral-500 mb-2">Shortcuts</p>
+            <div class="space-y-1.5">
+              <button class="w-full flex items-center justify-between rounded-md px-3 py-1.5 text-[11px] text-neutral-300 border border-white/10 bg-black/60 hover:bg-white/5 transition-all duration-300">
+                <span>Open command palette</span>
+                <span class="text-[10px] text-neutral-500">⌘ K</span>
+              </button>
+              <button class="w-full flex items-center justify-between rounded-md px-3 py-1.5 text-[11px] text-neutral-300 border border-white/10 bg-black/60 hover:bg-white/5 transition-all duration-300">
+                <span>Toggle reference grid</span>
+                <span class="text-[10px] text-neutral-500">G</span>
+              </button>
+              <button class="w-full flex items-center justify-between rounded-md px-3 py-1.5 text-[11px] text-neutral-300 border border-white/10 bg-black/60 hover:bg-white/5 transition-all duration-300">
+                <span>Switch theme</span>
+                <span class="text-[10px] text-neutral-500">T</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</div>
+<section class="bg-black py-20">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-20">
+      <h2 class="text-5xl font-bold tracking-tight mb-4 fade-in-up">Powerful Creative Tools</h2>
+      <p class="text-xl text-slate-400 fade-in-up delay-100">Everything you need to bring your vision to life</p>
+    </div>
+
+    <div class="mx-auto max-w-6xl lg:max-w-7xl px-4">
+      <div class="grid gap-10 lg:grid-cols-2">
+
+        <!-- LEFT: Single mockup image + Glass Info ON TOP -->
+        <div class="group relative overflow-hidden rounded-[2.5rem] border border-white/5 bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-xl fade-in-left hover:border-white/10 transition-all duration-500 hover:scale-[1.02]">
+          <!-- Glow on hover -->
+          <div class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.32),transparent_60%)]">
+          </div>
+
+          <!-- Single mockup image -->
+          <div class="sm:h-[360px] lg:h-[420px] h-[320px] relative" style="position: relative; --border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0))">
+            <div class="bg-center bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/f9e5019c-5dfa-4d86-9a59-c29b6c5b66d2_1600w.jpg)] bg-cover rounded-[2.5rem] absolute top-0 right-0 bottom-0 left-0 group-hover:scale-105 transition-transform duration-500">
+            </div>
+
+            <!-- bottom gradient so card reads well -->
+            <div class="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+            </div>
+          </div>
+
+          <!-- Glass Info Card OVER the image -->
+          <div class="absolute inset-x-4 sm:inset-x-6 bottom-4 sm:bottom-6 z-10">
+            <div class="max-w-xl mx-auto">
+              <div class="group/card flex overflow-hidden sm:px-8 sm:py-6 bg-black/40 border-white/10 border rounded-3xl px-6 py-5 relative backdrop-blur-xl gap-x-5 gap-y-5 items-center justify-between hover:bg-black/60 transition-all duration-300" id="project-card-one">
+                <!-- subtle glow -->
+                <div class="group-hover/card:opacity-100 transition-opacity duration-500 opacity-0 absolute top-0 right-0 bottom-0 left-0">
+                </div>
+
+                <div class="relative z-10 flex flex-col gap-3">
+                  <div class="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1 hover:bg-white/10 transition-colors cursor-pointer">
+                    <span class="text-xs text-slate-300">Published Android App</span>
+                  </div>
+                  <div class="">
+                    <h3 class="text-2xl sm:text-3xl font-semibold tracking-tight mb-1">
+                      Bankify
+                    </h3>
+                    <p class="text-sm text-slate-400">
+                      The simplest way to track your spending and keep every transaction in one place.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="relative z-10 flex items-center justify-center">
+                  <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5 border border-white/10 group-hover/card:scale-110 transition-transform duration-300">
+                    <!-- simple phone icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="7" y="2" width="10" height="20" rx="2"></rect>
+                      <circle cx="12" cy="18" r="1"></circle>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Masonry Grid + Glass Info ON TOP -->
+        <div class="group relative overflow-hidden rounded-[2.5rem] border border-white/5 bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-xl fade-in-right hover:border-white/10 transition-all duration-500 hover:scale-[1.02]">
+          <!-- Glow on hover -->
+          <div class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_top_right,rgba(249,115,22,0.4),transparent_60%)]">
+          </div>
+
+          <!-- Masonry grid image -->
+          <div class="relative h-[260px] sm:h-[300px] lg:h-[340px] rounded-[2.5rem] overflow-hidden">
+            <div class="grid grid-cols-3 grid-rows-2 h-full">
+              <div class="col-span-1 row-span-2 bg-[url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&amp;fit=crop&amp;w=700&amp;q=80')] bg-cover bg-center hover:scale-110 transition-transform duration-500">
+              </div>
+              <div class="col-span-2 row-span-1 bg-center bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/0b28110e-49d0-45d6-814e-65757d951541_1600w.webp)] bg-cover hover:scale-110 transition-transform duration-500">
+              </div>
+              <div class="col-span-1 row-span-1 bg-center bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/7673e8dd-9bec-4141-a633-6743d6877baa_800w.webp)] bg-cover hover:scale-110 transition-transform duration-500">
+              </div>
+              <div class="col-span-1 row-span-1 bg-[url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&amp;fit=crop&amp;w=700&amp;q=80')] bg-cover bg-center hover:scale-110 transition-transform duration-500">
+              </div>
+            </div>
+
+            <!-- top gradient + chrome -->
+            <div class="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/70 via-black/40 to-transparent">
+            </div>
+
+            <div class="absolute top-4 left-4 flex items-center gap-2">
+              <div class="h-8 w-8 rounded-full bg-black/70 backdrop-blur border border-white/20 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                <span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span>
+              </div>
+            </div>
+
+            <div class="absolute top-4 right-4 h-9 w-9 rounded-full bg-black/70 backdrop-blur flex items-center justify-center border border-white/20 hover:scale-110 transition-transform duration-300 cursor-pointer">
+              <div class="space-y-0.5">
+                <span class="block h-0.5 w-3 bg-white rounded-full"></span>
+                <span class="block h-0.5 w-3 bg-white/70 rounded-full"></span>
+                <span class="block h-0.5 w-3 bg-white/50 rounded-full"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Glass Info Card OVER the masonry grid -->
+          <div class="absolute inset-x-4 sm:inset-x-6 bottom-4 sm:bottom-6 z-10">
+            <div class="max-w-xl mx-auto">
+              <div id="project-card-two" class="group/card relative flex items-center justify-between gap-5 overflow-hidden rounded-3xl border border-white/10 bg-black/75 px-6 py-5 sm:px-8 sm:py-6 backdrop-blur-xl hover:bg-black/60 transition-all duration-300">
+                <!-- hover glow -->
+                <div class="absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_top_right,rgba(249,115,22,0.55),transparent_55%)]">
+                </div>
+
+                <div class="relative z-10 flex flex-col gap-3">
+                  <div class="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-1 hover:bg-white/10 transition-colors cursor-pointer">
+                    <span class="text-xs text-slate-300">Framer Website Template</span>
+                  </div>
+                  <div class="">
+                    <h3 class="text-2xl sm:text-3xl font-semibold tracking-tight mb-1">
+                      Lux
+                    </h3>
+                    <p class="text-sm text-slate-400">
+                      An immersive photography template that lets your work fill the screen and stay in focus.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="relative z-10 flex items-center justify-center">
+                  <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5 border border-white/10 group-hover/card:scale-110 transition-transform duration-300">
+                    <!-- simple globe icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="9"></circle>
+                      <path d="M3 12h18"></path>
+                      <path d="M12 3a14 14 0 0 1 4 9 14 14 0 0 1-4 9 14 14 0 0 1-4-9 14 14 0 0 1 4-9z"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /RIGHT card -->
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Animated Workflow Section -->
+<section id="workflow" class="py-32 relative overflow-hidden">
+  <div class="bg-gradient-to-b from-violet-500/5 to-transparent absolute top-0 right-0 bottom-0 left-0"></div>
+  
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-20">
+      <h2 class="text-5xl font-bold tracking-tight mb-4 fade-in-up">Your Creative Journey</h2>
+      <p class="text-xl text-slate-400 fade-in-up delay-100">From concept to completion in three simple steps</p>
+    </div>
+    
+    <div class="relative">
+      <!-- Connection Line -->
+      <div class="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-violet-500 transform -translate-y-1/2"></div>
+      
+      <div class="grid lg:grid-cols-3 gap-12 relative">
+        <!-- Step 1 -->
+        <div class="relative fade-in-up delay-100">
+          <div class="bg-black border border-white/10 rounded-3xl p-8 hover:border-violet-500/50 transition-all duration-500 hover:scale-105 hover:-translate-y-2">
+            <div class="flex text-2xl font-bold bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-white/0 to-white/10 w-16 h-16 rounded-2xl mr-auto mb-6 ml-auto items-center justify-center hover:scale-110 transition-transform duration-300">1</div>
+            <h3 class="text-2xl font-semibold mb-4 text-center">Describe Your Vision</h3>
+            <p class="text-slate-400 text-center mb-6">Simply type what you want to create. Our AI understands natural language and creative intent.</p>
+            <div class="bg-white/5 border border-white/10 rounded-xl p-4 hover:bg-white/10 transition-colors">
+              <div class="flex items-center gap-2 mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="edit-3" class="lucide lucide-edit-3 w-4 h-4 text-violet-400"><path d="M13 21h8"></path><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path></svg>
+                <span class="text-sm text-slate-400">Prompt</span>
+              </div>
+              <p class="text-sm">"Modern minimalist workspace with natural lighting..."</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Step 2 -->
+        <div class="relative fade-in-up delay-200">
+          <div class="bg-black border border-white/10 rounded-3xl p-8 hover:border-violet-500/50 transition-all duration-500 hover:scale-105 hover:-translate-y-2">
+            <div class="flex text-2xl font-bold bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-white/0 to-white/10 w-16 h-16 rounded-2xl mr-auto mb-6 ml-auto items-center justify-center hover:scale-110 transition-transform duration-300">2</div>
+            <h3 class="text-2xl font-semibold mb-4 text-center">AI Generates Options</h3>
+            <p class="text-slate-400 text-center mb-6">Watch as multiple design variations materialize instantly, each tailored to your specifications.</p>
+            <div class="grid grid-cols-2 gap-2">
+              <div class="aspect-square shimmer bg-center bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/88243f91-226d-49c3-b535-10406c562a54_320w.webp)] bg-cover rounded-lg hover:scale-105 transition-transform duration-300 cursor-pointer"></div>
+              <div class="aspect-square shimmer bg-center bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/c10fd820-4859-4f55-9798-672ade46e764_320w.webp)] bg-cover rounded-lg hover:scale-105 transition-transform duration-300 cursor-pointer" style="animation-delay: 0.5s"></div>
+              <div class="aspect-square shimmer bg-center bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/3b02a4b5-6482-43c9-bc48-44c3acea801b_320w.webp)] bg-cover rounded-lg hover:scale-105 transition-transform duration-300 cursor-pointer" style="animation-delay: 1s"></div>
+              <div class="aspect-square shimmer bg-center bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/22fc64f2-1e57-406c-bc42-d4cd1cbbe6bc_320w.webp)] bg-cover rounded-lg hover:scale-105 transition-transform duration-300 cursor-pointer" style="animation-delay: 1.5s"></div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Step 3 -->
+        <div class="relative fade-in-up delay-300">
+          <div class="bg-black border border-white/10 rounded-3xl p-8 hover:border-violet-500/50 transition-all duration-500 hover:scale-105 hover:-translate-y-2">
+            <div class="flex text-2xl font-bold bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-white/0 to-white/10 w-16 h-16 rounded-2xl mr-auto mb-6 ml-auto items-center justify-center hover:scale-110 transition-transform duration-300">
+              3
+            </div>
+            <h3 class="text-2xl font-semibold mb-4 text-center">Refine &amp; Export</h3>
+            <p class="text-slate-400 text-center mb-6">Polish your design with advanced editing tools, then export in any format you need.</p>
+            <div class="space-y-2">
+              <div class="flex items-center justify-between p-3 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-all duration-300 hover:scale-105 cursor-pointer">
+                <span class="text-sm">design-final.png</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="download" class="lucide lucide-download w-4 h-4 text-violet-400"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-all duration-300 hover:scale-105 cursor-pointer">
+                <span class="text-sm">design-4k.jpg</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="download" class="lucide lucide-download w-4 h-4 text-violet-400"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Showcase Gallery -->
+<section id="showcase" class="py-32 relative">
+  <div class="max-w-7xl mr-auto ml-auto pr-6 pl-6">
+    <div class="text-center mb-20">
+      <h2 class="text-5xl font-bold tracking-tight mb-4 fade-in-up">Created with DesignForge</h2>
+      <p class="text-xl text-slate-400 fade-in-up delay-100">Explore incredible designs from our community</p>
+    </div>
+    
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 auto-rows-[220px] gap-x-6 gap-y-6">
+    
+      <!-- Card 1 - tall -->
+      <div class="group relative overflow-hidden rounded-3xl bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/f080eef4-94c2-48e4-afd7-d2bb7670db6d_800w.webp)] bg-cover bg-center row-span-2 scale-in delay-100 hover:scale-105 transition-all duration-500 cursor-pointer">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/80 group-hover:to-black/90 transition-all duration-300"></div>
+    
+        <!-- top pill -->
+        <div class="absolute top-3 right-3 z-20 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+          <button class="rounded-full bg-white/90 px-4 py-1 text-xs font-medium text-slate-900 shadow hover:bg-white transition-colors">
+            Collect
+          </button>
+        </div>
+    
+        <!-- text -->
+        <div class="absolute inset-x-0 bottom-0 z-10 px-4 pb-4 pt-16 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+          <h3 class="text-sm font-medium text-white">Calm modern workspace</h3>
+          <p class="text-xs text-slate-300">Clean and focused environment</p>
+        </div>
+    
+        <!-- hover overlay -->
+        <div class="absolute inset-0 z-20 flex items-center justify-center bg-black/40 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+          <button class="px-6 py-3 bg-white text-black rounded-xl font-medium hover:scale-110 transition-transform duration-300">
+            View Details
+          </button>
+        </div>
+      </div>
+    
+      <!-- Card 2 - medium -->
+      <div class="group relative overflow-hidden rounded-3xl bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/603df3a1-12d4-4b90-841e-f37507a6d58e_800w.webp)] bg-cover bg-center row-span-2 scale-in delay-200 hover:scale-105 transition-all duration-500 cursor-pointer">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/80 group-hover:to-black/90 transition-all duration-300"></div>
+    
+        <div class="absolute inset-x-0 bottom-0 z-10 px-4 pb-4 pt-16 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+          <h3 class="text-sm font-medium text-white">Zen workspace aesthetic</h3>
+          <p class="text-xs text-slate-300">Minimalist productivity space</p>
+        </div>
+    
+        <div class="absolute inset-0 z-20 flex items-center justify-center bg-black/40 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+          <button class="px-6 py-3 bg-white text-black rounded-xl font-medium hover:scale-110 transition-transform duration-300">
+            View Details
+          </button>
+        </div>
+      </div>
+    
+      <!-- Card 3 - tall -->
+      <div class="group relative overflow-hidden rounded-3xl bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/cbd18b88-d764-4a5e-9e52-cea4c0b850c3_800w.webp)] bg-cover bg-center row-span-3 scale-in delay-300 hover:scale-105 transition-all duration-500 cursor-pointer">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/80 group-hover:to-black/90 transition-all duration-300"></div>
+    
+        <div class="absolute inset-x-0 bottom-0 z-10 px-4 pb-4 pt-16 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+          <h3 class="text-sm font-medium text-white">Forest Path</h3>
+          <p class="text-xs text-slate-300">Nature wanderlust</p>
+        </div>
+    
+        <div class="absolute inset-0 z-20 flex items-center justify-center bg-black/40 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+          <button class="px-6 py-3 bg-white text-black rounded-xl font-medium hover:scale-110 transition-transform duration-300">
+            View Details
+          </button>
+        </div>
+      </div>
+    
+      <!-- Card 4 - tall -->
+      <div class="group relative overflow-hidden rounded-3xl bg-[url('https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&amp;fit=crop&amp;w=900&amp;q=80')] bg-cover bg-center row-span-3 scale-in delay-400 hover:scale-105 transition-all duration-500 cursor-pointer">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/80 group-hover:to-black/90 transition-all duration-300"></div>
+    
+        <div class="absolute inset-x-0 bottom-0 z-10 px-4 pb-4 pt-16 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+          <h3 class="text-sm font-medium text-white">Tech Innovation</h3>
+          <p class="text-xs text-slate-300">Future technology</p>
+        </div>
+    
+        <div class="flex transition-opacity duration-500 group-hover:opacity-100 bg-black/40 opacity-0 bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/c2c5bdff-18a1-4599-8ab7-ba7d3f881760_800w.webp)] bg-cover bg-center z-20 absolute top-0 right-0 bottom-0 left-0 items-center justify-center">
+          <button class="px-6 py-3 bg-white text-black rounded-xl font-medium hover:scale-110 transition-transform duration-300">
+            View Details
+          </button>
+        </div>
+      </div>
+    
+      <!-- Card 5 -->
+      <div class="group overflow-hidden bg-center row-span-2 bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/34221b2a-9b4f-41ed-85c2-501075a46999_800w.webp)] bg-cover z-20 rounded-3xl relative scale-in delay-500 hover:scale-105 transition-all duration-500 cursor-pointer">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/80 group-hover:to-black/90 transition-all duration-300"></div>
+    
+        <div class="absolute inset-x-0 bottom-0 z-10 px-4 pb-4 pt-16 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+          <h3 class="text-sm font-medium text-white">Minimal M monogram</h3>
+          <p class="text-xs text-slate-300">Brand identity concept</p>
+        </div>
+    
+        <div class="z-20 flex transition-opacity duration-500 group-hover:opacity-100 bg-black/40 opacity-0 absolute top-0 right-0 bottom-0 left-0 items-center justify-center">
+          <button class="px-6 py-3 bg-white text-black rounded-xl font-medium hover:scale-110 transition-transform duration-300">
+            View Details
+          </button>
+        </div>
+      </div>
+    
+      <!-- Card 6 -->
+      <div class="group overflow-hidden bg-center row-span-2 bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/a2df0305-406b-4c70-bd26-98c6e9b0205d_800w.webp)] bg-cover rounded-3xl relative scale-in delay-600 hover:scale-105 transition-all duration-500 cursor-pointer">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/80 group-hover:to-black/90 transition-all duration-300"></div>
+    
+        <div class="absolute inset-x-0 bottom-0 z-10 px-4 pb-4 pt-16 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+          <h3 class="text-sm font-medium text-white">Ocean Views</h3>
+          <p class="text-xs text-slate-300">Travel destinations</p>
+        </div>
+    
+        <div class="z-20 flex transition-opacity duration-500 group-hover:opacity-100 bg-black/40 opacity-0 absolute top-0 right-0 bottom-0 left-0 items-center justify-center">
+          <button class="px-6 py-3 bg-white text-black rounded-xl font-medium hover:scale-110 transition-transform duration-300">
+            View Details
+          </button>
+        </div>
+      </div>
+    
+      <!-- Card 7 -->
+      <div class="group relative overflow-hidden rounded-3xl bg-[url('https://images.unsplash.com/photo-1517840933442-d2dfd588a22a?auto=format&amp;fit=crop&amp;w=900&amp;q=80')] bg-cover bg-center row-span-2 scale-in delay-700 hover:scale-105 transition-all duration-500 cursor-pointer">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/80 group-hover:to-black/90 transition-all duration-300"></div>
+    
+        <div class="absolute inset-x-0 bottom-0 z-10 px-4 pb-4 pt-16 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+          <h3 class="text-sm font-medium text-white">Fashion Style</h3>
+          <p class="text-xs text-slate-300">Style inspiration</p>
+        </div>
+    
+        <div class="z-20 flex transition-opacity duration-500 group-hover:opacity-100 bg-black/40 opacity-0 bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/fe47ac73-e611-4805-a7a2-e405f02a0c34_800w.webp)] bg-cover bg-center absolute top-0 right-0 bottom-0 left-0 items-center justify-center">
+          <button class="px-6 py-3 bg-white text-black rounded-xl font-medium hover:scale-110 transition-transform duration-300">
+            View Details
+          </button>
+        </div>
+      </div>
+    
+      <!-- Card 8 -->
+      <div class="group relative overflow-hidden rounded-3xl bg-[url('https://images.unsplash.com/photo-1526481280695-3c687fd543c0?auto=format&amp;fit=crop&amp;w=900&amp;q=80')] bg-cover bg-center row-span-2 scale-in delay-800 hover:scale-105 transition-all duration-500 cursor-pointer">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/80 group-hover:to-black/90 transition-all duration-300"></div>
+    
+        <div class="absolute inset-x-0 bottom-0 z-10 px-4 pb-4 pt-16 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+          <h3 class="text-sm font-medium text-white">Brand mark Velora</h3>
+          <p class="text-xs text-slate-300">Logo exploration</p>
+        </div>
+    
+        <div class="z-20 flex transition-opacity duration-500 group-hover:opacity-100 bg-black/40 opacity-0 bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/dec1be1e-112e-4fb6-8ac5-f3476f1e4613_800w.webp)] bg-cover bg-center absolute top-0 right-0 bottom-0 left-0 items-center justify-center">
+          <button class="px-6 py-3 bg-white text-black rounded-xl font-medium hover:scale-110 transition-transform duration-300">
+            View Details
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing Section -->
+<section class="pt-32 pb-32 relative" id="pricing">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-20">
+      <h2 class="text-5xl font-bold tracking-tight mb-4 fade-in-up">Simple, Transparent Pricing</h2>
+      <p class="text-xl text-slate-400 fade-in-up delay-100">Choose the plan that fits your creative needs</p>
+    </div>
+    
+    <div class="grid md:grid-cols-3 gap-8">
+      <!-- Free Plan -->
+      <div class="bg-white/5 border border-white/10 rounded-3xl p-8 fade-in-up delay-100 hover:border-white/20 hover:scale-105 transition-all duration-500 hover:-translate-y-2">
+        <h3 class="text-2xl font-semibold mb-2">Starter</h3>
+        <div class="text-4xl font-bold mb-6">Free</div>
+        <ul class="space-y-4 mb-8">
+          <li class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check w-5 h-5 text-green-400"><path d="M20 6 9 17l-5-5"></path></svg>
+            <span class="text-slate-300">50 generations/month</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check w-5 h-5 text-green-400"><path d="M20 6 9 17l-5-5"></path></svg>
+            <span class="text-slate-300">Standard quality</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check w-5 h-5 text-green-400"><path d="M20 6 9 17l-5-5"></path></svg>
+            <span class="text-slate-300">Community support</span>
+          </li>
+        </ul>
+        <button class="w-full py-3 bg-white/10 border border-white/20 rounded-xl font-medium hover:bg-white/20 transition-all duration-300 hover:scale-105">
+          Get Started
+        </button>
+      </div>
+      
+      <!-- Pro Plan -->
+      <div class="bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 border-2 border-violet-500 rounded-3xl p-8 relative fade-in-up delay-200 hover:scale-105 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-violet-500/50">
+        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full text-sm font-medium">
+          Most Popular
+        </div>
+        <h3 class="text-2xl font-semibold mb-2">Pro</h3>
+        <div class="text-4xl font-bold mb-6">$29<span class="text-lg text-slate-400">/mo</span></div>
+        <ul class="space-y-4 mb-8">
+          <li class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check w-5 h-5 text-green-400"><path d="M20 6 9 17l-5-5"></path></svg>
+            <span class="text-slate-300">Unlimited generations</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check w-5 h-5 text-green-400"><path d="M20 6 9 17l-5-5"></path></svg>
+            <span class="text-slate-300">High quality output</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check w-5 h-5 text-green-400"><path d="M20 6 9 17l-5-5"></path></svg>
+            <span class="text-slate-300">Priority support</span>
+          </li>
+          
+        </ul>
+        <button class="w-full py-3 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl font-medium hover:shadow-lg hover:shadow-violet-500/50 transition-all duration-300 hover:scale-105">
+          Start Free Trial
+        </button>
+      </div>
+      
+      <!-- Enterprise Plan -->
+      <div class="bg-white/5 border border-white/10 rounded-3xl p-8 fade-in-up delay-300 hover:border-white/20 hover:scale-105 transition-all duration-500 hover:-translate-y-2">
+        <h3 class="text-2xl font-semibold mb-2">Enterprise</h3>
+        <div class="text-4xl font-bold mb-6">Custom</div>
+        <ul class="space-y-4 mb-8">
+          <li class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check w-5 h-5 text-green-400"><path d="M20 6 9 17l-5-5"></path></svg>
+            <span class="text-slate-300">Everything in Pro</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check w-5 h-5 text-green-400"><path d="M20 6 9 17l-5-5"></path></svg>
+            <span class="text-slate-300">Dedicated support</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check w-5 h-5 text-green-400"><path d="M20 6 9 17l-5-5"></path></svg>
+            <span class="text-slate-300">Custom training</span>
+          </li>
+          
+        </ul>
+        <button class="w-full py-3 bg-white/10 border border-white/20 rounded-xl font-medium hover:bg-white/20 transition-all duration-300 hover:scale-105">
+          Contact Sales
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-32 relative overflow-hidden">
+  <div class="bg-center bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/69e27438-5c70-4909-a25c-efcf041fc04c_3840w.webp)] bg-cover absolute top-0 right-0 bottom-0 left-0" style="mask-image: linear-gradient(180deg, transparent, black 45%, black 60%, transparent); -webkit-mask-image: linear-gradient(180deg, transparent, black 45%, black 60%, transparent);"></div>
+  <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+    <h2 class="text-5xl md:text-6xl font-bold tracking-tight mb-6 blur-in">Ready to Transform Your Creative Process?</h2>
+    <p class="text-xl text-slate-400 mb-12 blur-in delay-100">Join thousands of designers creating amazing work with AI</p>
+    <button class="px-12 py-4 bg-white text-black rounded-xl text-lg font-medium hover:shadow-lg hover:shadow-white/50 transition-all duration-300 hover:scale-105 hover:-translate-y-1 blur-in delay-200">
+      Start Creating Today
+    </button>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="border-t border-white/10 py-12">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-2">
+        
+        <span class="bg-center text-xl font-semibold tracking-tight bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/6506f57d-d763-4f65-be30-e4db135775b2_1600w.png)] bg-cover pt-10 pr-12 pb-10 pl-12"></span>
+      </div>
+      <div class="flex items-center gap-8">
+        <a href="#" class="text-sm text-slate-400 hover:text-white transition-all duration-300 hover:scale-110">Privacy</a>
+        <a href="#" class="text-sm text-slate-400 hover:text-white transition-all duration-300 hover:scale-110">Terms</a>
+        <a href="#" class="text-sm text-slate-400 hover:text-white transition-all duration-300 hover:scale-110">Contact</a>
+      </div>
+    </div>
+    <div class="text-center mt-8 text-sm text-slate-500">
+      © 2024 DesignForge AI. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+  lucide.createIcons();
+  
+  // Intersection Observer for scroll animations
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animated');
+      }
+    });
+  }, observerOptions);
+  
+  // Observe all elements with animation classes
+  document.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right, .fade-in, .blur-in, .scale-in').forEach(el => {
+    observer.observe(el);
+  });
+</script>
+
+
+</body></html>

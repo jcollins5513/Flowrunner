@@ -1,0 +1,55 @@
+{
+  "name": "Elite Health & Performance Adventure Landing Page Template",
+  "slug": "elite-health-99",
+  "description": "This reusable landing page template is designed for luxury wellness and high-performance adventure services, combining elite travel, healthspan, genetics, and exclusive programs.",
+  "tags": [
+    "Landing Page",
+    "Hero",
+    "Features",
+    "Services",
+    "Luxury",
+    "Wellness",
+    "Adventure",
+    "Biohacking",
+    "Consultation",
+    "Testimonials"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/elite-health-99",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "This reusable landing page template is designed for luxury wellness and high-performance adventure services, combining elite travel, healthspan, genetics, and exclusive programs.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "aura",
+  "author": {
+    "name": "Andrew Nguyen",
+    "slug": "user-9e4fda8d",
+    "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocKY6SG6F-0bHE3-mhi2utZALNoxNsokGOHdcD4mfGMeryqWLJ4=s96-c",
+    "featured": false
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/elite-health-99.png",
+  "aura": {
+    "id": 5474,
+    "views": 363,
+    "forks": 14,
+    "premium": false
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "name": "Aceternity UI",
+  "slug": "animated-modal",
+  "description": "A customizable, compound modal component with animated transitions",
+  "props": [
+    {
+      "Prop": "children",
+      "Type": "ReactNode",
+      "Description": "The content to be wrapped by the provider."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/animated-modalCopy",
+  "url": "https://ui.aceternity.com/components/animated-modal",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A customizable, compound modal component with animated transitions",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import {",
+    " \nimport { motion } from \"motion/react\";"
+  ],
+  "dependencies": [
+    "motion/react",
+    "react"
+  ],
+  "client_only": true
+}

@@ -1,0 +1,63 @@
+{
+  "name": "Aceternity UI",
+  "slug": "card-stack",
+  "description": "Cards stack on top of each other after some interval. Perfect for showing testimonials.",
+  "props": [
+    {
+      "Prop name": "className",
+      "Type": "string",
+      "Description": "The class name of the child component."
+    },
+    {
+      "Prop name": "cards",
+      "Type": "Array<{id: number; name: string; designation: string; content: React.ReactNode;}>",
+      "Description": "The cards that you want to render in the stack effect"
+    },
+    {
+      "Prop name": "offset",
+      "Type": "number",
+      "Description": "The offset by which you want the cards to stack"
+    },
+    {
+      "Prop name": "scaleFactor",
+      "Type": "number",
+      "Description": "The scale by which you want the cards to stack"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/card-stackCopy",
+  "url": "https://ui.aceternity.com/components/card-stack",
+  "type": "card",
+  "subtype": "",
+  "layout_role": "inline-block",
+  "recommended_slots": [
+    "grid.item",
+    "section.content"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "auto-height",
+  "z_index_role": "content",
+  "usage_notes": "Cards stack on top of each other after some interval. Perfect for showing testimonials.",
+  "theme_requirements": [],
+  "data_requirements": [
+    {
+      "name": "items",
+      "fields": [
+        "title",
+        "description",
+        "media"
+      ],
+      "type": "array"
+    }
+  ],
+  "domain_tags": [],
+  "imports": [
+    "import { CardStack } from \"../ui/card-stack\";",
+    "import { cn } from \"@/lib/utils\";"
+  ],
+  "dependencies": [
+    "@/lib/utils"
+  ],
+  "client_only": true
+}

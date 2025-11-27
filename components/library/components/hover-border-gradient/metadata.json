@@ -1,0 +1,74 @@
+{
+  "name": "Aceternity UI",
+  "slug": "hover-border-gradient",
+  "description": "A hover effect that expands to the entire container with a gradient border.",
+  "props": [
+    {
+      "Prop": "children",
+      "Type": "React.ReactNode",
+      "Default": "N/A",
+      "Description": "The content to be displayed inside the hover gradient component."
+    },
+    {
+      "Prop": "containerClassName",
+      "Type": "string?",
+      "Default": "undefined",
+      "Description": "Additional CSS class for the container."
+    },
+    {
+      "Prop": "className",
+      "Type": "string?",
+      "Default": "undefined",
+      "Description": "Additional CSS class for the inner content."
+    },
+    {
+      "Prop": "as",
+      "Type": "React.ElementType?",
+      "Default": "\"button\"",
+      "Description": "The component type that will be used as the container."
+    },
+    {
+      "Prop": "duration",
+      "Type": "number?",
+      "Default": "1",
+      "Description": "Duration of the animation cycle in seconds."
+    },
+    {
+      "Prop": "clockwise",
+      "Type": "boolean?",
+      "Default": "true",
+      "Description": "Determines the direction of the gradient rotation."
+    },
+    {
+      "Prop": "...buttonProps",
+      "Type": "React.HTMLAttributes<HTMLElement>",
+      "Default": "N/A",
+      "Description": "Additional props to be spread over the container element."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/hover-border-gradientCopy",
+  "url": "https://ui.aceternity.com/components/hover-border-gradient",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "pointer-reactive",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A hover effect that expands to the entire container with a gradient border.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { HoverBorderGradient } from \"../ui/hover-border-gradient\";"
+  ],
+  "dependencies": [
+    "react"
+  ],
+  "client_only": true
+}

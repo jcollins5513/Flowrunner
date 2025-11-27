@@ -1,0 +1,57 @@
+{
+  "name": "Autonomous Fleet Exploration Landing Page Template",
+  "slug": "seamless-scroll-xrava",
+  "description": "A reusable landing page template designed for showcasing autonomous exploration fleets with advanced features, ideal for adventure and off-grid vehicle startups.",
+  "tags": [
+    "Landing Page",
+    "Hero",
+    "Features",
+    "Pricing",
+    "Testimonials",
+    "Horizontal Scroll",
+    "CTA",
+    "Autonomous Vehicles",
+    "Exploration",
+    "Fleet Management"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/seamless-scroll-xrava",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "A reusable landing page template designed for showcasing autonomous exploration fleets with advanced features, ideal for adventure and off-grid vehicle startups.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [
+    "saas"
+  ],
+  "source": "aura",
+  "author": {
+    "name": "Varava Dheva (Rava)",
+    "slug": "user-26a6a68c",
+    "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocLwXercOTmHg2KaV8x-HWqWws-2SYVtNAiZFGwhYlxjJLxavW5wkA=s96-c",
+    "featured": false
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/seamless-scroll-xrava.png?t=1763962840467",
+  "aura": {
+    "id": 5537,
+    "views": 457,
+    "forks": 21,
+    "premium": false
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

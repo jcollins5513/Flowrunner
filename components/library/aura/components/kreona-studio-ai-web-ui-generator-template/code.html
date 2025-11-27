@@ -1,0 +1,1440 @@
+<html lang="en" class="scroll-smooth"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kreona Studio - Web UI Generator</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+<!-- Scripts for Icons -->
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+body { font-family: 'Inter', sans-serif; background-color: #030303; }
+/* Custom Gradient Animation for text */
+.animate-gradient {
+background-size: 200% 200%;
+animation: gradient-move 4s ease infinite;
+}
+@keyframes gradient-move {
+0% { background-position: 0% 50%; }
+50% { background-position: 100% 50%; }
+100% { background-position: 0% 50%; }
+}
+/* Hide scrollbar for cleaner look */
+::-webkit-scrollbar { width: 0px; background: transparent; }
+</style>
+<style id="aura-editor-visibility-style">
+.invisible { visibility: hidden !important; }
+</style>
+<meta name="disabled-font-classes" content="font-roboto,font-poppins,font-merriweather,font-work-sans,font-pt-serif,font-space-mono">
+<style>
+@keyframes fadeSlideIn { 0% { opacity: 0; transform: translateY(30px); filter: blur(8px); } 100% { opacity: 1; transform: translateY(0); filter: blur(0px); } }
+</style>
+<script>
+(function () { const style = document.createElement("style"); style.textContent = ` .animate-on-scroll { animation-play-state: paused !important; } .animate-on-scroll.animate { animation-play-state: running !important; } `; document.head.appendChild(style); const once = true; if (!window.__inViewIO) { window.__inViewIO = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add("animate"); if (once) window.__inViewIO.unobserve(entry.target); } }); }, { threshold: 0.1, rootMargin: "0px 0px -5% 0px" }); } window.initInViewAnimations = function (selector = ".animate-on-scroll") { document.querySelectorAll(selector).forEach((el) => { window.__inViewIO.observe(el); }); }; document.addEventListener("DOMContentLoaded", () => initInViewAnimations()); })();
+</script>
+<link id="all-fonts-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist">
+.font-geist { font-family: 'Geist', sans-serif !important; }
+</style><link id="all-fonts-link-font-jakarta" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-jakarta">
+.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }
+</style><link id="all-fonts-link-font-manrope" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-manrope">
+.font-manrope { font-family: 'Manrope', sans-serif !important; }
+</style><link id="all-fonts-link-font-playfair" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&amp;display=swap"><style id="all-fonts-style-font-playfair">
+.font-playfair { font-family: 'Playfair Display', serif !important; }
+</style><link id="all-fonts-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-instrument-serif">
+.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }
+</style><link id="all-fonts-link-font-nunito" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-nunito">
+.font-nunito { font-family: 'Nunito', sans-serif !important; }
+</style><link id="all-fonts-link-font-bricolage" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-bricolage">
+.font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }
+</style><link id="all-fonts-link-font-space-grotesk" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-space-grotesk">
+.font-space-grotesk { font-family: 'Space Grotesk', sans-serif !important; }
+</style><link id="all-fonts-link-font-geist-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist-mono">
+.font-geist-mono { font-family: 'Geist Mono', monospace !important; }
+</style><link id="all-fonts-link-font-quicksand" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-quicksand">
+.font-quicksand { font-family: 'Quicksand', sans-serif !important; }
+</style><link id="all-fonts-link-font-montserrat" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-montserrat">
+.font-montserrat { font-family: 'Montserrat', sans-serif !important; }
+</style></head>
+  <body class="text-zinc-300 antialiased selection:selection:text-indigo-200">
+    <div class="aura-background-component top-0 w-full -z-10 absolute brightness-50 saturate-50 h-[900px]" style="; mask-image: linear-gradient(to bottom, transparent, black 0%, black 62%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 0%, black 62%, transparent)" data-alpha-mask="62">
+      <div data-us-project="MSvSkmJb9Ax55PeV6eku" class="absolute w-full h-full left-0 top-0 -z-10"></div>
+      <script type="text/javascript" class="">
+        !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.33/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head || document.body).appendChild(i)}}();
+      </script>
+    </div>
+
+    <nav class="fixed flex [animation:fadeSlideIn_0.8s_ease-out_0.1s_both] z-50 pr-4 pl-4 top-6 right-0 left-0 justify-center">
+      <div class="flex shadow-cyan-900/50 bg-[#000000]/60 border-[#ffffff]/20 border rounded-none pt-2 pr-2 pb-2 pl-2 shadow-2xl backdrop-blur-xl gap-x-1 gap-y-1 items-center">
+        <a href="#" class="inline-flex items-center justify-center bg-center w-[60px] h-[40px] bg-[url(https://cdn.midjourney.com/992e5ce2-c199-4ff5-b085-9c0f4635fa17/0_2.png?w=800&amp;q=80)] bg-cover rounded"></a>
+
+        <div class="hidden md:flex items-center gap-1 text-sm font-medium text-zinc-400">
+          <a href="#features" class="px-4 py-2 hover:text-cyan-300 transition-colors font-medium font-sans" style="">
+            Features
+          </a>
+          <a href="#pricing" class="px-4 py-2 hover:text-cyan-300 transition-colors font-medium font-sans" style="">
+            Pricing
+          </a>
+          <a href="#" class="px-4 py-2 hover:text-cyan-300 transition-colors font-medium font-sans" style="">
+            Showcase
+          </a>
+          <a href="#" class="px-4 py-2 hover:text-cyan-300 transition-colors mr-2 font-medium font-sans" style="">
+            Contact us
+          </a>
+        </div>
+
+        <a href="#" class="hover:bg-cyan-400 transition-colors shadow-cyan-500/30 active:scale-95 text-sm font-medium text-zinc-950 bg-cyan-500 rounded-none pt-2.5 pr-5 pb-2.5 pl-5 shadow-lg">
+          Launch Kreona
+        </a>
+      </div>
+    </nav>
+
+    <section class="flex flex-col overflow-hidden selection:selection:text-white text-white w-full pt-32 pb-20 relative" id="hero">
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none -z-0"></div>
+
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[700px] bg-cyan-900/10 blur-[150px] pointer-events-none -z-0" style="visibility: hidden;"></div>
+
+      <div class="md:px-6 flex flex-col w-full max-w-7xl z-10 mr-auto ml-auto pr-4 pl-4 relative items-center">
+        <style class="">
+          @keyframes fadeIn {
+            from {
+              opacity: 0;
+              transform: translateY(10px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+          @keyframes beamV {
+            0% { top: -150px; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+          }
+          @keyframes beamH {
+            0% { left: -150px; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { left: 100%; opacity: 0; }
+          }
+          @keyframes beamHRev {
+            0% { right: -150px; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { right: 100%; opacity: 0; }
+          }
+          .animate-beam-v { animation: beamV 6s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+          .animate-beam-h { animation: beamH 6s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+          .animate-beam-h-rev { animation: beamHRev 6s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+        </style>
+
+        <div class="w-px hidden md:block overflow-hidden bg-gradient-to-b from-transparent via-zinc-800 to-transparent h-full absolute top-0 left-4">
+          <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-transparent via-cyan-500 to-transparent animate-beam-v"></div>
+        </div>
+
+        <div class="absolute top-0 right-4 h-full w-px bg-gradient-to-b from-transparent via-zinc-800 to-transparent hidden md:block overflow-hidden" style="">
+          <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-transparent via-cyan-500 to-transparent animate-beam-v"></div>
+        </div>
+
+        <div class="text-center max-w-4xl mx-auto mb-16 relative" style="">
+          <div class="inline-flex items-center gap-2 px-3 py-1 border border-cyan-500/30 bg-cyan-950/20 mb-10 [animation:fadeSlideIn_1s_ease-out_0.1s_both] animate-on-scroll">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full bg-cyan-400 opacity-50"></span>
+              <span class="relative inline-flex h-2 w-2 bg-cyan-500"></span>
+            </span>
+            <span class="text-xs font-medium text-cyan-300 uppercase tracking-widest font-sans">
+              New v2.0 Assembly
+            </span>
+          </div>
+
+          <h1 class="md:text-7xl lg:text-8xl leading-[1.1] text-5xl font-medium tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-br from-[#ffffff] to-white/10 [animation:fadeSlideIn_1s_ease-out_0.2s_both] animate-on-scroll">
+            AI-Powered Code &amp; Architecture Design
+          </h1>
+
+          <p class="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto font-medium leading-relaxed [animation:fadeSlideIn_1s_ease-out_0.3s_both] animate-on-scroll">
+            Kreona Studio is your source for high-quality, scalable web
+            assembly. Generate components, create designs, and chat with AI in
+            seconds.
+          </p>
+        </div>
+
+        <div class="flex w-screen mb-16 relative items-center justify-center [animation:fadeSlideIn_1s_ease-out_0.4s_both] animate-on-scroll">
+          <div class="h-px bg-gradient-to-r from-transparent via-zinc-800 to-zinc-800 w-full max-w-[calc(50%-100px)] relative overflow-hidden group">
+            <div class="absolute top-0 left-0 h-full w-40 bg-gradient-to-r from-transparent via-cyan-500 to-transparent animate-beam-h"></div>
+          </div>
+
+          <button class="relative z-20 inline-block whitespace-nowrap text-base uppercase font-medium text-[#fefefe] bg-[#212121] border-[#fefefe] border-2 mr-5 ml-5 pt-4 pr-8 pb-4 pl-8 no-underline before:absolute before:-left-[2px] before:top-[6px] before:h-[calc(100%-12px)] before:w-[calc(100%+4px)] before:bg-[#212121] before:content-[''] before:transition-transform before:duration-300 before:ease-in-out before:scale-y-100 hover:before:scale-y-0 after:absolute after:-top-[2px] after:left-[6px] after:h-[calc(100%+4px)] after:w-[calc(100%-12px)] after:bg-[#212121] after:content-[''] after:transition-transform after:duration-300 after:delay-500 after:ease-in-out after:scale-x-100 hover:after:scale-x-0">
+            <span class="relative z-10">Start Building Free</span>
+          </button>
+
+          <div class="h-px bg-gradient-to-l from-transparent via-zinc-800 to-zinc-800 w-full max-w-[calc(50%-100px)] relative overflow-hidden group">
+            <div class="absolute top-0 right-0 h-full w-40 bg-gradient-to-l from-transparent via-cyan-500 to-transparent animate-beam-h-rev"></div>
+          </div>
+        </div>
+
+        <div class="min-h-[400px] flex [animation:fadeSlideIn_1s_ease-out_0.5s_both] animate-on-scroll w-full max-w-6xl mr-auto ml-auto relative justify-center">
+          <div class="pointer-events-none z-0 hidden md:block w-full h-full absolute top-0 right-0 bottom-0 left-0" style="">
+            <div class="absolute top-[35%] left-0 right-0 h-px bg-white/10 -translate-y-1/2 overflow-hidden" style=""></div>
+          </div>
+
+          <div class="z-10 w-full max-w-3xl mt-12 relative" style="">
+            <div class="shadow-black/60 transition-shadow bg-zinc-950 border-[#ffffff]/20 border ring-0 pt-2 pr-2 pb-2 pl-2 shadow-2xl" style="">
+              <div class="bg-[#0A0A0A] p-6 min-h-[140px] flex flex-col justify-between border border-white/10 transition-colors hover:border-cyan-500/30 group">
+                <textarea class="border-none outline-none placeholder:text-zinc-600 resize-none text-sm font-light text-zinc-300 font-mono bg-transparent w-full h-full" placeholder="ASK: Generate a complex component architecture..."></textarea>
+              </div>
+
+              <div class="flex items-center justify-between mt-3 px-2 pb-1">
+                <div class="flex items-center gap-3">
+                  <button class="hover:bg-zinc-700 hover:text-white flex transition-all text-cyan-400 bg-zinc-800/50 w-10 h-10 border-white/10 border items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-xl" style="" data-icon-set="solar" data-solar="link-circle-bold-duotone">
+                      <path fill="currentColor" d="M3.464 20.536C4.93 22 7.286 22 12 22s7.071 0 8.535-1.465C22 19.072 22 16.714 22 12s0-7.071-1.465-8.536C19.072 2 16.714 2 12 2S4.929 2 3.464 3.464C2 4.93 2 7.286 2 12s0 7.071 1.464 8.535" opacity=".5"></path>
+                      <path fill="currentColor" d="M9.5 8.75A3.25 3.25 0 1 0 12.75 12a.75.75 0 0 1 1.5 0A4.75 4.75 0 1 1 9.5 7.25a.75.75 0 0 1 0 1.5"></path>
+                      <path fill="currentColor" d="M17.75 12a3.25 3.25 0 0 1-3.25 3.25a.75.75 0 0 0 0 1.5A4.75 4.75 0 1 0 9.75 12a.75.75 0 0 0 1.5 0a3.25 3.25 0 0 1 6.5 0"></path>
+                    </svg>
+                  </button>
+                  <div class="hidden sm:flex items-center gap-2 px-4 py-2.5 bg-zinc-800/30 border border-cyan-500/30 text-cyan-500 text-sm hover:border-cyan-400 transition-colors cursor-text font-mono">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-lg" style="" data-icon-set="solar" data-solar="command-bold-duotone">
+                      <path fill="currentColor" d="M16 16h3a3 3 0 1 1-3 3.001zM5 16l3 .001v3a3 3 0 1 1-3-3"></path>
+                      <path fill="currentColor" fill-rule="evenodd" d="M19 8h-3V5a3 3 0 1 1 3 3M8 8V5a3 3 0 1 0-3 3z" clip-rule="evenodd"></path>
+                      <path fill="currentColor" d="M16 8H8v8h8z" opacity=".5"></path>
+                    </svg>
+                    <span class="">/Search-Command</span>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-4">
+                  <button class="hover:bg-zinc-700 hover:text-white flex transition-all text-cyan-400 bg-zinc-800/50 w-10 h-10 border-white/10 border items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" style="color: rgb(161, 236, 248); width: 20px; height: 20px;" class="w-[20px] h-[20px]" data-solar="arrow-right-bold-duotone" data-icon-set="solar" data-icon-replaced="true" stroke-width="2">
+                      <path fill="#a1ecf8" fill-rule="evenodd" d="M3.25 12a.75.75 0 0 1 .75-.75h9.25v1.5H4a.75.75 0 0 1-.75-.75" clip-rule="evenodd" opacity=".5"></path>
+                      <path fill="#a1ecf8" d="M13.25 12.75V18a.75.75 0 0 0 1.28.53l6-6a.75.75 0 0 0 0-1.06l-6-6a.75.75 0 0 0-1.28.53z"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="absolute top-[-10%] left-[5%] md:left-[10%] hidden md:flex flex-col items-center gap-3 animate-pulse" style="">
+            <div class="flex bg-zinc-900 w-16 h-16 border-white/10 border shadow-[0_0_15px_-3px_rgba(255,255,255,0.05)] items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="w-[30px] h-[30px]" data-icon-set="solar" data-solar="code-file-bold-duotone" stroke-width="2" data-icon-replaced="true" style="width: 30px; height: 30px; color: rgb(212, 212, 216)">
+                <path fill="currentColor" fill-rule="evenodd" d="M10 22h4c3.771 0 5.657 0 6.828-1.172S22 17.771 22 14v-.437c0-.873 0-1.529-.043-2.063h-4.052c-1.097 0-2.067 0-2.848-.105c-.847-.114-1.694-.375-2.385-1.066c-.692-.692-.953-1.539-1.067-2.386c-.105-.781-.105-1.75-.105-2.848l.01-2.834q0-.124.02-.244C11.121 2 10.636 2 10.03 2C6.239 2 4.343 2 3.172 3.172C2 4.343 2 6.229 2 10v4c0 3.771 0 5.657 1.172 6.828S6.229 22 10 22" clip-rule="evenodd" opacity=".5" class=""></path>
+                <path fill="currentColor" d="M10.702 14.264a.75.75 0 1 0-1.404-.527l-1.5 4a.75.75 0 1 0 1.404.527zm-3.172.266a.75.75 0 1 0-1.06-1.06l-1 1a.75.75 0 0 0 0 1.06l1 1a.75.75 0 0 0 1.06-1.06L7.06 15zm4.5.94a.75.75 0 1 0-1.06 1.06l.47.47l-.47.47a.75.75 0 1 0 1.06 1.06l1-1a.75.75 0 0 0 0-1.06zm-.52-13.21l-.01 2.835c0 1.097 0 2.066.105 2.848c.114.847.375 1.694 1.067 2.385c.69.691 1.538.953 2.385 1.067c.781.105 1.751.105 2.848.105h4.052q.02.232.028.5H22c0-.268 0-.402-.01-.56a5.3 5.3 0 0 0-.958-2.641c-.094-.128-.158-.204-.285-.357C19.954 7.494 18.91 6.312 18 5.5c-.81-.724-1.921-1.515-2.89-2.161c-.832-.556-1.248-.834-1.819-1.04a6 6 0 0 0-.506-.154c-.384-.095-.758-.128-1.285-.14z" class=""></path>
+              </svg>
+            </div>
+            <span class="text-xs text-zinc-500 font-medium font-mono">
+              Code Gen
+            </span>
+          </div>
+
+          <div class="absolute top-[-10%] right-[5%] md:right-[10%] hidden md:flex flex-col items-center gap-3 animate-pulse delay-75" style="">
+            <div class="w-16 h-16 bg-zinc-900 border border-white/10 flex items-center justify-center shadow-[0_0_15px_-3px_rgba(255,255,255,0.05)]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-3xl text-zinc-300" style="" data-icon-set="solar" data-solar="ruler-bold-duotone">
+                <path fill="currentColor" d="M2 15.616c0 .847.682 1.529 2.045 2.892l1.447 1.447C6.855 21.318 7.537 22 8.384 22s1.53-.682 2.893-2.045l8.678-8.678C21.318 9.913 22 9.23 22 8.384s-.682-1.529-2.045-2.892l-1.447-1.447C17.145 2.682 16.463 2 15.616 2c-.754 0-1.376.54-2.464 1.618l-1.05 1.048l-1.072 1.073l-1.05 1.048L8.91 7.86L7.86 8.909L6.788 9.98L5.74 11.03l-1.073 1.073l-1.048 1.049C2.539 14.24 2 14.862 2 15.616" opacity=".5"></path>
+                <path fill="currentColor" d="M13.238 3.691a1 1 0 0 0-.086-.073l-1.049 1.048q.033.045.074.086l1.414 1.414a.75.75 0 0 0 1.06-1.06zm-2.122 2.122a1 1 0 0 0-.086-.074L9.982 6.787q.033.045.074.086l2.121 2.122a.75.75 0 0 0 1.06-1.061zM8.995 7.934a1 1 0 0 0-.086-.074L7.86 8.908q.033.046.074.087l1.415 1.414a.75.75 0 1 0 1.06-1.06zm-2.121 2.121a1 1 0 0 0-.086-.074L5.739 11.03q.033.045.074.086l2.121 2.121a.75.75 0 1 0 1.061-1.06zm-2.122 2.122a1 1 0 0 0-.086-.075l-1.048 1.05q.033.045.074.085l1.414 1.414a.75.75 0 1 0 1.06-1.06z"></path>
+              </svg>
+            </div>
+            <span class="text-xs text-zinc-500 font-medium font-mono">
+              Design Sys
+            </span>
+          </div>
+
+          <div class="absolute bottom-[10%] left-[5%] md:left-[10%] hidden md:flex flex-col items-center gap-3 animate-pulse delay-150">
+            <div class="flex bg-zinc-900 w-16 h-16 border-white/10 border shadow-[0_0_15px_-3px_rgba(255,255,255,0.05)] items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="w-[30px] h-[30px]" data-icon-set="solar" data-solar="layers-bold-duotone" stroke-width="2" data-icon-replaced="true" style="width: 30px; height: 30px; color: rgb(212, 212, 216);">
+                <path fill="currentColor" d="M4.979 9.685C2.993 8.891 2 8.494 2 8s.993-.89 2.979-1.685l2.808-1.123C9.773 4.397 10.767 4 12 4s2.227.397 4.213 1.192l2.808 1.123C21.007 7.109 22 7.506 22 8s-.993.89-2.979 1.685l-2.808 1.124C14.227 11.603 13.233 12 12 12s-2.227-.397-4.213-1.191z"></path>
+                <path fill="currentColor" fill-rule="evenodd" d="M2 8c0 .494.993.89 2.979 1.685l2.808 1.124C9.773 11.603 10.767 12 12 12s2.227-.397 4.213-1.191l2.808-1.124C21.007 8.891 22 8.494 22 8s-.993-.89-2.979-1.685l-2.808-1.123C14.227 4.397 13.233 4 12 4s-2.227.397-4.213 1.192L4.98 6.315C2.993 7.109 2 7.506 2 8" clip-rule="evenodd" class=""></path>
+                <path fill="currentColor" d="m5.766 10l-.787.315C2.993 11.109 2 11.507 2 12s.993.89 2.979 1.685l2.808 1.124C9.773 15.603 10.767 16 12 16s2.227-.397 4.213-1.191l2.808-1.124C21.007 12.891 22 12.493 22 12s-.993-.89-2.979-1.685L18.234 10l-2.021.809C14.227 11.603 13.233 12 12 12s-2.227-.397-4.213-1.191z" opacity=".7" class=""></path>
+                <path fill="currentColor" d="m5.766 14l-.787.315C2.993 15.109 2 15.507 2 16s.993.89 2.979 1.685l2.808 1.124C9.773 19.603 10.767 20 12 20s2.227-.397 4.213-1.192l2.808-1.123C21.007 16.891 22 16.494 22 16c0-.493-.993-.89-2.979-1.685L18.234 14l-2.021.809C14.227 15.603 13.233 16 12 16s-2.227-.397-4.213-1.191z" opacity=".4" class=""></path>
+              </svg>
+            </div>
+            <span class="text-xs text-zinc-500 font-medium font-mono">
+              Components
+            </span>
+          </div>
+
+          <div class="absolute bottom-[10%] right-[5%] md:right-[10%] hidden md:flex flex-col items-center gap-3 animate-pulse delay-300">
+            <div class="w-16 h-16 bg-zinc-900 border border-white/10 flex items-center justify-center shadow-[0_0_15px_-3px_rgba(255,255,255,0.05)]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-3xl text-zinc-300" style="" data-icon-set="solar" data-solar="chat-line-bold-duotone">
+                <path fill="currentColor" d="m13.629 20.472l-.542.916c-.483.816-1.69.816-2.174 0l-.542-.916c-.42-.71-.63-1.066-.968-1.262c-.338-.197-.763-.204-1.613-.219c-1.256-.021-2.043-.098-2.703-.372a5 5 0 0 1-2.706-2.706C2 14.995 2 13.83 2 11.5v-1c0-3.273 0-4.91.737-6.112a5 5 0 0 1 1.65-1.651C5.59 2 7.228 2 10.5 2h3c3.273 0 4.91 0 6.113.737a5 5 0 0 1 1.65 1.65C22 5.59 22 7.228 22 10.5v1c0 2.33 0 3.495-.38 4.413a5 5 0 0 1-2.707 2.706c-.66.274-1.447.35-2.703.372c-.85.015-1.275.022-1.613.219c-.338.196-.548.551-.968 1.262" opacity=".5"></path>
+                <path fill="currentColor" d="M7.25 9A.75.75 0 0 1 8 8.25h8a.75.75 0 0 1 0 1.5H8A.75.75 0 0 1 7.25 9m0 3.5a.75.75 0 0 1 .75-.75h5.5a.75.75 0 0 1 0 1.5H8a.75.75 0 0 1-.75-.75"></path>
+              </svg>
+            </div>
+            <span class="text-xs text-zinc-500 font-medium font-mono">
+              AI Support
+            </span>
+          </div>
+
+          
+        </div>
+
+        <div class="flex flex-col gap-2 opacity-60 mt-16 items-center">
+          
+          <div class="flex items-center gap-2 text-cyan-400 text-xs font-medium tracking-wide font-mono">
+            
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="bg-zinc-950/50 border-white/5 border-t pt-32 pb-32 relative" id="features">
+  <div class="[animation:fadeSlideIn_0.8s_ease-out_0.1s_both] animate-on-scroll max-w-7xl border-slate-50/10 border mr-auto ml-auto pt-6 pr-6 pb-6 pl-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 w-full gap-x-16 gap-y-16 items-center">
+      <!-- LEFT COLUMN: Features Grid -->
+      <div class="grid grid-cols-2 [animation:fadeSlideIn_0.8s_ease-out_0.2s_both] animate-on-scroll w-full gap-x-4 gap-y-4">
+        <div class="bg-zinc-950 border border-white/10 rounded-none p-10 flex flex-col justify-between min-h-[280px] relative overflow-hidden group hover:border-cyan-500/50 transition-all duration-300 [animation:fadeSlideIn_1s_ease-out_0.2s_both] animate-on-scroll">
+          <div class="absolute top-0 right-0 bottom-0 left-0"></div>
+          <div class="absolute top-0 right-0 w-4 h-4 border-t border-r border-cyan-500/50"></div>
+
+          <div class="absolute top-0 right-0 w-40 h-40 bg-cyan-500/5 blur-[80px] pointer-events-none group-hover:bg-cyan-500/10 transition-colors">
+          </div>
+
+          <div class="flex items-center gap-4 z-10">
+            <span class="text-7xl text-white tracking-tighter font-manrope font-medium">
+                  10x
+                </span>
+            <div class="flex flex-col justify-center h-full pt-2">
+              <span class="text-[10px] uppercase tracking-widest text-cyan-500 font-bold mb-1">
+                    Velocity
+                  </span>
+              <div class="h-0.5 w-12 bg-zinc-800 overflow-hidden">
+                <div class="h-full w-full bg-cyan-500 origin-left animate-[shimmer_2s_infinite]"></div>
+              </div>
+            </div>
+          </div>
+          <p class="text-zinc-500 text-sm leading-relaxed max-w-[180px] font-medium font-sans relative z-10 mt-4">
+            Accelerate development. Go from raw idea to deployed frontend in
+            seconds.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-4">
+          <div class="bg-zinc-950 border border-white/10 rounded-none p-8 flex-1 flex flex-col justify-center gap-3 hover:bg-zinc-900 hover:border-white/30 transition-all duration-300 group relative overflow-hidden [animation:fadeSlideIn_1s_ease-out_0.3s_both] animate-on-scroll">
+            <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px]">
+            </div>
+            <div class="absolute top-0 left-0 w-3 h-3 border-t border-l border-white/20 group-hover:border-cyan-500/50 transition-colors">
+            </div>
+
+            <div class="relative z-10 flex items-center justify-between [animation:fadeSlideIn_1s_ease-out_0.2s_both] animate-on-scroll">
+              <div class="w-12 h-12 bg-zinc-900 border border-white/10 flex items-center justify-center text-zinc-400 group-hover:text-cyan-300 group-hover:border-cyan-500/30 transition-all rounded-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-xl" style="" data-icon-set="solar" data-solar="eye-bold-duotone">
+                  <path fill="currentColor" d="M2 12c0 1.64.425 2.191 1.275 3.296C4.972 17.5 7.818 20 12 20s7.028-2.5 8.725-4.704C21.575 14.192 22 13.639 22 12c0-1.64-.425-2.191-1.275-3.296C19.028 6.5 16.182 4 12 4S4.972 6.5 3.275 8.704C2.425 9.81 2 10.361 2 12" opacity=".5"></path>
+                  <path fill="currentColor" fill-rule="evenodd" d="M8.25 12a3.75 3.75 0 1 1 7.5 0a3.75 3.75 0 0 1-7.5 0m1.5 0a2.25 2.25 0 1 1 4.5 0a2.25 2.25 0 0 1-4.5 0" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-zinc-600 group-hover:text-white transition-colors" style="" data-icon-set="solar" data-solar="arrow-right-up-linear">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6m0 0H9m9 0v9"></path>
+              </svg>
+            </div>
+            <span class="relative z-10 text-zinc-300 text-sm font-medium font-sans group-hover:text-white mt-2">
+                  Real-time Visuals
+                </span>
+          </div>
+
+          <div class="bg-zinc-950 border border-white/10 rounded-none p-8 flex-1 flex flex-col justify-center gap-3 hover:bg-zinc-900 hover:border-white/30 transition-all duration-300 group relative overflow-hidden [animation:fadeSlideIn_1s_ease-out_0.4s_both] animate-on-scroll">
+            <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px]">
+            </div>
+            <div class="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-white/20 group-hover:border-cyan-500/50 transition-colors">
+            </div>
+
+            <div class="relative z-10 flex items-center justify-between">
+              <div class="w-12 h-12 bg-zinc-900 border border-white/10 flex items-center justify-center text-zinc-400 group-hover:text-cyan-300 group-hover:border-cyan-500/30 transition-all rounded-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-xl" style="" data-icon-set="solar" data-solar="code-square-bold-duotone">
+                  <path fill="currentColor" d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2s7.071 0 8.535 1.464C22 4.93 22 7.286 22 12s0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12" opacity=".5" class=""></path>
+                  <path fill="currentColor" d="M13.488 6.446a.75.75 0 0 1 .53.918l-2.588 9.66a.75.75 0 0 1-1.449-.389l2.589-9.659a.75.75 0 0 1 .918-.53M14.97 8.47a.75.75 0 0 1 1.06 0l.209.208c.635.635 1.165 1.165 1.529 1.642c.384.504.654 1.036.654 1.68s-.27 1.176-.654 1.68c-.364.477-.894 1.007-1.53 1.642l-.208.208a.75.75 0 1 1-1.06-1.06l.171-.172c.682-.682 1.139-1.14 1.434-1.528c.283-.37.347-.586.347-.77s-.064-.4-.347-.77c-.295-.387-.752-.846-1.434-1.528l-.171-.172a.75.75 0 0 1 0-1.06m-7 0a.75.75 0 0 1 1.06 1.06l-.171.172c-.682.682-1.138 1.14-1.434 1.528c-.283.37-.346.586-.346.77s.063.4.346.77c.296.387.752.846 1.434 1.528l.172.172a.75.75 0 1 1-1.061 1.06l-.208-.208c-.636-.635-1.166-1.165-1.53-1.642c-.384-.504-.653-1.036-.653-1.68s.27-1.176.653-1.68c.364-.477.894-1.007 1.53-1.642z">
+                  </path>
+                </svg>
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-zinc-600 group-hover:text-white transition-colors" style="" data-icon-set="solar" data-solar="arrow-right-up-linear">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6m0 0H9m9 0v9"></path>
+              </svg>
+            </div>
+            <span class="relative z-10 text-zinc-300 text-sm font-medium font-sans group-hover:text-white mt-2">
+                  Clean Code Export
+                </span>
+          </div>
+        </div>
+
+        <div class="col-span-2 bg-zinc-950 rounded-none relative overflow-hidden min-h-[300px] flex items-end group border border-white/10 hover:border-cyan-500/30 transition-all duration-500 [animation:fadeSlideIn_1s_ease-out_0.5s_both] animate-on-scroll">
+          <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px]">
+          </div>
+          <div class="bg-gradient-to-t from-zinc-950 via-zinc-950/50 to-transparent absolute top-0 right-0 bottom-0 left-0">
+          </div>
+
+          <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[85%]">
+            <div class="bg-zinc-900/95 backdrop-blur-xl border border-white/10 p-1 shadow-2xl shadow-black/50 transform group-hover:-translate-y-2 transition-transform duration-500 rounded-none">
+              <div class="flex items-center justify-between px-4 py-2 border-b border-white/5 bg-zinc-800/30">
+                <div class="flex gap-1.5">
+                  <div class="w-2 h-2 bg-zinc-600"></div>
+                  <div class="w-2 h-2 bg-zinc-600"></div>
+                </div>
+                <div class="text-[9px] font-mono text-zinc-500 tracking-wider">
+                  GENERATING...
+                </div>
+              </div>
+
+              <div class="p-6 space-y-5">
+                <div class="flex gap-5">
+                  <div class="w-16 h-16 bg-gradient-to-br from-cyan-900/20 to-blue-900/20 border border-cyan-500/20 animate-pulse flex items-center justify-center rounded-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-cyan-500/50 text-xl" style="" data-icon-set="solar" data-solar="bolt-bold">
+                      <path fill="currentColor" d="m5.67 9.914l3.062-4.143c1.979-2.678 2.969-4.017 3.892-3.734s.923 1.925.923 5.21v.31c0 1.185 0 1.777.379 2.148l.02.02c.387.363 1.003.363 2.236.363c2.22 0 3.329 0 3.704.673l.018.034c.354.683-.289 1.553-1.574 3.29l-3.062 4.144c-1.98 2.678-2.969 4.017-3.892 3.734s-.923-1.925-.923-5.21v-.31c0-1.185 0-1.777-.379-2.148l-.02-.02c-.387-.363-1.003-.363-2.236-.363c-2.22 0-3.329 0-3.703-.673l-.019-.034c-.354-.683.289-1.552 1.574-3.29">
+                      </path>
+                    </svg>
+                  </div>
+                  <div class="flex-1 space-y-3 py-1">
+                    <div class="h-2 bg-zinc-800/80 w-3/4"></div>
+                    <div class="h-2 bg-zinc-800/80 w-1/2"></div>
+                    <div class="h-2 bg-zinc-800/80 w-5/6"></div>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between pt-3 border-t border-white/5">
+                  <div class="flex items-center gap-2">
+                    <div class="w-1.5 h-1.5 bg-cyan-500 animate-pulse"></div>
+                    <span class="text-[10px] text-cyan-200 font-mono uppercase tracking-wide">
+                          Processing Prompt
+                        </span>
+                  </div>
+                  <span class="text-[10px] text-zinc-600 font-mono">
+                        0.8s
+                      </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: Interactive Tabs -->
+      <div class="flex flex-col lg:pl-4 [animation:fadeSlideIn_0.8s_ease-out_0.3s_both] animate-on-scroll pl-0 justify-center">
+        <div class="flex items-center gap-2 text-cyan-400 text-sm font-medium mb-8">
+          <div class="w-1 h-1 bg-cyan-400"></div>
+          <span class="font-medium font-sans uppercase tracking-widest text-xs text-zinc-500">
+            Capabilities
+          </span>
+        </div>
+
+        <h2 class="md:text-5xl leading-[1.15] [animation:fadeSlideIn_1s_ease-out_0.3s_both] animate-on-scroll text-4xl font-medium text-white tracking-tight font-manrope mb-12">
+          Turn simple text into
+          <span class="text-zinc-500">full-featured websites.</span>
+        </h2>
+
+        <!-- Tab Wrapper - Added ID 'aura-tabs-wrapper' -->
+        <div class="border-white/10 border-l pl-8 relative space-y-0" id="aura-tabs-wrapper">
+          
+          <!-- Active Indicator Line - Added ID 'aura-tab-indicator' -->
+          <div id="aura-tab-indicator" class="absolute left-[-1px] top-0 w-[1px] bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)] transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]" style="height: 88px; top: 0px;">
+          </div>
+
+          <!-- Tab 1 -->
+          <div class="group [animation:fadeSlideIn_1s_ease-out_0.4s_both] animate-on-scroll pb-10 cursor-pointer relative aura-tab-item active" onclick="auraSwitchTab(this)">
+            <div class="pointer-events-none aura-tab-content">
+              <h3 class="text-lg text-white font-medium font-sans mb-3 transition-colors duration-300">
+                Natural Language Prompts
+              </h3>
+              <p class="text-zinc-400 text-sm leading-relaxed font-medium font-sans max-w-md transition-colors duration-300">
+                Describe your vision: "A dark mode SaaS landing page with a
+                pricing grid," and watch Kreona build it pixel-perfectly.
+              </p>
+            </div>
+          </div>
+
+          <!-- Tab 2 -->
+          <div class="group [animation:fadeSlideIn_1s_ease-out_0.5s_both] animate-on-scroll pb-10 cursor-pointer relative aura-tab-item" onclick="auraSwitchTab(this)">
+            <div class="pointer-events-none aura-tab-content">
+              <h3 class="text-lg text-zinc-500 group-hover:text-white transition-colors font-medium font-sans mb-3 duration-300">
+                Production-Ready Code
+              </h3>
+              <p class="text-zinc-600 group-hover:text-zinc-400 text-sm leading-relaxed font-medium font-sans max-w-md transition-colors duration-300">
+                Clean, semantic HTML and Tailwind CSS. No lock-in, just code
+                you can ship.
+              </p>
+            </div>
+          </div>
+
+          <!-- Tab 3 -->
+          <div class="group [animation:fadeSlideIn_0.8s_ease-out_0.6s_both] animate-on-scroll cursor-pointer relative aura-tab-item" onclick="auraSwitchTab(this)">
+            <div class="pointer-events-none aura-tab-content">
+              <h3 class="text-lg text-zinc-500 group-hover:text-white transition-colors font-medium font-sans mb-3 duration-300">
+                Responsive by Default
+              </h3>
+              <p class="text-zinc-600 group-hover:text-zinc-400 text-sm leading-relaxed font-medium font-sans max-w-md transition-colors duration-300">
+                Every generated layout is mobile-optimized and adapts to any
+                screen size automatically.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="[animation:fadeSlideIn_0.8s_ease-out_0.6s_both] animate-on-scroll mt-14">
+          <button class="bg-white text-black px-8 py-4 rounded-none text-sm hover:bg-cyan-50 transition-all shadow-[0_0_20px_-5px_rgba(34,211,238,0.4)] hover:shadow-[0_0_30px_-5px_rgba(34,211,238,0.6)] active:translate-y-0.5 font-semibold font-sans tracking-wide [animation:fadeSlideIn_1s_ease-out_0.7s_both] animate-on-scroll">
+            Start Building for Free
+          </button>
+        </div>
+
+        <!-- Corrected JavaScript -->
+        <script>
+          // Function to set the active tab state and move the indicator
+          function auraSwitchTab(el) {
+            // 1. Get the necessary elements
+            const container = document.getElementById('aura-tabs-wrapper');
+            const indicator = document.getElementById('aura-tab-indicator');
+            
+            // Check if container and indicator exist
+            if (!container || !indicator) {
+              console.error("Tab container or indicator element not found.");
+              return;
+            }
+            
+            const items = container.querySelectorAll('.aura-tab-item');
+            
+            // 2. Calculate indicator position and height
+            // We use getBoundingClientRect to get accurate position relative to the viewport
+            const containerRect = container.getBoundingClientRect();
+            const elRect = el.getBoundingClientRect();
+            const content = el.querySelector('.aura-tab-content');
+            
+            // Calculate position relative to the container's top edge
+            const topPos = elRect.top - containerRect.top;
+            
+            // Use the inner content height for the indicator height
+            const contentHeight = content.offsetHeight;
+            
+            // Apply the position and height to the indicator (using translateY for smooth transition)
+            indicator.style.transform = `translateY(${topPos}px)`;
+            indicator.style.height = `${contentHeight}px`;
+            
+            // 3. Update Active/Inactive States
+            items.forEach(item => {
+              const title = item.querySelector('h3');
+              const text = item.querySelector('p');
+              
+              if (item === el) {
+                // Set Active State
+                item.classList.add('active');
+                
+                // Active Text Classes (White Title, Gray Text)
+                title.className = 'text-lg text-white font-medium font-sans mb-3 transition-colors duration-300';
+                text.className = 'text-zinc-400 text-sm leading-relaxed font-medium font-sans max-w-md transition-colors duration-300';
+              } else {
+                // Remove Active State
+                item.classList.remove('active');
+                
+                // Inactive Text Classes with Hover Effect
+                title.className = 'text-lg text-zinc-500 group-hover:text-white transition-colors font-medium font-sans mb-3 duration-300';
+                text.className = 'text-zinc-600 group-hover:text-zinc-400 text-sm leading-relaxed font-medium font-sans max-w-md transition-colors duration-300';
+              }
+            });
+          }
+
+          // Initial setup to run on page load
+          document.addEventListener('DOMContentLoaded', () => {
+            const firstTab = document.querySelector('.aura-tab-item:first-child');
+            if (firstTab) {
+              // Ensure the initial state is set correctly
+              auraSwitchTab(firstTab);
+            }
+          });
+        </script>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <!-- Testimonial Section -->
+    <section class="overflow-hidden pt-32 pb-32 relative" id="testimonial">
+      <!-- Background Gradient Mesh -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-5xl bg-gradient-to-r from-indigo-900/20 via-transparent to-teal-900/20 blur-3xl -z-10"></div>
+
+      <div class="[animation:fadeSlideIn_0.8s_ease-out_0.1s_both] animate-on-scroll max-w-7xl mr-auto ml-auto pr-6 pl-6">
+        <div class="flex flex-col gap-16 w-full max-w-[1400px] mr-auto ml-auto gap-x-12 gap-y-12">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="flex flex-col [animation:fadeSlideIn_0.8s_ease-out_0.2s_both] animate-on-scroll max-w-xl gap-x-8 gap-y-8">
+              <div class="[animation:fadeSlideIn_1s_ease-out_0.2s_both] animate-on-scroll">
+                <span class="inline-flex items-center px-3 py-1 bg-cyan-950/30 border border-cyan-500/20 text-[11px] text-cyan-400 uppercase mb-6 font-bold tracking-wider font-sans">
+                  AI Architecture
+                </span>
+                <h2 class="text-4xl lg:text-5xl text-white mb-6 leading-[1.1] tracking-tight font-manrope font-medium">
+                  Intelligent Layout Assembly
+                </h2>
+                <p class="text-lg text-zinc-400 leading-relaxed font-medium font-sans">
+                  Kreona analyzes your prompt to construct semantically correct
+                  component trees. It balances visual hierarchy with clean code
+                  structure automatically.
+                </p>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 [animation:fadeSlideIn_0.8s_ease-out_0.3s_both] animate-on-scroll gap-x-6 gap-y-6">
+                <div class="flex flex-col gap-3 group">
+                  <div class="w-10 h-10 flex items-center justify-center text-zinc-300 bg-zinc-950 border border-white/10 group-hover:border-cyan-500/50 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-lg text-cyan-300" style="" data-icon-set="solar" data-solar="structure-bold-duotone">
+                      <path fill="currentColor" d="M8 5a3 3 0 1 1-6 0a3 3 0 0 1 6 0m14 0a3 3 0 1 1-6 0a3 3 0 0 1 6 0M8 19a3 3 0 1 1-6 0a3 3 0 0 1 6 0m14 0a3 3 0 1 1-6 0a3 3 0 0 1 6 0"></path>
+                      <path fill="currentColor" d="M16.093 4.256A1 1 0 0 0 16 4.25H8a1 1 0 0 0-.093.006a3 3 0 0 1 0 1.488q.045.006.093.006h8a1 1 0 0 0 .093-.006a3 3 0 0 1 0-1.488M19 8q.386 0 .744-.093q.006.045.006.093v8a1 1 0 0 1-.006.093a3 3 0 0 0-1.488 0A1 1 0 0 1 18.25 16V8q0-.048.006-.093q.358.091.744.093m-2.907 10.256A1 1 0 0 0 16 18.25H8a1 1 0 0 0-.093.006a3 3 0 0 1 0 1.488q.045.006.093.006h8a1 1 0 0 0 .093-.006a3 3 0 0 1 0-1.488M5 8q-.386 0-.744-.093A1 1 0 0 0 4.25 8v8q0 .048.006.093a3 3 0 0 1 1.488 0A1 1 0 0 0 5.75 16V8a1 1 0 0 0-.006-.093Q5.386 7.998 5 8" opacity=".5"></path>
+                    </svg>
+                  </div>
+                  <p class="text-sm text-zinc-400 leading-snug font-medium font-sans">
+                    Auto-generates semantic HTML structure based on context.
+                  </p>
+                </div>
+                <div class="flex flex-col gap-3 group">
+                  <div class="w-10 h-10 flex items-center justify-center text-zinc-300 bg-zinc-950 border border-white/10 group-hover:border-blue-500/50 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-lg text-blue-300" style="" data-icon-set="solar" data-solar="devices-bold-duotone">
+                      <path fill="currentColor" d="M14.052 2c1.68 0 3.01 0 4.052.142c1.072.147 1.94.456 2.624 1.152s.988 1.58 1.132 2.67c.14 1.06.14 2.414.14 4.123v3.826c0 1.71 0 3.064-.14 4.123c-.144 1.09-.448 1.974-1.132 2.67s-1.552 1.005-2.624 1.152C17.063 22 15.732 22 14.052 22h-.104c-1.68 0-3.01 0-4.052-.142c-1.072-.147-1.94-.456-2.624-1.152s-.988-1.58-1.132-2.67C6 16.976 6 15.622 6 13.913v-3.826c0-1.71 0-3.064.14-4.123c.144-1.09.448-1.974 1.132-2.67S8.824 2.29 9.896 2.142C10.937 2 12.268 2 13.948 2z" opacity=".5" class=""></path>
+                      <path fill="currentColor" d="M12 18.25a.75.75 0 0 0 0 1.5h5a.75.75 0 0 0 0-1.5zM2 14.5c0-1.405 0-2.107.337-2.611a2 2 0 0 1 .552-.552C3.393 11 4.096 11 5.5 11s2.107 0 2.611.337a2 2 0 0 1 .552.552C9 12.393 9 13.096 9 14.5v4c0 1.404 0 2.107-.337 2.611a2 2 0 0 1-.552.552C7.607 22 6.904 22 5.5 22s-2.107 0-2.611-.337a2 2 0 0 1-.552-.552C2 20.607 2 19.904 2 18.5z" class=""></path>
+                    </svg>
+                  </div>
+                  <p class="text-sm text-zinc-400 leading-snug font-medium font-sans">
+                    Ensures perfect responsiveness across all viewports.
+                  </p>
+                </div>
+              </div>
+
+              <div class="[animation:fadeSlideIn_0.8s_ease-out_0.4s_both] animate-on-scroll pt-4">
+                <button class="bg-white text-black px-8 py-4 text-sm hover:bg-cyan-50 transition-all shadow-[0_0_20px_-5px_rgba(34,211,238,0.4)] active:translate-y-0.5 font-bold font-sans tracking-wide [animation:fadeSlideIn_1s_ease-out_0.5s_both] animate-on-scroll">
+                  Try Kreona free
+                </button>
+              </div>
+            </div>
+
+            <div class="overflow-hidden shadow-cyan-900/5 group hover:border-cyan-500/30 transition-colors duration-500 [animation:fadeSlideIn_1s_ease-out_0.5s_both] animate-on-scroll bg-zinc-950 border-white/10 border relative shadow-2xl">
+              <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
+              <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-cyan-500/50"></div>
+              <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-cyan-500/50"></div>
+              <div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-cyan-500/50"></div>
+              <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-cyan-500/50"></div>
+
+              <div class="px-6 py-4 border-b border-white/5 bg-zinc-900/80 flex items-center justify-between relative z-10">
+                <div class="flex gap-1.5">
+                  <div class="w-2 h-2 bg-zinc-700"></div>
+                  <div class="w-2 h-2 bg-zinc-700"></div>
+                  <div class="w-2 h-2 bg-zinc-700"></div>
+                </div>
+                <div class="text-[10px] font-mono text-cyan-500/70 tracking-wider">
+                  Generated_Layout_Tree.json
+                </div>
+              </div>
+
+              <div class="grid grid-cols-12 gap-4 px-6 py-3 border-b border-white/5 bg-zinc-950/50 text-xs font-medium text-zinc-500 uppercase tracking-wider relative z-10">
+                <div class="col-span-5 pl-2 font-medium font-sans">
+                  Component
+                </div>
+                <div class="col-span-3 text-center font-medium font-sans">
+                  Type
+                </div>
+                <div class="col-span-2 text-center font-medium font-sans">
+                  Nodes
+                </div>
+                <div class="col-span-2 text-right font-medium font-sans">
+                  Size
+                </div>
+              </div>
+
+              <div class="flex flex-col z-10 relative">
+                <div class="grid grid-cols-12 gap-4 px-6 py-4 border-b border-white/5 items-center hover:bg-white/[0.02] transition-colors group/row">
+                  <div class="col-span-5 flex items-center gap-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-cyan-400" style="" data-icon-set="solar" data-solar="laptop-minimalistic-bold-duotone">
+                      <path fill="currentColor" fill-rule="evenodd" d="M1 20.24c0-.42.344-.76.767-.76h20.466c.423 0 .767.34.767.76s-.344.76-.767.76H1.767A.764.764 0 0 1 1 20.24" clip-rule="evenodd"></path>
+                      <path fill="currentColor" d="M3.69 3.89c-.899.89-.899 2.324-.899 5.19v5.067c0 1.91 0 2.866.6 3.46c.599.593 1.564.593 3.493.593h10.233c1.93 0 2.894 0 3.493-.594c.6-.593.6-1.549.6-3.46V9.08c0-2.866 0-4.3-.9-5.19C19.412 3 17.965 3 15.07 3H8.93c-2.894 0-4.34 0-5.24.89" opacity=".5"></path>
+                      <path fill="currentColor" d="M8.93 14.4a.764.764 0 0 0-.767.76c0 .42.344.76.768.76h6.14c.423 0 .767-.34.767-.76s-.344-.76-.768-.76z"></path>
+                    </svg>
+                    <span class="text-sm text-zinc-200 font-medium font-sans">
+                      Split Hero Section
+                    </span>
+                  </div>
+                  <div class="col-span-3 flex justify-center gap-1">
+                    <span class="px-1.5 py-0.5 bg-cyan-950/50 border border-cyan-500/20 text-[10px] text-cyan-300 font-medium font-sans">
+                      Layout
+                    </span>
+                    <span class="px-1.5 py-0.5 bg-blue-950/50 border border-blue-500/20 text-[10px] text-blue-300 font-medium font-sans">
+                      Flex
+                    </span>
+                  </div>
+                  <div class="col-span-2 flex items-center justify-center gap-2">
+                    <span class="text-xs text-zinc-400 font-medium font-sans">
+                      12
+                    </span>
+                    <div class="flex items-end gap-[1px] h-3">
+                      <div class="w-0.5 h-1.5 bg-cyan-500"></div>
+                      <div class="w-0.5 h-2.5 bg-cyan-500"></div>
+                      <div class="w-0.5 h-3 bg-cyan-500"></div>
+                      <div class="w-0.5 h-2 bg-cyan-500/30"></div>
+                    </div>
+                  </div>
+                  <div class="col-span-2 flex items-center justify-end gap-2">
+                    <div class="w-16 h-1 bg-zinc-800">
+                      <div class="w-[85%] h-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)]"></div>
+                    </div>
+                    <span class="text-xs text-zinc-400 w-4 text-right font-medium font-sans">
+                      2k
+                    </span>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-12 gap-4 px-6 py-4 border-b border-white/5 items-center hover:bg-white/[0.02] transition-colors group/row">
+                  <div class="col-span-5 flex items-center gap-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-blue-400" style="" data-icon-set="solar" data-solar="gallery-wide-bold-duotone">
+                      <path fill="currentColor" d="M18.512 10.077c0 .738-.625 1.337-1.396 1.337s-1.395-.599-1.395-1.337c0-.739.625-1.338 1.395-1.338s1.396.599 1.396 1.338"></path>
+                      <path fill="currentColor" fill-rule="evenodd" d="M18.036 5.532c-1.06-.137-2.414-.137-4.123-.136h-3.826c-1.71 0-3.064 0-4.123.136c-1.09.14-1.974.437-2.67 1.104S2.29 8.149 2.142 9.195C2 10.21 2 11.508 2 13.147v.1c0 1.64 0 2.937.142 3.953c.147 1.046.456 1.892 1.152 2.559s1.58.963 2.67 1.104c1.06.136 2.414.136 4.123.136h3.826c1.71 0 3.064 0 4.123-.136c1.09-.14 1.974-.437 2.67-1.104s1.005-1.514 1.152-2.559C22 16.184 22 14.886 22 13.248v-.1c0-1.64 0-2.937-.142-3.953c-.147-1.046-.456-1.892-1.152-2.559s-1.58-.963-2.67-1.104M6.15 6.858c-.936.12-1.475.346-1.87.724c-.393.377-.629.894-.755 1.791c-.1.72-.123 1.619-.128 2.795l.47-.395c1.125-.942 2.819-.888 3.875.124l3.99 3.825a1.2 1.2 0 0 0 1.491.124l.278-.187a3.606 3.606 0 0 1 4.34.25l2.407 2.077c.098-.264.173-.579.227-.964c.128-.916.13-2.124.13-3.824s-.002-2.909-.13-3.825c-.126-.897-.362-1.414-.756-1.791c-.393-.378-.933-.604-1.869-.724c-.956-.124-2.216-.125-3.99-.125h-3.72c-1.774 0-3.034.001-3.99.125" clip-rule="evenodd"></path>
+                      <path fill="currentColor" d="M17.087 2.61c-.86-.11-1.955-.11-3.32-.11h-3.09c-1.364 0-2.459 0-3.318.11c-.89.115-1.633.358-2.222.92a2.9 2.9 0 0 0-.724 1.12c.504-.23 1.074-.366 1.714-.45c1.085-.14 2.47-.14 4.22-.14h3.915c1.749 0 3.134 0 4.219.14c.559.073 1.064.186 1.52.366a2.9 2.9 0 0 0-.693-1.035c-.589-.563-1.331-.806-2.221-.92" opacity=".5"></path>
+                    </svg>
+                    <span class="text-sm text-zinc-200 font-medium font-sans">
+                      Bento Feature Grid
+                    </span>
+                  </div>
+                  <div class="col-span-3 flex justify-center gap-1">
+                    <span class="px-1.5 py-0.5 bg-blue-950/50 border border-blue-500/20 text-[10px] text-blue-300 font-medium font-sans">
+                      Grid
+                    </span>
+                  </div>
+                  <div class="col-span-2 flex items-center justify-center gap-2">
+                    <span class="text-xs text-zinc-400 font-medium font-sans">
+                      24
+                    </span>
+                    <div class="flex items-end gap-[1px] h-3">
+                      <div class="w-0.5 h-2 bg-blue-500"></div>
+                      <div class="w-0.5 h-3 bg-blue-500"></div>
+                      <div class="w-0.5 h-1.5 bg-blue-500/30"></div>
+                      <div class="w-0.5 h-1 bg-blue-500/30"></div>
+                    </div>
+                  </div>
+                  <div class="col-span-2 flex items-center justify-end gap-2">
+                    <div class="w-16 h-1 bg-zinc-800">
+                      <div class="w-[60%] h-full bg-blue-500"></div>
+                    </div>
+                    <span class="text-xs text-zinc-400 w-4 text-right font-medium font-sans">
+                      1.5
+                    </span>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-12 gap-4 hover:bg-white/[0.02] transition-colors group/row border-white/5 border-b pt-4 pr-6 pb-4 pl-6 gap-x-4 gap-y-4 items-center">
+                  <div class="col-span-5 flex items-center gap-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-sky-400" style="" data-icon-set="solar" data-solar="users-group-rounded-bold-duotone">
+                      <circle cx="15" cy="6" r="3" fill="currentColor" opacity=".4"></circle>
+                      <ellipse cx="16" cy="17" fill="currentColor" opacity=".4" rx="5" ry="3"></ellipse>
+                      <circle cx="9.001" cy="6" r="4" fill="currentColor"></circle>
+                      <ellipse cx="9.001" cy="17.001" fill="currentColor" rx="7" ry="4"></ellipse>
+                    </svg>
+                    <span class="text-sm text-zinc-200 font-medium font-sans">
+                      Social Proof Carousel
+                    </span>
+                  </div>
+                  <div class="col-span-3 flex justify-center gap-1">
+                    <span class="px-1.5 py-0.5 bg-sky-950/50 border border-sky-500/20 text-[10px] text-sky-300 font-medium font-sans">
+                      Loop
+                    </span>
+                  </div>
+                  <div class="col-span-2 flex items-center justify-center gap-2">
+                    <span class="text-xs text-zinc-400 font-medium font-sans">
+                      8
+                    </span>
+                    <div class="flex items-end gap-[1px] h-3">
+                      <div class="w-0.5 h-1 bg-sky-500"></div>
+                      <div class="w-0.5 h-3 bg-sky-500"></div>
+                      <div class="w-0.5 h-3 bg-sky-500"></div>
+                      <div class="w-0.5 h-2 bg-sky-500"></div>
+                    </div>
+                  </div>
+                  <div class="col-span-2 flex items-center justify-end gap-2">
+                    <div class="w-16 h-1 bg-zinc-800">
+                      <div class="w-[40%] h-full bg-sky-500"></div>
+                    </div>
+                    <span class="text-xs text-zinc-400 w-4 text-right font-medium font-sans">
+                      1k
+                    </span>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-12 gap-4 hover:bg-white/[0.02] transition-colors group/row pt-4 pr-6 pb-4 pl-6 gap-x-4 gap-y-4 items-center">
+                  <div class="col-span-5 flex items-center gap-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-teal-400" style="" data-icon-set="solar" data-solar="tag-price-bold-duotone">
+                      <path fill="currentColor" d="m17.967 6.558l-1.83-1.83c-1.546-1.545-2.318-2.318-3.321-2.605c-1.003-.288-2.068-.042-4.197.45l-1.228.283c-1.792.413-2.688.62-3.302 1.233S3.27 5.6 2.856 7.391l-.284 1.228c-.491 2.13-.737 3.194-.45 4.197c.288 1.003 1.061 1.775 2.606 3.32l1.83 1.83C9.248 20.657 10.592 22 12.262 22c1.671 0 3.015-1.344 5.704-4.033c2.69-2.69 4.034-4.034 4.034-5.705c0-1.67-1.344-3.015-4.033-5.704" opacity=".5"></path>
+                      <path fill="currentColor" d="M11.147 14.328c-.673-.672-.667-1.638-.265-2.403a.75.75 0 0 1 1.04-1.046c.34-.18.713-.276 1.085-.272a.75.75 0 0 1-.014 1.5a.88.88 0 0 0-.609.277c-.387.387-.285.775-.177.884c.11.109.497.21.884-.177c.784-.784 2.138-1.044 3.006-.177c.673.673.667 1.639.264 2.404a.75.75 0 0 1-1.04 1.045a2.2 2.2 0 0 1-1.472.232a.75.75 0 1 1 .302-1.47c.177.037.463-.021.708-.266c.388-.388.286-.775.177-.884s-.496-.21-.884.177c-.784.784-2.138 1.044-3.005.176m-1.126-4.035a2 2 0 1 0-2.828-2.828a2 2 0 0 0 2.828 2.828"></path>
+                    </svg>
+                    <span class="text-sm text-zinc-200 font-medium font-sans">
+                      Pricing Toggles
+                    </span>
+                  </div>
+                  <div class="col-span-3 flex justify-center gap-1">
+                    <span class="px-1.5 py-0.5 bg-teal-950/50 border border-teal-500/20 text-[10px] text-teal-300 font-medium font-sans">
+                      Logic
+                    </span>
+                    <span class="px-1.5 py-0.5 bg-zinc-800 border border-zinc-700 text-[10px] text-zinc-400 font-medium font-sans">
+                      State
+                    </span>
+                  </div>
+                  <div class="col-span-2 flex items-center justify-center gap-2">
+                    <span class="text-xs text-zinc-400 font-medium font-sans">
+                      16
+                    </span>
+                    <div class="flex items-end gap-[1px] h-3">
+                      <div class="w-0.5 h-2 bg-teal-500"></div>
+                      <div class="w-0.5 h-1.5 bg-teal-500"></div>
+                      <div class="w-0.5 h-2.5 bg-teal-500"></div>
+                      <div class="w-0.5 h-2 bg-teal-500/30"></div>
+                    </div>
+                  </div>
+                  <div class="col-span-2 flex items-center justify-end gap-2">
+                    <div class="w-16 h-1 bg-zinc-800">
+                      <div class="w-[30%] h-full bg-teal-500"></div>
+                    </div>
+                    <span class="text-xs text-zinc-400 w-4 text-right font-medium font-sans">
+                      800
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 mt-4 gap-x-8 gap-y-8">
+            <div class="lg:p-10 flex flex-col overflow-hidden group hover:border-cyan-500/30 transition-all [animation:fadeSlideIn_0.8s_ease-out_0.6s_both] animate-on-scroll bg-zinc-950 border-white/10 border pt-8 pr-8 pb-8 pl-8 relative">
+              <div class="absolute top-0 left-0 w-3 h-3 border-t border-l border-white/20 group-hover:border-cyan-500/50 transition-colors"></div>
+              <div class="absolute top-0 right-0 w-3 h-3 border-t border-r border-white/20 group-hover:border-cyan-500/50 transition-colors"></div>
+
+              <div class="z-10 relative text-left">
+                <h3 class="text-2xl text-white mb-3 tracking-tight font-manrope font-medium">
+                  Code Generation Interface
+                </h3>
+                <p class="text-zinc-400 text-sm leading-relaxed max-w-lg mb-8 font-medium font-sans">
+                  Kreona ensures every generated layout meets strict standards
+                  for accessibility, SEO, and semantic correctness.
+                </p>
+
+                <div class="bg-zinc-950 w-full max-w-lg max-h-none border-white/10 border mt-auto mr-auto ml-auto pt-4 pr-6 pb-4 pl-6 shadow-2xl shadow-cyan-900/10 h-[14rem] overflow-hidden">
+                  <div class="flex gap-2 mb-3">
+                    <div class="w-2.5 h-2.5 bg-red-500/80 rounded-full"></div>
+                    <div class="w-2.5 h-2.5 bg-yellow-500/80 rounded-full"></div>
+                    <div class="w-2.5 h-2.5 bg-green-500/80 rounded-full"></div>
+                  </div>
+
+                  <div class="font-mono text-xs text-left leading-relaxed">
+                    <div class="opacity-0 animate-[fadeIn_0.3s_ease-out_0.2s_forwards]">
+                      <span class="text-zinc-600 select-none">$</span>
+                      <span class="text-cyan-400">kreona init</span>
+                      <span class="text-zinc-500">--project=kreona-ui</span>
+                    </div>
+
+                    <div class="opacity-0 animate-[fadeIn_0.3s_ease-out_1.2s_forwards] mt-3">
+                      <span class="text-zinc-600 select-none">$</span>
+                      <span class="text-cyan-400">kreona build</span>
+                      <span class="text-zinc-500">--target=tailwind-v3</span>
+                    </div>
+
+                    <div class="opacity-0 animate-[fadeIn_0.3s_ease-out_2.0s_forwards]">
+                      <span class="text-cyan-300">
+                        Generating HTML Structure... [
+                      </span>
+                      <span class="text-white animate-pulse">
+                        ███████████████
+                      </span>
+                      <span class="text-cyan-300">] 98%</span>
+                    </div>
+
+                    <div class="opacity-0 animate-[=" text-green-400="" font-semibold"="">
+                        BUILD COMPLETE:
+                      
+                      <span class="text-zinc-400">Output saved.</span>
+                    </div>
+
+                    <div class="opacity-0 animate-[fadeIn_0.3s_ease-out_4.0s_forwards] mt-3">
+                      <span class="text-zinc-600 select-none">$</span>
+                      <span class="text-cyan-400">kreona score</span>
+                    </div>
+
+                    <div class="opacity-0 animate-[fadeIn_0.3s_ease-out_4.8s_forwards] flex items-center">
+                      <span class="text-green-400 font-semibold mr-2">
+                        QUALITY:
+                      </span>
+                      <span class="text-white font-semibold">A+</span>
+                      <div class="w-1.5 h-3.5 bg-cyan-500 ml-1 animate-[pulse_1s_steps(2)_infinite]"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-zinc-950 border border-white/10 p-8 lg:p-10 flex flex-col relative overflow-hidden group hover:border-cyan-500/30 transition-all">
+              <div class="[animation:fadeSlideIn_0.8s_ease-out_0.7s_both] animate-on-scroll absolute top-0 right-0 bottom-0 left-0"></div>
+
+              <div class="absolute top-0 left-0 w-3 h-3 border-t border-l border-white/20 group-hover:border-cyan-500/50 transition-colors"></div>
+              <div class="absolute top-0 right-0 w-3 h-3 border-t border-r border-white/20 group-hover:border-cyan-500/50 transition-colors"></div>
+
+              <div class="z-10 relative text-left">
+                <div class="mb-10">
+                  <h3 class="text-2xl text-white mb-3 tracking-tight font-manrope font-medium">
+                    Design System Scalability
+                  </h3>
+                  <p class="text-zinc-400 text-sm leading-relaxed max-w-sm font-medium font-sans">
+                    Maintain visual consistency as your project grows. Track
+                    component reuse and token standardization automatically.
+                  </p>
+                </div>
+
+                <div class="group overflow-hidden bg-zinc-950 w-full max-w-lg border-white/10 border mt-auto mr-auto ml-auto pt-3 pr-3 pb-3 pl-3 relative">
+                  <style>
+                    @keyframes aura-bar-grow {
+                      from {
+                        transform: scaleY(0.2);
+                        opacity: 0.5;
+                      }
+
+                      to {
+                        transform: scaleY(1);
+                        opacity: 1;
+                      }
+                    }
+
+                    .aura-animate-bar {
+                      transform-origin: bottom;
+                      animation: aura-bar-grow 2s ease-in-out infinite alternate;
+                      opacity: 0;
+                      /* Start hidden */
+                      will-change: transform, opacity;
+                      animation-play-state: paused;
+                      /* Handled by IntersectionObserver */
+                    }
+                  </style>
+
+                  <div class="flex items-end justify-between mb-8">
+                    <div class="">
+                      <div class="text-xs text-zinc-500 mb-1 font-medium font-sans uppercase tracking-wider">
+                        Reusable Tokens
+                      </div>
+                      <div class="text-3xl text-white tracking-tight font-manrope font-medium flex items-baseline">
+                        <span class="tabular-nums tracking-tight" data-animated="complete">
+                          1,240
+                        </span>
+                        <span class="text-zinc-500 ml-1">+</span>
+                      </div>
+                    </div>
+                    <div class="w-10 h-10 rounded-lg bgcyan-500/80 shadow-[0_0_15px_-3px_rgba(6,182,212,0.15)]">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database">
+                        <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                        <path d="M3 5V19A9 3 0 0 0 21 19V5"></path>
+                        <path d="M3 12A9 3 0 0 0 21 12" class=""></path>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <div class="flex items-end justify-between h-32 gap-1.5 pt-4 border-t border-white/5 relative">
+                    <div class="absolute inset-0 w-full h-full pointer-events-none flex flex-col justify-between py-1 opacity-20">
+                      <div class="w-full border-t border-dashed border-zinc-700"></div>
+                      <div class="w-full border-t border-dashed border-zinc-700"></div>
+                      <div class="w-full border-t border-dashed border-zinc-700"></div>
+                    </div>
+
+                    <div class="w-full bg-gradient-to-t from-cyan-900/20 to-cyan-500/20 h-[35%] rounded-t-[2px] aura-animate-bar" style="animation-delay: 0ms; animation-play-state: running;"></div>
+                    <div class="w-full bg-gradient-to-t from-cyan-900/30 to-cyan-500/30 h-[50%] rounded-t-[2px] aura-animate-bar" style="animation-delay: 50ms; animation-play-state: running;"></div>
+                    <div class="w-full bg-gradient-to-t from-cyan-900/40 to-cyan-500/40 h-[65%] rounded-t-[2px] aura-animate-bar" style="animation-delay: 100ms; animation-play-state: running;"></div>
+
+                    <div class="w-full bg-gradient-to-t from-cyan-600 to-cyan-400 h-[85%] rounded-t-[3px] shadow-[0_0_20px_-5px_rgba(34,211,238,0.4)] aura-animate-bar relative z-10" style="animation-delay: 150ms; animation-play-state: running;"></div>
+                    <div class="w-full bg-gradient-to-t from-cyan-600 to-cyan-400 h-[100%] rounded-t-[3px] shadow-[0_0_20px_-5px_rgba(34,211,238,0.4)] aura-animate-bar relative z-10" style="animation-delay: 200ms; animation-play-state: running;"></div>
+
+                    <div class="w-full bg-gradient-to-t from-cyan-900/40 to-cyan-500/40 h-[60%] rounded-t-[2px] aura-animate-bar" style="animation-delay: 250ms; animation-play-state: running;"></div>
+                    <div class="w-full bg-gradient-to-t from-cyan-900/30 to-cyan-500/30 h-[45%] rounded-t-[2px] aura-animate-bar" style="animation-delay: 300ms; animation-play-state: running;"></div>
+                    <div class="w-full bg-gradient-to-t from-cyan-900/20 to-cyan-500/20 h-[30%] rounded-t-[2px] aura-animate-bar" style="animation-play-state: running;"></div>
+                    <div class="w-full border-x border-t border-zinc-800/50 bg-zinc-900/30 h-[55%] rounded-t-[2px] aura-animate-bar" style="animation-delay: 450ms; animation-play-state: running;"></div>
+                  </div>
+
+                  <script>
+                    (function() {
+                        // Since the chart container doesn't have an ID, we'll try to target0 div) is the target for intersection observation.
+                        const chartParent = document.querySelector('.group.bg-zinc-950.w-full.max-w-lg.border-white\\/10');
+                        const counter = chartParent ? chartParent.querySelector('[data-animated="true"]') : null;
+
+                        // Safety check
+                        if (!chartParent) return;
+
+                        const observer = new IntersectionObserver((entries) => {
+                          entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                              // 1. Trigger Bar Animation
+                              const bars = chartParent.querySelectorAll('.aura-animate-bar');
+                              bars.forEach(bar => bar.style.animationPlayState = 'running');
+
+                              // 2. Trigger Number Counter Animation
+                              if (counter && counter.dataset.animated === "true") { // Correcting logic for the counter
+                                counter.dataset.animated = "started"; // Mark as started, but let the script run the animation logic
+                                const target = 1240;
+                                const duration = 2000;
+                                const startTime = performance.now();
+                                const initialValue = parseInt(counter.innerText.replace(/,/g, '')); // Read initial value
+
+                                function updateCount(currentTime) {
+                                  const elapsed = currentTime - startTime;
+                                  const progress = Math.min(elapsed / duration, 1);
+                                  // Ease out exponential
+                                  const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+
+                                  const current = Math.floor(initialValue + ease * (target - initialValue));
+                                  counter.innerText = current.toLocaleString();
+
+                                  if (progress < 1) {
+                                    requestAnimationFrame(updateCount);
+                                  } else {
+                                    counter.innerText = "1,240";
+                                    counter.dataset.animated = "complete"; // Mark as complete
+                                  }
+                                }
+                                requestAnimationFrame(updateCount);
+                              }
+
+                              // Disconnect after triggering
+                              observer.disconnect();
+                            }
+                          });
+                        }, { threshold: 0.25 });
+
+                        observer.observe(chartParent);
+                      })();
+                  </script>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-32 relative border-t border-white/5">
+      <div class="[animation:fadeSlideIn_0.8s_ease-out_0.1s_both] animate-on-scroll max-w-7xl mr-auto ml-auto pr-6 pl-6">
+        <div class="[animation:fadeSlideIn_1s_ease-out_0.2s_both] animate-on-scroll text-center mb-16">
+          <h2 class="text-3xl md:text-5xl text-white mb-4 tracking-tight font-manrope font-medium" style="">
+            Simple, transparent pricing
+          </h2>
+          <p class="text-lg text-zinc-400 font-medium font-sans" style="">
+            For studios, startups and solo makers using Kreona Studio.
+          </p>
+
+          <!-- Toggle -->
+          <div class="flex items-center justify-center mt-8">
+            <div class="bg-zinc-900 p-1 rounded-full border border-white/10 flex items-center">
+              <button class="px-6 py-2 rounded-full bg-zinc-800 text-white text-sm shadow-sm font-medium font-sans" style="">
+                Monthly
+              </button>
+              <button class="px-6 py-2 rounded-full text-zinc-400 text-sm hover:text-white font-medium font-sans" style="">
+                Yearly
+                <span class="text-emerald-400 text-xs ml-1 font-medium font-sans" style="">
+                  -20%
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="group/grid [animation:fadeSlideIn_0.8s_ease-out_0.3s_both] animate-on-scroll max-w-7xl z-10 mr-auto ml-auto pr-6 pl-6 relative">
+          <!-- Flashlight/Spotlight Logic -->
+          <script>
+            document.addEventListener('mousemove', (e) => {
+                const cards = document.querySelectorAll('.spotlight-card');
+                cards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                });
+            });
+          </script>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-0 items-stretch w-full max-w-7xl mx-auto border-l border-white/10">
+            <!-- Card 1: Light -->
+            <div class="spotlight-card group relative p-10 bg-zinc-950 border-y border-r border-white/10 flex flex-col min-h-[420px] overflow-hidden transition-colors hover:border-white/20 [animation:fadeSlideIn_1s_ease-out_0.3s_both] animate-on-scroll" style="--mouse-x: 1085px; --mouse-y: -2638px;">
+              <!-- Spotlight Effect -->
+              <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.06), transparent 40%);"></div>
+
+              <!-- Grid Pattern -->
+              <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-50"></div>
+
+              <!-- Corner Accents -->
+              <div class="absolute top-0 left-0 w-3 h-3 border-t border-l border-transparent group-hover:border-white/40 transition-colors z-10"></div>
+              <div class="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-transparent group-hover:border-white/40 transition-colors z-10"></div>
+
+              <!-- Content -->
+              <div class="relative z-10 flex flex-col h-full pointer-events-none">
+                <div class="flex justify-start mb-8">
+                  <span class="px-4 py-1 border border-white/10 text-[10px] font-semibold text-zinc-400 uppercase tracking-widest bg-zinc-900/50 font-sans backdrop-blur-sm">
+                    Light
+                  </span>
+                </div>
+
+                <div class="relative flex-grow">
+                  <!-- Default View: Price -->
+                  <div class="absolute inset-0 flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:opacity-0 group-hover:-translate-y-4 group-hover:scale-95 origin-bottom">
+                    <div class="text-7xl text-white font-manrope font-medium tracking-tighter flex items-start leading-none">
+                      12
+                      <span class="text-2xl mt-2 ml-2 text-zinc-600 font-mono tracking-normal">
+                        $
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Hover View: Details -->
+                  <div class="absolute inset-0 flex flex-col justify-center gap-5 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] opacity-0 translate-y-8 scale-95 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 origin-center">
+                    <div class="flex items-start gap-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-lg text-zinc-600 shrink-0 mt-0.5" style="" data-icon-set="solar" data-solar="check-square-bold">
+                        <path fill="currentColor" fill-rule="evenodd" d="M12 22c-4.714 0-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12s0-7.071 1.464-8.536C4.93 2 7.286 2 12 2s7.071 0 8.535 1.464C22 4.93 22 7.286 22 12s0 7.071-1.465 8.535C19.072 22 16.714 22 12 22m4.03-13.03a.75.75 0 0 1 0 1.06l-5 5a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 1 1 1.06-1.06l1.47 1.47l4.47-4.47a.75.75 0 0 1 1.06 0" clip-rule="evenodd"></path>
+                      </svg>
+                      <span class="text-sm text-zinc-300 font-medium font-sans leading-snug">
+                        Limited article access
+                      </span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-lg text-zinc-600 shrink-0 mt-0.5" style="" data-icon-set="solar" data-solar="check-square-bold">
+                        <path fill="currentColor" fill-rule="evenodd" d="M12 22c-4.714 0-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12s0-7.071 1.464-8.536C4.93 2 7.286 2 12 2s7.071 0 8.535 1.464C22 4.93 22 7.286 22 12s0 7.071-1.465 8.535C19.072 22 16.714 22 12 22m4.03-13.03a.75.75 0 0 1 0 1.06l-5 5a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 1 1 1.06-1.06l1.47 1.47l4.47-4.47a.75.75 0 0 1 1.06 0" clip-rule="evenodd"></path>
+                      </svg>
+                      <span class="text-sm text-zinc-300 font-medium font-sans leading-snug">
+                        Basic daily updates
+                      </span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-lg text-zinc-600 shrink-0 mt-0.5" style="" data-icon-set="solar" data-solar="check-square-bold">
+                        <path fill="currentColor" fill-rule="evenodd" d="M12 22c-4.714 0-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12s0-7.071 1.464-8.536C4.93 2 7.286 2 12 2s7.071 0 8.535 1.464C22 4.93 22 7.286 22 12s0 7.071-1.465 8.535C19.072 22 16.714 22 12 22m4.03-13.03a.75.75 0 0 1 0 1.06l-5 5a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 1 1 1.06-1.06l1.47 1.47l4.47-4.47a.75.75 0 0 1 1.06 0" clip-rule="evenodd"></path>
+                      </svg>
+                      <span class="text-sm text-zinc-300 font-medium font-sans leading-snug">
+                        Community support
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-auto pt-10 flex items-end gap-6 justify-between pointer-events-auto">
+                  <p class="text-sm text-zinc-500 font-medium font-sans leading-relaxed max-w-[70%] transition-colors group-hover:text-zinc-400">
+                    Enjoy access to a limited selection of articles.
+                  </p>
+                  <button class="flex-shrink-0 w-12 h-12 bg-zinc-900 border border-white/10 flex items-center justify-center text-zinc-400 hover:bg-white hover:text-black transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-xl" style="" data-icon-set="solar" data-solar="arrow-right-up-linear">
+                      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6m0 0H9m9 0v9"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2: Most Popular -->
+            <div class="spotlight-card group relative p-10 bg-zinc-950 border-y border-r border-white/10 flex flex-col min-h-[420px] overflow-hidden [animation:fadeSlideIn_1s_ease-out_0.4s_both] animate-on-scroll" style="--mouse-x: 690.671875px; --mouse-y: -2638px;">
+              <!-- Spotlight Effect (Cyan Tint) -->
+              <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(6,182,212,0.08), transparent 40%);"></div>
+
+              <!-- Cyan Glows -->
+              <div class="absolute inset-0 border border-cyan-500/20 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div class="absolute top-0 right-0 w-40 h-40 bg-cyan-500/5 blur-[80px] pointer-events-none group-hover:bg-cyan-500/10 transition-colors"></div>
+
+              <div class="absolute top-0 left-0 w-3 h-3 border-t border-l border-cyan-500/50 z-10 transition-all group-hover:border-cyan-400"></div>
+              <div class="absolute top-0 right-0 w-3 h-3 border-t border-r border-cyan-500/50 z-10 transition-all group-hover:border-cyan-400"></div>
+              <div class="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-cyan-500/50 z-10 transition-all group-hover:border-cyan-400"></div>
+              <div class="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-cyan-500/50 z-10 transition-all group-hover:border-cyan-400"></div>
+
+              <!-- Content -->
+              <div class="relative z-10 flex flex-col h-full pointer-events-none">
+                <div class="flex justify-start mb-10">
+                  <span class="px-4 py-1 border border-cyan-500/30 text-[10px] font-semibold text-cyan-400 uppercase tracking-widest bg-cyan-950/20 font-sans shadow-[0_0_15px_-5px_rgba(34,211,238,0.3)] backdrop-blur-sm">
+                    Most Popular
+                  </span>
+                </div>
+
+                <div class="relative flex-grow">
+                  <!-- Default View: Price -->
+                  <div class="absolute inset-0 flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:opacity-0 group-hover:-translate-y-4 group-hover:scale-95 origin-bottom">
+                    <div class="text-7xl text-white font-manrope font-medium tracking-tighter flex items-start leading-none drop-shadow-[0_0_15px_rgba(34,211,238,0.2)]">
+                      29
+                      <span class="text-2xl mt-2 ml-2 text-cyan-500/70 font-mono tracking-normal">
+                        $
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Hover View: Details -->
+                  <div class="absolute inset-0 flex flex-col justify-center gap-5 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] opacity-0 translate-y-8 scale-95 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 origin-center">
+                    <div class="flex items-start gap-4">
+                      <div class="mt-0.5 text-cyan-500 shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-lg" style="" data-icon-set="solar" data-solar="check-square-bold">
+                          <path fill="currentColor" fill-rule="evenodd" d="M12 22c-4.714 0-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12s0-7.071 1.464-8.536C4.93 2 7.286 2 12 2s7.071 0 8.535 1.464C22 4.93 22 7.286 22 12s0 7.071-1.465 8.535C19.072 22 16.714 22 12 22m4.03-13.03a.75.75 0 0 1 0 1.06l-5 5a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 1 1 1.06-1.06l1.47 1.47l4.47-4.47a.75.75 0 0 1 1.06 0" clip-rule="evenodd"></path>
+                        </svg>
+                      </div>
+                      <span class="text-sm text-zinc-300 group-hover:text-white transition-colors font-medium font-sans leading-snug">
+                        Exclusive blog posts
+                      </span>
+                    </div>
+                    <div class="flex items-start gap-4">
+                      <div class="mt-0.5 text-cyan-500 shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-lg" style="" data-icon-set="solar" data-solar="check-square-bold">
+                          <path fill="currentColor" fill-rule="evenodd" d="M12 22c-4.714 0-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12s0-7.071 1.464-8.536C4.93 2 7.286 2 12 2s7.071 0 8.535 1.464C22 4.93 22 7.286 22 12s0 7.071-1.465 8.535C19.072 22 16.714 22 12 22m4.03-13.03a.75.75 0 0 1 0 1.06l-5 5a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 1 1 1.06-1.06l1.47 1.47l4.47-4.47a.75.75 0 0 1 1.06 0" clip-rule="evenodd"></path>
+                        </svg>
+                      </div>
+                      <span class="text-sm text-zinc-300 group-hover:text-white transition-colors font-medium font-sans leading-snug">
+                        Downloadable resources
+                      </span>
+                    </div>
+                    <div class="flex items-start gap-4">
+                      <div class="mt-0.5 text-cyan-500 shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-lg" style="" data-icon-set="solar" data-solar="check-square-bold">
+                          <path fill="currentColor" fill-rule="evenodd" d="M12 22c-4.714 0-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12s0-7.071 1.464-8.536C4.93 2 7.286 2 12 2s7.071 0 8.535 1.464C22 4.93 22 7.286 22 12s0 7.071-1.465 8.535C19.072 22 16.714 22 12 22m4.03-13.03a.75.75 0 0 1 0 1.06l-5 5a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 1 1 1.06-1.06l1.47 1.47l4.47-4.47a.75.75 0 0 1 1.06 0" clip-rule="evenodd"></path>
+                        </svg>
+                      </div>
+                      <span class="text-sm text-zinc-300 group-hover:text-white transition-colors font-medium font-sans leading-snug">
+                        Live monthly webinars
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-auto pt-10 flex items-end gap-6 justify-between pointer-events-auto">
+                  <p class="text-sm text-zinc-400 font-medium font-sans leading-relaxed max-w-[70%] transition-colors group-hover:text-zinc-300">
+                    Unlock additional content, features, and resources.
+                  </p>
+                  <button class="flex-shrink-0 w-12 h-12 bg-cyan-500 border border-cyan-400 flex items-center justify-center text-black hover:bg-cyan-400 transition-all duration-300 shadow-[0_0_20px_-5px_rgba(34,211,238,0.5)]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-xl" style="" data-icon-set="solar" data-solar="arrow-right-up-linear">
+                      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6m0 0H9m9 0v9"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3: Pro -->
+            <div class="spotlight-card group relative p-10 bg-zinc-950 border-y border-r border-white/10 flex flex-col min-h-[420px] overflow-hidden transition-colors hover:border-white/20 [animation:fadeSlideIn_1s_ease-out_0.5s_both] animate-on-scroll" style="--mouse-x: 296.3359375px; --mouse-y: -2638px;">
+              <!-- Spotlight Effect -->
+              <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0" style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.06), transparent 40%);"></div>
+
+              <!-- Grid Pattern -->
+              <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-50"></div>
+
+              <!-- Corner Accents -->
+              <div class="absolute top-0 left-0 w-3 h-3 border-t border-l border-transparent group-hover:border-white/40 transition-colors z-10"></div>
+              <div class="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-transparent group-hover:border-white/40 transition-colors z-10"></div>
+
+              <!-- Content -->
+              <div class="relative z-10 flex flex-col h-full pointer-events-none">
+                <div class="flex justify-start mb-8">
+                  <span class="px-4 py-1 border border-white/10 text-[10px] font-semibold text-zinc-400 uppercase tracking-widest bg-zinc-900/50 font-sans backdrop-blur-sm">
+                    Pro
+                  </span>
+                </div>
+
+                <div class="relative flex-grow">
+                  <!-- Default View: Price -->
+                  <div class="absolute inset-0 flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:opacity-0 group-hover:-translate-y-4 group-hover:scale-95 origin-bottom">
+                    <div class="text-7xl text-white font-manrope font-medium tracking-tighter flex items-start leading-none">
+                      39
+                      <span class="text-2xl mt-2 ml-2 text-zinc-600 font-mono tracking-normal">
+                        $
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Hover View: Details -->
+                  <div class="absolute inset-0 flex flex-col justify-center gap-5 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] opacity-0 translate-y-8 scale-95 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 origin-center">
+                    <div class="flex items-start gap-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-lg text-white shrink-0 mt-0.5" style="" data-icon-set="solar" data-solar="check-square-bold">
+                        <path fill="currentColor" fill-rule="evenodd" d="M12 22c-4.714 0-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12s0-7.071 1.464-8.536C4.93 2 7.286 2 12 2s7.071 0 8.535 1.464C22 4.93 22 7.286 22 12s0 7.071-1.465 8.535C19.072 22 16.714 22 12 22m4.03-13.03a.75.75 0 0 1 0 1.06l-5 5a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 1 1 1.06-1.06l1.47 1.47l4.47-4.47a.75.75 0 0 1 1.06 0" clip-rule="evenodd"></path>
+                      </svg>
+                      <span class="text-sm text-zinc-200 font-medium font-sans leading-snug">
+                        Unlimited content access
+                      </span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-lg text-white shrink-0 mt-0.5" style="" data-icon-set="solar" data-solar="check-square-bold">
+                        <path fill="currentColor" fill-rule="evenodd" d="M12 22c-4.714 0-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12s0-7.071 1.464-8.536C4.93 2 7.286 2 12 2s7.071 0 8.535 1.464C22 4.93 22 7.286 22 12s0 7.071-1.465 8.535C19.072 22 16.714 22 12 22m4.03-13.03a.75.75 0 0 1 0 1.06l-5 5a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 1 1 1.06-1.06l1.47 1.47l4.47-4.47a.75.75 0 0 1 1.06 0" clip-rule="evenodd"></path>
+                      </svg>
+                      <span class="text-sm text-zinc-200 font-medium font-sans leading-snug">
+                        Priority 24/7 support
+                      </span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-lg text-white shrink-0 mt-0.5" style="" data-icon-set="solar" data-solar="check-square-bold">
+                        <path fill="currentColor" fill-rule="evenodd" d="M12 22c-4.714 0-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12s0-7.071 1.464-8.536C4.93 2 7.286 2 12 2s7.071 0 8.535 1.464C22 4.93 22 7.286 22 12s0 7.071-1.465 8.535C19.072 22 16.714 22 12 22m4.03-13.03a.75.75 0 0 1 0 1.06l-5 5a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 1 1 1.06-1.06l1.47 1.47l4.47-4.47a.75.75 0 0 1 1.06 0" clip-rule="evenodd"></path>
+                      </svg>
+                      <span class="text-sm text-zinc-200 font-medium font-sans leading-snug">
+                        All features included
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-auto pt-10 flex items-end gap-6 justify-between pointer-events-auto">
+                  <p class="text-sm text-zinc-500 font-medium font-sans leading-relaxed max-w-[70%] transition-colors group-hover:text-zinc-400">
+                    Get unlimited access to all content.
+                  </p>
+                  <button class="flex-shrink-0 w-12 h-12 bg-zinc-900 border border-white/10 flex items-center justify-center text-zinc-400 hover:bg-white hover:text-black transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-xl" style="" data-icon-set="solar" data-solar="arrow-right-up-linear">
+                      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6m0 0H9m9 0v9"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-white/5 border-t pt-20 pb-20" id="footer">
+      <div class="[animation:fadeSlideIn_0.8s_ease-out_0.1s_both] animate-on-scroll max-w-7xl mr-auto ml-auto pr-6 pl-6">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-y-12 gap-x-8 mb-16 w-full">
+          <!-- Branding Header -->
+          <div class="col-span-1 md:col-span-12 flex gap-3 md:gap-5 [animation:fadeSlideIn_1s_ease-out_0.2s_both] animate-on-scroll pb-4 gap-x-3 gap-y-3 items-baseline">
+            <h1 class="text-7xl md:text-9xl lg:text-[11rem] leading-[0.8] tracking-tighter font-medium text-white font-sans select-none">
+              kreona
+            </h1>
+            <span class="text-xl md:text-3xl font-normal text-zinc-400 tracking-tight font-sans relative -top-1 md:-top-3">
+              studio
+            </span>
+          </div>
+
+          <!-- Divider -->
+          <div class="col-span-1 md:col-span-12 w-full h-px bg-white/10 [animation:fadeSlideIn_1s_ease-out_0.3s_both] animate-on-scroll"></div>
+
+          <!-- Content Area -->
+          <div class="col-span-1 md:col-span-12 grid grid-cols-1 lg:grid-cols-12 [animation:fadeSlideIn_0.8s_ease-out_0.3s_both] animate-on-scroll mt-2 gap-x-12 gap-y-12">
+            <!-- CTA Section -->
+            <div class="col-span-1 lg:col-span-5 flex flex-col items-start justify-between gap-10">
+              <p class="text-lg text-zinc-400 font-light font-sans leading-relaxed max-w-md">
+                Let’s build something great together — whether you have a
+                project in mind or just want to connect, we’d love to hear from
+                you.
+              </p>
+
+              <div class="flex items-center gap-4">
+                <button class="bg-zinc-300 hover:bg-white text-zinc-950 px-8 py-4 rounded-lg text-sm font-medium transition-colors font-sans duration-300">
+                  Book a 15-min call
+                </button>
+                <button class="w-14 h-14 rounded-full bg-zinc-300 hover:bg-white text-zinc-950 flex items-center justify-center transition-colors duration-300 group">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform">
+                    <path d="M7 7h10v10"></path>
+                    <path d="M7 17 17 7"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Links Grid -->
+            <div class="col-span-1 lg:col-span-7 grid grid-cols-2 sm:grid-cols-4 gap-10 lg:pl-10 w-full">
+              <!-- Column 1 -->
+              <div class="flex flex-col gap-6">
+                <span class="text-[10px] uppercase tracking-[0.2em] text-zinc-500 font-medium font-sans">
+                  Sitemap
+                </span>
+                <ul class="flex flex-col gap-4">
+                  <li class="">
+                    <a href="#" class="text-sm text-zinc-400 hover:text-white transition-colors font-sans font-normal">
+                      Home
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" class="text-sm text-zinc-400 hover:text-white transition-colors font-sans font-normal">
+                      About
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" class="text-sm text-zinc-400 hover:text-white transition-colors font-sans font-normal">
+                      Works
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Column 2 -->
+              <div class="flex flex-col gap-6">
+                <span class="text-[10px] uppercase tracking-[0.2em] text-zinc-500 font-medium font-sans">
+                  Recent Works
+                </span>
+                <ul class="flex flex-col gap-4">
+                  <li>
+                    <a href="#" class="text-sm text-zinc-400 hover:text-white transition-colors font-sans font-normal">
+                      Space
+                    </a>
+                  </li>
+                  <li class="">
+                    <a href="#" class="text-sm text-zinc-400 hover:text-white transition-colors font-sans font-normal">
+                      Botic
+                    </a>
+                  </li>
+                  <li class="">
+                    <a href="#" class="text-sm text-zinc-400 hover:text-white transition-colors font-sans font-normal">
+                      Run
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Column 3 -->
+              <div class="flex flex-col gap-6">
+                <span class="text-[10px] uppercase tracking-[0.2em] text-zinc-500 font-medium font-sans">
+                  Social
+                </span>
+                <ul class="flex flex-col gap-4">
+                  <li>
+                    <a href="#" class="text-sm text-zinc-400 hover:text-white transition-colors font-sans font-normal">
+                      Instagram
+                    </a>
+                  </li>
+                  <li class="">
+                    <a href="#" class="text-sm text-zinc-400 hover:text-white transition-colors font-sans font-normal">
+                      LinkedIn
+                    </a>
+                  </li>
+                  <li class="">
+                    <a href="#" class="text-sm text-zinc-400 hover:text-white transition-colors font-sans font-normal">
+                      Behance
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Column 4 -->
+              <div class="flex flex-col gap-6">
+                <span class="text-[10px] uppercase tracking-[0.2em] text-zinc-500 font-medium font-sans">
+                  Other
+                </span>
+                <ul class="flex flex-col gap-4">
+                  <li class="">
+                    <a href="#" class="text-sm text-zinc-400 hover:text-white transition-colors font-sans font-normal">
+                      Buy template
+                    </a>
+                  </li>
+                  <li class="">
+                    <a href="#" class="text-sm text-zinc-400 hover:text-white transition-colors font-sans font-normal">
+                      View More
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col md:flex-row [animation:fadeSlideIn_1s_ease-out_0.5s_both] animate-on-scroll border-white/5 border-t pt-8 gap-x-4 gap-y-4 items-center justify-between">
+          <p class="text-xs text-zinc-600 font-medium font-sans" style="">
+            © 2024 Kreona Studio. All rights reserved.
+          </p>
+          <div class="flex gap-6">
+            <a href="#" class="text-zinc-500 hover:text-white transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-base" style="" data-icon-set="solar" data-solar="planet-bold-duotone">
+                <path fill="currentColor" d="M20 12a8 8 0 1 1-16 0a8 8 0 0 1 16 0" opacity=".5"></path>
+                <path fill="currentColor" d="M17.712 5.453c1.047-.193 2.006-.259 2.797-.152c.77.103 1.536.393 1.956 1.064c.446.714.312 1.542-.012 2.258c-.33.728-.918 1.499-1.672 2.268c-1.516 1.547-3.836 3.226-6.597 4.697c-2.763 1.472-5.495 2.484-7.694 2.92c-1.095.217-2.098.299-2.923.201c-.8-.095-1.6-.383-2.032-1.075c-.47-.752-.296-1.63.07-2.379c.375-.768 1.032-1.586 1.872-2.403L4 12.416c0 .219.083.71.168 1.146c.045.23.09.444.123.596c-.652.666-1.098 1.263-1.339 1.756c-.277.567-.208.825-.145.925c.072.116.305.305.937.38c.609.073 1.44.018 2.455-.183c2.02-.4 4.613-1.351 7.28-2.772s4.85-3.015 6.23-4.423c.694-.707 1.15-1.334 1.377-1.836c.233-.515.167-.75.107-.844c-.07-.112-.289-.294-.883-.374c-.542-.072-1.272-.041-2.163.112L16.87 5.656c.338-.101.658-.17.842-.203"></path>
+              </svg>
+            </a>
+            <a href="#" class="text-zinc-500 hover:text-white transition-colors">
+              <iconify-icon icon="solar:github-bold-duotone" class="text-base"></iconify-icon>
+            </a>
+            <a href="#" class="text-zinc-500 hover:text-white transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" class="text-base" style="" data-icon-set="solar" data-solar="chat-round-dots-bold-duotone">
+                <path fill="currentColor" d="M12 23c6.075 0 11-4.925 11-11S18.075 1 12 1S1 5.925 1 12c0 1.76.413 3.423 1.148 4.898c.195.392.26.84.147 1.263l-.655 2.448a1.43 1.43 0 0 0 1.75 1.751l2.45-.655a1.8 1.8 0 0 1 1.262.147A10.96 10.96 0 0 0 12 23" opacity=".5"></path>
+                <path fill="currentColor" d="M10.9 12a1.1 1.1 0 1 0 2.2 0a1.1 1.1 0 0 0-2.2 0m-4.4 0a1.1 1.1 0 1 0 2.2 0a1.1 1.1 0 0 0-2.2 0m8.8 0a1.1 1.1 0 1 0 2.2 0a1.1 1.1 0 0 0-2.2 0"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script class="">
+      lucide.createIcons();
+    </script>
+  
+</body></html>

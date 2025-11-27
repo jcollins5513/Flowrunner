@@ -1,0 +1,40 @@
+{
+  "name": "Aceternity UI",
+  "slug": "file-upload",
+  "description": "A minimal file upload form with background grid, drag and drop, and micro interactions.",
+  "props": [
+    {
+      "Prop Name": "onChange",
+      "Type": "(files: File[]) => void",
+      "Default": "undefined",
+      "Description": "Callback function that is called when files are uploaded or dropped."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/file-uploadCopy",
+  "url": "https://ui.aceternity.com/components/file-upload",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A minimal file upload form with background grid, drag and drop, and micro interactions.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React, { useState } from \"react\";",
+    "import { FileUpload } from \"@/components/ui/file-upload\";"
+  ],
+  "dependencies": [
+    "@/components/ui/file-upload",
+    "react"
+  ],
+  "client_only": true
+}

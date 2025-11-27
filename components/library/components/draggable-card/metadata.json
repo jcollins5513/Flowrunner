@@ -1,0 +1,55 @@
+{
+  "name": "Aceternity UI",
+  "slug": "draggable-card",
+  "description": "A tiltable, draggable card component that jumps on bounds.",
+  "props": [
+    {
+      "Prop": "className",
+      "Type": "string?",
+      "Description": "Additional CSS classes to apply to the card body",
+      "Default": "undefined"
+    },
+    {
+      "Prop": "children",
+      "Type": "React.ReactNode?",
+      "Description": "Content to render inside the card",
+      "Default": "undefined"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/draggable-cardCopy",
+  "url": "https://ui.aceternity.com/components/draggable-card",
+  "type": "card",
+  "subtype": "",
+  "layout_role": "inline-block",
+  "recommended_slots": [
+    "grid.item",
+    "section.content"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "auto-height",
+  "z_index_role": "content",
+  "usage_notes": "A tiltable, draggable card component that jumps on bounds.",
+  "theme_requirements": [],
+  "data_requirements": [
+    {
+      "name": "items",
+      "fields": [
+        "title",
+        "description",
+        "media"
+      ],
+      "type": "array"
+    }
+  ],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import {"
+  ],
+  "dependencies": [
+    "react"
+  ],
+  "client_only": false
+}

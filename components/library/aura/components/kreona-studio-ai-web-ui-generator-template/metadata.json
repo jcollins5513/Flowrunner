@@ -1,0 +1,55 @@
+{
+  "name": "Kreona Studio AI Web UI Generator Template",
+  "slug": "kreona-studio-94",
+  "description": "This template provides a sleek, AI-powered web UI generator for creating scalable, production-ready websites from natural language prompts with clean code export.",
+  "tags": [
+    "Landing Page",
+    "AI",
+    "Code Generation",
+    "Design System",
+    "Responsive",
+    "Pricing",
+    "Features",
+    "Testimonials",
+    "Web UI",
+    "Architecture"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/kreona-studio-94",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "This template provides a sleek, AI-powered web UI generator for creating scalable, production-ready websites from natural language prompts with clean code export.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "aura",
+  "author": {
+    "name": "Sourasith Phomhome",
+    "slug": "sourasith-p",
+    "avatar_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/sign/user-avatars/avatar-72F3F2F6-BE51-407F-BF04-996779B6D953.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InN0b3JhZ2UtdXJsLXNpZ25pbmcta2V5X2M5NTc0NmE2LWNiMDYtNGYzYS1iYzEyLWM4MjBjYmU5ZjNhNiJ9.eyJ1cmwiOiJ1c2VyLWF2YXRhcnMvYXZhdGFyLTcyRjNGMkY2LUJFNTEtNDA3Ri1CRjA0LTk5Njc3OUI2RDk1My5qcGciLCJpYXQiOjE3NDYwNjk2NjMsImV4cCI6MjA2MTQyOTY2M30.9UsfCVsS9O6m3QAfT63HBjI9jGkuUDIj5rX_0BpKzO0",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/kreona-studio-94.png",
+  "aura": {
+    "id": 5513,
+    "views": 947,
+    "forks": 13,
+    "premium": true
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

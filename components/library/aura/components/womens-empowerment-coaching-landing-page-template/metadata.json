@@ -1,0 +1,54 @@
+{
+  "name": "Women's Empowerment Coaching Landing Page Template",
+  "slug": "women-s-boundaries-69",
+  "description": "A reusable landing page template designed for coaches helping women set healthy boundaries and reclaim personal peace through supportive coaching programs.",
+  "tags": [
+    "Landing Page",
+    "Hero",
+    "Coaching",
+    "Pricing",
+    "Testimonials",
+    "Call to Action",
+    "Women's Empowerment",
+    "Boundaries",
+    "Discovery Call"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/women-s-boundaries-69",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "A reusable landing page template designed for coaches helping women set healthy boundaries and reclaim personal peace through supportive coaching programs.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "aura",
+  "author": {
+    "name": "Taha Hussain",
+    "slug": "user-e492392a",
+    "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocKMHTjm7b9IAEVeb4JNIVfPcViPCFjTph_w2TbnRv_XWvtkLUQUSA=s96-c",
+    "featured": false
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/women-s-boundaries-69.png?t=1763884061427",
+  "aura": {
+    "id": 5488,
+    "views": 317,
+    "forks": 4,
+    "premium": false
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

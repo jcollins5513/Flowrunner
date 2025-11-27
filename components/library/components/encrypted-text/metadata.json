@@ -1,0 +1,82 @@
+{
+  "name": "Aceternity UI",
+  "slug": "encrypted-text",
+  "description": "A text component that reveals the text gradually, gibberish effect.",
+  "props": [
+    {
+      "Prop": "text",
+      "Type": "string",
+      "Default": "-",
+      "Description": "The text to be encrypted and revealed.",
+      "Required": "Yes"
+    },
+    {
+      "Prop": "className",
+      "Type": "string",
+      "Default": "-",
+      "Description": "Additional CSS classes to apply to the component.",
+      "Required": "No"
+    },
+    {
+      "Prop": "revealDelayMs",
+      "Type": "number",
+      "Default": "50",
+      "Description": "Time in milliseconds between revealing each subsequent real character.",
+      "Required": "No"
+    },
+    {
+      "Prop": "charset",
+      "Type": "string",
+      "Default": "\"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-={}[];:,.<>/?\"",
+      "Description": "Custom character set to use for the gibberish effect.",
+      "Required": "No"
+    },
+    {
+      "Prop": "flipDelayMs",
+      "Type": "number",
+      "Default": "50",
+      "Description": "Time in milliseconds between gibberish flips for unrevealed characters.",
+      "Required": "No"
+    },
+    {
+      "Prop": "encryptedClassName",
+      "Type": "string",
+      "Default": "-",
+      "Description": "CSS class for styling the encrypted/scrambled characters.",
+      "Required": "No"
+    },
+    {
+      "Prop": "revealedClassName",
+      "Type": "string",
+      "Default": "-",
+      "Description": "CSS class for styling the revealed characters.",
+      "Required": "No"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/encrypted-textCopy",
+  "url": "https://ui.aceternity.com/components/encrypted-text",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A text component that reveals the text gradually, gibberish effect.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import { EncryptedText } from \"@/components/ui/encrypted-text\";",
+    "import React from \"react\";"
+  ],
+  "dependencies": [
+    "@/components/ui/encrypted-text",
+    "react"
+  ],
+  "client_only": false
+}

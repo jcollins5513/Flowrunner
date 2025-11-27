@@ -1,0 +1,43 @@
+{
+  "name": "Aceternity UI",
+  "slug": "meteors",
+  "description": "A group of beams in the background of a container, sort of like meteors.",
+  "props": [
+    {
+      "Prop name": "className",
+      "Type": "string",
+      "Description": "The class name of the child component."
+    },
+    {
+      "Prop name": "number",
+      "Type": "number",
+      "Description": "The number of meteors you want in the card"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/meteorsCopy",
+  "url": "https://ui.aceternity.com/components/meteors",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A group of beams in the background of a container, sort of like meteors.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { Meteors } from \"../ui/meteors\";"
+  ],
+  "dependencies": [
+    "react"
+  ],
+  "client_only": false
+}

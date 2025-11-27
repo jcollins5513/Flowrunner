@@ -1,0 +1,146 @@
+{
+  "name": "Aceternity UI",
+  "slug": "dotted-glow-background",
+  "description": "A background effect with opacity animation, glow effect and more.",
+  "props": [
+    {
+      "Prop": "className",
+      "Type": "string",
+      "Default": "-",
+      "Description": "Additional CSS classes to apply to the container.",
+      "Required": "No"
+    },
+    {
+      "Prop": "gap",
+      "Type": "number",
+      "Default": "12",
+      "Description": "Distance between dot centers in pixels.",
+      "Required": "No"
+    },
+    {
+      "Prop": "radius",
+      "Type": "number",
+      "Default": "2",
+      "Description": "Base radius of each dot in CSS pixels.",
+      "Required": "No"
+    },
+    {
+      "Prop": "color",
+      "Type": "string",
+      "Default": "\"rgba(0,0,0,0.7)\"",
+      "Description": "Dot color (will pulse by alpha).",
+      "Required": "No"
+    },
+    {
+      "Prop": "darkColor",
+      "Type": "string",
+      "Default": "-",
+      "Description": "Optional dot color for dark mode.",
+      "Required": "No"
+    },
+    {
+      "Prop": "glowColor",
+      "Type": "string",
+      "Default": "\"rgba(0, 170, 255, 0.85)\"",
+      "Description": "Shadow/glow color for bright dots.",
+      "Required": "No"
+    },
+    {
+      "Prop": "darkGlowColor",
+      "Type": "string",
+      "Default": "-",
+      "Description": "Optional glow color for dark mode.",
+      "Required": "No"
+    },
+    {
+      "Prop": "colorLightVar",
+      "Type": "string",
+      "Default": "-",
+      "Description": "Optional CSS variable name for light dot color (e.g.--color-zinc-900).",
+      "Required": "No"
+    },
+    {
+      "Prop": "colorDarkVar",
+      "Type": "string",
+      "Default": "-",
+      "Description": "Optional CSS variable name for dark dot color (e.g.--color-zinc-100).",
+      "Required": "No"
+    },
+    {
+      "Prop": "glowColorLightVar",
+      "Type": "string",
+      "Default": "-",
+      "Description": "Optional CSS variable name for light glow color.",
+      "Required": "No"
+    },
+    {
+      "Prop": "glowColorDarkVar",
+      "Type": "string",
+      "Default": "-",
+      "Description": "Optional CSS variable name for dark glow color.",
+      "Required": "No"
+    },
+    {
+      "Prop": "opacity",
+      "Type": "number",
+      "Default": "0.6",
+      "Description": "Global opacity for the whole layer.",
+      "Required": "No"
+    },
+    {
+      "Prop": "backgroundOpacity",
+      "Type": "number",
+      "Default": "0",
+      "Description": "Background radial fade opacity (0 = transparent background).",
+      "Required": "No"
+    },
+    {
+      "Prop": "speedMin",
+      "Type": "number",
+      "Default": "0.4",
+      "Description": "Minimum per-dot speed in rad/s.",
+      "Required": "No"
+    },
+    {
+      "Prop": "speedMax",
+      "Type": "number",
+      "Default": "1.3",
+      "Description": "Maximum per-dot speed in rad/s.",
+      "Required": "No"
+    },
+    {
+      "Prop": "speedScale",
+      "Type": "number",
+      "Default": "1",
+      "Description": "Global speed multiplier for all dots.",
+      "Required": "No"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/dotted-glow-backgroundCopy",
+  "url": "https://ui.aceternity.com/components/dotted-glow-background",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A background effect with opacity animation, glow effect and more.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { DottedGlowBackground } from \"@/components/ui/dotted-glow-background\";"
+  ],
+  "dependencies": [
+    "@/components/ui/dotted-glow-background",
+    "react"
+  ],
+  "client_only": false
+}

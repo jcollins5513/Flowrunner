@@ -1,0 +1,58 @@
+{
+  "name": "Aceternity UI",
+  "slug": "background-lines",
+  "description": "A set of svg paths that animate in a wave pattern. Good for hero sections background, as seen on height.app",
+  "props": [
+    {
+      "Prop Name": "children",
+      "Type": "React.ReactNode",
+      "Default": "Required",
+      "Description": "The content to be rendered inside the component."
+    },
+    {
+      "Prop Name": "className",
+      "Type": "string",
+      "Default": "undefined",
+      "Description": "Additional CSS classes to be applied to the outer container."
+    },
+    {
+      "Prop Name": "svgOptions",
+      "Type": "object",
+      "Default": "undefined",
+      "Description": "Options for customizing the SVG animation."
+    },
+    {
+      "Prop Name": "svgOptions",
+      "Type": "object",
+      "Default": "{ duration: 10 }",
+      "Description": "Options for customizing the SVG animation. Properties: -duration: number - The duration of each path animation in seconds."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/background-linesCopy",
+  "url": "https://ui.aceternity.com/components/background-lines",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A set of svg paths that animate in a wave pattern. Good for hero sections background, as seen on height.app",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { BackgroundLines } from \"@/components/ui/background-lines\";"
+  ],
+  "dependencies": [
+    "@/components/ui/background-lines",
+    "react"
+  ],
+  "client_only": false
+}

@@ -1,0 +1,55 @@
+{
+  "name": "Smart Garden Control Dashboard Template",
+  "slug": "aurora-garden",
+  "description": "This template provides a modern, reusable dashboard UI for smart garden irrigation control, featuring automation, weather integration, and scheduling.",
+  "tags": [
+    "Dashboard",
+    "Smart Garden",
+    "Irrigation",
+    "Automation",
+    "Weather Forecast",
+    "Scheduling",
+    "Water Usage",
+    "Controls",
+    "Analytics",
+    "Responsive"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/aurora-garden",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "This template provides a modern, reusable dashboard UI for smart garden irrigation control, featuring automation, weather integration, and scheduling.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "aura",
+  "author": {
+    "name": "Meng To",
+    "slug": "meng",
+    "avatar_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/user-avatars/avatars/9109ecbb-cdc4-4815-981e-2ea83be13765-1747961036177.png",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/aurora-garden.png",
+  "aura": {
+    "id": 5244,
+    "views": 1156,
+    "forks": 5,
+    "premium": true
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

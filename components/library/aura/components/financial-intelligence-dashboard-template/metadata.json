@@ -1,0 +1,55 @@
+{
+  "name": "Financial Intelligence Dashboard Template",
+  "slug": "matrixpay",
+  "description": "This reusable template is designed for building a modern financial intelligence dashboard to automate treasury operations, visualize liquidity, and orchestrate payments across multiple currencies and chains.",
+  "tags": [
+    "Landing Page",
+    "Dashboard",
+    "Treasury",
+    "Payments",
+    "Financial Intelligence",
+    "Analytics",
+    "API",
+    "Security",
+    "Multi-Currency",
+    "Automation"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/matrixpay",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "This reusable template is designed for building a modern financial intelligence dashboard to automate treasury operations, visualize liquidity, and orchestrate payments across multiple currencies and chains.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "aura",
+  "author": {
+    "name": "Aksonvady Phomhome",
+    "slug": "aksonvady",
+    "avatar_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/user-avatars/avatars/2e815afb-cac1-4c01-90e1-cf3810246e35-1747968317403.jpg",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/matrixpay.png",
+  "aura": {
+    "id": 5310,
+    "views": 1360,
+    "forks": 14,
+    "premium": true
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

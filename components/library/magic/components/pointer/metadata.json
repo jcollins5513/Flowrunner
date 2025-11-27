@@ -1,0 +1,34 @@
+{
+  "name": "Pointer",
+  "slug": "pointer",
+  "description": "Pointer component from Magic UI.",
+  "tags": [],
+  "category": "component",
+  "installation": "",
+  "url": "https://magicui.design/docs/components/pointer",
+  "type": "component",
+  "layout_role": "widget",
+  "recommended_slots": [
+    "section.content",
+    "marketing.feature"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "Magic UI component.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "magic",
+  "client_only": true,
+  "imports": [
+    "import { motion } from \"motion/react\"",
+    "import { Pointer } from \"@/registry/magicui/pointer\""
+  ],
+  "dependencies": [
+    "@/registry/magicui/pointer",
+    "motion/react"
+  ]
+}

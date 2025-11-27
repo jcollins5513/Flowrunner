@@ -1,0 +1,59 @@
+{
+  "name": "Aceternity UI",
+  "slug": "background-gradient",
+  "description": "An animated gradient that sits at the background of a card, button or anything.",
+  "props": [
+    {
+      "Prop": "children",
+      "Type": "React.ReactNode",
+      "Default": "undefined",
+      "Description": "The content to be rendered within the gradient background."
+    },
+    {
+      "Prop": "className",
+      "Type": "string",
+      "Default": "undefined",
+      "Description": "The CSS class to be applied to the inner div."
+    },
+    {
+      "Prop": "containerClassName",
+      "Type": "string",
+      "Default": "undefined",
+      "Description": "The CSS class to be applied to the outermost div."
+    },
+    {
+      "Prop": "animate",
+      "Type": "boolean",
+      "Default": "true",
+      "Description": "Determines whether the gradient background should animate. If false, the gradient background will be static."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/background-gradientCopy",
+  "url": "https://ui.aceternity.com/components/background-gradient",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "An animated gradient that sits at the background of a card, button or anything.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { BackgroundGradient } from \"../ui/background-gradient\";",
+    "import { IconAppWindow } from \"@tabler/icons-react\";"
+  ],
+  "dependencies": [
+    "@tabler/icons-react",
+    "react"
+  ],
+  "client_only": true
+}

@@ -1,0 +1,53 @@
+{
+  "name": "Aceternity UI",
+  "slug": "hero-highlight",
+  "description": "A background effect with a text highlight component, perfect for hero sections.",
+  "props": [
+    {
+      "Prop": "children",
+      "Type": "React.ReactNode",
+      "Default": "N/A",
+      "Description": "The content to be displayed inside the HeroHighlight component."
+    },
+    {
+      "Prop": "className",
+      "Type": "string (optional)",
+      "Default": "N/A",
+      "Description": "Additional CSS classes to apply to the child component for styling."
+    },
+    {
+      "Prop": "containerClassName",
+      "Type": "string (optional)",
+      "Default": "N/A",
+      "Description": "Additional CSS classes to apply to the container component for styling."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/hero-highlightCopy",
+  "url": "https://ui.aceternity.com/components/hero-highlight",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A background effect with a text highlight component, perfect for hero sections.",
+  "theme_requirements": [
+    "light-mode-friendly"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import { motion } from \"motion/react\";",
+    "import { HeroHighlight, Highlight } from \"../ui/hero-highlight\";"
+  ],
+  "dependencies": [
+    "motion/react"
+  ],
+  "client_only": true
+}

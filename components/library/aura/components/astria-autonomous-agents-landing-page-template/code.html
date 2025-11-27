@@ -1,0 +1,1930 @@
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nebula — Autonomous Agents for Modern Ops</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style id="premium-dividers">
+.premium-divider-horizontal {
+position: relative;
+width: 100%;
+height: 2px;
+margin: 1.5rem 0;
+}
+.premium-divider-horizontal::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+height: 1px;
+background: repeating-linear-gradient(
+45deg,
+rgba(255,255,255,0.15) 0px,
+rgba(255,255,255,0.15) 1px,
+transparent 1px,
+transparent 2px
+),
+repeating-linear-gradient(
+-45deg,
+rgba(255,255,255,0.15) 0px,
+rgba(255,255,255,0.15) 1px,
+transparent 1px,
+transparent 2px
+);
+background-size: 2px 2px;
+}
+.premium-divider-horizontal::after {
+content: '';
+position: absolute;
+bottom: 0;
+left: 0;
+right: 0;
+height: 1px;
+background: repeating-linear-gradient(
+45deg,
+rgba(255,255,255,0.12) 0px,
+rgba(255,255,255,0.12) 1px,
+transparent 1px,
+transparent 2px
+),
+repeating-linear-gradient(
+-45deg,
+rgba(255,255,255,0.12) 0px,
+rgba(255,255,255,0.12) 1px,
+transparent 1px,
+transparent 2px
+);
+background-size: 2px 2px;
+}
+.premium-divider-vertical {
+position: fixed;
+top: 0;
+bottom: 0;
+width: 1px;
+z-index: 1;
+pointer-events: none;
+background: repeating-linear-gradient(
+45deg,
+rgba(255,255,255,0.15) 0px,
+rgba(255,255,255,0.15) 1px,
+transparent 1px,
+transparent 2px
+),
+repeating-linear-gradient(
+-45deg,
+rgba(255,255,255,0.15) 0px,
+rgba(255,255,255,0.15) 1px,
+transparent 1px,
+transparent 2px
+);
+background-size: 2px 2px;
+}
+.premium-divider-vertical.left {
+left: max(1rem, calc((100vw - 80rem) / 2));
+}
+.premium-divider-vertical.right {
+right: max(1rem, calc((100vw - 80rem) / 2));
+}
+/* Top patterned divider line */
+.grid-divider {
+background-image:
+linear-gradient(135deg, rgba(255,255,255,0.15) 0, rgba(255,255,255,0.15) 1px, transparent 1px, transparent 12px),
+linear-gradient(225deg, rgba(255,255,255,0.15) 0, rgba(255,255,255,0.15) 1px, transparent 1px, transparent 12px);
+background-size: 12px 12px;
+opacity: 0.55;
+}
+/* Left circular dotted artwork (approximation of the halftone circle) */
+.dot-circle {
+width: 260px;
+aspect-ratio: 1 / 1;
+border-radius: 9999px;
+background:
+radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9) 0, transparent 60%),
+radial-gradient(circle at 70% 60%, rgba(112,97,255,0.9) 0, transparent 60%),
+radial-gradient(circle at 40% 80%, rgba(255,120,180,0.9) 0, transparent 60%);
+mask-image: radial-gradient(circle, black 0, black 65%, transparent 70%);
+-webkit-mask-image: radial-gradient(circle, black 0, black 65%, transparent 70%);
+opacity: 0.95;
+}
+/* Right rectangular dotted artwork */
+.dot-rectangle {
+width: 100%;
+aspect-ratio: 4 / 3;
+border-radius: 2rem;
+background:
+radial-gradient(circle at 20% 30%, rgba(255,255,255,0.9) 0, transparent 55%),
+radial-gradient(circle at 70% 40%, rgba(151,113,255,0.95) 0, transparent 55%),
+radial-gradient(circle at 60% 80%, rgba(82,36,255,0.95) 0, transparent 55%);
+opacity: 0.9;
+}
+/* If you later want real dot/halftone art, you can replace these with images */
+@keyframes codeScroll {
+0% {
+transform: translateY(100%);
+opacity: 0;
+}
+10% {
+opacity: 1;
+}
+100% {
+transform: translateY(-100%);
+opacity: 1;
+}
+}
+.code-scroll {
+animation: codeScroll 8s linear infinite;
+}
+/* ===== Huge faint footer watermark ===== */
+.footer-watermark {
+position: relative;
+margin-top: 2rem;
+font-size: clamp(4rem, 18vw, 10rem);
+font-weight: 700;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+text-align: center;
+color: rgba(255, 255, 255, 0.06);
+pointer-events: none;
+user-select: none;
+line-height: 1;
+z-index: 10;
+text-shadow: 0 0 40px rgba(255,255,255,0.03);
+}
+footer {
+position: relative;
+z-index: 5;
+}
+</style>
+<style id="aura-editor-visibility-style">
+.invisible { visibility: hidden !important; }
+<!-- Progressive Blur Top -->
+<div class="gradient-blur">
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+</div>
+<style>
+.gradient-blur {
+position: fixed;
+z-index: 20;
+inset: 0 0 auto 0;
+height: 12%;
+pointer-events: none;
+}
+.gradient-blur>div,
+.gradient-blur::before,
+.gradient-blur::after {
+position: absolute;
+inset: 0;
+}
+.gradient-blur::before {
+content: "";
+z-index: 1;
+backdrop-filter: blur(0.5px);
+mask: linear-gradient(to top,
+rgba(0, 0, 0, 0) 0%,
+rgba(0, 0, 0, 1) 12.5%,
+rgba(0, 0, 0, 1) 25%,
+rgba(0, 0, 0, 0) 37.5%);
+}
+.gradient-blur>div:nth-of-type(1) {
+z-index: 2;
+backdrop-filter: blur(1px);
+mask: linear-gradient(to top,
+rgba(0, 0, 0, 0) 12.5%,
+rgba(0, 0, 0, 1) 25%,
+rgba(0, 0, 0, 1) 37.5%,
+rgba(0, 0, 0, 0) 50%);
+}
+.gradient-blur>div:nth-of-type(2) {
+z-index: 3;
+backdrop-filter: blur(2px);
+mask: linear-gradient(to top,
+rgba(0, 0, 0, 0) 25%,
+rgba(0, 0, 0, 1) 37.5%,
+rgba(0, 0, 0, 1) 50%,
+rgba(0, 0, 0, 0) 62.5%);
+}
+.gradient-blur>div:nth-of-type(3) {
+z-index: 4;
+backdrop-filter: blur(4px);
+mask: linear-gradient(to top,
+rgba(0, 0, 0, 0) 37.5%,
+rgba(0, 0, 0, 1) 50%,
+rgba(0, 0, 0, 1) 62.5%,
+rgba(0, 0, 0, 0) 75%);
+}
+.gradient-blur>div:nth-of-type(4) {
+z-index: 5;
+backdrop-filter: blur(8px);
+mask: linear-gradient(to top,
+rgba(0, 0, 0, 0) 50%,
+rgba(0, 0, 0, 1) 62.5%,
+rgba(0, 0, 0, 1) 75%,
+rgba(0, 0, 0, 0) 87.5%);
+}
+.gradient-blur>div:nth-of-type(5) {
+z-index: 6;
+backdrop-filter: blur(16px);
+mask: linear-gradient(to top,
+rgba(0, 0, 0, 0) 62.5%,
+rgba(0, 0, 0, 1) 75%,
+rgba(0, 0, 0, 1) 87.5%,
+rgba(0, 0, 0, 0) 100%);
+}
+.gradient-blur>div:nth-of-type(6) {
+z-index: 7;
+backdrop-filter: blur(32px);
+mask: linear-gradient(to top,
+rgba(0, 0, 0, 0) 75%,
+rgba(0, 0, 0, 1) 87.5%,
+rgba(0, 0, 0, 1) 100%);
+}
+.gradient-blur::after {
+content: "";
+z-index: 8;
+backdrop-filter: blur(64px);
+mask: linear-gradient(to top,
+rgba(0, 0, 0, 0) 87.5%,
+rgba(0, 0, 0, 1) 100%);
+}
+.btn-53,
+.btn-53 *,
+.btn-53 :after,
+.btn-53 :before,
+.btn-53:after,
+.btn-53:before {
+border: 0 solid;
+box-sizing: border-box;
+}
+/* base reset */
+.btn-53 {
+-webkit-tap-highlight-color: transparent;
+-webkit-appearance: button;
+background-image: none;
+cursor: pointer;
+font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+Roboto, "Helvetica Neue", Arial, sans-serif;
+font-size: 100%;
+line-height: 1.5;
+margin: 0;
+-webkit-mask-image: -webkit-radial-gradient(#000, #fff);
+padding: 0;
+}
+.btn-53:disabled {
+cursor: default;
+}
+.btn-53 svg {
+display: block;
+vertical-align: middle;
+}
+.btn-53 [hidden] {
+display: none;
+}
+/* pill button look */
+.btn-53 {
+border: 1px solid #d7d7d7;
+border-radius: 999px;
+display: block;
+font-weight: 900;
+overflow: hidden;
+padding: 1.1rem 3rem;
+position: relative;
+text-transform: uppercase;
+background-color: #ffffff; /* background under the sliding layer */
+color: #000;
+}
+/* top layer text */
+.btn-53 .original {
+background: #ffffff;
+color: #000000;
+display: grid;
+inset: 0;
+place-content: center;
+position: absolute;
+transition: transform 0.25s cubic-bezier(0.87, 0, 0.13, 1);
+}
+/* slide the original label down on hover */
+.btn-53:hover .original {
+transform: translateY(100%);
+}
+/* letters underneath */
+.btn-53 .letters {
+display: inline-flex;
+gap: 0.05em;
+}
+.btn-53 span {
+opacity: 0;
+transform: translateY(-15px);
+transition:
+transform 0.25s cubic-bezier(0.87, 0, 0.13, 1),
+opacity 0.25s;
+color: #000;
+}
+/* alternate direction for every second letter */
+.btn-53 span:nth-child(2n) {
+transform: translateY(15px);
+}
+/* reveal letters on hover */
+.btn-53:hover span {
+opacity: 1;
+transform: translateY(0);
+}
+/* staggered delays for each letter of "START FREE" */
+.btn-53:hover span:nth-child(2) { transition-delay: 0.05s; }
+.btn-53:hover span:nth-child(3) { transition-delay: 0.10s; }
+.btn-53:hover span:nth-child(4) { transition-delay: 0.15s; }
+.btn-53:hover span:nth-child(5) { transition-delay: 0.20s; }
+.btn-53:hover span:nth-child(6) { transition-delay: 0.25s; }
+.btn-53:hover span:nth-child(7) { transition-delay: 0.30s; }
+.btn-53:hover span:nth-child(8) { transition-delay: 0.35s; }
+.btn-53:hover span:nth-child(9) { transition-delay: 0.40s; }
+</style>
+<link id="all-fonts-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist">.font-geist { font-family: 'Geist', sans-serif !important; }</style><link id="all-fonts-link-font-roboto" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-roboto">.font-roboto { font-family: 'Roboto', sans-serif !important; }</style><link id="all-fonts-link-font-montserrat" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-montserrat">.font-montserrat { font-family: 'Montserrat', sans-serif !important; }</style><link id="all-fonts-link-font-poppins" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-poppins">.font-poppins { font-family: 'Poppins', sans-serif !important; }</style><link id="all-fonts-link-font-playfair" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&amp;display=swap"><style id="all-fonts-style-font-playfair">.font-playfair { font-family: 'Playfair Display', serif !important; }</style><link id="all-fonts-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-instrument-serif">.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }</style><link id="all-fonts-link-font-merriweather" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;display=swap"><style id="all-fonts-style-font-merriweather">.font-merriweather { font-family: 'Merriweather', serif !important; }</style><link id="all-fonts-link-font-bricolage" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-bricolage">.font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }</style><link id="all-fonts-link-font-jakarta" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-jakarta">.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }</style><link id="all-fonts-link-font-manrope" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-manrope">.font-manrope { font-family: 'Manrope', sans-serif !important; }</style><link id="all-fonts-link-font-space-grotesk" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-space-grotesk">.font-space-grotesk { font-family: 'Space Grotesk', sans-serif !important; }</style><link id="all-fonts-link-font-work-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-work-sans">.font-work-sans { font-family: 'Work Sans', sans-serif !important; }</style><link id="all-fonts-link-font-pt-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-pt-serif">.font-pt-serif { font-family: 'PT Serif', serif !important; }</style><link id="all-fonts-link-font-geist-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist-mono">.font-geist-mono { font-family: 'Geist Mono', monospace !important; }</style><link id="all-fonts-link-font-space-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-space-mono">.font-space-mono { font-family: 'Space Mono', monospace !important; }</style><link id="all-fonts-link-font-quicksand" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-quicksand">.font-quicksand { font-family: 'Quicksand', sans-serif !important; }</style><link id="all-fonts-link-font-nunito" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-nunito">.font-nunito { font-family: 'Nunito', sans-serif !important; }
+.progressive-blur::before {
+content: "";
+position: absolute;
+inset: 0;
+backdrop-filter: blur(20px); /* strong blur */
+mask-image: linear-gradient(
+to right,
+rgba(0,0,0,1) 0%,
+rgba(0,0,0,0.4) 30%,
+rgba(0,0,0,0.1) 50%,
+rgba(0,0,0,0.4) 70%,
+rgba(0,0,0,1) 100%
+);
+-webkit-mask-image: radial-gradient(circle at center, black 20%, transparent 70%);
+pointer-events: none;
+z-index: -1;
+}
+</style></head>
+  <body class="antialiased text-white bg-black" style="font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji">
+<div id="wrapper">
+ 
+  <!--
+  Progress blur from bottom. Usage:
+  
+  1) Insert this code in the <body>
+  !-->
+  <div class="gradient-blur">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <style>
+    .gradient-blur {
+      position: fixed;
+      z-index: 5;
+      inset: auto 0 0 0;
+      height: 65%;
+      pointer-events: none;
+    }
+
+    .gradient-blur>div,
+    .gradient-blur::before,
+    .gradient-blur::after {
+      position: absolute;
+      inset: 0;
+    }
+
+    .gradient-blur::before {
+      content: "";
+      z-index: 1;
+      backdrop-filter: blur(0.5px);
+      mask: linear-gradient(to bottom,
+          rgba(0, 0, 0, 0) 0%,
+          rgba(0, 0, 0, 1) 12.5%,
+          rgba(0, 0, 0, 1) 25%,
+          rgba(0, 0, 0, 0) 37.5%);
+    }
+
+    .gradient-blur>div:nth-of-type(1) {
+      z-index: 2;
+      backdrop-filter: blur(1px);
+      mask: linear-gradient(to bottom,
+          rgba(0, 0, 0, 0) 12.5%,
+          rgba(0, 0, 0, 1) 25%,
+          rgba(0, 0, 0, 1) 37.5%,
+          rgba(0, 0, 0, 0) 50%);
+    }
+
+    .gradient-blur>div:nth-of-type(2) {
+      z-index: 3;
+      backdrop-filter: blur(2px);
+      mask: linear-gradient(to bottom,
+          rgba(0, 0, 0, 0) 25%,
+          rgba(0, 0, 0, 1) 37.5%,
+          rgba(0, 0, 0, 1) 50%,
+          rgba(0, 0, 0, 0) 62.5%);
+    }
+
+    .gradient-blur>div:nth-of-type(3) {
+      z-index: 4;
+      backdrop-filter: blur(4px);
+      mask: linear-gradient(to bottom,
+          rgba(0, 0, 0, 0) 37.5%,
+          rgba(0, 0, 0, 1) 50%,
+          rgba(0, 0, 0, 1) 62.5%,
+          rgba(0, 0, 0, 0) 75%);
+    }
+
+    .gradient-blur>div:nth-of-type(4) {
+      z-index: 5;
+      backdrop-filter: blur(8px);
+      mask: linear-gradient(to bottom,
+          rgba(0, 0, 0, 0) 50%,
+          rgba(0, 0, 0, 1) 62.5%,
+          rgba(0, 0, 0, 1) 75%,
+          rgba(0, 0, 0, 0) 87.5%);
+    }
+
+    .gradient-blur>div:nth-of-type(5) {
+      z-index: 6;
+      backdrop-filter: blur(16px);
+      mask: linear-gradient(to bottom,
+          rgba(0, 0, 0, 0) 62.5%,
+          rgba(0, 0, 0, 1) 75%,
+          rgba(0, 0, 0, 1) 87.5%,
+          rgba(0, 0, 0, 0) 100%);
+    }
+
+    .gradient-blur>div:nth-of-type(6) {
+      z-index: 7;
+      backdrop-filter: blur(32px);
+      mask: linear-gradient(to bottom,
+          rgba(0, 0, 0, 0) 75%,
+          rgba(0, 0, 0, 1) 87.5%,
+          rgba(0, 0, 0, 1) 100%);
+    }
+
+    .gradient-blur::after {
+      content: "";
+      z-index: 8;
+      backdrop-filter: blur(64px);
+      mask: linear-gradient(to bottom,
+          rgba(0, 0, 0, 0) 87.5%,
+          rgba(0, 0, 0, 1) 100%);
+    }
+  /* ---------- Trusted logos ---------- */
+  
+  /* Hover tilt wrapper */
+  .logo-tilt {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 900px;
+  transform-style: preserve-3d;
+  transition: transform 350ms ease, box-shadow 350ms ease;
+  }
+  
+  .logo-tilt:hover {
+  transform: rotateX(8deg) rotateY(-8deg) translateY(-2px);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.6);
+  }
+  
+  /* 3D flip core */
+  .logo-flip {
+  position: relative;
+  width: 140px;
+  height: 40px;
+  transform-style: preserve-3d;
+  transform-origin: center;
+  }
+  
+  /* Faces */
+  .logo-flip::before,
+  .logo-flip::after {
+  content: attr(data-front);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 1.35rem;
+  backface-visibility: hidden;
+  }
+  
+  /* Back face uses data-back */
+  .logo-flip::after {
+  content: attr(data-back);
+  transform: rotateX(180deg);
+  opacity: 0.85;
+  }
+  
+  /* Flip animation (added with JS via .logo-flip-active) */
+  @keyframes flipLogo {
+  0% { transform: rotateX(0deg); }
+  45% { transform: rotateX(180deg); }
+  50% { transform: rotateX(180deg); }
+  95% { transform: rotateX(360deg); }
+  100% { transform: rotateX(360deg); }
+  }
+  
+  .logo-flip-active {
+  animation: flipLogo 4s linear infinite;
+  }
+  
+  /* Staggered delays for each logo */
+  .logo-delay-200 { animation-delay: 0.2s; }
+  .logo-delay-400 { animation-delay: 0.4s; }
+  .logo-delay-600 { animation-delay: 0.6s; }
+  
+  /* ---------- Testimonials scrolling columns ---------- */
+  @keyframes testimonialsUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+  }
+  
+  @keyframes testimonialsDown {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0); }
+  }
+  
+  .animate-testimonials-up {
+  animation: testimonialsUp 30s linear infinite;
+  }
+  
+  .animate-testimonials-down {
+  animation: testimonialsDown 30s linear infinite;
+  }
+  /* ===== Trusted logos: vertical slot / cube-like spin ===== */
+
+.logo-slot {
+  position: relative;
+  width: 160px;
+  height: 40px;
+  overflow: hidden;
+  perspective: 900px;
+  transform-style: preserve-3d;
+}
+
+/* Track that moves up/down */
+.logo-track {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  transform-style: preserve-3d;
+  animation: logoSlot 4s ease-in-out infinite;
+}
+
+/* Each logo face */
+.logo-track span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.3rem;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  transform: translateZ(0);
+}
+
+/* 3D-ish vertical spin with blur mid-way */
+@keyframes logoSlot {
+  0% {
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+    opacity: 1;
+  }
+  20% {
+    transform: translate3d(0, -50%, 40px);
+    filter: blur(3px);
+    opacity: 0.8;
+  }
+  25% {
+    transform: translate3d(0, -100%, 0);
+    filter: blur(0);
+    opacity: 1;
+  }
+  45% {
+    transform: translate3d(0, -100%, 0);
+    filter: blur(0);
+  }
+  65% {
+    transform: translate3d(0, -50%, 40px);
+    filter: blur(3px);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+
+/* Small staggering so logos don’t flip all at once */
+.logo-delay-0   { animation-delay: 0s; }
+.logo-delay-200 { animation-delay: 0.2s; }
+.logo-delay-400 { animation-delay: 0.4s; }
+.logo-delay-600 { animation-delay: 0.6s; }
+
+/* === We ship cards: scroll-in + glow === */
+.changelog-card {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s ease-out,
+    transform 0.7s ease-out,
+    box-shadow 0.4s ease-out,
+    border-color 0.4s ease-out,
+    background-color 0.4s ease-out;
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+}
+
+.changelog-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.changelog-card:hover {
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.9),
+              0 0 30px rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* === CTA: particle streaks === */
+.cta-shell {
+  position: relative;
+}
+
+.cta-particles {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(255,255,255,0.16) 0, transparent 45%),
+    radial-gradient(circle at 80% 0%, rgba(255,255,255,0.12) 0, transparent 50%),
+    linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.18) 40%, transparent 60%);
+  opacity: 0.12;
+  transform: translate3d(0,0,0);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: ctaDrift 14s linear infinite;
+}
+
+@keyframes ctaDrift {
+  0% {
+    transform: translate3d(-4%, -4%, 0);
+  }
+  50% {
+    transform: translate3d(4%, 4%, 0);
+  }
+  100% {
+    transform: translate3d(-4%, -4%, 0);
+  }
+}
+
+/* === Footer logo: 3D hover === */
+.footer-logo {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 0.875rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  overflow: hidden;
+  perspective: 900px;
+  transform-style: preserve-3d;
+}
+
+.footer-logo-inner {
+  width: 100%;
+  height: 100%;
+  transform-origin: center;
+  transition:
+    transform 0.4s ease-out,
+    box-shadow 0.4s ease-out,
+    filter 0.4s ease-out;
+}
+
+.footer-logo:hover .footer-logo-inner {
+  transform: rotateX(10deg) rotateY(-10deg) scale(1.03) translateY(-2px);
+  box-shadow: 0 26px 70px rgba(0,0,0,0.9);
+  filter: saturate(1.2);
+}
+  
+/* ===== Subtle animated grid band behind sections ===== */
+
+.grid-divider-band {
+position: relative;
+overflow: hidden;
+}
+
+.grid-divider-band::before {
+content: "";
+position: absolute;
+inset: 0;
+pointer-events: none;
+opacity: 0.28;
+mix-blend-mode: screen;
+background-image:
+repeating-linear-gradient(
+to right,
+rgba(255, 255, 255, 0.04) 0,
+rgba(255, 255, 255, 0.04) 1px,
+transparent 1px,
+transparent 64px
+),
+repeating-linear-gradient(
+to bottom,
+rgba(255, 255, 255, 0.04) 0,
+rgba(255, 255, 255, 0.04) 1px,
+transparent 1px,
+transparent 64px
+);
+transform: translate3d(0,0,0);
+animation: gridDrift 24s linear infinite;
+}
+
+@keyframes gridDrift {
+0% { transform: translate3d(-32px, 0, 0); }
+50% { transform: translate3d(32px, 16px, 0); }
+100% { transform: translate3d(-32px, 0, 0); }
+}
+.footer-watermark {
+z-index: 10;
+}
+  
+  </style>
+</div>
+
+
+
+
+    <!-- Navigation -->
+    <header class="sticky z-30 border-white/10 border-b top-0">
+      
+        <div class="flex pt-5 pr-5 pb-5 pl-5 relative backdrop-blur-md items-center justify-between">
+          <!-- Logo -->
+          <div class="flex items-center gap-3">
+            
+            <a href="#" class="inline-flex items-center justify-center bg-center w-[100px] h-[40px] bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/59ee738f-e8f2-448b-8db3-ee56f4748818_1600w.png)] bg-cover rounded" style=""></a>
+          </div>
+
+          <!-- Center Nav -->
+          <nav class="hidden md:flex items-center gap-2">
+            <a href="#" class="px-3 py-1.5 rounded-full text-sm font-medium text-white/70 hover:text-white bg-white/5 hover:bg-white/10 transition">Pricing</a>
+            <a href="#" class="px-3 py-1.5 rounded-full text-sm font-medium text-white/70 hover:text-white bg-white/5 hover:bg-white/10 transition">Changelog</a>
+            <a href="#" class="px-3 py-1.5 rounded-full text-sm font-medium text-white/70 hover:text-white bg-white/5 hover:bg-white/10 transition">Customers</a>
+            <a href="#" class="px-3 py-1.5 rounded-full text-sm font-medium text-white/70 hover:text-white bg-white/5 hover:bg-white/10 transition">Contact</a>
+          </nav>
+
+          <!-- CTA -->
+          <div class="flex items-center gap-3">
+            <button class="inline-flex gap-2 hover:bg-white/90 transition text-sm font-semibold text-black tracking-tight bg-white rounded-full pt-2 pr-4 pb-2 pl-4 gap-x-2 gap-y-2 items-center">Get Astria</button>
+          </div>
+        </div>
+      
+    </header>
+
+    <!-- Hero -->
+    <section class="relative" ;"="">
+      <div class="-z-10 overflow-hidden mb-0 absolute top-0 right-0 bottom-0 left-0">
+        
+        <svg class="absolute inset-0 opacity-[0.08]" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+              <path d="M32 0H0V32" fill="none" stroke="white" stroke-width="0.5"></path>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid)" class=""></rect>
+        </svg>
+      </div>
+
+      <div class="sm:px-6 lg:px-8 max-w-7xl mr-auto ml-auto pr-4 pl-4" style="mask-image: linear-gradient(180deg, transparent, black 70%, black 100%, transparent); -webkit-mask-image: linear-gradient(180deg, transparent, black 70%, black 100%, transparent);">
+        <!-- Announcement -->
+        <div class="flex justify-center">
+          <span class="inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-white/70 ring-1 ring-white/10">
+            <span class="inline-flex items-center justify-center rounded-full bg-emerald-400/20 text-emerald-300 px-1.5 py-0.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="sparkles" class="lucide lucide-sparkles h-3.5 w-3.5"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg>
+            </span>
+            NEW: Orbit — Multi‑Agent Runtime
+            <a href="#" class="underline decoration-dotted decoration-white/30 underline-offset-2 text-white/80 hover:text-white">See what’s new</a>
+          </span>
+        </div>
+
+        <!-- Card with patterned backdrop -->
+        <div class="overflow-hidden bg-neutral-950 ring-white/10 ring-1 rounded-3xl mt-8">
+          <div class="isolate sm:px-10 sm:pt-20 sm:pb-16 md:pt-24 md:pb-20 pt-16 pr-6 pb-14 pl-6 relative"><div class="pointer-events-none absolute top-0 right-0 bottom-0 left-0" data-container-bg="true"><div data-us-project="PFOu1U4uozSRWA5TSUcD" class="absolute w-full h-full left-0 top-0 -z-10"></div>
+<script type="text/javascript">
+  !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.34/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head || document.body).appendChild(i)}}();
+</script></div>
+            <!-- Pattern + image layer -->
+            <div class="pointer-events-none absolute inset-0 -z-10">
+              <img src="default" alt="" class="h-full w-full object-cover opacity-[0.15] mix-blend-screen" style="">
+              <svg class="absolute inset-0 opacity-30" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse">
+                    <circle cx="1.5" cy="1.5" r="1.5" fill="#93c5fd"></circle>
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#dots)"></rect>
+              </svg>
+              <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/60"></div>
+            </div>
+
+            <!-- Content -->
+            <div class="mx-auto max-w-3xl text-center">
+              <h1 class="text-4xl sm:text-6xl md:text-7xl font-semibold tracking-tight">
+                Turn agent teams into your unfair advantage
+              </h1>
+              <p class="sm:text-lg text-base text-white/70 mt-5">Astria automates the busywork across product, growth, and support. Ship faster, reduce toil, and keep humans in the loop only when it matters.</p>
+
+              <!-- Wrapper just to match the screenshot background (Tailwind) -->
+<div class="flex mt-8 gap-x-3 gap-y-3 items-center justify-center">
+  <button class="btn-53">
+    <div class="original">Start Free</div>
+
+    <div class="letters">
+      <span class="">S</span>
+      <span class="">T</span>
+      <span class="">A</span>
+      <span class="">R</span>
+      <span class="">T</span>
+      <span class="">F</span>
+      <span class="">R</span>
+      <span class="">E</span>
+      <span class="">E</span>
+    </div>
+  </button>
+  <a href="#" class="inline-flex items-center gap-2 sm:text-base hover:text-white hover:bg-white/10 transition text-sm font-medium text-white/80 bg-white/5 rounded-full ring-white/10 ring-1 pt-4 pr-5 pb-4 pl-5 backdrop-blur-md">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="play" class="lucide lucide-play h-5 w-5"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg>
+                  See it in action
+                </a>
+</div>
+
+
+              <div class="mt-5 text-xs text-white/50">
+                No credit card • 14‑day trial • Cancel anytime
+              </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 text-center mt-12 gap-x-6 gap-y-6">
+              <div class="flex flex-col items-center">
+                <div class="flex items-center gap-2 text-white/80">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" class="lucide lucide-check-circle h-4 w-4 text-emerald-300"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg>
+                  <span class="text-sm font-medium">Teams onboarded</span>
+                </div>
+                <div class="mt-1 text-2xl sm:text-3xl font-semibold tracking-tight">12,482</div>
+              </div>
+              <div class="flex flex-col items-center">
+                <div class="flex items-center gap-2 text-white/80">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="workflow" class="lucide lucide-workflow h-4 w-4 text-cyan-300"><rect width="8" height="8" x="3" y="3" rx="2"></rect><path d="M7 11v4a2 2 0 0 0 2 2h4"></path><rect width="8" height="8" x="13" y="13" rx="2"></rect></svg>
+                  <span class="text-sm font-medium">Tasks automated</span>
+                </div>
+                <div class="mt-1 text-2xl sm:text-3xl font-semibold tracking-tight">8.6M</div>
+              </div>
+              <div class="flex flex-col items-center">
+                <div class="flex items-center gap-2 text-white/80">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="clock" class="lucide lucide-clock lucide-gauge w-[16px] h-[16px]" data-icon-set="lucide" data-icon-replaced="true" style="color: rgb(165, 180, 252); width: 16px; height: 16px;"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="10"></circle></svg>
+                  <span class="text-sm font-medium">Avg. time saved</span>
+                </div>
+                <div class="mt-1 text-2xl sm:text-3xl font-semibold tracking-tight">37%</div>
+              </div>
+              <div class="flex flex-col items-center">
+                <div class="flex items-center gap-2 text-white/80">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shield-check" class="lucide lucide-shield-check h-4 w-4 text-fuchsia-300"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>
+                  <span class="text-sm font-medium">Uptime</span>
+                </div>
+                <div class="mt-1 text-2xl sm:text-3xl font-semibold tracking-tight">99.985%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trust bar -->
+        
+      
+    </div></section><div class="premium-divider-horizontal"></div>
+    
+    
+    <section class="pt-20 pb-20 relative">
+  <div class="absolute inset-0 -z-10 overflow-hidden">
+    <svg class="absolute inset-0 opacity-[0.08]" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+          <path d="M32 0H0V32" fill="none" stroke="white" stroke-width="0.5"></path>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grid)"></rect>
+    </svg>
+  </div>
+
+  <div class="sm:px-6 lg:px-8 max-w-7xl mr-auto ml-auto pr-4 pl-4">
+
+    <!-- Trust logos row -->
+    
+
+    <!-- Feature video block (self-contained) -->
+    <div data-module="feature-video" class="relative mt-8 overflow-hidden rounded-3xl ring-1 ring-white/10 bg-neutral-950">
+      
+
+      <!-- Play overlay -->
+      
+      <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/50">
+      </div>
+
+      <!-- Local scripts for this module -->
+      <script src="https://unpkg.com/lucide@latest"></script>
+      <script>
+        (function () {
+          const root = document.currentScript.closest('[data-module="feature-video"]');
+          const video = root.querySelector('video');
+          const playBtn = root.querySelector('[data-play]');
+          function initIcons() { try { window.lucide && window.lucide.createIcons(); } catch(e){} }
+          if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initIcons); else initIcons();
+
+          playBtn.addEventListener('click', () => {
+            playBtn.classList.add('hidden');
+            video.setAttribute('controls', '');
+            const playPromise = video.play();
+            if (playPromise && typeof playPromise.catch === 'function') {
+              playPromise.catch(() => { /* autoplay blocked; leave controls visible */ });
+            }
+          });
+        })();
+      </script>
+    </div>
+
+    <div class="relative">
+
+      <!-- top divider -->
+      
+
+      <!-- bottom divider -->
+      
+
+      <!-- vertical left -->
+      <div class="absolute top-0 bottom-0 left-0 w-[1px] bg-[url('/grid-line.svg')] opacity-20" style=""></div>
+
+      <!-- vertical right -->
+      <div class="absolute top-0 bottom-0 right-0 w-[1px] bg-[url('/grid-line.svg')] opacity-20" style=""></div>
+
+    </div>
+
+    <!-- Feature grid section -->
+    <section class="mt-16">
+      
+
+      <div class="sm:px-6 lg:px-8 max-w-6xl mr-auto ml-auto pt-12 pr-4 pb-12 pl-4">
+        <div class="grid gap-8 lg:grid-cols-2 relative">
+
+          <!-- Left card -->
+          <article class="flex flex-col overflow-hidden bg-black/60 border-white/10 border pt-10 pr-8 pb-8 pl-8 relative justify-between">
+            <div class="">
+              <!-- Label -->
+              <div class="inline-flex items-center gap-2 text-sm text-white/60 mb-4">
+                <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/5 border border-white/10">
+              <span class="h-2.5 w-2.5 border border-white/50"></span>
+                </span>
+                <span class="">Adaptive Flow Engine</span>
+              </div>
+
+              <!-- Heading -->
+              <h3 class="sm:text-3xl text-2xl font-semibold text-white tracking-tight mb-3">Deploy Intelligent Apps Faster Than Ever.</h3>
+
+              <!-- Copy -->
+              <p class="sm:text-base text-sm text-white/60 max-w-md">Deliver intelligent, context-aware experiences that evolve with user behavior. Our adaptive pipeline architecture responds in real time, automatically optimizing workflows based on changing demands and usage patterns.</p>
+            </div>
+
+            <!-- Animated Schema Artwork -->
+            <div class="mt-10 relative h-64 flex items-center justify-center">
+              <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                <!-- Animated grid lines -->
+                <defs>
+                  <pattern id="grid-left" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"></path>
+                  </pattern>
+                  
+                </defs>
+                
+                <rect width="400" height="300" fill="url(#grid-left)" opacity="0.3" class=""></rect>
+                
+                <!-- Central node -->
+                <circle cx="200" cy="150" r="25" fill="rgba(217,70,239,0.2)" stroke="rgb(217,70,239)" stroke-width="2">
+                  <animate attributeName="r" values="25;28;25" dur="2s" repeatCount="indefinite"></animate>
+                </circle>
+                <circle cx="200" cy="150" r="12" fill="rgb(217,70,239)" opacity="0.8" class=""></circle>
+                
+                <!-- Connecting lines with pulse animation -->
+                <line x1="200" y1="150" x2="100" y2="80" stroke="url(#pulse-gradient-1)" stroke-width="2" opacity="0.6"></line>
+                <line x1="200" y1="150" x2="300" y2="80" stroke="url(#pulse-gradient-1)" stroke-width="2" opacity="0.6" style="animation-delay: 0.5s"></line>
+                <line x1="200" y1="150" x2="100" y2="220" stroke="url(#pulse-gradient-1)" stroke-width="2" opacity="0.6" style="animation-delay: 1s"></line>
+                <line x1="200" y1="150" x2="300" y2="220" stroke="url(#pulse-gradient-1)" stroke-width="2" opacity="0.6" style="animation-delay: 1.5s"></line>
+                
+                <!-- Outer nodes -->
+                <circle cx="100" cy="80" r="15" fill="rgba(139,92,246,0.2)" stroke="rgb(139,92,246)" stroke-width="1.5">
+                  <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"></animate>
+                </circle>
+                <circle cx="300" cy="80" r="15" fill="rgba(56,189,248,0.2)" stroke="rgb(56,189,248)" stroke-width="1.5" class="">
+                  <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite" begin="0.5s"></animate>
+                </circle>
+                <circle cx="100" cy="220" r="15" fill="rgba(52,211,153(52,211,153)" stroke-width="1.5" class="">
+                  <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite" begin="1s"></animate>
+                </circle>
+                <circle cx="300" cy="220" r="15" fill="rgba(251,146,60,0.2)" stroke="rgb(251,146,60)" stroke-width="1.5" class="">
+                  <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite" begin="1.5s"></animate>
+                </circle>
+                
+                <!-- Floating particles -->
+                <circle cx="150" cy="100" r="2" fill="rgb(217,70,239)" opacity="0.6">
+                  
+                </circle>
+                <circle cx="250" cy="180" r="2" fill="rgb(139,92,246)" opacity="0.6">
+                  
+                </circle>
+              </svg>
+            </div>
+          </article>
+
+          <!-- Right card -->
+          <article class="flex flex-col lg:-ml-px overflow-hidden bg-black/60 border-white/10 border pt-10 pr-8 pb-8 pl-8 relative justify-between">
+            <div class="">
+              <!-- Label -->
+              <div class="inline-flex items-center gap-2 text-sm text-white/60 mb-4">
+                <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/5 border border-white/10">
+              <span class="h-2 w-3 border-t border-r border-white/50 -rotate-12 translate-y-[1px]"></span>
+                </span>
+                <span class="">Vector Compute Layer</span>
+              </div>
+
+              <!-- Heading -->
+              <h3 class="sm:text-3xl text-2xl font-semibold text-white tracking-tight mb-3">Precision Built For Massive Scale.</h3>
+
+              <!-- Copy -->
+              <p class="sm:text-base text-sm text-white/60 max-w-md">Run high-performance applications with real-time vector matching engineered for accuracy, reliability, and speed.</p>
+            </div>
+
+            <!-- Animated Schema Artwork -->
+            <div class="mt-10 relative h-64 flex items-center justify-center">
+              <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="grid-right-vector" width="12" height="12" patternUnits="userSpaceOnUse">
+                    <circle cx="1" cy="1" r="0.8" fill="rgba(56,189,248,0.15)"></circle>
+                  </pattern>
+                  
+                  
+                </defs>
+                
+                <rect width="400" height="300" fill="url(#grid-right-vector)" opacity="0.5" class=""></rect>
+                
+                <!-- Central vector hub -->
+                <circle cx="200" cy="150" r="35" fill="rgba(217,70,239,0.2)" stroke="rgb(217,70,239)" stroke-width="2">
+                  <animate attributeName="r" values="35;38;35" dur="2.5s" repeatCount="indefinite"></animate>
+                </circle>
+                <circle cx="200" cy="150" r="18" fill="rgb(217,70,239)" opacity="0.9">
+                  <animate attributeName="opacity" values="0.9;1;0.9" dur="2s" repeatCount="indefinite"></animate>
+                </circle>
+                
+                <!-- Vector dimension lines radiating outward -->
+                <line x1="200" y1="150" x2="280" y2="150" stroke="url(#vector-gradient-1)" stroke-width="2.5" opacity="0.7">
+                  <animate attributeName="x2" values="280;290;280" dur="2s" repeatCount="indefinite"></animate>
+                </line>
+                <line x1="200" y1="150" x2="120" y2="150" stroke="url(#vector-gradient-1)" stroke-width="2.5" opacity="0.7">
+                  <animate attributeName="x2" values="120;110;120" dur="2s" repeatCount="indefinite" begin="0.3s"></animate>
+                </line>
+                <line x1="200" y1="150" x2="200" y2="230" stroke="url(#vector-gradient-2)" stroke-width="2.5" opacity="0.7">
+                  <animate attributeName="y2" values="230;240;230" dur="2s" repeatCount="indefinite" begin="0.6s"></animate>
+                </line>
+                <line x1="200" y1="150" x2="200" y2="70" stroke="url(#vector-gradient-2)" stroke-width="2.5" opacity="0.7">
+                  <animate attributeName="y2" values="70;60;70" dur="2s" repeatCount="indefinite" begin="0.9s"></animate>
+                </line>
+                
+                <!-- Diagonal vector paths -->
+                <line x1="200" y1="150" x2="260" y2="90" stroke="rgb(139,92,246)" stroke-width="2" opacity="0.6">
+                  <animate attributeName="opacity" values="0.6;0.9;0.6" dur="2.5s" repeatCount="indefinite"></animate>
+                </line>
+                <line x1="200" y1="150" x2="140" y2="210" stroke="rgb(56,189,248)" stroke-width="2" opacity="0.6" class="">
+                  <animate attributeName="opacity" values="0.6;0.9;0.6" dur="2.5s" repeatCount="indefinite" begin="0.5s"></animate>
+                </line>
+                <line x1="200" y1="150" x2="260" y2="210" stroke="rgb(217,70,239)" stroke-width="2" opacity="0.6">
+                  <animate attributeName="opacity" values="0.6;0.9;0.6" dur="2.5s" repeatCount="indefinite" begin="1s"></animate>
+                </line>
+                <line x1="200" y1="150" x2="140" y2="90" stroke="rgb(56,189,248)" stroke-width="2" opacity="0.6">
+                  <animate attributeName="opacity" values="0.6;0.9;0.6" dur="2.5s" repeatCount="indefinite" begin="1.5s"></animate>
+                </line>
+                
+                <!-- Vector endpoint nodes -->
+                <circle cx="280" cy="150" r="8" fill="rgba(139,92,246,0.3)" stroke="rgb(139,92,246)" stroke-width="1.5">
+                  <animate attributeName="r" values="8;10;8" dur="2s" repeatCount="indefinite"></animate>
+                </circle>
+                <circle cx="120" cy="150" r="8" fill="rgba(56,189,248,0.3)" stroke="rgb(56,189,248)" stroke-width="1.5">
+                  <animate attributeName="r" values="8;10;8" dur="2s" repeatCount="indefinite" begin="0.3s"></animate>
+                </circle>
+                <circle cx="200" cy="230" r="8" fill="rgba(217,70,239,0.3)" stroke="rgb(217,70,239)" stroke-width="1.5">
+                  <animate attributeName="r" values="8;10;8" dur="2s" repeatCount="indefinite" begin="0.6s"></animate>
+                </circle>
+                <circle cx="200" cy="70" r="8" fill="rgba(56,189,248,0.3)" stroke="rgb(56,189,248)" stroke-width="1.5">
+                  <animate attributeName="r" values="8;10;8" dur="2s" repeatCount="indefinite" begin="0.9s"></animate>
+                </circle>
+                
+                <!-- Floating vector data particles -->
+                <circle cx="240" cy="120" r="3" fill="rgb(139,92,246)" opacity="0.8">
+                  <animate attributeName="cx" values="240;200;240" dur="3s" repeatCount="indefinite"></animate>
+                  <animate attributeName="cy" values="120;150;120" dur="3s" repeatCount="indefinite"></animate>
+                </circle>
+                <circle cx="160" cy="180" r="3" fill="rgb(56,189,248)" opacity="0.8">
+                  <animate attributeName="cx" values="160;200;160" dur="3s" repeatCount="indefinite" begin="0.5s"></animate>
+                  <animate attributeName="cy" values="180;150;180" dur="3s" repeatCount="indefinite" begin="0.5s"></animate>
+                </circle>
+                <circle cx="220" cy="190" r="3" fill="rgb(217,70,239)" opacity="0.8">
+                  <animate attributeName="cx" values="220;200;220" dur="3s" repeatCount="indefinite" begin="1s"></animate>
+                  <animate attributeName="cy" values="190;150;190" dur="3s" repeatCount="indefinite" begin="1s"></animate>
+                </circle>
+                <circle cx="180" cy="110" r="3" fill="rgb(56,189,248)" opacity="0.8">
+                  <animate attributeName="cx" values="180;200;180" dur="3s" repeatCount="indefinite" begin="1.5s"></animate>
+                  <animate attributeName="cy" values="110;150;110" dur="3s" repeatCount="indefinite" begin="1.5s"></animate>
+                </circle>
+                
+                <!-- Pulsing accuracy rings -->
+                <circle cx="200" cy="150" r="50" fill="none" stroke="rgba(217,70,239,0.3)" stroke-width="1">
+                  <animate attributeName="r" values="50;65;50" dur="3s" repeatCount="indefinite"></animate>
+                  <animate attributeName="opacity" values="0.3;0;0.3" dur="3s" repeatCount="indefinite"></animate>
+                </circle>
+                <circle cx="200" cy="150" r="70" fill="none" stroke="rgba(56,189,248,0.3)" stroke-width="1" class="">
+                  <animate attributeName="r" values="70;85;70" dur="3s" repeatCount="indefinite" begin="0.5s"></animate>
+                  <animate attributeName="opacity" values="0.3;0;0.3" dur="3s" repeatCount="indefinite" begin="0.5s"></animate>
+                </circle>
+              </svg>
+            </div>
+          </article>
+
+          <!-- Vertical divider (center line) -->
+          <div class="hidden lg:block absolute inset-y-4 left-1/2 w-px bg-white/5"></div>
+        </div>
+      </div>
+    </section>
+    <!-- Two feature cards -->
+
+
+  </div>
+</section>
+
+<!-- Move faster / 2 feature blocks section -->
+<section class="mt-24">
+  <div class="sm:px-6 lg:px-8 max-w-6xl mr-auto ml-auto pr-4 pl-4">
+    <div class="border border-white/10 bg-black">
+
+      <!-- Title grid row -->
+      <div class="grid grid-cols-3 divide-x divide-white/10">
+        <div class=""></div>
+
+        <div class="flex items-center justify-center py-10 px-6">
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-white text-center">
+            Move faster. Think bigger.
+          </h2>
+        </div>
+
+        <div class=""></div>
+      </div>
+
+      <!-- ROW 1 – floating card stack -->
+      <div class="border-t border-white/10">
+        <div class="grid lg:grid-cols-2 lg:divide-x lg:divide-white/10">
+          <!-- Text column -->
+          <div class="px-8 py-12 flex items-center">
+            <div class="">
+              <h3 class="text-2xl sm:text-3xl font-semibold tracking-tight text-white mb-4">
+                Track how your agents use tokens, in real time.
+              </h3>
+              <p class="sm:text-base text-sm text-white/60 max-w-md">Gain full visibility into prompt, completion, and tool calls for every Astria agent. See token usage, latency, and outcomes at a glance while everything runs live in production.</p>
+            </div>
+          </div>
+
+        <!-- Visual column: stacked floating cards like the screenshot -->
+        <div class="px-8 py-12 flex items-center justify-center">
+          <!-- make the stack a hover group -->
+          <div class="group w-full max-w-md aspect-[4/3] rounded-md border border-white/10 bg-gradient-to-b from-neutral-950 to-black relative overflow-hidden">
+            <!-- subtle background highlight -->
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_60%)] opacity-40">
+            </div>
+        
+            <!-- back card -->
+            <div class="bg-gradient-to-tr from-fuchsia-500/25 via-violet-500/25 to-sky-400/25 h-44 border-white/10 border rounded-3xl absolute top-16 right-20 left-4 shadow-[0_30px_80px_rgba(0,0,0,0.75)] -rotate-12 transform-gpu transition-transform duration-500 ease-out group-hover:-rotate-[16deg] group-hover:-translate-y-1"></div>
+        
+            <!-- middle card -->
+            <div class="bg-gradient-to-tr from-fuchsia-500/35 via-violet-500/35 to-sky-400/35 h-44 border-white/10 border rounded-3xl absolute top-16 right-14 left-6 shadow-[0_32px_85px_rgba(0,0,0,0.85)] -rotate-10 transform-gpu transition-transform duration-500 ease-out group-hover:-rotate-[13deg] group-hover:-translate-y-0.5 group-hover:translate-x-0.5"></div>
+        
+            <!-- front card with your text -->
+            <div class="flex flex-col bg-gradient-to-tr from-fuchsia-500 via-violet-500 to-sky-400 h-44 border-white/20 border rounded-3xl pr-6 pl-6 absolute top-12 right-8 left-10 shadow-[0_36px_95px_rgba(0,0,0,0.95)] -rotate-8 justify-center transform-gpu transition-transform duration-500 ease-out group-hover:-rotate-[5deg] group-hover:-translate-y-2 group-hover:translate-x-1">
+              <div class="text-xs text-white/70 mb-1">
+                o3 model · live stream
+              </div>
+              <div class="text-2xl font-semibold text-white mb-1">
+                53 tokens used
+              </div>
+              <div class="text-[11px] text-white/60">
+                Updated every call as Astria routes traffic.
+              </div>
+            </div>
+        
+            <!-- glow under the stack -->
+            <div class="-translate-x-1/2 bg-fuchsia-500/40 opacity-80 w-44 h-8 rounded-full absolute bottom-16 left-1/2 blur-xl transform-gpu transition-transform duration-500 ease-out group-hover:scale-110 group-hover:translate-y-1"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROW 2 – code block on grid -->
+      <div class="border-t border-white/10">
+        <div class="grid lg:grid-cols-2 lg:divide-x lg:divide-white/10">
+          <!-- Text column -->
+          <div class="px-8 py-12 flex items-center">
+            <div class="">
+              <h3 class="text-2xl sm:text-3xl font-semibold tracking-tight text-white mb-4">
+                Launch agents in a sandboxed playground.
+              </h3>
+              <p class="sm:text-base text-sm text-white/60 max-w-md">Prototype new workflows, test prompts, and fine-tune behavior in a safe environment. Ship with confidence by promoting the exact same Astria flows from sandbox to production.</p>
+            </div>
+          </div>
+
+          <!-- Visual column: code card on grid -->
+          <div class="px-8 py-12 flex items-center justify-center">
+            <div class="w-full max-w-md aspect-[4/3] rounded-md border border-white/10 bg-gradient-to-b from-neutral-950 to-black relative overflow-hidden" style="transform-style: preserve-3d;">
+              <!-- ground grid -->
+              <div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(to_top,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[size:32px_32px] opacity-10 translate-y-6" style="transform: perspective(1200px) rotateX(65deg) translateY(40px); transform-origin: center bottom;">
+              </div>
+
+              <!-- code card -->
+              <div class="bg-black/85 w-[78%] border-white/15 border rounded-2xl px-6 py-5 absolute top-32 left-1/2 shadow-[0_30px_80px_rgba(0,0,0,0.95)]" style="transform: translateX(-50%) translateY(-40%)">
+                <div class="text-[11px] text-emerald-400 font-mono mb-2">
+                  // Mirage sandbox example
+                </div>
+                <div class="overflow-hidden h-[120px] relative">
+                <pre class="code-scroll text-[11px] leading-relaxed text-white/80 font-mono whitespace-pre absolute w-full">                const agent = mirage.agent({
+                  name: "researcher",
+                  tools: [browser, docs],
+                });
+                
+                const result = await agent.run({
+                  prompt: "Summarize today's updates",
+                });
+                  </pre>
+                  </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div></section>
+
+<!-- Turn decisions section -->
+<section class="mt-24">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="border border-white/10 bg-black">
+
+      <!-- Title row -->
+      <div class="grid grid-cols-3 divide-x divide-white/10">
+        <div class=""></div>
+
+        <div class="flex items-center justify-center py-10 px-6">
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-white text-center">
+            Turn decisions into actions.
+          </h2>
+        </div>
+
+        <div class=""></div>
+      </div>
+
+      <!-- Feature grid -->
+      <div class="grid md:grid-cols-2 border-t border-white/10">
+        <!-- Top-left -->
+        <article class="px-10 py-14 border-b border-white/10 md:border-b md:border-r flex flex-col gap-4">
+          <div class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/25">
+            <!-- simple lightning icon -->
+            <svg class="h-4 w-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="13 2 3 14 11 14 11 22 21 10 13 10"></polyline>
+            </svg>
+          </div>
+          <div class="">
+            <h3 class="text-xl sm:text-2xl font-semibold tracking-tight text-white mb-2">
+              Scale agents at lightning speed.
+            </h3>
+            <p class="sm:text-base text-sm text-white/60 max-w-md">Spin up Astria agents in minutes with reusable tools and flows, then roll them out across teams without touching your core stack.</p>
+          </div>
+        </article>
+
+        <!-- Top-right -->
+        <article class="px-10 py-14 border-b border-white/10 md:border-b flex flex-col gap-4">
+          <div class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/25">
+            <!-- log icon -->
+            <svg class="h-4 w-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="3" width="16" height="18" rx="2" ry="2"></rect>
+              <line x1="8" y1="8" x2="16" y2="8"></line>
+              <line x1="8" y1="12" x2="16" y2="12"></line>
+              <line x1="8" y1="16" x2="13" y2="16"></line>
+            </svg>
+          </div>
+          <div class="">
+            <h3 class="text-xl sm:text-2xl font-semibold tracking-tight text-white mb-2">
+              Log every token, prompt, and response.
+            </h3>
+            <p class="sm:text-base text-sm text-white/60 max-w-md">Capture structured logs from Astria agents to debug behaviors, monitor costs, and understand exactly how each decision was made.</p>
+          </div>
+        </article>
+
+        <!-- Bottom-left -->
+        <article class="px-10 py-14 border-b border-white/10 md:border-b-0 md:border-r flex flex-col gap-4">
+          <div class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/25">
+            <!-- stack / integration icon -->
+            <svg class="h-4 w-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+            </svg>
+          </div>
+          <div class="">
+            <h3 class="text-xl sm:text-2xl font-semibold tracking-tight text-white mb-2">
+              Plug into your stack in minutes.
+            </h3>
+            <p class="sm:text-base text-sm text-white/60 max-w-md">Use simple APIs and webhooks to connect Astria to your existing apps, queues, and data pipelines with minimal engineering overhead.</p>
+          </div>
+        </article>
+
+        <!-- Bottom-right -->
+        <article class="flex flex-col gap-4 pt-14 pr-10 pb-14 pl-10 gap-x-4 gap-y-4">
+          <div class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/25">
+            <!-- chat / safety icon -->
+            <svg class="h-4 w-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6A8.38 8.38 0 0 1 12.5 3h.5a8.49 8.49 0 0 1 8 8.5Z"></path>
+              <line x1="8" y1="11" x2="16" y2="11"></line>
+              <line x1="8" y1="14" x2="13" y2="14"></line>
+            </svg>
+          </div>
+          <div class="">
+            <h3 class="sm:text-2xl text-xl font-semibold text-white tracking-tight mb-2">
+              Let agents talk to users safely.
+            </h3>
+            <p class="sm:text-base text-sm text-white/60 max-w-md">Add guardrails, reviews, and policies around every Astria interaction so agents can respond in real time while staying on-brand and on-policy.</p>
+          </div>
+        </article>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ROI & Case Studies Section -->
+<section id="roi-section" class="mt-32">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="border border-white/10 bg-black">
+
+      <!-- ROW 1 -->
+      <div class="grid md:grid-cols-2 border-b border-white/10">
+        <!-- Left column -->
+        <div class="px-10 py-16 flex flex-col justify-center">
+          <h3 class="text-6xl sm:text-7xl font-semibold tracking-tight text-white flex items-baseline gap-1">
+            <span class="stat-counter" data-counter="142">0</span>
+            <span>%</span>
+          </h3>
+          <p class="sm:text-base leading-relaxed text-sm text-white/70 max-w-xs mt-3">increase in workflow efficiency after deploying Astria AI agents.</p>
+
+          <div class="mt-10">
+            <span class="text-2xl font-semibold tracking-widest text-white">
+              NOVA TECH
+            </span>
+          </div>
+        </div>
+
+        <!-- Right column: autoplay video -->
+        <div class="px-10 py-12 flex items-center justify-center">
+          <div class="relative w-full max-w-lg rounded-xl overflow-hidden aspect-video border border-white/10 bg-black">
+            <video class="w-full h-full object-cover" autoplay="" muted="" loop="" playsinline="">
+              <!-- TODO: replace with your own video source -->
+              <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+            </video>
+            <!-- subtle overlay for readability -->
+            <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROW 2 -->
+      <div class="grid md:grid-cols-2">
+        <!-- Left column -->
+        <div class="px-10 py-16 flex flex-col justify-center">
+          <h3 class="text-6xl sm:text-7xl font-semibold tracking-tight text-white flex items-baseline gap-1">
+            <span class="stat-counter" data-counter="118">0</span>
+            <span class="">%</span>
+          </h3>
+          <p class="sm:text-base leading-relaxed text-sm text-white/70 max-w-xs mt-3">reduction in operational overhead after integrating autonomous Astria workflows.</p>
+
+          <div class="mt-10">
+            <span class="text-2xl font-semibold tracking-widest text-white">
+              ASTRO LABS
+            </span>
+          </div>
+        </div>
+
+        <!-- Right column: autoplay video -->
+        <div class="px-10 py-12 flex items-center justify-center">
+          <div class="relative w-full max-w-lg rounded-xl overflow-hidden aspect-video border border-white/10 bg-black">
+            <video class="w-full h-full object-cover" autoplay="" muted="" loop="" playsinline="">
+              <!-- TODO: replace with your own video source -->
+              <source src="https://cdn.midjourney.com/video/6bdb372e-b3bb-4355-b723-b3bd545c1707/0.mp4" type="video/mp4">
+            </video>
+            <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================== TRUSTED BY TEAMS ==================== -->
+<section class="mt-32">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="border border-white/10 bg-black">
+      <!-- Title row -->
+      <div class="py-10 border-b border-white/10">
+        <h2 class="text-center text-base sm:text-lg font-medium text-white/80">
+          Trusted by teams at
+        </h2>
+      </div>
+
+      <!-- Logos row -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 divide-x divide-white/10">
+        <!-- Logo 1 -->
+        <div class="flex items-center justify-center py-12">
+          <div class="logo-slot">
+            <div class="logo-track logo-delay-0">
+              <span>Ephicient®</span>
+              <span>BEEM</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Logo 2 -->
+        <div class="flex items-center justify-center py-12">
+          <div class="logo-slot">
+            <div class="logo-track logo-delay-200">
+              <span>Pipelinx.co</span>
+              <span>2020INC</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Logo 3 -->
+        <div class="flex items-center justify-center py-12">
+          <div class="logo-slot">
+            <div class="logo-track logo-delay-400">
+              <span>OE</span>
+              <span>Workport</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Logo 4 -->
+        <div class="flex items-center justify-center py-12">
+          <div class="logo-slot">
+            <div class="logo-track logo-delay-600">
+              <span>invarion</span>
+              <span>Ephicient®</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== TESTIMONIALS ==================== -->
+<section class="mt-32">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-black border-white/10 border pt-16 pb-16">
+      <!-- Title -->
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-white">
+          What people say
+        </h2>
+        <p class="sm:text-base text-sm text-white/60 mt-4">Teams use Astria to launch agents faster, ship with more confidence, and spend less time babysitting prompts.</p>
+      </div>
+
+      <!-- Scrolling testimonials -->
+      <div class="grid overflow-hidden md:grid-cols-2 md:gap-10 mt-12 pt-12 pr-10 pl-10 gap-x-6 gap-y-6" style="mask-image: linear-gradient(180deg, transparent, black 45%, black 80%, transparent); -webkit-mask-image: linear-gradient(180deg, transparent, black 45%, black 80%, transparent);">
+        <!-- Column 1: scroll up -->
+        <div class="relative h-[420px] overflow-hidden">
+          <div class="space-y-4 animate-testimonials-up">
+            <!-- card 1 -->
+            <article class="rounded-3xl border border-white/10 bg-white/[0.03] px-6 py-5 shadow-[0_18px_45px_rgba(0,0,0,0.8)]">
+              <p class="text-sm text-white/80">“Astria handles the orchestration so our agents feel like one cohesive product instead of a bunch of scripts. It freed up at least a day a week for our team.”</p>
+              <div class="mt-4 flex items-center gap-3">
+                <div class="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center text-xs text-white/70">
+                  RA
+                </div>
+                <div class="">
+                  <p class="text-sm font-medium text-white">Rania Alvarez</p>
+                  <p class="text-xs text-white/50">Head of Product, Nova Tech</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- card 2 -->
+            <article class="rounded-3xl border border-white/10 bg-white/[0.03] px-6 py-5 shadow-[0_18px_45px_rgba(0,0,0,0.8)]">
+              <p class="text-sm text-white/80">“We wired Astria into our stack in a weekend. Every support ticket now gets a first pass from an agent, with full logs when a human needs to jump in.”</p>
+              <div class="mt-4 flex items-center gap-3">
+                <div class="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center text-xs text-white/70">
+                  MK
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-white">Michael Kim</p>
+                  <p class="text-xs text-white/50">CX Lead, Astro Labs</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- card 3 -->
+            <article class="rounded-3xl border border-white/10 bg-white/[0.03] px-6 py-5 shadow-[0_18px_45px_rgba(0,0,0,0.8)]">
+              <p class="text-sm text-white/80">
+                “The observability is the killer feature. We see which tools agents used,
+                how many tokens they spent, and why a path was chosen.”
+              </p>
+              <div class="mt-4 flex items-center gap-3">
+                <div class="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center text-xs text-white/70">
+                  JL
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-white">Jamie Liu</p>
+                  <p class="text-xs text-white/50">Engineering Manager, Orbit Systems</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- duplicate for seamless loop -->
+            <article class="rounded-3xl border border-white/10 bg-white/[0.03] px-6 py-5 shadow-[0_18px_45px_rgba(0,0,0,0.8)]">
+              <p class="text-sm text-white/80">
+                “Mirage handles the orchestration so our agents feel like one cohesive product
+                instead of a bunch of scripts. It freed up at least a day a week for our team.”
+              </p>
+              <div class="mt-4 flex items-center gap-3">
+                <div class="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center text-xs text-white/70">
+                  RA
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-white">Rania Alvarez</p>
+                  <p class="text-xs text-white/50">Head of Product, Nova Tech</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Column 2: scroll down -->
+        <div class="relative h-[420px] overflow-hidden">
+          <div class="space-y-4 animate-testimonials-down">
+            <!-- card A -->
+            <article class="rounded-3xl border border-white/10 bg-white/[0.03] px-6 py-5 shadow-[0_18px_45px_rgba(0,0,0,0.8)]">
+              <p class="text-sm text-white/80">“We prototype new agents in the Astria sandbox and promote them straight to production. No more copy-pasting prompts between tools.”</p>
+              <div class="mt-4 flex items-center gap-3">
+                <div class="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center text-xs text-white/70">
+                  ES
+                </div>
+                <div class="">
+                  <p class="text-sm font-medium text-white">Elena Santos</p>
+                  <p class="text-xs text-white/50">Founder, Lumen Studio</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- card B -->
+            <article class="rounded-3xl border border-white/10 bg-white/[0.03] px-6 py-5 shadow-[0_18px_45px_rgba(0,0,0,0.8)]">
+              <p class="text-sm text-white/80">“Our ops team finally trusts the AI layer. Astria gives us guardrails, approvals, and a clear audit trail for every decision.”</p>
+              <div class="mt-4 flex items-center gap-3">
+                <div class="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center text-xs text-white/70">
+                  HC
+                </div>
+                <div class="">
+                  <p class="text-sm font-medium text-white">Hugo Chen</p>
+                  <p class="text-xs text-white/50">VP Operations, Beacon</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- card C -->
+            <article class="rounded-3xl border border-white/10 bg-white/[0.03] px-6 py-5 shadow-[0_18px_45px_rgba(0,0,0,0.8)]">
+              <p class="text-sm text-white/80">“Astria made a small team feel much bigger. Agents handle the repetitive work so we can stay focused on product.”</p>
+              <div class="mt-4 flex items-center gap-3">
+                <div class="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center text-xs text-white/70">
+                  LD
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-white">Lena Dorsey</p>
+                  <p class="text-xs text-white/50">CTO, Northwind</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- duplicate for seamless loop -->
+            <article class="rounded-3xl border border-white/10 bg-white/[0.03] px-6 py-5 shadow-[0_18px_45px_rgba(0,0,0,0.8)]">
+              <p class="text-sm text-white/80">
+                “We prototype new agents in the Mirage sandbox and promote them straight
+                to production. No more copy-pasting prompts between tools.”
+              </p>
+              <div class="mt-4 flex items-center gap-3">
+                <div class="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center text-xs text-white/70">
+                  ES
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-white">Elena Santos</p>
+                  <p class="text-xs text-white/50">Founder, Lumen Studio</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- ==================== CHANGES / RELEASES SECTION ==================== -->
+<section class="mt-32">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="border border-white/10 bg-black grid-divider-band">
+      <!-- Title + CTA row -->
+      <div class="grid grid-cols-3 border-b border-white/10">
+        <div class=""></div>
+
+        <div class="flex pt-12 pr-4 pb-12 pl-4 items-center justify-center">
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-white">
+            We ship, a lot.
+          </h2>
+        </div>
+
+        <div class="flex pt-12 pr-4 pb-12 pl-4 items-center justify-center">
+          <a href="#" class="inline-flex items-center bg-white text-black text-sm font-semibold rounded-full px-6 py-2 shadow hover:bg-white/90 transition">
+            View all updates
+          </a>
+        </div>
+      </div>
+
+      <!-- Cards row -->
+      <div class="grid md:grid-cols-3 pt-16 pr-8 pb-16 pl-8 gap-x-8 gap-y-8">
+        <!-- Card 1 -->
+        <article class="changelog-card border border-white/10 bg-black rounded-xl overflow-hidden hover:bg-white/[0.03] transition">
+          <div class="p-6 pb-0">
+            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&amp;w=600" class="rounded-lg border border-white/10">
+          </div>
+          <div class="p-6">
+            <p class="text-xs text-white/40 mb-3">MAY 6, 2025</p>
+            <h3 class="text-lg font-semibold text-white mb-2">
+              Multi-Flow Agents — Now in Beta
+            </h3>
+            <p class="text-white/60 text-sm">
+              Build agents that coordinate multiple steps at once, with fully automated routing.
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="changelog-card border border-white/10 bg-black rounded-xl overflow-hidden hover:bg-white/[0.03] transition">
+          <div class="p-6 pb-0">
+            <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/286d3fce-adff-4983-993c-1096523889dc_800w.jpg" class="rounded-lg border border-white/10 object-cover w-full h-auto">
+          </div>
+          <div class="p-6">
+            <p class="text-xs text-white/40 mb-3">APR 29, 2025</p>
+            <h3 class="text-lg font-semibold text-white mb-2">
+              High-Speed Execution Mode
+            </h3>
+            <p class="text-white/60 text-sm">
+              Dramatically reduce inference delays for real-time interactions and fast workflows.
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="changelog-card border border-white/10 bg-black rounded-xl overflow-hidden hover:bg-white/[0.03] transition">
+          <div class="p-6 pb-0">
+            <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/6ee18476-e920-4c46-b39d-239b9b00604b_800w.webp" class="object-cover bg-center border-white/10 border rounded-lg w-full h-auto" style="">
+          </div>
+          <div class="p-6">
+            <p class="text-xs text-white/40 mb-3">APR 1, 2025</p>
+            <h3 class="text-lg font-semibold text-white mb-2">
+              Code Runner — Execute Python in-flow
+            </h3>
+            <p class="text-white/60 text-sm">
+              Run Python snippets inside your agent workflows without extra infrastructure.
+            </p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ==================== CTA SECTION ==================== -->
+<section class="mt-32">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="overflow-hidden cta-shell grid-divider-band bg-black bg-cover bg-center border-white/10 border pt-28 pb-28 relative bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/4cee36f3-48bc-4eca-9282-2f402b9cde5d_1600w.webp)]" style="">
+      
+      <!-- Animated particle / streak layer -->
+      <div class="cta-particles pointer-events-none"></div>
+
+      <!-- CTA content -->
+      <div class="relative text-center">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-white max-w-3xl mx-auto">
+          Start building intelligent workflows  
+          <span class="block">in minutes.</span>
+        </h2>
+
+        <a href="#" class="mt-8 inline-flex items-center bg-white text-black text-lg font-semibold rounded-full px-8 py-3 shadow hover:bg-white/90 transition">
+          Get Started
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<footer class="bg-black border-white/10 border-t mt-32">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- 3-column band -->
+    <div class="border-x border-white/10">
+      <div class="grid md:grid-cols-3 divide-x divide-white/10">
+
+        <!-- LEFT COLUMN: full background rectangle -->
+        <div class="min-h-[230px]">
+          <div class="bg-center w-full h-full bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/12c1c130-5c0b-4615-9155-5e3f1df37789_800w.webp)] bg-cover"></div>
+        </div>
+
+        <!-- MIDDLE COLUMN: nav links -->
+        <div class="flex items-center justify-center py-10">
+          <nav class="space-y-3 text-sm text-white/80">
+            <a href="#" class="block hover:text-white transition">Pricing</a>
+            <a href="#" class="block hover:text-white transition">Changelog</a>
+            <a href="#" class="block hover:text-white transition">Customers</a>
+            <a href="#" class="block hover:text-white transition">Contact</a>
+          </nav>
+        </div>
+
+        <!-- RIGHT COLUMN: contact + icons + © -->
+        <div class="flex flex-col md:items-start pt-10 pr-6 pb-10 pl-6 gap-x-4 gap-y-4 items-center justify-center">
+          <p class="text-sm font-medium text-white">hi@astria.com</p>
+
+          <div class="flex items-center gap-4 text-xl text-white/80">
+            <!-- X -->
+            <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_5602_16557)">
+<path d="M19.8878 19.0417H16.9245V14.4C16.9245 13.2933 16.9045 11.8683 15.3828 11.8683C13.8395 11.8683 13.6028 13.075 13.6028 14.3183V19.0417H10.6395V9.49666H13.4845V10.8017H13.5245C14.1045 9.81166 15.1845 9.21833 16.3312 9.26C19.3345 9.26 19.8895 11.235 19.8895 13.8067L19.8878 19.04V19.0417ZM7.29618 8.19166C6.84097 8.18948 6.405 8.00779 6.08296 7.68606C5.76092 7.36433 5.5788 6.92854 5.57618 6.47333C5.57618 5.53 6.35284 4.75333 7.29618 4.75333C8.23951 4.75333 9.01451 5.53 9.01618 6.47333C9.01618 7.41666 8.23951 8.19166 7.29618 8.19166ZM8.77784 19.0417H5.81118V9.49666H8.77784V19.0417ZM21.3628 1.99999H4.32118C3.93476 1.99775 3.56307 2.14809 3.28688 2.41835C3.01069 2.68862 2.85232 3.05695 2.84618 3.44333V20.5567C2.85232 20.943 3.01069 21.3114 3.28688 21.5816C3.56307 21.8519 3.93476 22.0022 4.32118 22H21.3645C21.7518 22.0031 22.1247 21.8533 22.4022 21.583C22.6796 21.3128 22.8392 20.9439 22.8462 20.5567V3.44166C22.8392 3.05471 22.6795 2.68621 22.4019 2.41648C22.1244 2.14674 21.7515 1.99764 21.3645 2.00166L21.3628 1.99999Z" fill="currentColor"></path>
+</g>
+<defs>
+
+</defs>
+</svg>
+            <!-- GitHub -->
+            <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M14.0324 10.0936L21.3178 1.625H19.5914L13.2655 8.9782L8.21307 1.625H2.38567L10.026 12.7443L2.38567 21.625H4.11216L10.7924 13.8598L16.1282 21.625H21.9556L14.032 10.0936H14.0324ZM11.6678 12.8423L10.8936 11.7351L4.73424 2.92468H7.38603L12.3567 10.0349L13.1309 11.1422L19.5922 20.3844H16.9404L11.6678 12.8427V12.8423Z" fill="currentColor"></path>
+</svg>
+            <!-- YouTube -->
+            <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M19.7247 22H5.04467C3.57467 22 2.38467 20.81 2.38467 19.34V4.66C2.38467 3.19 3.57467 2 5.04467 2H19.7147C21.1947 2 22.3847 3.19 22.3847 4.66V19.33C22.3847 20.81 21.1947 22 19.7247 22Z" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M16.3847 12C16.3847 14.21 14.5947 16 12.3847 16C10.1747 16 8.38467 14.21 8.38467 12C8.38467 9.79 10.1747 8 12.3847 8C14.5947 8 16.3847 9.79 16.3847 12Z" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M19.3847 5.5C19.3847 5.78 19.1647 6 18.8847 6C18.6047 6 18.3847 5.78 18.3847 5.5C18.3847 5.22 18.6047 5 18.8847 5C19.1647 5 19.3847 5.22 19.3847 5.5Z" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+          </div>
+
+          <p class="text-xs text-white/40 mt-2">© 2025 Mirage</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- MIRAGE watermark band -->
+  <div class="flex overflow-hidden sm:h-40 mt-20 mr-0 ml-0 relative items-end justify-center" style="mask-image: linear-gradient(180deg, transparent, black 45%, black 100%, transparent); -webkit-mask-image: linear-gradient(180deg, transparent, black 45%, black 100%, transparent);">
+    <!-- dark fade over the top of the text -->
+    <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/95 to-transparent"></div>
+
+    <p class="text-[clamp(4rem,18vw,10rem)] leading-none font-semibold text-white/10 tracking-[0.35em] text-center pt-6 pr-6 pb-6 pl-6 relative">ASTRIA</p>
+  </div>
+</footer>
+
+
+
+
+
+<div class="premium-divider-horizontal"></div><div class="premium-divider-horizontal"></div>
+
+    <script src="https://unpkg.com/lucide@latest" class=""></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
+      });
+    </script>
+  
+<div class="premium-divider-vertical left"></div><div class="premium-divider-vertical right"></div>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const counters = document.querySelectorAll(".stat-counter");
+    if (!counters.length) return;
+
+    const animateCounter = (el) => {
+      const target = parseInt(el.getAttribute("data-counter"), 10);
+      const duration = 1500; // ms
+      let start = null;
+
+      const step = (timestamp) => {
+        if (!start) start = timestamp;
+        const progress = Math.min((timestamp - start) / duration, 1);
+        const value = Math.floor(progress * target);
+        el.textContent = value.toString();
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      window.requestAnimationFrame(step);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animateCounter(entry.target);
+            obs.unobserve(entry.target); // run once per counter
+          }
+        });
+      },
+      {
+        threshold: 0.4,
+      }
+    );
+
+    counters.forEach((counter) => observer.observe(counter));
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const logoFlips = document.querySelectorAll(".logo-flip");
+    if (!logoFlips.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("logo-flip-active");
+            obs.unobserve(entry.target); // start once per logo
+          }
+        });
+      },
+      { threshold: 0.35 }
+    );
+
+    logoFlips.forEach((el) => observer.observe(el));
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const cards = document.querySelectorAll(".changelog-card");
+    if (!cards.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const index = [...cards].indexOf(el);
+            // small stagger
+            setTimeout(() => {
+              el.classList.add("visible");
+            }, index * 120);
+            obs.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+
+    cards.forEach((card) => observer.observe(card));
+  });
+</script>
+
+</body></html>

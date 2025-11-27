@@ -1,0 +1,38 @@
+{
+  "name": "Aceternity UI",
+  "slug": "layout-grid",
+  "description": "A layout effect that animates the grid item on click, powered by framer motion layout",
+  "props": [
+    {
+      "Prop": "cards",
+      "Type": "Card[]",
+      "Description": "An array of Card objects. Each Card object should have the following properties: id (a unique identifier), content (the JSX.Element to be displayed), className (the CSS class name for the card), and thumbnail (the URL of the thumbnail image)."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/layout-gridCopy",
+  "url": "https://ui.aceternity.com/components/layout-grid",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A layout effect that animates the grid item on click, powered by framer motion layout",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React, { useState, useRef, useEffect } from \"react\";",
+    "import { LayoutGrid } from \"../ui/layout-grid\";"
+  ],
+  "dependencies": [
+    "react"
+  ],
+  "client_only": true
+}

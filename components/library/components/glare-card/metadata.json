@@ -1,0 +1,52 @@
+{
+  "name": "Aceternity UI",
+  "slug": "glare-card",
+  "description": "A glare effect that happens on hover, as seen on Linear's website",
+  "props": [
+    {
+      "Prop Name": "children",
+      "Type": "React.ReactNode",
+      "Description": "The content to be displayed inside the card.",
+      "Required": "Yes"
+    },
+    {
+      "Prop Name": "className",
+      "Type": "string",
+      "Description": "Additional CSS class names to apply to the card.",
+      "Required": "No"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/glare-cardCopy",
+  "url": "https://ui.aceternity.com/components/glare-card",
+  "type": "card",
+  "subtype": "",
+  "layout_role": "inline-block",
+  "recommended_slots": [
+    "grid.item",
+    "section.content"
+  ],
+  "interaction_profile": "pointer-reactive",
+  "preferred_size": "auto-height",
+  "z_index_role": "content",
+  "usage_notes": "A glare effect that happens on hover, as seen on Linear's website",
+  "theme_requirements": [],
+  "data_requirements": [
+    {
+      "name": "items",
+      "fields": [
+        "title",
+        "description",
+        "media"
+      ],
+      "type": "array"
+    }
+  ],
+  "domain_tags": [],
+  "imports": [
+    "import { GlareCard } from \"../ui/glare-card\";"
+  ],
+  "dependencies": [],
+  "client_only": false
+}

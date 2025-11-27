@@ -1,0 +1,61 @@
+{
+  "name": "Aceternity UI",
+  "slug": "pointer-highlight",
+  "description": "A component that highlights text when it's in view, with a pointer and border.",
+  "props": [
+    {
+      "Prop": "children",
+      "Type": "React.ReactNode",
+      "Required": "Yes",
+      "Default": "-",
+      "Description": "The content to be wrapped by the pointer highlight effect"
+    },
+    {
+      "Prop": "rectangleClassName",
+      "Type": "string",
+      "Required": "No",
+      "Default": "-",
+      "Description": "Additional CSS classes to apply to the animated rectangle border"
+    },
+    {
+      "Prop": "pointerClassName",
+      "Type": "string",
+      "Required": "No",
+      "Default": "-",
+      "Description": "Additional CSS classes to apply to the pointer icon"
+    },
+    {
+      "Prop": "containerClassName",
+      "Type": "string",
+      "Required": "No",
+      "Default": "-",
+      "Description": "Additional CSS classes to apply to the container div"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/pointer-highlightCopy",
+  "url": "https://ui.aceternity.com/components/pointer-highlight",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "pointer-reactive",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A component that highlights text when it's in view, with a pointer and border.",
+  "theme_requirements": [
+    "light-mode-friendly"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import { PointerHighlight } from \"@/components/ui/pointer-highlight\";"
+  ],
+  "dependencies": [
+    "@/components/ui/pointer-highlight"
+  ],
+  "client_only": false
+}

@@ -1,0 +1,55 @@
+{
+  "name": "Creative Masterclass Landing Page Template",
+  "slug": "creative-masterclas-4",
+  "description": "A reusable landing page template designed to promote and sell a creative storytelling masterclass course with curriculum highlights, pricing, and community features.",
+  "tags": [
+    "Landing Page",
+    "Hero",
+    "Features",
+    "Pricing",
+    "Testimonials",
+    "Interactive Demo",
+    "Community",
+    "Course",
+    "Masterclass",
+    "CTA"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/creative-masterclas-4",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "A reusable landing page template designed to promote and sell a creative storytelling masterclass course with curriculum highlights, pricing, and community features.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "aura",
+  "author": {
+    "name": "Nicholas Nicolaou",
+    "slug": "user-8632a292",
+    "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocIXAHHPmeU_a0dnqyStDEsRmk6iJ40-LsRWOHKx8hNg_NtW3w=s96-c",
+    "featured": false
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/creative-masterclas-4.png?t=1763982937127",
+  "aura": {
+    "id": 5554,
+    "views": 438,
+    "forks": 17,
+    "premium": false
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "name": "Aceternity UI",
+  "slug": "container-scroll-animation",
+  "description": "A scroll animation that rotates in 3d on scroll. Perfect for hero or marketing sections.",
+  "props": [
+    {
+      "Component": "ContainerScroll",
+      "Prop": "titleComponent",
+      "Type": "string | React.ReactNode",
+      "Description": "The component or string to be used as the title."
+    },
+    {
+      "Component": "ContainerScroll",
+      "Prop": "children",
+      "Type": "React.ReactNode",
+      "Description": "The children components to be rendered inside the ContainerScroll component."
+    },
+    {
+      "Component": "Header",
+      "Prop": "translate",
+      "Type": "MotionValue<number>",
+      "Description": "The motion value for translation to be applied to the Header component."
+    },
+    {
+      "Component": "Header",
+      "Prop": "titleComponent",
+      "Type": "string | React.ReactNode",
+      "Description": "The component or string to be used as the title in the Header component."
+    },
+    {
+      "Component": "Card",
+      "Prop": "rotate",
+      "Type": "MotionValue<number>",
+      "Description": "The motion value for rotation to be applied to the Card component."
+    },
+    {
+      "Component": "Card",
+      "Prop": "scale",
+      "Type": "MotionValue<number>",
+      "Description": "The motion value for scaling to be applied to the Card component."
+    },
+    {
+      "Component": "Card",
+      "Prop": "translate",
+      "Type": "MotionValue<number>",
+      "Description": "The motion value for translation to be applied to the Card component."
+    },
+    {
+      "Component": "Card",
+      "Prop": "children",
+      "Type": "React.ReactNode",
+      "Description": "The children components to be rendered inside the Card component."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/container-scroll-animationCopy",
+  "url": "https://ui.aceternity.com/components/container-scroll-animation",
+  "type": "hero",
+  "subtype": "",
+  "layout_role": "section",
+  "recommended_slots": [
+    "hero.primary",
+    "section.lead"
+  ],
+  "interaction_profile": "scroll-reactive",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "A scroll animation that rotates in 3d on scroll. Perfect for hero or marketing sections.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [
+    "marketing"
+  ],
+  "imports": [
+    "import React from \"react\";",
+    "import { ContainerScroll } from \"../ui/container-scroll-animation\";"
+  ],
+  "dependencies": [
+    "react"
+  ],
+  "client_only": true
+}

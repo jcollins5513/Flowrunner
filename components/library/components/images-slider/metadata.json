@@ -1,0 +1,76 @@
+{
+  "name": "Aceternity UI",
+  "slug": "images-slider",
+  "description": "A full page slider with images that can be navigated with the keyboard.",
+  "props": [
+    {
+      "Prop": "images",
+      "Type": "string[]",
+      "Default": "-",
+      "Description": "An array of image URLs to be displayed in the slider."
+    },
+    {
+      "Prop": "children",
+      "Type": "React.ReactNode",
+      "Default": "-",
+      "Description": "Any React nodes that will be rendered inside the slider."
+    },
+    {
+      "Prop": "overlay",
+      "Type": "React.ReactNode",
+      "Default": "true",
+      "Description": "If true, an overlay will be displayed on the images."
+    },
+    {
+      "Prop": "overlayClassName",
+      "Type": "string",
+      "Default": "-",
+      "Description": "The CSS class name to be applied to the overlay."
+    },
+    {
+      "Prop": "className",
+      "Type": "string",
+      "Default": "-",
+      "Description": "The CSS class name to be applied to the slider."
+    },
+    {
+      "Prop": "autoplay",
+      "Type": "boolean",
+      "Default": "true",
+      "Description": "If true, the slider will automatically move to the next image every 5 seconds."
+    },
+    {
+      "Prop": "direction",
+      "Type": "\"up\" | \"down\"",
+      "Default": "\"up\"",
+      "Description": "The direction of the transition when changing images."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/images-sliderCopy",
+  "url": "https://ui.aceternity.com/components/images-slider",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A full page slider with images that can be navigated with the keyboard.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import { motion } from \"motion/react\";",
+    "import React from \"react\";",
+    "import { ImagesSlider } from \"../ui/images-slider\";"
+  ],
+  "dependencies": [
+    "motion/react",
+    "react"
+  ],
+  "client_only": true
+}

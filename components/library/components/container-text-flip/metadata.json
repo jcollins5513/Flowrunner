@@ -1,0 +1,61 @@
+{
+  "name": "Aceternity UI",
+  "slug": "container-text-flip",
+  "description": "A container that flips through words, animating the width.",
+  "props": [
+    {
+      "Prop": "words",
+      "Type": "string[]",
+      "Default": "[\"better\", \"modern\", \"beautiful\", \"awesome\"]",
+      "Description": "Array of words to cycle through in the animation"
+    },
+    {
+      "Prop": "interval",
+      "Type": "number",
+      "Default": "3000",
+      "Description": "Time in milliseconds between word transitions"
+    },
+    {
+      "Prop": "className",
+      "Type": "string",
+      "Default": "-",
+      "Description": "Additional CSS classes to apply to the container"
+    },
+    {
+      "Prop": "textClassName",
+      "Type": "string",
+      "Default": "-",
+      "Description": "Additional CSS classes to apply to the text"
+    },
+    {
+      "Prop": "animationDuration",
+      "Type": "number",
+      "Default": "700",
+      "Description": "Duration of the transition animation in milliseconds"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/container-text-flipCopy",
+  "url": "https://ui.aceternity.com/components/container-text-flip",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A container that flips through words, animating the width.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import { ContainerTextFlip } from \"@/components/ui/container-text-flip\";"
+  ],
+  "dependencies": [
+    "@/components/ui/container-text-flip"
+  ],
+  "client_only": false
+}

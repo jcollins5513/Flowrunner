@@ -1,0 +1,65 @@
+{
+  "name": "Aceternity UI",
+  "slug": "tooltip-card",
+  "description": "A tooltip card container that follows mouse pointer when hovered over",
+  "props": [
+    {
+      "Prop": "content",
+      "Type": "string | React.ReactNode",
+      "Default": "-",
+      "Description": "The content to display inside the tooltip.",
+      "Required": "Yes"
+    },
+    {
+      "Prop": "children",
+      "Type": "React.ReactNode",
+      "Default": "-",
+      "Description": "The element that triggers the tooltip on hover/touch.",
+      "Required": "Yes"
+    },
+    {
+      "Prop": "containerClassName",
+      "Type": "string",
+      "Default": "-",
+      "Description": "Additional CSS classes to apply to the tooltip container.",
+      "Required": "No"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/tooltip-cardCopy",
+  "url": "https://ui.aceternity.com/components/tooltip-card",
+  "type": "card",
+  "subtype": "",
+  "layout_role": "inline-block",
+  "recommended_slots": [
+    "grid.item",
+    "section.content"
+  ],
+  "interaction_profile": "pointer-reactive",
+  "preferred_size": "auto-height",
+  "z_index_role": "content",
+  "usage_notes": "A tooltip card container that follows mouse pointer when hovered over",
+  "theme_requirements": [],
+  "data_requirements": [
+    {
+      "name": "items",
+      "fields": [
+        "title",
+        "description",
+        "media"
+      ],
+      "type": "array"
+    }
+  ],
+  "domain_tags": [],
+  "imports": [
+    "import { Tooltip } from \"@/components/ui/tooltip-card\";",
+    "import React from \"react\";"
+  ],
+  "dependencies": [
+    "@/components/ui/tooltip-card",
+    "react"
+  ],
+  "client_only": true
+}

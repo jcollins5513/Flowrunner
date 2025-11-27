@@ -1,0 +1,55 @@
+{
+  "name": "Aurora Mobile Experience Landing Page Template",
+  "slug": "aurora-art-gallery-8",
+  "description": "A reusable mobile landing page template designed for art galleries and digital exhibitions to showcase collections, featured pieces, and membership benefits.",
+  "tags": [
+    "Landing Page",
+    "Mobile",
+    "Art Gallery",
+    "Collections",
+    "Featured Piece",
+    "Membership",
+    "Exhibitions",
+    "UI Template",
+    "Digital Art",
+    "Mobile UI"
+  ],
+  "category": "Mobile",
+  "installation": "",
+  "url": "https://www.aura.build/share/aurora-art-gallery-8",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "A reusable mobile landing page template designed for art galleries and digital exhibitions to showcase collections, featured pieces, and membership benefits.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "aura",
+  "author": {
+    "name": "ramin mahmoudi",
+    "slug": "user-95c078db",
+    "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocL0BrYiQmGbKkeZCb0ksOql3inNcwTzhwt80tMFvXhNw2Yh5g=s96-c",
+    "featured": false
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/aurora-art-gallery-8.png?t=1763877731848",
+  "aura": {
+    "id": 5466,
+    "views": 301,
+    "forks": 1,
+    "premium": false
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

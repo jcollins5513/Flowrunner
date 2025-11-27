@@ -1,0 +1,46 @@
+{
+  "name": "Bento Grid",
+  "slug": "bento-grid",
+  "description": "Bento Grid component from Magic UI.",
+  "tags": [],
+  "category": "layout",
+  "installation": "",
+  "url": "https://magicui.design/docs/components/bento-grid",
+  "type": "component",
+  "layout_role": "widget",
+  "recommended_slots": [
+    "section.content",
+    "marketing.feature"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "Magic UI component.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "magic",
+  "client_only": false,
+  "imports": [
+    "import { CalendarIcon, FileTextIcon } from \"@radix-ui/react-icons\"",
+    "import { BellIcon, Share2Icon } from \"lucide-react\"",
+    "import { cn } from \"@/lib/utils\"",
+    "import { Calendar } from \"@/components/ui/calendar\"",
+    "import AnimatedBeamMultipleOutputDemo from \"@/registry/example/animated-beam-multiple-outputs\"",
+    "import AnimatedListDemo from \"@/registry/example/animated-list-demo\"",
+    "import { BentoCard, BentoGrid } from \"@/registry/magicui/bento-grid\"",
+    "import { Marquee } from \"@/registry/magicui/marquee\""
+  ],
+  "dependencies": [
+    "@/components/ui/calendar",
+    "@/lib/utils",
+    "@/registry/example/animated-beam-multiple-outputs",
+    "@/registry/example/animated-list-demo",
+    "@/registry/magicui/bento-grid",
+    "@/registry/magicui/marquee",
+    "@radix-ui/react-icons",
+    "lucide-react"
+  ]
+}

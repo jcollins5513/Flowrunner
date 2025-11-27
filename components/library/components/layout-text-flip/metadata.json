@@ -1,0 +1,54 @@
+{
+  "name": "Aceternity UI",
+  "slug": "layout-text-flip",
+  "description": "A text flip effect that changes the layout of surrounding text",
+  "props": [
+    {
+      "Prop": "text",
+      "Type": "string",
+      "Default": "\"Build Amazing\"",
+      "Description": "The static text that appears before the flipping words",
+      "Required": "Yes"
+    },
+    {
+      "Prop": "words",
+      "Type": "string[]",
+      "Default": "[\"Landing Pages\", \"Component Blocks\", \"Page Sections\", \"3D Shaders\"]",
+      "Description": "Array of words/phrases to cycle through",
+      "Required": "Yes"
+    },
+    {
+      "Prop": "duration",
+      "Type": "number",
+      "Default": "3000",
+      "Description": "Duration in milliseconds between word transitions",
+      "Required": "No"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/layout-text-flipCopy",
+  "url": "https://ui.aceternity.com/components/layout-text-flip",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A text flip effect that changes the layout of surrounding text",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import { LayoutTextFlip } from \"@/components/ui/layout-text-flip\";",
+    "import { motion } from \"motion/react\";"
+  ],
+  "dependencies": [
+    "@/components/ui/layout-text-flip",
+    "motion/react"
+  ],
+  "client_only": true
+}

@@ -1,0 +1,38 @@
+{
+  "name": "Aceternity UI",
+  "slug": "background-beams",
+  "description": "Multiple background beams that follow a path of SVG, makes a good hero section background.",
+  "props": [
+    {
+      "Prop name": "className",
+      "Type": "string",
+      "Description": "The class name of the Background Beams component."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/background-beamsCopy",
+  "url": "https://ui.aceternity.com/components/background-beams",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "Multiple background beams that follow a path of SVG, makes a good hero section background.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { BackgroundBeams } from \"../ui/background-beams\";"
+  ],
+  "dependencies": [
+    "react"
+  ],
+  "client_only": true
+}

@@ -1,0 +1,41 @@
+{
+  "name": "Shine Border",
+  "slug": "shine-border",
+  "description": "Shine Border component from Magic UI.",
+  "tags": [],
+  "category": "component",
+  "installation": "",
+  "url": "https://magicui.design/docs/components/shine-border",
+  "type": "component",
+  "layout_role": "widget",
+  "recommended_slots": [
+    "section.content",
+    "marketing.feature"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "Magic UI component.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "magic",
+  "client_only": true,
+  "imports": [
+    "\nimport { useTheme } from \"next-themes\"",
+    "\nimport { Button } from \"@/components/ui/button\"",
+    "import {",
+    "import { Input } from \"@/components/ui/input\"",
+    "import { Label } from \"@/components/ui/label\"",
+    "import { ShineBorder } from \"@/registry/magicui/shine-border\""
+  ],
+  "dependencies": [
+    "@/components/ui/button",
+    "@/components/ui/input",
+    "@/components/ui/label",
+    "@/registry/magicui/shine-border",
+    "next-themes"
+  ]
+}

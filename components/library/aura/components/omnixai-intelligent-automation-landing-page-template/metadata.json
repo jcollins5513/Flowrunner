@@ -1,0 +1,57 @@
+{
+  "name": "OmnixAI Intelligent Automation Landing Page Template",
+  "slug": "omnixai-intelligent",
+  "description": "This template provides a sleek, modern landing page designed for AI and intelligent automation platforms to showcase features, pricing, testimonials, and company info.",
+  "tags": [
+    "Landing Page",
+    "Hero",
+    "Features",
+    "Pricing",
+    "Testimonials",
+    "AI",
+    "Automation",
+    "SaaS",
+    "Process",
+    "Call-to-Action"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/omnixai-intelligent",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "This template provides a sleek, modern landing page designed for AI and intelligent automation platforms to showcase features, pricing, testimonials, and company info.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [
+    "saas"
+  ],
+  "source": "aura",
+  "author": {
+    "name": "Sourany Phomhome",
+    "slug": "sourany",
+    "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocLoQZePAiZWIthvCKEU9ojH9gXKvKMsh4bHnXIlpUcwrvUFJO9F=s96-c",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/omnixai-intelligent.png?t=1763631515415",
+  "aura": {
+    "id": 5189,
+    "views": 1959,
+    "forks": 16,
+    "premium": true
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

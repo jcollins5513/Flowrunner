@@ -1,0 +1,55 @@
+{
+  "name": "Aura Unified Workspace Landing Page Template",
+  "slug": "aura-unified-25",
+  "description": "A reusable landing page template designed to showcase a unified digital workspace with keyboard-first automation and integrations.",
+  "tags": [
+    "Landing Page",
+    "Hero",
+    "Features",
+    "Pricing",
+    "Testimonials",
+    "Dark Mode",
+    "Automation",
+    "Integrations",
+    "API",
+    "Focus Mode"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/aura-unified-25",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "A reusable landing page template designed to showcase a unified digital workspace with keyboard-first automation and integrations.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "aura",
+  "author": {
+    "name": "Lorenzo Renga",
+    "slug": "user-f95fdf56",
+    "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocLZ-KjHcmgHcgy2aVNp2ng4YsHyBOWl40-AFGrgQzNlNRrzcI_I=s96-c",
+    "featured": false
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/aura-unified-25.png?t=1763829730475",
+  "aura": {
+    "id": 5413,
+    "views": 307,
+    "forks": 20,
+    "premium": false
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

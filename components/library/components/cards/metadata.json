@@ -1,0 +1,47 @@
+{
+  "name": "Aceternity UI",
+  "slug": "cards",
+  "description": "A set of cards that can be used for different use cases",
+  "props": [],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/cards-demo-1@aceternity/cards-demo-2@aceternity/cards-demo-3Copy",
+  "url": "https://ui.aceternity.com/components/cards",
+  "type": "card",
+  "subtype": "",
+  "layout_role": "inline-block",
+  "recommended_slots": [
+    "grid.item",
+    "section.content"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "auto-height",
+  "z_index_role": "content",
+  "usage_notes": "A set of cards that can be used for different use cases",
+  "theme_requirements": [],
+  "data_requirements": [
+    {
+      "name": "items",
+      "fields": [
+        "title",
+        "description",
+        "media"
+      ],
+      "type": "array"
+    }
+  ],
+  "domain_tags": [],
+  "imports": [
+    "import { animate, motion } from \"motion/react\";",
+    "import React, { useEffect, useState } from \"react\";",
+    "import { cn } from \"@/lib/utils\";",
+    "import { GoCopilot } from \"react-icons/go\";"
+  ],
+  "dependencies": [
+    "@/lib/utils",
+    "motion/react",
+    "react",
+    "react-icons/go"
+  ],
+  "client_only": true
+}

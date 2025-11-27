@@ -1,0 +1,56 @@
+{
+  "name": "Aceternity UI",
+  "slug": "svg-mask-effect",
+  "description": "A mask reveal effect, hover the cursor over a container to reveal what's underneath.",
+  "props": [
+    {
+      "Prop name": "className",
+      "Type": "string",
+      "Description": "The class name of the Background Beams component."
+    },
+    {
+      "Prop name": "children",
+      "Type": "string|ReactNode",
+      "Description": "The content of the page that you want to keep static / always on the page"
+    },
+    {
+      "Prop name": "revealText",
+      "Type": "string|ReactNode",
+      "Description": "The component that is revealed on hover"
+    },
+    {
+      "Prop name": "size",
+      "Type": "number",
+      "Description": "size of the mask"
+    },
+    {
+      "Prop name": "revealSize",
+      "Type": "number",
+      "Description": "Hovered over size of the mask"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/svg-mask-effectCopy",
+  "url": "https://ui.aceternity.com/components/svg-mask-effect",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "pointer-reactive",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A mask reveal effect, hover the cursor over a container to reveal what's underneath.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import { MaskContainer } from \"@/components/ui/svg-mask-effect\";"
+  ],
+  "dependencies": [
+    "@/components/ui/svg-mask-effect"
+  ],
+  "client_only": true
+}

@@ -1,0 +1,57 @@
+{
+  "name": "NovaPulse AI Music Studio Landing Page Template",
+  "slug": "novapulse-ai",
+  "description": "This template provides a cutting-edge AI music studio landing page, designed to showcase AI-driven music generation, collaboration, and licensing features for creators and studios.",
+  "tags": [
+    "Landing Page",
+    "AI Music",
+    "Features",
+    "Pricing",
+    "Collaboration",
+    "Audio Player",
+    "Workflow",
+    "Licensing",
+    "Neural Processing",
+    "UI"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/novapulse-ai",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "This template provides a cutting-edge AI music studio landing page, designed to showcase AI-driven music generation, collaboration, and licensing features for creators and studios.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [
+    "marketing"
+  ],
+  "source": "aura",
+  "author": {
+    "name": "Aksonvady Phomhome",
+    "slug": "aksonvady",
+    "avatar_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/user-avatars/avatars/2e815afb-cac1-4c01-90e1-cf3810246e35-1747968317403.jpg",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/novapulse-ai.png",
+  "aura": {
+    "id": 5250,
+    "views": 1770,
+    "forks": 25,
+    "premium": true
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

@@ -1,6 +1,7 @@
 // Component factory - maps DSL component types to React components
 import React from 'react'
-import { type Component } from '../dsl/types'
+import { type Component, type Palette, type Vibe } from '../dsl/types'
+import { type PatternFamily } from '../patterns/families'
 import { Title } from '@/components/renderer/Title'
 import { Subtitle } from '@/components/renderer/Subtitle'
 import { Button } from '@/components/renderer/Button'
@@ -12,6 +13,15 @@ import { EditableSubtitle } from '@/components/editing/EditableSubtitle'
 import { EditableButton } from '@/components/editing/EditableButton'
 import { EditableText } from '@/components/editing/EditableText'
 import { EditableForm } from '@/components/editing/EditableForm'
+import { LibraryComponentRenderer } from '@/lib/library/wrappers/library-component-renderer'
+
+export interface LibraryContext {
+  vibe: Vibe
+  palette: Palette
+  pattern: PatternFamily
+  slot?: string
+  hasAccess: boolean
+}
 
 export interface ComponentRendererProps {
   component: Component
@@ -25,6 +35,8 @@ export interface ComponentRendererProps {
   onStartEdit?: (componentIndex: number) => void
   onSaveEdit?: (componentIndex: number, updatedComponent: Component) => void
   screenId?: string
+  // Library component context (optional)
+  libraryContext?: LibraryContext
 }
 
 export function renderComponent({
@@ -38,9 +50,19 @@ export function renderComponent({
   onStartEdit,
   onSaveEdit,
   screenId,
+  libraryContext,
 }: ComponentRendererProps): React.ReactElement {
   const commonProps = { style, className }
   const isEditing = editMode && editingComponentId === `${screenId}-${componentIndex}`
+
+  // Try to use library component if context is provided and component doesn't explicitly opt out
+  const useLibraryComponent =
+    libraryContext &&
+    libraryContext.hasAccess &&
+    !component.props?.libraryComponent === false // Allow explicit opt-out
+
+  // Check if component explicitly specifies a library component
+  const explicitLibraryComponent = component.props?.libraryComponent as string | undefined
 
   // Helper to get component ID
   const getComponentId = () => {
@@ -69,7 +91,7 @@ export function renderComponent({
   }
 
   switch (component.type) {
-    case 'title':
+    case 'title': {
       if (editMode) {
         return (
           <EditableTitle
@@ -82,8 +104,27 @@ export function renderComponent({
           />
         )
       }
+      // Try library component, fallback to default
+      if (useLibraryComponent && libraryContext) {
+        return (
+          <LibraryComponentRenderer
+            component={component}
+            vibe={libraryContext.vibe}
+            palette={libraryContext.palette}
+            pattern={libraryContext.pattern}
+            slot={libraryContext.slot}
+            hasAccess={libraryContext.hasAccess}
+            style={style}
+            className={className}
+            defaultRender={() => (
+              <Title key={component.content} content={component.content} {...commonProps} />
+            )}
+          />
+        )
+      }
       return <Title key={component.content} content={component.content} {...commonProps} />
-    case 'subtitle':
+    }
+    case 'subtitle': {
       if (editMode) {
         return (
           <EditableSubtitle
@@ -96,7 +137,26 @@ export function renderComponent({
           />
         )
       }
+      // Try library component
+      if (useLibraryComponent && libraryContext) {
+        return (
+          <LibraryComponentRenderer
+            component={component}
+            vibe={libraryContext.vibe}
+            palette={libraryContext.palette}
+            pattern={libraryContext.pattern}
+            slot={libraryContext.slot}
+            hasAccess={libraryContext.hasAccess}
+            style={style}
+            className={className}
+            defaultRender={() => (
+              <Subtitle key={component.content} content={component.content} {...commonProps} />
+            )}
+          />
+        )
+      }
       return <Subtitle key={component.content} content={component.content} {...commonProps} />
+    }
     case 'button': {
       const buttonVariant = component.props?.variant as 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link' | undefined
       const buttonSize = component.props?.size as 'default' | 'sm' | 'lg' | 'icon' | undefined
@@ -113,6 +173,33 @@ export function renderComponent({
             variant={buttonVariant}
             size={buttonSize}
             {...commonProps}
+          />
+        )
+      }
+      
+      // Try library component
+      if (useLibraryComponent && libraryContext) {
+        return (
+          <LibraryComponentRenderer
+            component={component}
+            vibe={libraryContext.vibe}
+            palette={libraryContext.palette}
+            pattern={libraryContext.pattern}
+            slot={libraryContext.slot}
+            hasAccess={libraryContext.hasAccess}
+            style={style}
+            className={className}
+            onClick={onClick}
+            defaultRender={() => (
+              <Button
+                key={component.content}
+                content={component.content}
+                onClick={onClick}
+                variant={buttonVariant}
+                size={buttonSize}
+                {...commonProps}
+              />
+            )}
           />
         )
       }
@@ -170,7 +257,7 @@ export function renderComponent({
         />
       )
     }
-    case 'text':
+    case 'text': {
       if (editMode) {
         return (
           <EditableText
@@ -183,7 +270,26 @@ export function renderComponent({
           />
         )
       }
+      // Try library component
+      if (useLibraryComponent && libraryContext) {
+        return (
+          <LibraryComponentRenderer
+            component={component}
+            vibe={libraryContext.vibe}
+            palette={libraryContext.palette}
+            pattern={libraryContext.pattern}
+            slot={libraryContext.slot}
+            hasAccess={libraryContext.hasAccess}
+            style={style}
+            className={className}
+            defaultRender={() => (
+              <Text key={component.content} content={component.content} {...commonProps} />
+            )}
+          />
+        )
+      }
       return <Text key={component.content} content={component.content} {...commonProps} />
+    }
     case 'image':
       if (typeof component.props?.url === 'string') {
         const imageId = typeof component.props?.id === 'string' 

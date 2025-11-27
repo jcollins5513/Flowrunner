@@ -1,0 +1,36 @@
+{
+  "name": "Animated Beam",
+  "slug": "animated-beam",
+  "description": "Animated Beam component from Magic UI.",
+  "tags": [],
+  "category": "animation",
+  "installation": "",
+  "url": "https://magicui.design/docs/components/animated-beam",
+  "type": "component",
+  "layout_role": "widget",
+  "recommended_slots": [
+    "section.content",
+    "marketing.feature"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "Magic UI component.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "magic",
+  "client_only": true,
+  "imports": [
+    "\nimport React, { forwardRef, useRef } from \"react\"",
+    "\nimport { cn } from \"@/lib/utils\"",
+    "import { AnimatedBeam } from \"@/registry/magicui/animated-beam\""
+  ],
+  "dependencies": [
+    "@/lib/utils",
+    "@/registry/magicui/animated-beam",
+    "react"
+  ]
+}

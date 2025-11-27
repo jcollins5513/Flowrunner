@@ -1,0 +1,1549 @@
+{
+  "total_components": 50,
+  "components": [
+    {
+      "name": "Modern Architecture Landing Page Template",
+      "sanitized_name": "modern-architecture-landing-page-template",
+      "url": "https://www.aura.build/share/archdigest",
+      "description": "This reusable landing page template is designed for architecture studios showcasing modern, brutalist projects with portfolio, awards, and newsletter features.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Architecture",
+        "Portfolio",
+        "Projects",
+        "Awards",
+        "Carousel",
+        "Newsletter",
+        "Responsive",
+        "Modern Design",
+        "CTA"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "NeonShield Cyber Defense Infrastructure Template",
+      "sanitized_name": "neonshield-cyber-defense-infrastructure-template",
+      "url": "https://www.aura.build/share/neonshield-cyber",
+      "description": "This reusable landing page template is designed for cybersecurity platforms, showcasing infrastructure security features, integrations, developer tools, and live monitoring.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Cybersecurity",
+        "Infrastructure Security",
+        "Features",
+        "Integrations",
+        "Developer Tools",
+        "Analytics",
+        "Live Monitoring",
+        "CTA",
+        "UI Dashboard"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Nexus Engineering Workflow Landing Page Template",
+      "sanitized_name": "nexus-engineering-workflow-landing-page-template",
+      "url": "https://www.aura.build/share/nexus",
+      "description": "A reusable landing page template designed for engineering teams to showcase a high-performance product orchestration and deployment workflow system.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Engineering",
+        "Workflow",
+        "Product Releases",
+        "Automation",
+        "AI Assistance",
+        "Infrastructure",
+        "Features",
+        "CTA",
+        "Dark Mode"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Planet Explorer 3D Solar System Template",
+      "sanitized_name": "planet-explorer-3d-solar-system-template",
+      "url": "https://www.aura.build/share/planet-explorer-by-kavindi",
+      "description": "A reusable interactive 3D solar system template for educational and exploration purposes, featuring planet details, animations, and gamified UI elements.",
+      "category": "Animation",
+      "tags": [
+        "Landing Page",
+        "3D Visualization",
+        "Solar System",
+        "Interactive",
+        "Education",
+        "Gamification",
+        "Planet Details",
+        "Animation",
+        "AR Mode",
+        "Quiz"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Cinema Archive Interface Landing Page Template",
+      "sanitized_name": "cinema-archive-interface-landing-page-template",
+      "url": "https://www.aura.build/share/cinema-archive-12",
+      "description": "A reusable landing page template designed to showcase a vintage cinema archive collection with interactive 3D carousel and detailed movie info.",
+      "category": "Animation",
+      "tags": [
+        "Landing Page",
+        "Carousel",
+        "3D Effects",
+        "Vintage",
+        "Movie Archive",
+        "Interactive",
+        "Filter Navigation",
+        "Responsive",
+        "TailwindCSS",
+        "Animation"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Neural Intelligence AI Consulting Landing Page Template",
+      "sanitized_name": "neural-intelligence-ai-consulting-landing-page-template",
+      "url": "https://www.aura.build/share/cognitive",
+      "description": "This reusable landing page template is designed for AI consulting firms specializing in neural intelligence to showcase services, case studies, and client engagement.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Hero",
+        "Features",
+        "Services",
+        "Testimonials",
+        "Contact",
+        "AI Consulting",
+        "Neural Networks",
+        "Carousel",
+        "Statistics"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Creative Masterclass Landing Page Template",
+      "sanitized_name": "creative-masterclass-landing-page-template",
+      "url": "https://www.aura.build/share/creative-masterclas-4",
+      "description": "A reusable landing page template designed to promote and sell a creative storytelling masterclass course with curriculum highlights, pricing, and community features.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Hero",
+        "Features",
+        "Pricing",
+        "Testimonials",
+        "Interactive Demo",
+        "Community",
+        "Course",
+        "Masterclass",
+        "CTA"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Flux 3D Design Landing Page Template",
+      "sanitized_name": "flux-3d-design-landing-page-template",
+      "url": "https://www.aura.build/share/flux-3d-design-tool",
+      "description": "A reusable landing page template for a collaborative 3D spatial design tool enabling web-based creation and export of interactive scenes and React components.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "3D Design",
+        "Features",
+        "Pricing",
+        "Testimonials",
+        "Collaboration",
+        "React Export",
+        "Physics Engine",
+        "Event System",
+        "Spatial Web"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Kreona Studio AI Web UI Generator Template",
+      "sanitized_name": "kreona-studio-ai-web-ui-generator-template",
+      "url": "https://www.aura.build/share/kreona-studio-94",
+      "description": "This template provides a sleek, AI-powered web UI generator for creating scalable, production-ready websites from natural language prompts with clean code export.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "AI",
+        "Code Generation",
+        "Design System",
+        "Responsive",
+        "Pricing",
+        "Features",
+        "Testimonials",
+        "Web UI",
+        "Architecture"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Autonomous Fleet Exploration Landing Page Template",
+      "sanitized_name": "autonomous-fleet-exploration-landing-page-template",
+      "url": "https://www.aura.build/share/seamless-scroll-xrava",
+      "description": "A reusable landing page template designed for showcasing autonomous exploration fleets with advanced features, ideal for adventure and off-grid vehicle startups.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Hero",
+        "Features",
+        "Pricing",
+        "Testimonials",
+        "Horizontal Scroll",
+        "CTA",
+        "Autonomous Vehicles",
+        "Exploration",
+        "Fleet Management"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Kray Cafe Landing Page Template",
+      "sanitized_name": "kray-cafe-landing-page-template",
+      "url": "https://www.aura.build/share/kray-cafe-landing-90",
+      "description": "Reusable landing page template designed for authentic Korean cafes seeking to showcase their menu, atmosphere, and customer testimonials.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Hero",
+        "Features",
+        "Testimonials",
+        "Menu",
+        "Gallery",
+        "Contact",
+        "Social Proof",
+        "Korean Cafe",
+        "Booking"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Clarity Yield Treasury Management Landing Page Template",
+      "sanitized_name": "clarity-yield-treasury-management-landing-page-template",
+      "url": "https://www.aura.build/share/clarity-yield",
+      "description": "This template offers a modern landing page design for treasury management platforms, showcasing features, solutions, and program deployments to drive user engagement.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Treasury Management",
+        "Features",
+        "Solutions",
+        "Integrations",
+        "Pricing",
+        "Demo",
+        "Programs",
+        "Risk Management",
+        "Compliance"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Women's Empowerment Coaching Landing Page Template",
+      "sanitized_name": "womens-empowerment-coaching-landing-page-template",
+      "url": "https://www.aura.build/share/women-s-boundaries-69",
+      "description": "A reusable landing page template designed for coaches helping women set healthy boundaries and reclaim personal peace through supportive coaching programs.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Hero",
+        "Coaching",
+        "Pricing",
+        "Testimonials",
+        "Call to Action",
+        "Women's Empowerment",
+        "Boundaries",
+        "Discovery Call"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "DevForge Academy Coding Bootcamp Landing Page Template",
+      "sanitized_name": "devforge-academy-coding-bootcamp-landing-page-template",
+      "url": "https://www.aura.build/share/devforge",
+      "description": "This template provides a sleek, modern landing page for coding bootcamps, showcasing curriculum, mentorship, student outcomes, and calls to action for prospective students.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Hero",
+        "Features",
+        "Curriculum",
+        "Mentorship",
+        "Testimonials",
+        "Projects",
+        "CTA",
+        "Tech Stack",
+        "Education"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Qolaba AI Studio Landing Page Template",
+      "sanitized_name": "qolaba-ai-studio-landing-page-template",
+      "url": "https://www.aura.build/share/qolaba-ai-studio-73",
+      "description": "This reusable landing page template showcases a unified AI intelligence platform for orchestrating LLMs, autonomous agents, and AI-powered workflows.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "AI Studio",
+        "Automation",
+        "Features",
+        "Pricing",
+        "Workflows",
+        "Agents",
+        "File Uploads",
+        "Use Cases",
+        "Dark Mode"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Financial Intelligence Dashboard Template",
+      "sanitized_name": "financial-intelligence-dashboard-template",
+      "url": "https://www.aura.build/share/matrixpay",
+      "description": "This reusable template is designed for building a modern financial intelligence dashboard to automate treasury operations, visualize liquidity, and orchestrate payments across multiple currencies and chains.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Dashboard",
+        "Treasury",
+        "Payments",
+        "Financial Intelligence",
+        "Analytics",
+        "API",
+        "Security",
+        "Multi-Currency",
+        "Automation"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "SAKURA Predictive Architecture Landing Page Template",
+      "sanitized_name": "sakura-predictive-architecture-landing-page-template",
+      "url": "https://www.aura.build/share/sakura",
+      "description": "This landing page template is designed for AI-driven predictive architecture and analytics platforms, featuring automated scaling, data infrastructure, and enterprise-grade reliability.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Hero",
+        "Features",
+        "Testimonials",
+        "Pricing",
+        "FAQ",
+        "CTA",
+        "AI",
+        "Predictive Analytics",
+        "Infrastructure"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Nova 3D Design Tool Landing Page Template",
+      "sanitized_name": "nova-3d-design-tool-landing-page-template",
+      "url": "https://www.aura.build/share/nova-3d-design",
+      "description": "This reusable landing page template showcases Nova, a browser-based real-time 3D design tool for creating immersive web experiences and collaborative workflows.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "3D Design",
+        "Real-time Collaboration",
+        "Features",
+        "Pricing",
+        "Testimonials",
+        "UI",
+        "SaaS",
+        "Creative Tool"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Elite Health & Performance Adventure Landing Page Template",
+      "sanitized_name": "elite-health--performance-adventure-landing-page-template",
+      "url": "https://www.aura.build/share/elite-health-99",
+      "description": "This reusable landing page template is designed for luxury wellness and high-performance adventure services, combining elite travel, healthspan, genetics, and exclusive programs.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Hero",
+        "Features",
+        "Services",
+        "Luxury",
+        "Wellness",
+        "Adventure",
+        "Biohacking",
+        "Consultation",
+        "Testimonials"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Aurora Mobile Experience Landing Page Template",
+      "sanitized_name": "aurora-mobile-experience-landing-page-template",
+      "url": "https://www.aura.build/share/aurora-art-gallery-8",
+      "description": "A reusable mobile landing page template designed for art galleries and digital exhibitions to showcase collections, featured pieces, and membership benefits.",
+      "category": "Mobile",
+      "tags": [
+        "Landing Page",
+        "Mobile",
+        "Art Gallery",
+        "Collections",
+        "Featured Piece",
+        "Membership",
+        "Exhibitions",
+        "UI Template",
+        "Digital Art",
+        "Mobile UI"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Senior Software Engineer Portfolio Template",
+      "sanitized_name": "senior-software-engineer-portfolio-template",
+      "url": "https://www.aura.build/share/kyriakosmichael",
+      "description": "A reusable portfolio landing page template designed for senior software engineers to showcase work, skills, career timeline, and contact info with an AI assistant feature.",
+      "category": "Animation",
+      "tags": [
+        "Landing Page",
+        "Portfolio",
+        "Hero",
+        "Work Showcase",
+        "Skills Marquee",
+        "AI Assistant",
+        "Career Timeline",
+        "Contact",
+        "Tailwind CSS",
+        "Animation"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Nebula Web3 Infrastructure Landing Page Template",
+      "sanitized_name": "nebula-web3-infrastructure-landing-page-template",
+      "url": "https://www.aura.build/share/nebula",
+      "description": "A cutting-edge landing page template designed for Web3 protocols to showcase scalable, secure, and decentralized blockchain infrastructure solutions.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Web3",
+        "Blockchain",
+        "API",
+        "Infrastructure",
+        "Features",
+        "Testimonials",
+        "Pricing",
+        "Contact Form",
+        "Dark Mode"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Aura Unified Workspace Landing Page Template",
+      "sanitized_name": "aura-unified-workspace-landing-page-template",
+      "url": "https://www.aura.build/share/aura-unified-25",
+      "description": "A reusable landing page template designed to showcase a unified digital workspace with keyboard-first automation and integrations.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Hero",
+        "Features",
+        "Pricing",
+        "Testimonials",
+        "Dark Mode",
+        "Automation",
+        "Integrations",
+        "API",
+        "Focus Mode"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Personal Portfolio Landing Page Template",
+      "sanitized_name": "personal-portfolio-landing-page-template",
+      "url": "https://www.aura.build/share/tech-community-39",
+      "description": "This is a reusable personal portfolio landing page template designed for product designers to showcase their experience, projects, and contact info.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Portfolio",
+        "Hero",
+        "Projects",
+        "About",
+        "Experience",
+        "Contact",
+        "Resume",
+        "UI/UX",
+        "Designer"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Sparks Dashboard Landing Page Template",
+      "sanitized_name": "sparks-dashboard-landing-page-template",
+      "url": "https://www.aura.build/share/sparks-dashboard",
+      "description": "A reusable dashboard landing page template designed for visualizing sales pipelines, revenue forecasts, team health, and priority tasks with interactive charts.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Dashboard",
+        "Pipeline",
+        "Revenue",
+        "Charts",
+        "Team Health",
+        "Tasks",
+        "D3.js",
+        "Analytics",
+        "Marketing"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Enterprise SaaS UI Template",
+      "sanitized_name": "enterprise-saas-ui-template",
+      "url": "https://www.aura.build/share/gemini-3-0-svg-20",
+      "description": "A versatile, reusable template featuring an enterprise-grade SaaS icon system, advanced data visualization charts, kinetic interaction library, decorative assets, UI components, and a premium product showcase.",
+      "category": "Animation",
+      "tags": [
+        "Landing Page",
+        "SaaS",
+        "Icons",
+        "Data Visualization",
+        "Interaction Library",
+        "UI Components",
+        "Decorative Patterns",
+        "Animation",
+        "Dashboard",
+        "Product Showcase"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "FinTrax Financial Dashboard Template",
+      "sanitized_name": "fintrax-financial-dashboard-template",
+      "url": "https://www.aura.build/share/financial-dashboard",
+      "description": "This FinTrax Financial Dashboard Template provides a sleek, modern design for tracking transactions, credit scores, and cryptocurrency exchange, ideal for fintech and crypto apps.",
+      "category": "Mobile",
+      "tags": [
+        "Landing Page",
+        "Dashboard",
+        "Finance",
+        "Cryptocurrency",
+        "Exchange",
+        "Credit Score",
+        "Analytics",
+        "UI",
+        "Dark Mode",
+        "Responsive"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Developer Portfolio Landing Page Template",
+      "sanitized_name": "developer-portfolio-landing-page-template",
+      "url": "https://www.aura.build/share/dev-pranta-saha",
+      "description": "This reusable template showcases a developer portfolio focused on interactive web experiences using React and TypeScript, ideal for frontend technologists.",
+      "category": "Animation",
+      "tags": [
+        "Landing Page",
+        "Portfolio",
+        "React",
+        "TypeScript",
+        "Motion Design",
+        "Performance",
+        "Accessibility",
+        "Developer",
+        "Interactive UI",
+        "Contact"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Smart Garden Control Dashboard Template",
+      "sanitized_name": "smart-garden-control-dashboard-template",
+      "url": "https://www.aura.build/share/aurora-garden",
+      "description": "This template provides a modern, reusable dashboard UI for smart garden irrigation control, featuring automation, weather integration, and scheduling.",
+      "category": "Web",
+      "tags": [
+        "Dashboard",
+        "Smart Garden",
+        "Irrigation",
+        "Automation",
+        "Weather Forecast",
+        "Scheduling",
+        "Water Usage",
+        "Controls",
+        "Analytics",
+        "Responsive"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "NovaPulse AI Music Studio Landing Page Template",
+      "sanitized_name": "novapulse-ai-music-studio-landing-page-template",
+      "url": "https://www.aura.build/share/novapulse-ai",
+      "description": "This template provides a cutting-edge AI music studio landing page, designed to showcase AI-driven music generation, collaboration, and licensing features for creators and studios.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "AI Music",
+        "Features",
+        "Pricing",
+        "Collaboration",
+        "Audio Player",
+        "Workflow",
+        "Licensing",
+        "Neural Processing",
+        "UI"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Canvas Visual Synthesis Landing Page Template",
+      "sanitized_name": "canvas-visual-synthesis-landing-page-template",
+      "url": "https://www.aura.build/share/canvas-visual",
+      "description": "A reusable landing page template designed for creative tech platforms offering modular, parametric, and open-source visual synthesis tools.",
+      "category": "Animation",
+      "tags": [
+        "Landing Page",
+        "Hero",
+        "Features",
+        "Stats",
+        "Carousel",
+        "Open Source",
+        "UI Components",
+        "Animation",
+        "Creative Tools",
+        "Download"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "OmnixAI Intelligent Automation Landing Page Template",
+      "sanitized_name": "omnixai-intelligent-automation-landing-page-template",
+      "url": "https://www.aura.build/share/omnixai-intelligent",
+      "description": "This template provides a sleek, modern landing page designed for AI and intelligent automation platforms to showcase features, pricing, testimonials, and company info.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Hero",
+        "Features",
+        "Pricing",
+        "Testimonials",
+        "AI",
+        "Automation",
+        "SaaS",
+        "Process",
+        "Call-to-Action"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "NeuroDesk AI Workspace Landing Page Template",
+      "sanitized_name": "neurodesk-ai-workspace-landing-page-template",
+      "url": "https://www.aura.build/share/neurodesk-ai",
+      "description": "This template provides a sleek AI-powered workspace landing page designed to showcase workflow automation, team collaboration, and product offerings for tech and product teams.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Hero",
+        "Features",
+        "Pricing",
+        "Testimonials",
+        "FAQ",
+        "Signup Form",
+        "AI Workspace",
+        "Workflow Automation",
+        "Team Collaboration"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Project Management Dashboard Template",
+      "sanitized_name": "project-management-dashboard-template",
+      "url": "https://www.aura.build/share/project-dashboard",
+      "description": "A reusable project management dashboard template designed to organize tasks, sprints, and team collaboration efficiently.",
+      "category": "Web",
+      "tags": [
+        "Dashboard",
+        "Project Management",
+        "Kanban Board",
+        "Task Tracking",
+        "Team Collaboration",
+        "Sprint Planning",
+        "Comments",
+        "Sidebar Navigation",
+        "Dark Mode"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Lumina Real Estate Dashboard Template",
+      "sanitized_name": "lumina-real-estate-dashboard-template",
+      "url": "https://www.aura.build/share/lumina-dashboard",
+      "description": "A reusable dashboard template designed for real estate professionals to track property listings, sales statistics, and client messages effectively.",
+      "category": "Web",
+      "tags": [
+        "Dashboard",
+        "Real Estate",
+        "Listings",
+        "Sales Statistics",
+        "Messages",
+        "Analytics",
+        "Property Management",
+        "Charts",
+        "User Profile",
+        "Search"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Voyage Travel Landing Page Template",
+      "sanitized_name": "voyage-travel-landing-page-template",
+      "url": "https://www.aura.build/share/aero-travel",
+      "description": "A reusable travel landing page template designed to showcase curated journeys, destinations, pricing plans, and traveler testimonials for modern explorers.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Travel",
+        "Destinations",
+        "Experiences",
+        "Pricing",
+        "Testimonials",
+        "Features",
+        "Adventure",
+        "Tours",
+        "Booking"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Design & Prototyping Mobile App Template",
+      "sanitized_name": "design--prototyping-mobile-app-template",
+      "url": "https://www.aura.build/share/mobile-app-design",
+      "description": "A reusable mobile app design template showcasing event timelines, immersive sessions, and course details for UX and interaction design projects.",
+      "category": "Mobile",
+      "tags": [
+        "Mobile App",
+        "UX Research",
+        "Event Timeline",
+        "Prototyping",
+        "Interaction Design",
+        "Course Schedule",
+        "User Persona",
+        "Team Collaboration",
+        "UI Components"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Novus Arc Studio Landing Page Template",
+      "sanitized_name": "novus-arc-studio-landing-page-template",
+      "url": "https://www.aura.build/share/novus",
+      "description": "A modern landing page template designed for architecture and design studios showcasing parametric design and brutalist principles with interactive visuals and steps.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Architecture",
+        "Parametric Design",
+        "Brutalism",
+        "Interactive Stats",
+        "Visual Showcase",
+        "Process Steps",
+        "Responsive",
+        "CTA",
+        "Modern UI"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Creative Suite Landing Page Template",
+      "sanitized_name": "creative-suite-landing-page-template",
+      "url": "https://www.aura.build/share/lumina-video",
+      "description": "This template provides a sleek, modern landing page designed for creative AI-powered video editing and storytelling platforms, showcasing features, steps, stats, and social proof.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Hero",
+        "Features",
+        "Steps",
+        "Testimonials",
+        "Stats",
+        "Contact",
+        "Social Media",
+        "Pricing",
+        "Case Studies"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "DesignForge AI Creative Workspace Template",
+      "sanitized_name": "designforge-ai-creative-workspace-template",
+      "url": "https://www.aura.build/share/designforg-ai",
+      "description": "A reusable landing page template for AI-powered design collaboration and portfolio management, enabling creative teams to generate, refine, and showcase digital designs.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "AI Collaboration",
+        "Creative Tools",
+        "Portfolio",
+        "Features",
+        "Pricing",
+        "Workflow",
+        "Showcase",
+        "CTA"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "NovaCash Financial Dashboard Landing Page Template",
+      "sanitized_name": "novacash-financial-dashboard-landing-page-template",
+      "url": "https://www.aura.build/share/personal-finance",
+      "description": "A reusable landing page template designed for personal finance and budgeting apps to showcase spending lanes, cashflow insights, and growth tracking.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Finance",
+        "Dashboard",
+        "Spending Lanes",
+        "Cashflow",
+        "Budgeting",
+        "Analytics",
+        "Growth Tracking",
+        "Mobile Mockup",
+        "Responsive"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Visual Narrative Designer Portfolio Template",
+      "sanitized_name": "visual-narrative-designer-portfolio-template",
+      "url": "https://www.aura.build/share/nova-studio",
+      "description": "This template is designed for visual narrative designers to showcase portfolios, client case studies, and campaign workflows, perfect for creative studios.",
+      "category": "Mobile",
+      "tags": [
+        "Landing Page",
+        "Portfolio",
+        "Visual Design",
+        "Case Studies",
+        "Workflow",
+        "Campaigns",
+        "Testimonials",
+        "Contact",
+        "Analytics",
+        "Services"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Astria Autonomous Agents Landing Page Template",
+      "sanitized_name": "astria-autonomous-agents-landing-page-template",
+      "url": "https://www.aura.build/share/astria-saas-landing-page",
+      "description": "This reusable landing page template showcases Astria, a platform for deploying and managing autonomous AI agents to automate workflows across product, growth, and support.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Hero",
+        "Features",
+        "Pricing",
+        "Testimonials",
+        "Video",
+        "Changelog",
+        "Trust Logos",
+        "CTA"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Influencer Marketing Landing Page Template",
+      "sanitized_name": "influencer-marketing-landing-page-template",
+      "url": "https://www.aura.build/share/rhythmstyle",
+      "description": "This reusable influencer marketing landing page template connects brands with talent through a talent-first approach, featuring case studies, services, and contact forms.",
+      "category": "Mobile",
+      "tags": [
+        "Landing Page",
+        "Influencer Marketing",
+        "Talent Network",
+        "Case Studies",
+        "Services",
+        "Contact Form",
+        "Brand Partnerships",
+        "Campaign Results",
+        "Social Media",
+        "Creator Management"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Mira Growth Dashboard Landing Page Template",
+      "sanitized_name": "mira-growth-dashboard-landing-page-template",
+      "url": "https://www.aura.build/share/mira-growth-dashboard",
+      "description": "This reusable landing page template is designed for SaaS growth and revenue teams to showcase a data-driven client expansion dashboard with AI-powered insights.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Hero",
+        "Features",
+        "Pricing",
+        "Testimonials",
+        "Dashboard",
+        "AI Assistant",
+        "SaaS",
+        "Growth",
+        "Revenue"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Observ Subscription Monitoring Landing Page Template",
+      "sanitized_name": "observ-subscription-monitoring-landing-page-template",
+      "url": "https://www.aura.build/share/observ-ai",
+      "description": "This template provides a sleek, modern landing page designed for AI-powered subscription monitoring and financial insight platforms.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Hero",
+        "Features",
+        "Pricing",
+        "Testimonials",
+        "Analytics",
+        "Dashboard",
+        "SaaS",
+        "AI",
+        "Finance"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "NeonGrid Sign In Template",
+      "sanitized_name": "neongrid-sign-in-template",
+      "url": "https://www.aura.build/share/neongrid-login",
+      "description": "This reusable sign-in template is designed for secure workspace access, featuring email login, password input, and social sign-in options.",
+      "category": "Web",
+      "tags": [
+        "Sign In",
+        "Login Form",
+        "Workspace",
+        "Authentication",
+        "Social Login",
+        "Tailwind CSS",
+        "Dark UI",
+        "Responsive",
+        "Security",
+        "User Access"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Lumina Skin Rituals Landing Page Template",
+      "sanitized_name": "lumina-skin-rituals-landing-page-template",
+      "url": "https://www.aura.build/share/lumina-skin",
+      "description": "This reusable landing page template showcases a gentle skincare ritual brand, designed to promote sensitive skin products and build customer engagement.",
+      "category": "Web",
+      "tags": [
+        "Landing Page",
+        "Hero",
+        "Features",
+        "Products",
+        "Testimonials",
+        "Clinical Results",
+        "Pricing",
+        "Call to Action",
+        "Skincare",
+        "Routine"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Educational Workshop & Course Overview Template",
+      "sanitized_name": "educational-workshop--course-overview-template",
+      "url": "https://www.aura.build/share/interactive-learning",
+      "description": "A reusable landing page template designed for showcasing live workshops, course details, and instructor profiles for educational platforms.",
+      "category": "Mobile",
+      "tags": [
+        "Landing Page",
+        "Workshop",
+        "Course Overview",
+        "Instructor Profile",
+        "Live Session",
+        "Schedule",
+        "Projects",
+        "Enrollment",
+        "Education"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    },
+    {
+      "name": "Fluxora AI Infrastructure Landing Page Template",
+      "sanitized_name": "fluxora-ai-infrastructure-landing-page-template",
+      "url": "https://www.aura.build/share/fluxora",
+      "description": "This reusable landing page template is designed to showcase AI-driven infrastructure and edge computing services for ambitious teams building scalable products.",
+      "category": "Animation",
+      "tags": [
+        "Landing Page",
+        "Hero",
+        "Features",
+        "Pricing",
+        "Testimonials",
+        "AI",
+        "Infrastructure",
+        "Edge Computing",
+        "Services",
+        "Animation"
+      ],
+      "type": "template",
+      "recommended_slots": [
+        "landing.hero",
+        "landing.section",
+        "gallery"
+      ],
+      "source": "aura",
+      "has_code": true,
+      "screenshots": {
+        "preview": true,
+        "code": false
+      }
+    }
+  ],
+  "generated_at": "2025-11-26 05:41:24"
+}

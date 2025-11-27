@@ -1,0 +1,70 @@
+{
+  "name": "Aceternity UI",
+  "slug": "infinite-moving-cards",
+  "description": "A customizable group of cards that move infinitely in a loop. Made with Framer Motion and Tailwind CSS.",
+  "props": [
+    {
+      "Prop": "items",
+      "Type": "{ quote: string; name: string; title: string; }[]",
+      "Description": "An array of objects, each containing a quote, name, and title."
+    },
+    {
+      "Prop": "direction",
+      "Type": "\"left\" | \"right\"",
+      "Description": "The direction of the animation. Default is \"left\"."
+    },
+    {
+      "Prop": "speed",
+      "Type": "\"fast\" | \"normal\" | \"slow\"",
+      "Description": "The speed of the animation. Default is \"fast\"."
+    },
+    {
+      "Prop": "pauseOnHover",
+      "Type": "boolean",
+      "Description": "If true, the animation will pause when the mouse hovers over it. Default is true."
+    },
+    {
+      "Prop": "className",
+      "Type": "string",
+      "Description": "Optional additional CSS classes to apply to the component."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/infinite-moving-cardsCopy",
+  "url": "https://ui.aceternity.com/components/infinite-moving-cards",
+  "type": "card",
+  "subtype": "",
+  "layout_role": "inline-block",
+  "recommended_slots": [
+    "grid.item",
+    "section.content"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "auto-height",
+  "z_index_role": "content",
+  "usage_notes": "A customizable group of cards that move infinitely in a loop. Made with Framer Motion and Tailwind CSS.",
+  "theme_requirements": [
+    "tailwind-classes"
+  ],
+  "data_requirements": [
+    {
+      "name": "items",
+      "fields": [
+        "title",
+        "description",
+        "media"
+      ],
+      "type": "array"
+    }
+  ],
+  "domain_tags": [],
+  "imports": [
+    " \nimport React, { useEffect, useState } from \"react\";",
+    "import { InfiniteMovingCards } from \"../ui/infinite-moving-cards\";"
+  ],
+  "dependencies": [
+    "react"
+  ],
+  "client_only": true
+}

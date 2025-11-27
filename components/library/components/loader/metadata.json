@@ -1,0 +1,32 @@
+{
+  "name": "Aceternity UI",
+  "slug": "loader",
+  "description": "A set of simple and minimal loaders for your loading screens and components.",
+  "props": [],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/loaderCopy",
+  "url": "https://ui.aceternity.com/components/loader",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A set of simple and minimal loaders for your loading screens and components.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { LoaderOne } from \"@/components/ui/loader\";"
+  ],
+  "dependencies": [
+    "@/components/ui/loader",
+    "react"
+  ],
+  "client_only": false
+}

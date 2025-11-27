@@ -1,0 +1,1062 @@
+<html lang="en"><head><meta charset="UTF-8">
+<title>Clarity Yield - Advantage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+.border-gradient {
+position: relative;
+}
+.border-gradient::before {
+content: "";
+position: absolute;
+inset: 0;
+border-radius: 9999px;
+padding: 1px;
+-webkit-mask: linear-gradient(#fff 0 0) content-box,
+linear-gradient(#fff 0 0);
+-webkit-mask-composite: xor;
+mask-composite: exclude;
+background: linear-gradient(225deg,
+rgba(255, 255, 255, 0) 0%,
+rgba(255, 255, 255, 0.25) 50%,
+rgba(255, 255, 255, 0) 100%);
+pointer-events: none;
+}
+.border-gradient-card::before {
+border-radius: 1rem;
+}
+@keyframes sparkle {
+0%,
+100% {
+opacity: 0;
+transform: scale(0);
+}
+50% {
+opacity: 1;
+transform: scale(1);
+}
+}
+.sparkle {
+position: absolute;
+width: 3px;
+height: 3px;
+background: white;
+border-radius: 50%;
+opacity: 0;
+animation: sparkle 3s ease-in-out infinite;
+}
+.group:hover .sparkle {
+animation: sparkle 2s ease-in-out infinite;
+}
+</style>
+<script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+<style>
+.font-geist {
+font-family: 'Geist', sans-serif !important;
+}
+</style>
+<style>
+.font-jakarta {
+font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+</style>
+<script src="https://www.aura.build/FxFilter.js"></script>
+<meta name="disabled-font-classes" content="font-roboto,font-montserrat,font-poppins,font-playfair,font-instrument-serif,font-merriweather,font-bricolage,font-manrope,font-space-grotesk,font-work-sans,font-pt-serif,font-geist-mono,font-space-mono,font-quicksand,font-nunito"><link id="all-fonts-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist">.font-geist { font-family: 'Geist', sans-serif !important; }</style><link id="all-fonts-link-font-roboto" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-roboto">.font-roboto { font-family: 'Roboto', sans-serif !important; }</style><link id="all-fonts-link-font-montserrat" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-montserrat">.font-montserrat { font-family: 'Montserrat', sans-serif !important; }</style><link id="all-fonts-link-font-poppins" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-poppins">.font-poppins { font-family: 'Poppins', sans-serif !important; }</style><link id="all-fonts-link-font-playfair" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&amp;display=swap"><style id="all-fonts-style-font-playfair">.font-playfair { font-family: 'Playfair Display', serif !important; }</style><link id="all-fonts-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-instrument-serif">.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }</style><link id="all-fonts-link-font-merriweather" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;display=swap"><style id="all-fonts-style-font-merriweather">.font-merriweather { font-family: 'Merriweather', serif !important; }</style><link id="all-fonts-link-font-bricolage" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-bricolage">.font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }</style><link id="all-fonts-link-font-jakarta" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-jakarta">.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }</style><link id="all-fonts-link-font-manrope" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-manrope">.font-manrope { font-family: 'Manrope', sans-serif !important; }</style><link id="all-fonts-link-font-space-grotesk" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-space-grotesk">.font-space-grotesk { font-family: 'Space Grotesk', sans-serif !important; }</style><link id="all-fonts-link-font-work-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-work-sans">.font-work-sans { font-family: 'Work Sans', sans-serif !important; }</style><link id="all-fonts-link-font-pt-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-pt-serif">.font-pt-serif { font-family: 'PT Serif', serif !important; }</style><link id="all-fonts-link-font-geist-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist-mono">.font-geist-mono { font-family: 'Geist Mono', monospace !important; }</style><link id="all-fonts-link-font-space-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-space-mono">.font-space-mono { font-family: 'Space Mono', monospace !important; }</style><link id="all-fonts-link-font-quicksand" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-quicksand">.font-quicksand { font-family: 'Quicksand', sans-serif !important; }</style><link id="all-fonts-link-font-nunito" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-nunito">.font-nunito { font-family: 'Nunito', sans-serif !important; }</style><link id="all-fonts-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist">.font-geist { font-family: 'Geist', sans-serif !important; }</style><link id="all-fonts-link-font-roboto" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-roboto">.font-roboto { font-family: 'Roboto', sans-serif !important; }</style><link id="all-fonts-link-font-montserrat" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-montserrat">.font-montserrat { font-family: 'Montserrat', sans-serif !important; }</style><link id="all-fonts-link-font-poppins" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-poppins">.font-poppins { font-family: 'Poppins', sans-serif !important; }</style><link id="all-fonts-link-font-playfair" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&amp;display=swap"><style id="all-fonts-style-font-playfair">.font-playfair { font-family: 'Playfair Display', serif !important; }</style><link id="all-fonts-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-instrument-serif">.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }</style><link id="all-fonts-link-font-merriweather" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;display=swap"><style id="all-fonts-style-font-merriweather">.font-merriweather { font-family: 'Merriweather', serif !important; }</style><link id="all-fonts-link-font-bricolage" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-bricolage">.font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }</style><link id="all-fonts-link-font-jakarta" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-jakarta">.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }</style><link id="all-fonts-link-font-manrope" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-manrope">.font-manrope { font-family: 'Manrope', sans-serif !important; }</style><link id="all-fonts-link-font-space-grotesk" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-space-grotesk">.font-space-grotesk { font-family: 'Space Grotesk', sans-serif !important; }</style><link id="all-fonts-link-font-work-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-work-sans">.font-work-sans { font-family: 'Work Sans', sans-serif !important; }</style><link id="all-fonts-link-font-pt-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-pt-serif">.font-pt-serif { font-family: 'PT Serif', serif !important; }</style><link id="all-fonts-link-font-geist-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist-mono">.font-geist-mono { font-family: 'Geist Mono', monospace !important; }</style><link id="all-fonts-link-font-space-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-space-mono">.font-space-mono { font-family: 'Space Mono', monospace !important; }</style><link id="all-fonts-link-font-quicksand" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-quicksand">.font-quicksand { font-family: 'Quicksand', sans-serif !important; }</style><link id="all-fonts-link-font-nunito" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-nunito">.font-nunito { font-family: 'Nunito', sans-serif !important; }</style><link id="all-fonts-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist">.font-geist { font-family: 'Geist', sans-serif !important; }</style><link id="all-fonts-link-font-roboto" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-roboto">.font-roboto { font-family: 'Roboto', sans-serif !important; }</style><link id="all-fonts-link-font-montserrat" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-montserrat">.font-montserrat { font-family: 'Montserrat', sans-serif !important; }</style><link id="all-fonts-link-font-poppins" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-poppins">.font-poppins { font-family: 'Poppins', sans-serif !important; }</style><link id="all-fonts-link-font-playfair" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&amp;display=swap"><style id="all-fonts-style-font-playfair">.font-playfair { font-family: 'Playfair Display', serif !important; }</style><link id="all-fonts-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-instrument-serif">.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }</style><link id="all-fonts-link-font-merriweather" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;display=swap"><style id="all-fonts-style-font-merriweather">.font-merriweather { font-family: 'Merriweather', serif !important; }</style><link id="all-fonts-link-font-bricolage" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-bricolage">.font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }</style><link id="all-fonts-link-font-jakarta" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-jakarta">.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }</style><link id="all-fonts-link-font-manrope" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-manrope">.font-manrope { font-family: 'Manrope', sans-serif !important; }</style><link id="all-fonts-link-font-space-grotesk" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-space-grotesk">.font-space-grotesk { font-family: 'Space Grotesk', sans-serif !important; }</style><link id="all-fonts-link-font-work-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-work-sans">.font-work-sans { font-family: 'Work Sans', sans-serif !important; }</style><link id="all-fonts-link-font-pt-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-pt-serif">.font-pt-serif { font-family: 'PT Serif', serif !important; }</style><link id="all-fonts-link-font-geist-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist-mono">.font-geist-mono { font-family: 'Geist Mono', monospace !important; }</style><link id="all-fonts-link-font-space-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-space-mono">.font-space-mono { font-family: 'Space Mono', monospace !important; }</style><link id="all-fonts-link-font-quicksand" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-quicksand">.font-quicksand { font-family: 'Quicksand', sans-serif !important; }</style><link id="all-fonts-link-font-nunito" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-nunito">.font-nunito { font-family: 'Nunito', sans-serif !important; }</style><link id="all-fonts-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist">.font-geist { font-family: 'Geist', sans-serif !important; }</style><link id="all-fonts-link-font-roboto" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-roboto">.font-roboto { font-family: 'Roboto', sans-serif !important; }</style><link id="all-fonts-link-font-montserrat" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-montserrat">.font-montserrat { font-family: 'Montserrat', sans-serif !important; }</style><link id="all-fonts-link-font-poppins" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-poppins">.font-poppins { font-family: 'Poppins', sans-serif !important; }</style><link id="all-fonts-link-font-playfair" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&amp;display=swap"><style id="all-fonts-style-font-playfair">.font-playfair { font-family: 'Playfair Display', serif !important; }</style><link id="all-fonts-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-instrument-serif">.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }</style><link id="all-fonts-link-font-merriweather" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;display=swap"><style id="all-fonts-style-font-merriweather">.font-merriweather { font-family: 'Merriweather', serif !important; }</style><link id="all-fonts-link-font-bricolage" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-bricolage">.font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }</style><link id="all-fonts-link-font-jakarta" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-jakarta">.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }</style><link id="all-fonts-link-font-manrope" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-manrope">.font-manrope { font-family: 'Manrope', sans-serif !important; }</style><link id="all-fonts-link-font-space-grotesk" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-space-grotesk">.font-space-grotesk { font-family: 'Space Grotesk', sans-serif !important; }</style><link id="all-fonts-link-font-work-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-work-sans">.font-work-sans { font-family: 'Work Sans', sans-serif !important; }</style><link id="all-fonts-link-font-pt-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-pt-serif">.font-pt-serif { font-family: 'PT Serif', serif !important; }</style><link id="all-fonts-link-font-geist-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist-mono">.font-geist-mono { font-family: 'Geist Mono', monospace !important; }</style><link id="all-fonts-link-font-space-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-space-mono">.font-space-mono { font-family: 'Space Mono', monospace !important; }</style><link id="all-fonts-link-font-quicksand" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-quicksand">.font-quicksand { font-family: 'Quicksand', sans-serif !important; }</style><link id="all-fonts-link-font-nunito" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-nunito">.font-nunito { font-family: 'Nunito', sans-serif !important; }</style><link id="all-fonts-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist">
+.font-geist {
+font-family: 'Geist', sans-serif !important;
+}
+</style><link id="all-fonts-link-font-jakarta" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-jakarta">
+.font-jakarta {
+font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+</style><style id="border-gradient-shared-style">
+[style*="--border-gradient"]::before {
+content: "";
+position: absolute;
+inset: 0;
+padding: 1px;
+border-radius: var(--border-radius-before, inherit);
+-webkit-mask: linear-gradient(#fff 0 0) content-box,
+linear-gradient(#fff 0 0);
+-webkit-mask-composite: xor;
+mask-composite: exclude;
+background: var(--border-gradient);
+pointer-events: none;
+}</style></head>
+
+<body class="min-h-screen antialiased text-slate-100 bg-slate-950">
+
+
+
+
+
+
+
+
+
+
+<!-- Background (component) added by Aura -->
+<div class="aura-background-component top-0 w-full h-screen -z-10 mix-blend-screen absolute saturate-0" data-alpha-mask="80" style="; mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent)"><div class="aura-background-component top-0 w-full -z-10 absolute h-full">
+  <div data-us-project="EET25BiXxR2StNXZvAzF" class="absolute w-full h-full left-0 top-0 -z-10"></div>
+  <script type="text/javascript">
+    !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head || document.body).appendChild(i)}}();
+  </script>
+</div></div>
+  <header class="relative">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="flex items-center justify-between py-5">
+        <a href="#" class="flex items-center gap-2">
+          <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-slate-900/80 border-gradient border-gradient-card">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-sky-200"><path d="M2.75 12a4.25 4.25 0 0 1 6.8-3.4a.75.75 0 1 0 .901-1.2A5.75 5.75 0 1 0 7 17.75c.784 0 1.464-.143 2.064-.435s1.079-.714 1.489-1.215c.66-.804 1.196-1.894 1.776-3.074l.339-.689a.755.755 0 0 0-.339-1.008a.745.745 0 0 0-1.003.337l-.366.743c-.584 1.183-1.027 2.082-1.567 2.74c-.307.375-.624.64-.986.817s-.81.284-1.407.284A4.25 4.25 0 0 1 2.75 12"></path><path d="M12.67 12.335a.755.755 0 0 0-.34-1.006a.746.746 0 0 0-.975.284q.162-.323.316-.639c.58-1.18 1.117-2.27 1.776-3.074c.41-.501.89-.923 1.49-1.215S16.217 6.25 17 6.25a5.75 5.75 0 1 1-3.45 10.35a.75.75 0 0 1 .9-1.2A4.25 4.25 0 1 0 17 7.75c-.596 0-1.045.107-1.406.284c-.363.176-.68.442-.987.816c-.54.66-.983 1.558-1.567 2.741q-.174.355-.369.744z" opacity=".5"></path></svg>
+        </span>
+          <span class="font-semibold tracking-tight text-slate-50 font-geist">Clarity Yield</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-8 text-sm text-white/80">
+          <a class="hover:text-white transition font-geist" href="#">
+            Features
+          </a>
+          <a class="hover:text-white transition font-geist" href="#">
+            Solutions
+          </a>
+          <a class="hover:text-white transition font-geist" href="#">
+            Integrations
+          </a>
+          <a class="hover:text-white transition font-geist" href="#">
+            Pricing
+          </a>
+        </nav>
+        <div class="flex items-center gap-3">
+          <a class="hidden sm:inline-flex text-sm text-white/80 hover:text-white transition font-geist" href="#">
+            Sign in
+          </a>
+          <a href="#" class="inline-flex items-center gap-2 rounded-full border-gradient before:rounded-full bg-white/5 px-4 py-2.5 text-sm font-medium hover:bg-white/10 transition font-geist">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+              <path d="m10 17 5-5-5-5"></path>
+              <path d="M15 12H3"></path>
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+            </svg>
+            Create account
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex min-h-[90vh] sm:px-8 lg:px-16 w-full pt-10 pr-4 pb-10 pl-4 items-stretch justify-center">
+    <div class="grid bg-center sm:p-10 lg:grid-cols-2 lg:gap-16 lg:p-14 w-full max-w-6xl rounded-3xl pt-6 pr-6 pb-6 pl-6 gap-x-10 gap-y-10">
+      <!-- Left column -->
+      <section class="flex flex-col gap-10 gap-x-10 gap-y-10 justify-center">
+        <div class="space-y-6">
+          <p class="text-sm font-medium tracking-[0.18em] text-sky-300 font-geist">
+            OUR EDGE
+          </p>
+          <div class="space-y-3">
+            <h1 class="sm:text-5xl text-4xl text-slate-50 tracking-tight font-jakarta">
+              Streamline Growth
+            </h1>
+            <p class="text-lg font-normal leading-relaxed text-sky-100/80 font-geist">
+              Capital orchestration for modern teams, turning fragmented flows
+              into a single, adaptive financial layer.
+            </p>
+          </div>
+        </div>
+
+        <!-- Image -->
+        <div class="overflow-hidden border-gradient border-gradient-card bg-[radial-gradient(circle_at_top_left,var(--tw-gradient-stops))] from-white/10 to-white/0 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative">
+  <div class="bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-sky-400/20 via-transparent to-transparent absolute top-0 right-0 bottom-0 left-0">
+</div>
+  <div class="relative space-y-4">
+    <div class="flex items-center gap-3">
+      <div class="flex bg-gradient-to-br from-blue-500/20 to-blue-500/0 w-10 h-10 rounded-xl items-center justify-center" style="position: relative; --border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0)); --border-radius-before: 12px">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-sky-300">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+          </path>
+          <polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline>
+          <polyline points="7.5 19.79 7.5 14.6 3 12"></polyline>
+          <polyline points="21 12 16.5 14.6 16.5 19.79"></polyline>
+          <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+          <line x1="12" y1="22.08" x2="12" y2="12"></line>
+        </svg>
+      </div>
+      <div class="flex-1">
+        <div class="flex items-center gap-2 mb-1">
+  <div class="h-2 w-2 rounded-full bg-green-400 animate-pulse"></div>
+  <span class="text-xs font-medium text-slate-300 font-geist">Live Network Activity</span>
+</div>
+        <div class="text-xl font-semibold text-slate-50 font-geist">$2.4B</div>
+      </div>
+    </div>
+    <div class="grid grid-cols-3 gap-3 pt-2">
+      <div class="bg-gradient-to-br from-white/10 to-white/0 rounded-lg px-3 py-3" style="position: relative; --border-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)); --border-radius-before: 8px">
+        <div class="text-xs text-slate-400 font-geist mb-1">Volume 24h</div>
+        <div class="text-sm font-semibold text-slate-50 font-geist">$847M</div>
+      </div>
+      <div class="bg-gradient-to-br from-white/10 to-white/0 rounded-lg pt-3 pr-3 pb-3 pl-3" style="position: relative; --border-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)); --border-radius-before: 8px">
+        <div class="text-xs text-slate-400 font-geist mb-1">Networks</div>
+        <div class="text-sm font-semibold text-slate-50 font-geist">12+</div>
+      </div>
+      <div class="bg-gradient-to-br from-white/10 to-white/0 rounded-lg pt-3 pr-3 pb-3 pl-3" style="position: relative; --border-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)); --border-radius-before: 8px">
+        <div class="text-xs text-slate-400 font-geist mb-1">Uptime</div>
+        <div class="text-sm font-semibold text-slate-50 font-geist">99.9%</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+        <div class="flex items-center justify-between pt-4 text-xs text-sky-200/80">
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center justify-center border-gradient border-gradient-card bg-slate-900/80 w-7 h-7 rounded-full">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-sky-200"><path d="M2.75 12a4.25 4.25 0 0 1 6.8-3.4a.75.75 0 1 0 .901-1.2A5.75 5.75 0 1 0 7 17.75c.784 0 1.464-.143 2.064-.435s1.079-.714 1.489-1.215c.66-.804 1.196-1.894 1.776-3.074l.339-.689a.755.755 0 0 0-.339-1.008a.745.745 0 0 0-1.003.337l-.366.743c-.584 1.183-1.027 2.082-1.567 2.74c-.307.375-.624.64-.986.817s-.81.284-1.407.284A4.25 4.25 0 0 1 2.75 12"></path><path d="M12.67 12.335a.755.755 0 0 0-.34-1.006a.746.746 0 0 0-.975.284q.162-.323.316-.639c.58-1.18 1.117-2.27 1.776-3.074c.41-.501.89-.923 1.49-1.215S16.217 6.25 17 6.25a5.75 5.75 0 1 1-3.45 10.35a.75.75 0 0 1 .9-1.2A4.25 4.25 0 1 0 17 7.75c-.596 0-1.045.107-1.406.284c-.363.176-.68.442-.987.816c-.54.66-.983 1.558-1.567 2.741q-.174.355-.369.744z" opacity=".5"></path></svg>
+</span>
+            <div class="space-y-0.5">
+              <p class="font-semibold tracking-tight text-slate-50 font-geist">
+                Clarity Yield
+              </p>
+              <p class="text-xs text-sky-200/70 font-geist">
+                Infra for programmable liquidity
+              </p>
+            </div>
+          </div>
+          <p class="hidden text-xs text-sky-300/70 sm:block font-geist">
+            Series B · Backed by 40+ global funds
+          </p>
+        </div>
+
+        <div class="pt-4">
+          <a href="#" class="group inline-flex items-center gap-3 transition-colors duration-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/60 text-white/90 bg-gradient-to-b from-white/10 via-white/0 to-white/10 w-full max-w-fit rounded-[28px] pt-1 pr-1 pb-1 pl-1 relative" aria-label="Schedule a demo" style="box-shadow: inset 0 1px 0 rgba(56, 189, 248, 0.4); position: relative; --border-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1)); --border-radius-before: 28px">
+            <span class="pointer-events-none absolute -inset-1 rounded-full opacity-0 blur-xl transition duration-500 group-hover:opacity-100" style="background: radial-gradient(60% 60% at 50% 50%, rgba(56,189,248,.55), rgba(56,189,248,0) 70%);" aria-hidden="true"></span>
+            <span class="isolate inline-flex items-center gap-3 bg-gradient-to-br from-sky-500/0 via-sky-500/10 to-sky-500/0 rounded-3xl pt-3 pr-6 pb-3 pl-6 relative">
+<span class="pointer-events-none absolute inset-0 rounded-[999px] opacity-70 [box-shadow:inset_0_1px_0_rgba(255,255,255,.08),inset_0_-6px_20px_rgba(0,0,0,.5)]" aria-hidden="true"></span>
+            <span class="pointer-events-none absolute inset-0 overflow-hidden rounded-[999px]" aria-hidden="true">
+<span class="sparkle left-4 top-2" style="animation-delay: 0s;"></span>
+            <span class="sparkle left-10 top-6" style="animation-delay: 0.3s;"></span>
+            <span class="sparkle left-20 top-3" style="animation-delay: 0.6s;"></span>
+            <span class="sparkle left-28 top-7" style="animation-delay: 0.9s;"></span>
+            <span class="sparkle right-8 top-4" style="animation-delay: 1.2s;"></span>
+            <span class="sparkle right-16 top-8" style="animation-delay: 1.5s;"></span>
+            </span>
+            <span class="relative z-10 font-semibold tracking-tight font-geist">Schedule a demo</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="relative z-10 transition-transform duration-300 group-hover:translate-x-0.5">
+              <path d="M5 12h14"></path>
+              <path d="m12 5 7 7-7 7"></path>
+            </svg>
+            </span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Right column -->
+      <section class="flex flex-col sm:p-6 lg:p-8 bg-center bg-slate-900/50 bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/e54c4dc6-3c47-4eee-a300-14234e4e7b29_1600w.webp)] bg-cover rounded-3xl pt-4 pr-4 pb-4 pl-4 justify-center">
+        <div class="space-y-4">
+          <!-- Optimized funding runway -->
+          <article class="space-y-3">
+            <button class="w-full flex sm:px-5 border-gradient border-gradient-card cursor-pointer hover:bg-slate-900/80 transition-all duration-200 bg-gradient-to-br from-black/60 to-black/25 rounded-2xl pt-3 pr-4 pb-3 pl-4 shadow-[5.7px_5.7px_8.6px_rgba(0,_0,_0,_0.07),_13.7px_13.7px_10.9px_rgba(0,_0,_0,_0.099),_25.7px_25.7px_20.5px_rgba(0,_0,_0,_0.123),_45.8px_45.8px_36.6px_rgba(0,_0,_0,_0.147),_85.8px_85.8px_68.5px_rgba(0,_0,_0,_0.176),_205px_205px_163.4px_rgba(0,_0,_0,_0.246)] backdrop-blur gap-x-3 gap-y-3 items-center justify-between" data-tab="" data-target="panel-1" type="button" style="position: relative; --border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2)); --border-radius-before: 16px">
+        <div class="flex items-center gap-3">
+          <div class="flex border-gradient bg-slate-800/70 w-8 h-8 rounded-full items-center justify-center transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-sky-200">
+              <path d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2s7.071 0 8.535 1.464C22 4.93 22 7.286 22 12s0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12" opacity=".5"></path>
+              <path d="M14.5 10.75a.75.75 0 0 1 0-1.5H17a.75.75 0 0 1 .75.75v2.5a.75.75 0 0 1-1.5 0v-.69l-2.013 2.013a1.75 1.75 0 0 1-2.474 0l-1.586-1.586a.25.25 0 0 0-.354 0L7.53 14.53a.75.75 0 0 1-1.06-1.06l2.293-2.293a1.75 1.75 0 0 1 2.474 0l1.586 1.586a.25.25 0 0 0 .354 0l2.012-2.013z"></path>
+            </svg>
+          </div>
+          <p class="text-sm font-medium tracking-tight text-slate-50 font-geist">
+            Optimized funding runway
+          </p>
+        </div>
+        <span class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 text-slate-50 border-gradient">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="" data-arrow="panel-1" style="transform: rotate(180deg);">
+            <path d="m8.303 12.404 3.327 3.431c.213.22.527.22.74 0l6.43-6.63C19.201 8.79 18.958 8 18.43 8h-5.723z"></path>
+            <path d="M11.293 8H5.57c-.528 0-.771.79-.37 1.205l2.406 2.481z" opacity=".5"></path>
+          </svg>
+        </span>
+      </button>
+            <article class="sm:p-5 border-gradient border-gradient-card transition-all duration-300 bg-sky-100/90 rounded-2xl pt-4 pr-4 pb-4 pl-4 shadow-[2.8px_2.8px_2.2px_rgba(0,_0,_0,_0.034),_6.7px_6.7px_5.3px_rgba(0,_0,_0,_0.048),_12.5px_12.5px_10px_rgba(0,_0,_0,_0.06),_22.3px_22.3px_17.9px_rgba(0,_0,_0,_0.072),_41.8px_41.8px_33.4px_rgba(0,_0,_0,_0.086),_100px_100px_80px_rgba(0,_0,_0,_0.12)] backdrop-blur space-y-4" id="panel-1">
+              <header class="flex items-start justify-between gap-3">
+                <div class="flex items-center gap-3">
+                  <div class="flex border-gradient bg-slate-900/5 w-9 h-9 rounded-full items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-slate-800">
+                      <path d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2s7.071 0 8.535 1.464C22 4.93 22 7.286 22 12s0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12" opacity=".5"></path>
+                      <path d="M14.5 10.75a.75.75 0 0 1 0-1.5H17a.75.75 0 0 1 .75.75v2.5a.75.75 0 0 1-1.5 0v-.69l-2.013 2.013a1.75 1.75 0 0 1-2.474 0l-1.586-1.586a.25.25 0 0 0-.354 0L7.53 14.53a.75.75 0 0 1-1.06-1.06l2.293-2.293a1.75 1.75 0 0 1 2.474 0l1.586 1.586a.25.25 0 0 0 .354 0l2.012-2.013z">
+                      </path>
+                    </svg>
+                  </div>
+                  <div class="">
+                    <h2 class="text-lg font-semibold tracking-tight text-slate-950 font-geist">
+                      Optimized funding runway
+                    </h2>
+                    <p class="hidden text-sm font-normal text-slate-900/80 sm:block font-geist">
+                      Cut capital friction and keep your roadmap in motion.
+                    </p>
+                  </div>
+                </div>
+              </header>
+              <p class="text-sm font-normal leading-relaxed text-slate-900/80 font-geist">
+                Dynamic pricing rails compress the cost of raising and moving capital across networks. Automate treasury
+                routing, minimize idle balances, and unlock new strategies without adding operational overhead.
+              </p>
+            </article>
+          </article>
+
+          <!-- Real-time risk visibility -->
+          <article class="space-y-3">
+            <button class="flex sm:px-5 border-gradient border-gradient-card cursor-pointer hover:bg-slate-900/80 transition-all duration-200 bg-gradient-to-br from-black/60 to-black/25 w-full rounded-2xl pt-3 pr-4 pb-3 pl-4 shadow-[5.7px_5.7px_8.6px_rgba(0,_0,_0,_0.07),_13.7px_13.7px_10.9px_rgba(0,_0,_0,_0.099),_25.7px_25.7px_20.5px_rgba(0,_0,_0,_0.123),_45.8px_45.8px_36.6px_rgba(0,_0,_0,_0.147),_85.8px_85.8px_68.5px_rgba(0,_0,_0,_0.176),_205px_205px_163.4px_rgba(0,_0,_0,_0.246)] backdrop-blur gap-x-3 gap-y-3 items-center justify-between" data-tab="" data-target="panel-2" type="button" style="position: relative; --border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2)); --border-radius-before: 16px">
+        <div class="flex items-center gap-3">
+          <div class="flex border-gradient bg-slate-800/70 w-8 h-8 rounded-full items-center justify-center transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-sky-200">
+              <path d="M3 10c0-3.771 0-5.657 1.172-6.828S7.229 2 11 2h2c3.771 0 5.657 0 6.828 1.172S21 6.229 21 10v4c0 3.771 0 5.657-1.172 6.828S16.771 22 13 22h-2c-3.771 0-5.657 0-6.828-1.172S3 17.771 3 14z" opacity=".5"></path>
+              <path d="M9.25 9A.75.75 0 0 1 10 8.25h4a.75.75 0 0 1 0 1.5h-4A.75.75 0 0 1 9.25 9m0 4a.75.75 0 0 1 .75-.75h4a.75.75 0 0 1 0 1.5h-4a.75.75 0 0 1-.75-.75m0 4a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5H10a.75.75 0 0 1-.75-.75"></path>
+            </svg>
+          </div>
+          <p class="text-sm font-medium text-slate-50 tracking-tight font-geist">
+            Real-time risk visibility
+          </p>
+        </div>
+        <span class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 text-slate-50 border-gradient">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="" data-arrow="panel-2" style="transform: rotate(0deg);">
+            <path d="m8.303 12.404 3.327 3.431c.213.22.527.22.74 0l6.43-6.63C19.201 8.79 18.958 8 18.43 8h-5.723z"></path>
+            <path d="M11.293 8H5.57c-.528 0-.771.79-.37 1.205l2.406 2.481z" opacity=".5"></path>
+          </svg>
+        </span>
+      </button>
+            <article class="sm:p-5 border-gradient border-gradient-card transition-all duration-300 bg-sky-100/90 rounded-2xl pt-4 pr-4 pb-4 pl-4 backdrop-blur space-y-4 hidden" id="panel-2">
+              <header class="flex items-start justify-between gap-3">
+                <div class="flex items-center gap-3">
+                  <div class="flex border-gradient bg-slate-900/5 w-9 h-9 rounded-full items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-slate-800">
+                      <path d="M3 10c0-3.771 0-5.657 1.172-6.828S7.229 2 11 2h2c3.771 0 5.657 0 6.828 1.172S21 6.229 21 10v4c0 3.771 0 5.657-1.172 6.828S16.771 22 13 22h-2c-3.771 0-5.657 0-6.828-1.172S3 17.771 3 14z" opacity=".5"></path>
+                      <path d="M9.25 9A.75.75 0 0 1 10 8.25h4a.75.75 0 0 1 0 1.5h-4A.75.75 0 0 1 9.25 9m0 4a.75.75 0 0 1 .75-.75h4a.75.75 0 0 1 0 1.5h-4a.75.75 0 0 1-.75-.75m0 4a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5H10a.75.75 0 0 1-.75-.75">
+                      </path>
+                    </svg>
+                  </div>
+                  <div class="">
+                    <h2 class="text-lg font-semibold tracking-tight text-slate-950 font-geist">
+                      Real-time risk visibility
+                    </h2>
+                    <p class="hidden text-sm font-normal text-slate-900/80 sm:block font-geist">
+                      Monitor exposure across all chains in one unified view.
+                    </p>
+                  </div>
+                </div>
+              </header>
+              <p class="text-sm font-normal leading-relaxed text-slate-900/80 font-geist">
+                Surface concentration risk, counterparty exposure, and protocol health metrics as they evolve, so
+                decisions are grounded in live data, not yesterday's snapshot.
+              </p>
+            </article>
+          </article>
+
+          <!-- Collaborative treasury rules -->
+          <article class="space-y-3">
+            <button class="w-full flex sm:px-5 border-gradient border-gradient-card cursor-pointer hover:bg-slate-900/80 transition-all duration-200 bg-gradient-to-br from-black/60 to-black/25 rounded-2xl pt-3 pr-4 pb-3 pl-4 shadow-[5.7px_5.7px_8.6px_rgba(0,_0,_0,_0.07),_13.7px_13.7px_10.9px_rgba(0,_0,_0,_0.099),_25.7px_25.7px_20.5px_rgba(0,_0,_0,_0.123),_45.8px_45.8px_36.6px_rgba(0,_0,_0,_0.147),_85.8px_85.8px_68.5px_rgba(0,_0,_0,_0.176),_205px_205px_163.4px_rgba(0,_0,_0,_0.246)] backdrop-blur gap-x-3 gap-y-3 items-center justify-between" data-tab="" data-target="panel-3" type="button" style="position: relative; --border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2)); --border-radius-before: 16px">
+        <div class="flex items-center gap-3">
+          <div class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-800/70 border-gradient transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-sky-200">
+              <circle cx="15" cy="6" r="3" opacity=".4"></circle>
+              <ellipse cx="16" cy="17" opacity=".4" rx="5" ry="3"></ellipse>
+              <circle cx="9.001" cy="6" r="4"></circle>
+              <ellipse cx="9.001" cy="17.001" rx="7" ry="4"></ellipse>
+            </svg>
+          </div>
+          <p class="text-sm font-medium tracking-tight text-slate-50 font-geist">
+            Collaborative treasury rules
+          </p>
+        </div>
+        <span class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 text-slate-50 border-gradient">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="" data-arrow="panel-3" style="transform: rotate(0deg);">
+            <path d="m8.303 12.404 3.327 3.431c.213.22.527.22.74 0l6.43-6.63C19.201 8.79 18.958 8 18.43 8h-5.723z"></path>
+            <path d="M11.293 8H5.57c-.528 0-.771.79-.37 1.205l2.406 2.481z" opacity=".5"></path>
+          </svg>
+        </span>
+      </button>
+            <article class="sm:p-5 border-gradient border-gradient-card transition-all duration-300 bg-sky-100/90 rounded-2xl pt-4 pr-4 pb-4 pl-4 backdrop-blur space-y-4 hidden" id="panel-3">
+              <header class="flex items-start justify-between gap-3">
+                <div class="flex items-center gap-3">
+                  <div class="flex border-gradient bg-slate-900/5 w-9 h-9 rounded-full items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-slate-800">
+                      <circle cx="15" cy="6" r="3" opacity=".4"></circle>
+                      <ellipse cx="16" cy="17" opacity=".4" rx="5" ry="3"></ellipse>
+                      <circle cx="9.001" cy="6" r="4"></circle>
+                      <ellipse cx="9.001" cy="17.001" rx="7" ry="4"></ellipse>
+                    </svg>
+                  </div>
+                  <div>
+                    <h2 class="text-lg font-semibold tracking-tight text-slate-950 font-geist">
+                      Collaborative treasury rules
+                    </h2>
+                    <p class="hidden text-sm font-normal text-slate-900/80 sm:block font-geist">
+                      Align operators, finance, and governance in one surface.
+                    </p>
+                  </div>
+                </div>
+              </header>
+              <p class="text-sm font-normal leading-relaxed text-slate-900/80 font-geist">
+                Encode approvals, spending thresholds, and scenario playbooks as living policies, so teams can move
+                quickly without sacrificing control or auditability.
+              </p>
+            </article>
+          </article>
+
+          <!-- Compliant by design -->
+          <article class="space-y-3">
+            <button class="w-full flex sm:px-5 border-gradient border-gradient-card cursor-pointer hover:bg-slate-900/80 transition-all duration-200 bg-gradient-to-br from-black/60 to-black/25 rounded-2xl pt-3 pr-4 pb-3 pl-4 shadow-[5.7px_5.7px_8.6px_rgba(0,_0,_0,_0.07),_13.7px_13.7px_10.9px_rgba(0,_0,_0,_0.099),_25.7px_25.7px_20.5px_rgba(0,_0,_0,_0.123),_45.8px_45.8px_36.6px_rgba(0,_0,_0,_0.147),_85.8px_85.8px_68.5px_rgba(0,_0,_0,_0.176),_205px_205px_163.4px_rgba(0,_0,_0,_0.246)] backdrop-blur gap-x-3 gap-y-3 items-center justify-between" data-tab="" data-target="panel-4" type="button" style="position: relative; --border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2)); --border-radius-before: 16px">
+        <div class="flex items-center gap-3">
+          <div class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-800/70 border-gradient transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" style="color: rgb(186, 230, 253); width: 16px; height: 16px" class="text-sky-200 w-[16px] h-[16px]" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" data-solar="notes-bold-duotone" data-icon-set="solar" data-icon-replaced="true" stroke-width="1.5">
+              <path fill="#bae6fd" fill-rule="evenodd" d="m20.83 10.715-.518 1.932c-.605 2.255-.907 3.383-1.592 4.114a4 4 0 0 1-2.01 1.161q-.145.034-.295.052c-.915.113-2.032-.186-4.064-.73-2.255-.605-3.383-.907-4.114-1.592a4 4 0 0 1-1.161-2.011c-.228-.976.074-2.103.679-4.358l.517-1.932.244-.905c.455-1.666.761-2.583 1.348-3.21a4 4 0 0 1 2.01-1.16c.976-.228 2.104.074 4.36.679.5.135.94.254 1.324.371.36.11.673.206.96.313.667.25 1.145.55 1.536.917a4 4 0 0 1 1.161 2.012c.228.976-.075 2.103-.679 4.358m-9.778-.91a.75.75 0 0 1 .919-.53l4.83 1.295a.75.75 0 1 1-.389 1.448l-4.83-1.294a.75.75 0 0 1-.53-.918m-.776 2.898a.75.75 0 0 1 .918-.53l2.898.777a.75.75 0 1 1-.388 1.448l-2.898-.776a.75.75 0 0 1-.53-.919" clip-rule="evenodd"></path>
+              <path fill="#bae6fd" d="M16.415 17.975a4 4 0 0 1-1.068 1.677c-.731.685-1.859.987-4.114 1.591s-3.383.907-4.358.679a4 4 0 0 1-2.011-1.161c-.685-.731-.988-1.859-1.592-4.114l-.517-1.932c-.605-2.255-.907-3.383-.68-4.358a4 4 0 0 1 1.162-2.011c.731-.685 1.859-.987 4.114-1.592q.638-.172 1.165-.309l-.244.906-.517 1.932c-.605 2.255-.907 3.382-.68 4.358a4 4 0 0 0 1.162 2.011c.731.685 1.859.987 4.114 1.592 2.032.544 3.149.843 4.064.73" opacity=".5"></path>
+            </svg>
+          </div>
+          <p class="text-sm font-medium tracking-tight text-slate-50 font-geist">
+            Compliant by design
+          </p>
+        </div>
+        <span class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 text-slate-50 border-gradient">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="" data-arrow="panel-4" style="transform: rotate(0deg);">
+            <path d="m8.303 12.404 3.327 3.431c.213.22.527.22.74 0l6.43-6.63C19.201 8.79 18.958 8 18.43 8h-5.723z"></path>
+            <path d="M11.293 8H5.57c-.528 0-.771.79-.37 1.205l2.406 2.481z" opacity=".5"></path>
+          </svg>
+        </span>
+      </button>
+            <article class="sm:p-5 border-gradient border-gradient-card transition-all duration-300 bg-sky-100/90 rounded-2xl pt-4 pr-4 pb-4 pl-4 backdrop-blur space-y-4 hidden" id="panel-4">
+              <header class="flex items-start justify-between gap-3">
+                <div class="flex items-center gap-3">
+                  <div class="flex border-gradient bg-slate-900/5 w-9 h-9 rounded-full items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-slate-800">
+                      <path d="M9 12h.01"></path>
+                      <path d="M15 12h.01"></path>
+                      <path d="M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5"></path>
+                      <path d="M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 2.5c-.8 0-1.5-.4-1.5-1">
+                      </path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h2 class="text-lg font-semibold tracking-tight text-slate-950 font-geist">
+                      Compliant by design
+                    </h2>
+                    <p class="hidden text-sm font-normal text-slate-900/80 sm:block font-geist">
+                      Map every transaction to policy, counterparties, and jurisdiction.
+                    </p>
+                  </div>
+                </div>
+              </header>
+              <p class="text-sm font-normal leading-relaxed text-slate-900/80 font-geist">
+                Automatically surface the evidence regulators and auditors expect—ownership trails, approvals, and risk
+                flags—without slowing down day-to-day operations.
+              </p>
+            </article>
+          </article>
+        </div>
+
+        <script>
+          (function () {
+      const tabItems = document.querySelectorAll("[data-tab]");
+      const panels = document.querySelectorAll("#panel-1, #panel-2, #panel-3, #panel-4");
+
+      function showPanel(targetId) {
+        panels.forEach((panel) => {
+          const arrowIcon = document.querySelector('[data-arrow="' + panel.id + '"]');
+          if (panel.id === targetId) {
+            panel.classList.remove("hidden");
+            if (arrowIcon) {
+              arrowIcon.style.transform = "rotate(180deg)";
+            }
+          } else {
+            if (!panel.classList.contains("hidden")) {
+              panel.classList.add("hidden");
+            }
+            if (arrowIcon) {
+              arrowIcon.style.transform = "rotate(0deg)";
+            }
+          }
+        });
+      }
+
+      tabItems.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const targetId = tab.getAttribute("data-target");
+          if (targetId) {
+            const targetPanel = document.getElementById(targetId);
+            const isOpen = targetPanel && !targetPanel.classList.contains("hidden");
+            if (isOpen) {
+              targetPanel.classList.add("hidden");
+              const arrowIcon = document.querySelector('[data-arrow="' + targetId + '"]');
+              if (arrowIcon) {
+                arrowIcon.style.transform = "rotate(0deg)";
+              }
+            } else {
+              showPanel(targetId);
+            }
+          }
+        });
+      });
+
+      showPanel("panel-1");
+    })();
+        </script>
+      </section>
+    </div>
+  </div><div class="sm:px-8 lg:px-16 w-full mt-12 mb-12 pr-4 pb-16 pl-4">
+  <section class="flex flex-col overflow-hidden border-gradient border-gradient-card before:rounded-[2.5rem] bg-[radial-gradient(circle_at_top_left,var(--tw-gradient-stops))] from-white/10 to-white/0 w-full max-w-6xl rounded-[2.5rem] mr-auto ml-auto pt-10 pr-6 pb-10 pl-6 relative">
+  <div class="bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-sky-400/20 via-transparent to-transparent absolute top-0 right-0 bottom-0 left-0"><img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/27564e74-24f8-4d09-bce5-71132afc4076_1600w.webp" alt="Container background" class="w-full h-full object-cover absolute top-0 right-0 bottom-0 left-0" data-container-bg="true" style="mask-image: linear-gradient(180deg, transparent, black 55%, black 60%, transparent); -webkit-mask-image: linear-gradient(180deg, transparent, black 55%, black 60%, transparent);">
+</div>
+  <!-- Floating search pill -->
+  <div class="flex -translate-x-1/2 bg-slate-900/90 ring-slate-700/70 ring-1 rounded-full pt-2 pr-4 pb-2 pl-2 absolute top-4 left-1/2 shadow-[0_12px_30px_rgba(15,23,42,0.7)] backdrop-blur space-x-2 items-center">
+    <span class="inline-flex items-center justify-center border-gradient border-gradient-card bg-slate-900/80 w-7 h-7 rounded-full">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" style="color: rgb(186, 230, 253); width: 16px; height: 16px" class="text-sky-200 w-[16px] h-[16px]" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" data-solar="hearts-bold-duotone" data-icon-set="solar" data-icon-replaced="true" stroke-width="2"><path fill="#bae6fd" d="M2 9.137C2 14 6.02 16.591 8.962 18.911C10 19.729 11 20.5 12 20.5s2-.77 3.038-1.59C17.981 16.592 22 14 22 9.138S16.5.825 12 5.501C7.5.825 2 4.274 2 9.137" opacity=".5"></path><path fill="#bae6fd" d="M16.5 13.287c-2.475-2.716-5.5-.712-5.5 2.112c0 2.56 1.814 4.035 3.358 5.292l.044.036l.427.35c.571.475 1.121.923 1.671.923s1.1-.448 1.671-.923C19.789 19.73 22 18.224 22 15.399c0-.927-.326-1.767-.853-2.38c-1.075-1.251-2.985-1.556-4.647.268"></path></svg>
+</span>
+    <p class="text-sm font-medium text-slate-100 font-geist">
+      Reframing capital, one treasury at a time.
+    </p>
+  </div>
+
+  <!-- Stacked cards background -->
+  <div class="pointer-events-none z-0 flex gap-3 absolute top-16 right-6 left-6 justify-center">
+</div>
+
+  <!-- Content container -->
+  <div class="z-10 grid gap-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:items-center mt-20 relative gap-x-10 gap-y-10">
+    <!-- Left: Values -->
+    <div class="space-y-8">
+      <div class="inline-flex bg-gradient-to-br from-blue-500/10 to-blue-500/0 rounded-full ring-sky-400/40 pt-1 pr-3 pb-1 pl-3 gap-x-2 gap-y-2 items-center" style="position: relative; --border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)); --border-radius-before: 9999px">
+        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="18" height="18" viewBox="0 0 24 24" data-icon="solar:stars-bold-duotone" data-width="18" data-height="18">
+          <path fill="currentColor" d="M15.252 10.689c-.987-1.18-1.48-1.77-2.048-1.68c-.567.091-.832.803-1.362 2.227l-.138.368c-.15.405-.226.607-.373.756c-.146.149-.348.228-.75.386l-.367.143c-1.417.555-2.126.833-2.207 1.4s.52 1.049 1.721 2.011l.31.25c.342.273.513.41.611.597c.1.187.115.404.146.837l.029.394c.11 1.523.166 2.285.683 2.545s1.154-.155 2.427-.983l.329-.215c.362-.235.543-.353.75-.387c.208-.033.42.022.841.132l.385.1c1.485.386 2.228.58 2.629.173s.193-1.144-.221-2.62l-.108-.38c-.117-.42-.176-.63-.147-.837c.03-.208.145-.39.374-.756l.21-.332c.807-1.285 1.21-1.927.94-2.438c-.269-.511-1.033-.553-2.562-.635l-.396-.022c-.434-.023-.652-.035-.841-.13c-.19-.095-.33-.263-.61-.599z">
+          </path>
+          <path fill="currentColor" d="M10.331 4.252c1.316-1.574 1.974-2.361 2.73-2.24s1.11 1.07 1.817 2.969l.183.491c.201.54.302.81.497 1.008c.196.199.464.304 1.001.514l.489.192c1.89.74 2.835 1.11 2.942 1.866c.108.757-.693 1.398-2.294 2.682l-.414.332c-.455.365-.683.547-.815.797s-.152.538-.194 1.115l-.038.526c-.148 2.031-.222 3.047-.911 3.393c-.69.347-1.538-.206-3.236-1.311l-.439-.286c-.482-.314-.723-.47-1-.515s-.558.028-1.121.175l-.513.133c-1.98.516-2.971.773-3.505.231s-.258-1.526.295-3.492l.142-.509c.157-.559.236-.838.197-1.115c-.04-.277-.193-.52-.499-1.008l-.278-.443C4.29 8.044 3.752 7.187 4.11 6.507c.36-.682 1.379-.737 3.418-.848l.527-.028c.58-.031.869-.047 1.122-.174c.252-.127.439-.35.813-.798z" opacity=".5"></path>
+        </svg>
+        <span class="text-xs font-medium uppercase tracking-[0.22em] text-sky-200 font-geist">
+            Treasury, reimagined
+          </span>
+      </div>
+
+      <div class="space-y-3">
+        <h2 class="sm:text-5xl text-4xl font-normal text-slate-50 tracking-tight font-jakarta">
+          Inclusive.
+
+          Adaptive.
+
+          Compounding.
+        </h2>
+        <p class="text-xl font-normal leading-relaxed text-sky-100/85 font-geist">
+          We build capital systems that see every market, every team, and every constraint—then orchestrate them into
+          a single, compounding advantage.
+        </p>
+      </div>
+
+      <dl class="grid gap-4 sm:grid-cols-3">
+        <div class="bg-gradient-to-br from-white/10 via-white/0 to-white/10 rounded-2xl ring-slate-700/70 pt-4 pr-4 pb-4 pl-4 backdrop-blur-lg" style="position: relative; --border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1)); --border-radius-before: 16px">
+          <dt class="flex uppercase text-xs font-medium text-slate-400 tracking-[0.18em] font-geist mb-1 gap-x-2 gap-y-2 items-center">Capital</dt>
+          <dd class="text-lg font-semibold text-slate-50 font-geist">
+            $4.7B
+          </dd>
+        </div>
+        <div class="bg-gradient-to-br from-white/10 via-white/0 to-white/10 rounded-2xl ring-slate-700/70 pt-4 pr-4 pb-4 pl-4 backdrop-blur-lg" style="position: relative; --border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1)); --border-radius-before: 16px">
+          <dt class="mb-1 flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-slate-400 font-geist">
+            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="16" height="16" viewBox="0 0 24 24" data-icon="solar:users-group-rounded-bold-duotone" data-width="16" data-height="16" class="w-[16px] h-[16px]" stroke-width="2" data-icon-replaced="true" style="color: rgb(148, 163, 184); width: 16px; height: 16px;">
+              <circle cx="15" cy="6" r="3" fill="currentColor" opacity=".4"></circle>
+              <ellipse cx="16" cy="17" fill="currentColor" opacity=".4" rx="5" ry="3" class=""></ellipse>
+              <circle cx="9.001" cy="6" r="4" fill="currentColor"></circle>
+              <ellipse cx="9.001" cy="17.001" fill="currentColor" rx="7" ry="4" class=""></ellipse>
+            </svg>
+            Institutions
+          </dt>
+          <dd class="text-lg font-semibold text-slate-50 font-geist">
+            180+
+          </dd>
+        </div>
+        <div class="bg-gradient-to-br from-white/10 via-white/0 to-white/10 rounded-2xl ring-slate-700/70 pt-4 pr-4 pb-4 pl-4 backdrop-blur-lg" style="position: relative; --border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1)); --border-radius-before: 16px">
+  <dt class="flex gap-2 uppercase text-xs font-medium text-slate-400 tracking-[0.18em] font-geist mb-1 gap-x-2 gap-y-2 items-center">Policy</dt>
+  <dd class="text-lg font-semibold text-slate-50 font-geist">
+  99.98%
+</dd>
+</div>
+      </dl>
+    </div>
+
+    <!-- Right: Highlight card -->
+    <div class="relative">
+      <div class="absolute -right-6 -top-6 hidden h-16 w-16 rounded-3xl bg-gradient-to-br from-sky-400/80 via-sky-500/30 to-transparent blur-xl sm:block">
+      </div>
+      <div class="bg-gradient-to-br from-white/80 to-white/30 rounded-3xl ring-sky-100/60 pt-5 pr-5 pb-5 pl-5 relative shadow-[4px_4px_6px_rgba(0,_0,_0,_0.049),_9.6px_9.6px_7.6px_rgba(0,_0,_0,_0.069),_18px_18px_14.3px_rgba(0,_0,_0,_0.086),_32px_32px_25.6px_rgba(0,_0,_0,_0.103),_60px_60px_47.8px_rgba(0,_0,_0,_0.123),_143px_143px_114.3px_rgba(0,_0,_0,_0.172)] backdrop-blur-xl" style="position: relative; --border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0)); --border-radius-before: 24px">
+        <div class="flex items-start justify-between gap-4">
+          <div class="space-y-2">
+            <p class="text-base font-semibold tracking-tight text-slate-950 font-geist">
+              Personalized liquidity, at every touchpoint.
+            </p>
+            <p class="text-base font-normal leading-relaxed text-slate-800/90 font-geist">
+              Every desk, protocol, and partner sees the same live picture of cash, collateral, and risk—so decisions
+              move as fast as the market, not the back office.
+            </p>
+          </div>
+          <span class="inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-slate-900/90 text-sky-200 shadow-[0_10px_25px_rgba(15,23,42,0.9)]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" style="color: rgb(186, 230, 253); width: 22px; height: 22px" class="w-[22px] h-[22px]" aria-hidden="true" role="img" data-icon="solar:radar-2-bold-duotone" data-width="22" data-height="22" data-solar="chart-square-bold-duotone" data-icon-set="solar" data-icon-replaced="true" stroke-width="2"><path fill="#bae6fd" d="M12 22c-4.714 0-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12s0-7.071 1.464-8.536C4.93 2 7.286 2 12 2s7.071 0 8.535 1.464C22 4.93 22 7.286 22 12s0 7.071-1.465 8.535C19.072 22 16.714 22 12 22" opacity=".5"></path><path fill="#bae6fd" d="M12 5.25a.75.75 0 0 1 .75.75v12a.75.75 0 0 1-1.5 0V6a.75.75 0 0 1 .75-.75m-5 3a.75.75 0 0 1 .75.75v9a.75.75 0 0 1-1.5 0V9A.75.75 0 0 1 7 8.25m10 4a.75.75 0 0 1 .75.75v5a.75.75 0 0 1-1.5 0v-5a.75.75 0 0 1 .75-.75"></path></svg>
+            </span>
+        </div>
+
+        <div class="mt-5 grid gap-3 sm:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+          <div class="bg-white/70 rounded-2xl ring-slate-200 pt-3 pr-4 pb-3 pl-4 shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]">
+            <div class="mb-1 flex items-center justify-between gap-2">
+              <p class="uppercase text-xs font-medium text-slate-500 tracking-[0.18em] font-geist">Strategy</p>
+              <span class="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" style="color: rgb(241, 245, 249); width: 14px; height: 14px;" class="w-[14px] h-[14px]" aria-hidden="true" role="img" data-icon="solar:graph-up-bold-duotone" data-width="14" data-height="14" data-solar="round-alt-arrow-down-bold-duotone" data-icon-set="solar" data-icon-replaced="true" stroke-width="2"><path fill="#f1f5f9" d="M2 12c0 5.523 4.477 10 10 10s10-4.477 10-10S17.523 2 12 2S2 6.477 2 12" opacity=".5"></path><path fill="#f1f5f9" d="M15.53 11.03a.75.75 0 1 0-1.06-1.06L12 12.44L9.53 9.97a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0z"></path></svg>
+                  <span class="text-xs font-medium text-emerald-700 font-geist">
+                    +18%
+                  </span>
+              </span>
+            </div>
+            <p class="text-lg font-semibold text-slate-900 font-geist">
+              92.4%
+            </p>
+            <p class="mt-1 text-xs font-normal text-slate-600 font-geist">
+              Auto-routed to preferred venues with guardrails baked in.
+            </p>
+          </div>
+
+          <div class="bg-slate-900/90 rounded-2xl ring-slate-700/80 pt-3 pr-4 pb-3 pl-4 shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]">
+            <div class="mb-1 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="16" height="16" viewBox="0 0 24 24" data-icon="solar:clock-circle-bold-duotone" data-width="16" data-height="16" class="">
+                <path fill="currentColor" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2S2 6.477 2 12s4.477 10 10 10" opacity=".5" class=""></path>
+                <path fill="currentColor" fill-rule="evenodd" d="M12 7.25a.75.75 0 0 1 .75.75v3.69l2.28 2.28a.75.75 0 1 1-1.06 1.06l-2.5-2.5a.75.75 0 0 1-.22-.53V8a.75.75 0 0 1 .75-.75" clip-rule="evenodd"></path>
+              </svg>
+              <p class="uppercase text-xs font-medium text-sky-200 tracking-[0.18em] font-geist">Time</p>
+            </div>
+            <p class="text-lg font-semibold text-slate-50 font-geist">
+              6.3 minutes
+            </p>
+            <p class="text-xs font-normal text-sky-100/80 font-geist mt-1">
+              From alert to executed treasury move, on average.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section></div><div class="sm:px-8 lg:px-16 w-full mt-10 mb-16 pr-4 pl-4">
+  <section class="border-gradient border-gradient-card before:rounded-[2.5rem] sm:px-8 overflow-hidden bg-[radial-gradient(circle_at_top_left,var(--tw-gradient-stops))] from-white/10 via-white/0 to-white/10 w-full max-w-6xl rounded-[2.5rem] mr-auto ml-auto pt-8 pb-10 relative">
+
+  <div class="relative flex flex-col gap-8">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <button class="inline-flex text-sky-100 bg-slate-900/90 rounded-full ring-slate-700/70 ring-1 pt-1.5 pr-3 pb-1.5 pl-1.5 shadow-[0_10px_30px_rgba(15,23,42,0.8)] gap-x-2 gap-y-2 items-center">
+          <span class="inline-flex items-center justify-center border-gradient border-gradient-card bg-slate-900/80 w-7 h-7 rounded-full">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-sky-200"><path d="M2.75 12a4.25 4.25 0 0 1 6.8-3.4a.75.75 0 1 0 .901-1.2A5.75 5.75 0 1 0 7 17.75c.784 0 1.464-.143 2.064-.435s1.079-.714 1.489-1.215c.66-.804 1.196-1.894 1.776-3.074l.339-.689a.755.755 0 0 0-.339-1.008a.745.745 0 0 0-1.003.337l-.366.743c-.584 1.183-1.027 2.082-1.567 2.74c-.307.375-.624.64-.986.817s-.81.284-1.407.284A4.25 4.25 0 0 1 2.75 12"></path><path d="M12.67 12.335a.755.755 0 0 0-.34-1.006a.746.746 0 0 0-.975.284q.162-.323.316-.639c.58-1.18 1.117-2.27 1.776-3.074c.41-.501.89-.923 1.49-1.215S16.217 6.25 17 6.25a5.75 5.75 0 1 1-3.45 10.35a.75.75 0 0 1 .9-1.2A4.25 4.25 0 1 0 17 7.75c-.596 0-1.045.107-1.406.284c-.363.176-.68.442-.987.816c-.54.66-.983 1.558-1.567 2.741q-.174.355-.369.744z" opacity=".5" class=""></path></svg>
+</span>
+          <span class="text-xs font-medium tracking-[0.18em] uppercase font-geist">
+            Featured programs
+          </span>
+        </button>
+      <p class="text-base sm:text-lg font-normal leading-relaxed text-sky-100/85 max-w-xl text-left sm:text-right font-geist">
+        Treasury rails powering teams across funds, networks, and markets. Here are a few of the systems we operate
+        today.
+      </p>
+    </div>
+
+    <div class="grid gap-5 md:grid-cols-2">
+      <!-- Card 1 -->
+      <article class="flex flex-col gap-3">
+        <div class="relative overflow-hidden rounded-3xl bg-slate-900/80 border-gradient border-gradient-card before:rounded-3xl shadow-[0_20px_45px_rgba(15,23,42,0.9)]">
+          <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/67351756-a1a8-4042-926e-9015a7f1e799_1600w.webp" alt="Digital-first consumer brand liquidity overview" class="sm:h-56 w-full h-40 object-cover">
+          <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/0 to-transparent">
+          </div>
+          <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+
+              <p class="text-xs sm:text-sm font-medium text-sky-50 font-geist">
+                Live spend &amp; liquidity guardrails
+              </p>
+            </div>
+            <span class="text-[0.7rem] sm:text-xs font-medium text-emerald-300 font-geist bg-emerald-400/15 rounded-full pt-1 pr-2.5 pb-1 pl-2.5">
+                42% less idle cash
+              </span>
+          </div>
+        </div>
+        <div class="flex items-center justify-between text-xs sm:text-sm text-sky-100/80 font-geist">
+          <p class="font-medium text-slate-50">
+            Horizon Commerce Network
+          </p>
+          <p class="text-sky-300/80">
+            Feb 2024 – Present
+          </p>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="flex flex-col gap-3">
+        <div class="overflow-hidden border-gradient border-gradient-card before:rounded-3xl bg-slate-900/80 rounded-3xl relative shadow-[0_20px_45px_rgba(15,23,42,0.9)]">
+          <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/007dbc81-e803-4c6b-ad52-87c2f79b15ec_1600w.webp" alt="Institutional credit and yield orchestration" class="sm:h-56 w-full h-40 object-cover">
+          <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/0 to-transparent">
+          </div>
+          <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+
+              <p class="text-xs sm:text-sm font-medium text-sky-50 font-geist">
+                Multi-venue credit routing
+              </p>
+            </div>
+            <span class="rounded-full bg-sky-400/15 px-2.5 py-1 text-[0.7rem] sm:text-xs font-medium text-sky-200 font-geist">
+                3.2x venue coverage
+              </span>
+          </div>
+        </div>
+        <div class="flex items-center justify-between text-xs sm:text-sm text-sky-100/80 font-geist">
+          <p class="font-medium text-slate-50">
+            Meridian Yield Desk
+          </p>
+          <p class="text-sky-300/80">
+            Oct 2023 – Present
+          </p>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="flex flex-col gap-3">
+        <div class="relative overflow-hidden rounded-3xl bg-slate-900/80 border-gradient border-gradient-card before:rounded-3xl shadow-[0_20px_45px_rgba(15,23,42,0.9)]">
+          <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/e267fc56-23df-456e-a702-bc6ce0840fd9_1600w.webp" alt="Risk automation for routing and execution" class="sm:h-56 w-full h-40 object-cover">
+          <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/10 to-transparent">
+          </div>
+          <div class="absolute bottom-4 left-4 right-4 flex flex-col gap-1">
+            <p class="text-xs sm:text-sm font-medium text-sky-50 font-geist">
+              Vector Macro Fund
+            </p>
+            <p class="text-[0.7rem] sm:text-xs text-slate-200/85 max-w-xs font-geist">
+              Simplified cross-book moves, cutting manual approvals by 68% and reducing slippage on large tickets.
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center justify-between text-xs sm:text-sm text-sky-100/80 font-geist">
+          <p class="font-medium text-slate-50">
+            Programmatic risk rails
+          </p>
+          <p class="text-sky-300/80">
+            May 2024 – Present
+          </p>
+        </div>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="flex flex-col gap-3">
+        <div class="relative overflow-hidden rounded-3xl bg-slate-900/80 border-gradient border-gradient-card before:rounded-3xl shadow-[0_20px_45px_rgba(15,23,42,0.9)]">
+          <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/09dc0e81-3730-4910-9053-26ecec7a3816_1600w.webp" alt="Healthcare treasury operating fabric" class="sm:h-56 w-full h-40 object-cover">
+          <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/0 to-transparent">
+          </div>
+          <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+
+              <p class="text-xs sm:text-sm font-medium text-sky-50 font-geist">
+                Policy-aware disbursements
+              </p>
+            </div>
+            <span class="rounded-full bg-indigo-400/15 px-2.5 py-1 text-[0.7rem] sm:text-xs font-medium text-indigo-200 font-geist">
+                0 policy breaches in 14 months
+              </span>
+          </div>
+        </div>
+        <div class="flex items-center justify-between text-xs sm:text-sm text-sky-100/80 font-geist">
+          <p class="font-medium text-slate-50">
+            Aegis Health Collective
+          </p>
+          <p class="text-sky-300/80">
+            Jan 2024 – Present
+          </p>
+        </div>
+      </article>
+    </div>
+
+    <div class="flex justify-center">
+      <a href="#" class="group inline-flex items-center gap-2 text-sm font-medium text-sky-200 hover:text-sky-50 transition-colors font-geist">
+        <span>
+            View all deployments
+          </span>
+        <span class="inline-flex items-center justify-center border-gradient border-gradient-card bg-slate-900/80 w-7 h-7 rounded-full">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-[16px] h-[16px]" data-lucide="arrow-right" data-icon-set="lucide" data-icon-replaced="true" style="color: rgb(186, 230, 253);"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+</span>
+      </a>
+    </div>
+  </div>
+</section>
+</div><div class="sm:px-8 lg:px-16 w-full mt-24 mb-16 pr-4 pl-4">
+  <section class="border-gradient border-gradient-card before:rounded-[2.5rem] overflow-hidden sm:px-10 bg-[radial-gradient(circle_at_top_left,var(--tw-gradient-stops))] from-white/10 via-white/0 to-white/10 w-full max-w-6xl rounded-[2.5rem] mr-auto ml-auto pt-10 pr-6 pb-10 pl-6 relative">
+
+
+  <div class="relative flex flex-col gap-10">
+    <!-- Pill -->
+    <div class="inline-flex items-center gap-2 rounded-full bg-slate-900/90 ring-1 ring-slate-700/70 px-2 py-1.5 shadow-[0_10px_30px_rgba(15,23,42,0.8)] w-max">
+      <span class="inline-flex items-center justify-center border-gradient border-gradient-card bg-slate-900/80 w-7 h-7 rounded-full">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-sky-200"><path d="M2.75 12a4.25 4.25 0 0 1 6.8-3.4a.75.75 0 1 0 .901-1.2A5.75 5.75 0 1 0 7 17.75c.784 0 1.464-.143 2.064-.435s1.079-.714 1.489-1.215c.66-.804 1.196-1.894 1.776-3.074l.339-.689a.755.755 0 0 0-.339-1.008a.745.745 0 0 0-1.003.337l-.366.743c-.584 1.183-1.027 2.082-1.567 2.74c-.307.375-.624.64-.986.817s-.81.284-1.407.284A4.25 4.25 0 0 1 2.75 12"></path><path d="M12.67 12.335a.755.755 0 0 0-.34-1.006a.746.746 0 0 0-.975.284q.162-.323.316-.639c.58-1.18 1.117-2.27 1.776-3.074c.41-.501.89-.923 1.49-1.215S16.217 6.25 17 6.25a5.75 5.75 0 1 1-3.45 10.35a.75.75 0 0 1 .9-1.2A4.25 4.25 0 1 0 17 7.75c-.596 0-1.045.107-1.406.284c-.363.176-.68.442-.987.816c-.54.66-.983 1.558-1.567 2.741q-.174.355-.369.744z" opacity=".5" class=""></path></svg>
+</span>
+      <span class="text-xs font-medium tracking-[0.18em] uppercase text-sky-100 font-geist">
+          About Clarity
+        </span>
+    </div>
+
+    <!-- Copy -->
+    <div class="space-y-5 max-w-3xl">
+      <h2 class="sm:text-4xl md:text-5xl text-3xl font-normal text-slate-50 tracking-tight font-jakarta">
+        We’re a full-stack treasury studio for teams that move fast.
+      </h2>
+      <p class="text-lg md:text-xl font-normal leading-relaxed text-sky-100/85 font-geist">
+        From trading desks to protocol treasuries, we design liquidity systems that turn fragmented balances into a
+        single, programmable asset layer. Our operators, engineers, and risk partners work alongside your teams to
+        keep capital flowing where it matters most.
+      </p>
+    </div>
+
+    <!-- Stats -->
+    <dl class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 border-t border-slate-800/70 pt-6">
+      <div class="space-y-1.5">
+        <dt class="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-slate-400 font-geist">
+          <span class="inline-flex items-center justify-center bg-slate-900/80 w-6 h-6 border-slate-700/70 border rounded-xl">
+              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="solar:shield-check-bold-duotone"><path fill="currentColor" d="M3.378 5.082C3 5.62 3 7.22 3 10.417v1.574c0 5.638 4.239 8.375 6.899 9.536c.721.315 1.082.473 2.101.473c1.02 0 1.38-.158 2.101-.473C16.761 20.365 21 17.63 21 11.991v-1.574c0-3.198 0-4.797-.378-5.335c-.377-.537-1.88-1.052-4.887-2.081l-.573-.196C13.595 2.268 12.812 2 12 2s-1.595.268-3.162.805L8.265 3c-3.007 1.03-4.51 1.545-4.887 2.082" opacity=".5"></path><path fill="currentColor" d="M15.06 10.5a.75.75 0 0 0-1.12-1l-3.011 3.374l-.87-.974a.75.75 0 0 0-1.118 1l1.428 1.6a.75.75 0 0 0 1.119 0z"></path></svg>
+            </span>
+          Monthly flow
+        </dt>
+        <dd class="text-xl font-semibold text-slate-50 font-geist">
+          $260M
+        </dd>
+        <p class="text-sm font-normal text-slate-400 font-geist">
+          Net capital orchestrated across clients each month.
+        </p>
+      </div>
+
+      <div class="space-y-1.5">
+        <dt class="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-slate-400 font-geist">
+          <span class="inline-flex items-center justify-center bg-slate-900/80 w-6 h-6 border-slate-700/70 border rounded-xl">
+              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="solar:shield-check-bold-duotone"><path fill="currentColor" d="M3.378 5.082C3 5.62 3 7.22 3 10.417v1.574c0 5.638 4.239 8.375 6.899 9.536c.721.315 1.082.473 2.101.473c1.02 0 1.38-.158 2.101-.473C16.761 20.365 21 17.63 21 11.991v-1.574c0-3.198 0-4.797-.378-5.335c-.377-.537-1.88-1.052-4.887-2.081l-.573-.196C13.595 2.268 12.812 2 12 2s-1.595.268-3.162.805L8.265 3c-3.007 1.03-4.51 1.545-4.887 2.082" opacity=".5"></path><path fill="currentColor" d="M15.06 10.5a.75.75 0 0 0-1.12-1l-3.011 3.374l-.87-.974a.75.75 0 0 0-1.118 1l1.428 1.6a.75.75 0 0 0 1.119 0z"></path></svg>
+            </span>
+          Policy adherence
+        </dt>
+        <dd class="text-xl font-semibold text-slate-50 font-geist">
+          99.99%
+        </dd>
+        <p class="text-sm font-normal text-slate-400 font-geist">
+          Execution aligned with on-chain and off-chain guardrails.
+        </p>
+      </div>
+
+      <div class="space-y-1.5">
+        <dt class="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-slate-400 font-geist">
+          <span class="inline-flex h-6 w-6 items-center justify-center rounded-xl bg-slate-900/80 border border-slate-700/70">
+              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="solar:case-round-bold-duotone"><g fill="none"><path fill="currentColor" fill-rule="evenodd" d="M17.192 6H6.808c-1.688 0-2.531 0-3.175.33A3 3 0 0 0 2.33 7.633C2 8.277 2 9.12 2 10.808c0 .429 0 .643.073.824a1 1 0 0 0 .3.404c.153.122.358.183.77.307L8.5 13.95v1.213c0 .765.46 1.471 1.187 1.767l.56.227a4.65 4.65 0 0 0 3.506 0l.56-.227a1.91 1.91 0 0 0 1.187-1.767V13.95l5.358-1.607c.41-.124.616-.185.768-.307a1 1 0 0 0 .3-.404c.074-.18.074-.395.074-.824c0-1.688 0-2.531-.33-3.175a3 3 0 0 0-1.303-1.303C19.723 6 18.88 6 17.192 6M13.6 13h-3.2c-.22 0-.4.182-.4.406v1.757c0 .166.1.315.251.377l.56.228c.764.31 1.614.31 2.377 0l.56-.228a.41.41 0 0 0 .252-.377v-1.757a.403.403 0 0 0-.4-.406" clip-rule="evenodd"></path><path fill="currentColor" d="m20.958 12.313l-.034.01L15.5 13.95v1.213c0 .765-.46 1.471-1.187 1.767l-.56.227a4.65 4.65 0 0 1-3.506 0l-.56-.227A1.91 1.91 0 0 1 8.5 15.163V13.95L3 12.3c0 3.675.035 7.388 1.318 8.528C5.636 22 7.758 22 12 22s6.364 0 7.682-1.172c1.283-1.14 1.317-4.853 1.318-8.528z" opacity=".5"></path><path stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M9.17 4a3.001 3.001 0 0 1 5.66 0" opacity=".5"></path></g></svg>
+            </span>
+          Programs launched
+        </dt>
+        <dd class="text-xl font-semibold text-slate-50 font-geist">
+          420+
+        </dd>
+        <p class="text-sm font-normal text-slate-400 font-geist">
+          End-to-end treasury deployments across funds and networks.
+        </p>
+      </div>
+
+      <div class="space-y-1.5">
+        <dt class="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-slate-400 font-geist">
+          <span class="inline-flex h-6 w-6 items-center justify-center rounded-xl bg-slate-900/80 border border-slate-700/70">
+              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="solar:clock-circle-bold-duotone"><path fill="currentColor" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2S2 6.477 2 12s4.477 10 10 10" opacity=".5"></path><path fill="currentColor" fill-rule="evenodd" d="M12 7.25a.75.75 0 0 1 .75.75v3.69l2.28 2.28a.75.75 0 1 1-1.06 1.06l-2.5-2.5a.75.75 0 0 1-.22-.53V8a.75.75 0 0 1 .75-.75" clip-rule="evenodd"></path></svg>
+            </span>
+          Operating history
+        </dt>
+        <dd class="text-xl font-semibold text-slate-50 font-geist">
+          11+
+        </dd>
+        <p class="text-sm font-normal text-slate-400 font-geist">
+          Years building and running institutional-grade liquidity rails.
+        </p>
+      </div>
+    </dl>
+  </div>
+</section>
+</div><div class="sm:px-8 lg:px-16 w-full mt-24 mb-16 pr-4 pl-4">
+  <section class="border-gradient border-gradient-card before:rounded-[2.5rem] overflow-hidden sm:px-6 lg:px-8 bg-[radial-gradient(circle_at_bottom_right,var(--tw-gradient-stops))] from-white/10 via-white/0 to-white/10 w-full max-w-6xl rounded-[2.5rem] mr-auto ml-auto pt-8 pr-4 pb-8 pl-4 relative">
+
+  <div class="flex flex-col overflow-hidden rounded-xl relative gap-x-8 gap-y-8">
+    <!-- Top social row -->
+    <div class="grid grid-cols-2 md:grid-cols-4 border-b border-slate-800/70">
+      <!-- Signal Wire -->
+      <button class="group flex gap-3 md:px-6 hover:bg-slate-900/70 transition-colors bg-gradient-to-b from-slate-900/80 to-slate-950/0 border-slate-800/70 border-r pt-4 pr-4 pb-4 pl-4 relative gap-x-3 gap-y-3 items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center justify-center bg-slate-900/90 w-7 h-7 border-slate-700/80 border rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" style="color: rgb(241, 245, 249); width: 16px; height: 16px;" class="w-[16px] h-[16px]" aria-hidden="true" role="img" data-icon="solar:play-circle-bold-duotone" data-mingcute="social-x-line" data-icon-set="mingcute" data-icon-replaced="true" stroke-width="2"><g fill="none" fill-rule="evenodd"><path d="m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z"></path><path fill="#f1f5f9" d="M19.753 4.659a1 1 0 0 0-1.506-1.317l-5.11 5.84L8.8 3.4A1 1 0 0 0 8 3H4a1 1 0 0 0-.8 1.6l6.437 8.582l-5.39 6.16a1 1 0 0 0 1.506 1.317l5.11-5.841L15.2 20.6a1 1 0 0 0 .8.4h4a1 1 0 0 0 .8-1.6l-6.437-8.582l5.39-6.16ZM16.5 19L6 5h1.5L18 19z"></path></g></svg>
+            </span>
+            <span class="text-sm font-medium text-slate-50 tracking-tight font-geist">X</span>
+          </div>
+          
+        </button>
+
+      <!-- X (Markets) -->
+      <button class="group relative flex items-center justify-between gap-3 border-r border-slate-800/70 bg-gradient-to-b from-slate-900/80 to-slate-950/0 px-4 py-4 md:px-6 hover:bg-slate-900/70 transition-colors">
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center justify-center bg-slate-900/90 w-7 h-7 border-slate-700/80 border rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" style="color: rgb(241, 245, 249); width: 16px; height: 16px;" class="w-[16px] h-[16px]" aria-hidden="true" role="img" data-icon="solar:play-circle-bold-duotone" data-mingcute="instagram-line" data-icon-set="mingcute" data-icon-replaced="true" stroke-width="2"><g fill="none" fill-rule="evenodd"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"></path><path fill="#f1f5f9" d="M16 3a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8a5 5 0 0 1 5-5zm0 2H8a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3m-4 3a4 4 0 1 1 0 8a4 4 0 0 1 0-8m0 2a2 2 0 1 0 0 4a2 2 0 0 0 0-4m4.5-3.5a1 1 0 1 1 0 2a1 1 0 0 1 0-2"></path></g></svg>
+            </span>
+            <span class="text-sm font-medium text-slate-50 tracking-tight font-geist">Instagram</span>
+          </div>
+          
+        </button>
+
+      <!-- Nexus Feed -->
+      <button class="group flex gap-3 md:px-6 hover:bg-slate-900/70 transition-colors bg-gradient-to-b from-slate-900/80 to-slate-950/0 border-slate-800/70 border-r pt-4 pr-4 pb-4 pl-4 relative gap-x-3 gap-y-3 items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center justify-center bg-slate-900/90 w-7 h-7 border-slate-700/80 border rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" style="color: rgb(241, 245, 249); width: 16px; height: 16px;" class="w-[16px] h-[16px]" aria-hidden="true" role="img" data-icon="solar:play-circle-bold-duotone" data-mingcute="linkedin-line" data-icon-set="mingcute" data-icon-replaced="true" stroke-width="2"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"></path><path fill="#f1f5f9" d="M18 3a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3zm0 2H6a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1M8 10a1 1 0 0 1 .993.883L9 11v5a1 1 0 0 1-1.993.117L7 16v-5a1 1 0 0 1 1-1m3-1a1 1 0 0 1 .984.821a6 6 0 0 1 .623-.313c.667-.285 1.666-.442 2.568-.159c.473.15.948.43 1.3.907c.315.425.485.942.519 1.523L17 12v4a1 1 0 0 1-1.993.117L15 16v-4c0-.33-.08-.484-.132-.555a.55.55 0 0 0-.293-.188c-.348-.11-.849-.052-1.182.09c-.5.214-.958.55-1.27.861L12 12.34V16a1 1 0 0 1-1.993.117L10 16v-6a1 1 0 0 1 1-1M8 7a1 1 0 1 1 0 2a1 1 0 0 1 0-2"></path></g></svg>
+            </span>
+            <span class="text-sm font-medium text-slate-50 tracking-tight font-geist">LinkedIn</span>
+          </div>
+          
+        </button>
+
+      <!-- Orbit Studio -->
+      <button class="group flex gap-3 md:px-6 hover:bg-slate-900/70 transition-colors bg-gradient-to-b from-slate-900/80 to-slate-950/0 pt-4 pr-4 pb-4 pl-4 relative gap-x-3 gap-y-3 items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-700/80 bg-slate-900/90">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" style="color: rgb(241, 245, 249); width: 16px; height: 16px" class="w-[16px] h-[16px]" aria-hidden="true" role="img" data-icon="solar:camera-bold-duotone" data-mingcute="facebook-line" data-icon-set="mingcute" data-icon-replaced="true" stroke-width="2"><g fill="none" fill-rule="evenodd"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"></path><path fill="#f1f5f9" d="M4 12a8 8 0 1 1 9 7.938V14h2a1 1 0 1 0 0-2h-2v-2a1 1 0 0 1 1-1h.5a1 1 0 1 0 0-2H14a3 3 0 0 0-3 3v2H9a1 1 0 1 0 0 2h2v5.938A8 8 0 0 1 4 12m8 10c5.523 0 10-4.477 10-10S17.523 2 12 2S2 6.477 2 12s4.477 10 10 10"></path></g></svg>
+            </span>
+            <span class="text-sm font-medium text-slate-50 tracking-tight font-geist">Facebook</span>
+          </div>
+          
+        </button>
+    </div>
+
+    <!-- Bottom link grid -->
+    <div class="grid gap-8 sm:grid-cols-4 text-slate-300">
+      <!-- About -->
+      <div class="space-y-3">
+        <p class="text-xs font-medium uppercase tracking-[0.18em] text-slate-500 font-geist">
+          Company
+        </p>
+        <ul class="space-y-2 text-sm font-normal font-geist">
+          <li class="hover:text-slate-50 transition-colors">
+            <a href="#">Product overview</a>
+          </li>
+          <li class="hover:text-slate-50 transition-colors">
+            <a href="#" class="">Pricing &amp; plans</a>
+          </li>
+          <li class="hover:text-slate-50 transition-colors">
+            <a href="#">Customer stories</a>
+          </li>
+          <li class="hover:text-slate-50 transition-colors">
+            <a href="#">Team</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Support -->
+      <div class="space-y-3">
+        <p class="text-xs font-medium uppercase tracking-[0.18em] text-slate-500 font-geist">
+          Support
+        </p>
+        <ul class="space-y-2 text-sm font-normal font-geist">
+          <li class="hover:text-slate-50 transition-colors">
+            <a href="#">Knowledge base</a>
+          </li>
+          <li class="hover:text-slate-50 transition-colors">
+            <a href="#">Implementation desk</a>
+          </li>
+          <li class="hover:text-slate-50 transition-colors">
+            <a href="#">Status &amp; uptime</a>
+          </li>
+          <li class="hover:text-slate-50 transition-colors">
+            <a href="#">Security portal</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Community -->
+      <div class="-y-3">
+        <p class="text-xs font-medium uppercase tracking-[0.18em] text-slate-500 font-geist">
+          Community
+        </p>
+        <ul class="space-y-2 text-sm font-normal font-geist">
+          <li class="hover:text-slate-50 transition-colors">
+            <a href="#">Operator forum</a>
+          </li>
+          <li class="hover:text-slate-50 transition-colors">
+            <a href="#">Treasury workshops</a>
+          </li>
+          <li class="hover:text-slate-50 transition-colors">
+            <a href="#">Partner network</a>
+          </li>
+          <li class="hover:text-slate-50 transition-colors">
+            <a href="#" class="">Careers</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Governance -->
+      <div class="space-y-3">
+        <p class="text-xs font-medium uppercase tracking-[0.18em] text-slate-500 font-geist">
+          Governance
+        </p>
+        <ul class="space-y-2 text-sm font-normal font-geist">
+          <li class="hover:text-slate-50 transition-colors">
+            <a href="#" class="">Investor briefings</a>
+          </li>
+          <li class="hover:text-slate-50 transition-colors">
+            <a href="#">Risk framework</a>
+          </li>
+          <li class="hover:text-slate-50 transition-colors">
+            <a href="#">Data processing</a>
+          </li>
+          <li class="hover:text-slate-50 transition-colors">
+            <a href="#">Regulatory resources</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom meta -->
+    <div class="flex flex-col gap-3 border-t border-slate-800/70 pt-4 sm:flex-row sm:items-center sm:justify-between">
+      <p class="text-xs sm:text-sm font-normal text-slate-500 font-geist">
+        © 2025 Clarity Yield Systems Inc. All rights reserved.
+      </p>
+      <div class="flex flex-wrap gap-4 text-xs sm:text-sm font-normal text-slate-400 font-geist">
+        <a href="#" class="hover:text-slate-50 transition-colors">Terms</a>
+        <a href="#" class="hover:text-slate-50 transition-colors">Privacy</a>
+        <a href="#" class="hover:text-slate-50 transition-colors">Cookie policy</a>
+        <a href="#" class="hover:text-slate-50 transition-colors">System status</a>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+  <script>
+    const tabItems = document.querySelectorAll("[data-tab]");
+const panels = document.querySelectorAll("[id^='panel-']");
+const panelToggles = document.querySelectorAll("[data-panel-toggle]");
+
+function showPanel(targetId) {
+panels.forEach((panel) => {
+if (panel.id === targetId) {
+panel.classList.remove("hidden");
+} else {
+if (!panel.classList.contains("hidden")) {
+panel.classList.add("hidden");
+}
+}
+});
+}
+
+tabItems.forEach((tab) => {
+tab.addEventListener("click", () => {
+const targetId = tab.getAttribute("data-target");
+if (targetId) {
+showPanel(targetId);
+}
+});
+});
+
+panelToggles.forEach((btn) => {
+btn.addEventListener("click", (e) => {
+e.stopPropagation();
+const targetId = btn.getAttribute("data-target");
+if (!targetId) return;
+const panel = document.getElementById(targetId);
+if (!panel) return;
+panel.classList.add("hidden");
+});
+});
+
+showPanel("panel-1");
+  </script>
+
+
+
+</body></html>

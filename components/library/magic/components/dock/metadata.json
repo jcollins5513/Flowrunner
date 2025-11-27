@@ -1,0 +1,34 @@
+{
+  "name": "Dock",
+  "slug": "dock",
+  "description": "Dock component from Magic UI.",
+  "tags": [],
+  "category": "layout",
+  "installation": "",
+  "url": "https://magicui.design/docs/components/dock",
+  "type": "component",
+  "layout_role": "widget",
+  "recommended_slots": [
+    "section.content",
+    "marketing.feature"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "Magic UI component.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "magic",
+  "client_only": true,
+  "imports": [
+    "\nimport React from \"react\"",
+    "\nimport { Dock, DockIcon } from \"@/registry/magicui/dock\""
+  ],
+  "dependencies": [
+    "@/registry/magicui/dock",
+    "react"
+  ]
+}

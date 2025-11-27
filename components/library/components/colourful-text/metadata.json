@@ -1,0 +1,41 @@
+{
+  "name": "Aceternity UI",
+  "slug": "colourful-text",
+  "description": "A text component with various colours, filter and scale effects.",
+  "props": [
+    {
+      "Prop": "text",
+      "Type": "string",
+      "Required": "Yes",
+      "Description": "The text string to be rendered with colorful animated characters. Each character will be individually animated with color transitions and motion effects."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/colourful-textCopy",
+  "url": "https://ui.aceternity.com/components/colourful-text",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A text component with various colours, filter and scale effects.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import ColourfulText from \"@/components/ui/colourful-text\";",
+    "import { motion } from \"motion/react\";"
+  ],
+  "dependencies": [
+    "@/components/ui/colourful-text",
+    "motion/react",
+    "react"
+  ],
+  "client_only": true
+}

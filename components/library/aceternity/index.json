@@ -1,0 +1,25 @@
+{
+  "total_components": 1,
+  "components": [
+    {
+      "name": "dotted-glow-background",
+      "sanitized_name": "dotted-glow-background",
+      "url": "https://ui.aceternity.com/components/dotted-glow-background",
+      "description": "A background effect with opacity animation, glow effect and more.",
+      "category": "",
+      "tags": [],
+      "type": "background",
+      "recommended_slots": [
+        "hero.background",
+        "section.background"
+      ],
+      "source": "aceternity",
+      "has_code": true,
+      "screenshots": {
+        "preview": false,
+        "code": true
+      }
+    }
+  ],
+  "generated_at": "2025-11-26 03:52:23"
+}

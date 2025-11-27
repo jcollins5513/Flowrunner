@@ -1,0 +1,49 @@
+{
+  "name": "Aceternity UI",
+  "slug": "text-generate-effect",
+  "description": "A cool text effect that fades in text on page load, one by one.",
+  "props": [
+    {
+      "Prop name": "className",
+      "Type": "string",
+      "Description": "The class name of the child component."
+    },
+    {
+      "Prop name": "words",
+      "Type": "string",
+      "Description": "The word string that you want to animate"
+    },
+    {
+      "Prop name": "duration",
+      "Type": "number",
+      "Description": "The duration of the animation"
+    },
+    {
+      "Prop name": "filter",
+      "Type": "boolean",
+      "Description": "Whether to apply a filter to the text"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/text-generate-effectCopy",
+  "url": "https://ui.aceternity.com/components/text-generate-effect",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A cool text effect that fades in text on page load, one by one.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import { TextGenerateEffect } from \"../ui/text-generate-effect\";"
+  ],
+  "dependencies": [],
+  "client_only": true
+}

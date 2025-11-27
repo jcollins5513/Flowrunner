@@ -1,0 +1,64 @@
+{
+  "name": "Aceternity UI",
+  "slug": "multi-step-loader",
+  "description": "A step loader for screens that take a lot of time to load.",
+  "props": [
+    {
+      "Prop Name": "loadingStates",
+      "Type": "LoadingState[]",
+      "Default Value": "N/A",
+      "Description": "An array of objects, each with atextproperty to display the current loading state message."
+    },
+    {
+      "Prop Name": "loading",
+      "Type": "boolean",
+      "Default Value": "undefined",
+      "Description": "A boolean to control whether the loader is active or not."
+    },
+    {
+      "Prop Name": "duration",
+      "Type": "number",
+      "Default Value": "2000",
+      "Description": "The duration (in milliseconds) before transitioning to the next loading state."
+    },
+    {
+      "Prop Name": "loop",
+      "Type": "boolean",
+      "Default Value": "true",
+      "Description": "A boolean to control whether the loading states should loop back to the start."
+    },
+    {
+      "Prop Name": "value",
+      "Type": "number (optional)",
+      "Default Value": "0",
+      "Description": "(Only in LoaderCore) The current index of the loading state to be displayed."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/multi-step-loaderCopy",
+  "url": "https://ui.aceternity.com/components/multi-step-loader",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A step loader for screens that take a lot of time to load.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React, { useState } from \"react\";",
+    "import { MultiStepLoader as Loader } from \"../ui/multi-step-loader\";",
+    "import { IconSquareRoundedX } from \"@tabler/icons-react\";"
+  ],
+  "dependencies": [
+    "@tabler/icons-react",
+    "react"
+  ],
+  "client_only": true
+}

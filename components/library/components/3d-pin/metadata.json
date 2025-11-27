@@ -1,0 +1,57 @@
+{
+  "name": "Aceternity UI",
+  "slug": "3d-pin",
+  "description": "A gradient pin that animates on hover, perfect for product links.",
+  "props": [
+    {
+      "Prop name": "className",
+      "Type": "string",
+      "Description": "The class name of the child component."
+    },
+    {
+      "Prop name": "containerClassName",
+      "Type": "string",
+      "Description": "The class name of the Container Component."
+    },
+    {
+      "Prop name": "title",
+      "Type": "string|ReactNode",
+      "Description": "Title that shows up on hover."
+    },
+    {
+      "Prop name": "href",
+      "Type": "string",
+      "Description": "Link of the component that you want to redirect to."
+    },
+    {
+      "Prop name": "children",
+      "Type": "ReactNode",
+      "Description": "The component that you want to render."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/3d-pinCopy",
+  "url": "https://ui.aceternity.com/components/3d-pin",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "pointer-reactive",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A gradient pin that animates on hover, perfect for product links.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { PinContainer } from \"../ui/3d-pin\";"
+  ],
+  "dependencies": [
+    "react"
+  ],
+  "client_only": true
+}

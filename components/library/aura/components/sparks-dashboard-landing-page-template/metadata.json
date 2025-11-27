@@ -1,0 +1,57 @@
+{
+  "name": "Sparks Dashboard Landing Page Template",
+  "slug": "sparks-dashboard",
+  "description": "A reusable dashboard landing page template designed for visualizing sales pipelines, revenue forecasts, team health, and priority tasks with interactive charts.",
+  "tags": [
+    "Landing Page",
+    "Dashboard",
+    "Pipeline",
+    "Revenue",
+    "Charts",
+    "Team Health",
+    "Tasks",
+    "D3.js",
+    "Analytics",
+    "Marketing"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/sparks-dashboard",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "A reusable dashboard landing page template designed for visualizing sales pipelines, revenue forecasts, team health, and priority tasks with interactive charts.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [
+    "marketing"
+  ],
+  "source": "aura",
+  "author": {
+    "name": "Meng To",
+    "slug": "meng",
+    "avatar_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/user-avatars/avatars/9109ecbb-cdc4-4815-981e-2ea83be13765-1747961036177.png",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/sparks-dashboard.png",
+  "aura": {
+    "id": 5309,
+    "views": 986,
+    "forks": 5,
+    "premium": true
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

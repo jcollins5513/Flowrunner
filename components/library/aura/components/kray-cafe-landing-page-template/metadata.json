@@ -1,0 +1,55 @@
+{
+  "name": "Kray Cafe Landing Page Template",
+  "slug": "kray-cafe-landing-90",
+  "description": "Reusable landing page template designed for authentic Korean cafes seeking to showcase their menu, atmosphere, and customer testimonials.",
+  "tags": [
+    "Landing Page",
+    "Hero",
+    "Features",
+    "Testimonials",
+    "Menu",
+    "Gallery",
+    "Contact",
+    "Social Proof",
+    "Korean Cafe",
+    "Booking"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/kray-cafe-landing-90",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "Reusable landing page template designed for authentic Korean cafes seeking to showcase their menu, atmosphere, and customer testimonials.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "aura",
+  "author": {
+    "name": "Matthew Lee",
+    "slug": "user-a7b99164",
+    "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocKvHfz_Un_aJZSwOkKCeH-d9siVEd_hfGKK3j-kzjFIdY9atQ=s96-c",
+    "featured": false
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/kray-cafe-landing-90.png?t=1763955652969",
+  "aura": {
+    "id": 5524,
+    "views": 383,
+    "forks": 5,
+    "premium": false
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

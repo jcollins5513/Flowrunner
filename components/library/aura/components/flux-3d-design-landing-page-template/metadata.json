@@ -1,0 +1,55 @@
+{
+  "name": "Flux 3D Design Landing Page Template",
+  "slug": "flux-3d-design-tool",
+  "description": "A reusable landing page template for a collaborative 3D spatial design tool enabling web-based creation and export of interactive scenes and React components.",
+  "tags": [
+    "Landing Page",
+    "3D Design",
+    "Features",
+    "Pricing",
+    "Testimonials",
+    "Collaboration",
+    "React Export",
+    "Physics Engine",
+    "Event System",
+    "Spatial Web"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/flux-3d-design-tool",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "A reusable landing page template for a collaborative 3D spatial design tool enabling web-based creation and export of interactive scenes and React components.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "aura",
+  "author": {
+    "name": "Sourany Phomhome",
+    "slug": "sourany",
+    "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocLoQZePAiZWIthvCKEU9ojH9gXKvKMsh4bHnXIlpUcwrvUFJO9F=s96-c",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/flux-3d-design-tool.png",
+  "aura": {
+    "id": 5538,
+    "views": 1061,
+    "forks": 16,
+    "premium": true
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "name": "Aceternity UI",
+  "slug": "vortex",
+  "description": "A wavy, swirly, vortex background ideal for CTAs and backgrounds.",
+  "props": [
+    {
+      "Prop Name": "children",
+      "Type": "any",
+      "Default Value": "",
+      "Description": "Optional children to be rendered inside the component."
+    },
+    {
+      "Prop Name": "className",
+      "Type": "string",
+      "Default Value": "",
+      "Description": "Optional className for styling the children wrapper."
+    },
+    {
+      "Prop Name": "containerClassName",
+      "Type": "string",
+      "Default Value": "",
+      "Description": "Optional className for styling the container."
+    },
+    {
+      "Prop Name": "particleCount",
+      "Type": "number",
+      "Default Value": "700",
+      "Description": "Number of particles to be generated."
+    },
+    {
+      "Prop Name": "rangeY",
+      "Type": "number",
+      "Default Value": "100",
+      "Description": "Vertical range for particle movement."
+    },
+    {
+      "Prop Name": "baseHue",
+      "Type": "number",
+      "Default Value": "220",
+      "Description": "Base hue for particle color."
+    },
+    {
+      "Prop Name": "baseSpeed",
+      "Type": "number",
+      "Default Value": "0.0",
+      "Description": "Base speed for particle movement."
+    },
+    {
+      "Prop Name": "rangeSpeed",
+      "Type": "number",
+      "Default Value": "1.5",
+      "Description": "Range of speed variation for particles."
+    },
+    {
+      "Prop Name": "baseRadius",
+      "Type": "number",
+      "Default Value": "1",
+      "Description": "Base radius of particles."
+    },
+    {
+      "Prop Name": "rangeRadius",
+      "Type": "number",
+      "Default Value": "2",
+      "Description": "Range of radius variation for particles."
+    },
+    {
+      "Prop Name": "backgroundColor",
+      "Type": "string",
+      "Default Value": "\"#000000\"",
+      "Description": "Background color of the canvas."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/vortexCopy",
+  "url": "https://ui.aceternity.com/components/vortex",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A wavy, swirly, vortex background ideal for CTAs and backgrounds.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { Vortex } from \"../ui/vortex\";"
+  ],
+  "dependencies": [
+    "react"
+  ],
+  "client_only": false
+}

@@ -1,0 +1,46 @@
+{
+  "name": "Aceternity UI",
+  "slug": "animated-testimonials",
+  "description": "Minimal testimonials sections with image and quote.",
+  "props": [
+    {
+      "Prop Name": "testimonials",
+      "Type": "Array<{ quote: string; name: string; designation: string; src: string }>",
+      "Required": "Yes",
+      "Default": "-",
+      "Description": "Array of testimonial objects containing the quote, author name, designation, and image source URL"
+    },
+    {
+      "Prop Name": "autoplay",
+      "Type": "boolean",
+      "Required": "No",
+      "Default": "false",
+      "Description": "Whether to automatically cycle through testimonials every 5 seconds"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/animated-testimonialsCopy",
+  "url": "https://ui.aceternity.com/components/animated-testimonials",
+  "type": "hero",
+  "subtype": "",
+  "layout_role": "section",
+  "recommended_slots": [
+    "hero.primary",
+    "section.lead"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "Minimal testimonials sections with image and quote.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import { AnimatedTestimonials } from \"@/components/ui/animated-testimonials\";"
+  ],
+  "dependencies": [
+    "@/components/ui/animated-testimonials"
+  ],
+  "client_only": false
+}

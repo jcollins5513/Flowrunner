@@ -1,0 +1,44 @@
+{
+  "name": "Aceternity UI",
+  "slug": "following-pointer",
+  "description": "A custom pointer that follows mouse arrow and animates in pointer and content.",
+  "props": [
+    {
+      "Prop name": "children",
+      "Type": "React.ReactNode",
+      "Description": "The content to be rendered inside the component."
+    },
+    {
+      "Prop name": "className",
+      "Type": "string(optional)",
+      "Description": "The class name of the FollowerPointerCard component."
+    },
+    {
+      "Prop name": "title",
+      "Type": "string or ReactNode(optional)",
+      "Description": "The title to be displayed on the pointer."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/following-pointerCopy",
+  "url": "https://ui.aceternity.com/components/following-pointer",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "pointer-reactive",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A custom pointer that follows mouse arrow and animates in pointer and content.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import { FollowerPointerCard } from \"../ui/following-pointer\";"
+  ],
+  "dependencies": [],
+  "client_only": false
+}

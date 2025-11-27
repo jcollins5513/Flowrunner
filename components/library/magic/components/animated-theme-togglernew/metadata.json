@@ -1,0 +1,32 @@
+{
+  "name": "Animated Theme TogglerNew",
+  "slug": "animated-theme-toggler",
+  "description": "Animated Theme TogglerNew component from Magic UI.",
+  "tags": [],
+  "category": "animation",
+  "installation": "",
+  "url": "https://magicui.design/docs/components/animated-theme-toggler",
+  "type": "component",
+  "layout_role": "widget",
+  "recommended_slots": [
+    "section.content",
+    "marketing.feature"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "Magic UI component.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "magic",
+  "client_only": false,
+  "imports": [
+    "import { AnimatedThemeToggler } from \"@/registry/magicui/animated-theme-toggler\""
+  ],
+  "dependencies": [
+    "@/registry/magicui/animated-theme-toggler"
+  ]
+}

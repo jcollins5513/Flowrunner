@@ -1,0 +1,1830 @@
+<html lang="en" class="scroll-smooth"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flux - Spatial Design Tool</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style id="aura-editor-visibility-style">
+.invisible { visibility: hidden !important; }
+</style>
+<style id="aura-editor-visibility-style">
+.invisible { visibility: hidden !important; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Space+Grotesk:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body {
+background-color: #050505;
+font-family: 'Inter', sans-serif;
+-webkit-font-smoothing: antialiased;
+}
+/* Custom Grid Pattern */
+.grid-bg {
+background-image:
+linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+background-size: 40px 40px;
+mask-image: radial-gradient(ellipse at center, black 40%, transparent 70%);
+-webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 70%);
+}
+/* Animations */
+@keyframes fadeSlideIn {
+0% { opacity: 0; transform: translateY(20px); filter: blur(10px); }
+100% { opacity: 1; transform: translateY(0); filter: blur(0px); }
+}
+.animate-on-scroll {
+opacity: 0;
+animation-fill-mode: forwards;
+}
+.animate-on-scroll.visible {
+animation: fadeSlideIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+/* Beam Animations */
+.beam-border-h::after {
+content: ''; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
+background: linear-gradient(to right, transparent, #fd953f, transparent);
+transform: translateX(-100%);
+animation: beam-slide 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+opacity: 0.5;
+}
+@keyframes beam-slide {
+0% { transform: translateX(-100%); opacity: 0; }
+10% { opacity: 1; }
+90% { opacity: 1; }
+100% { transform: translateX(100%); opacity: 0; }
+}
+/* Custom 3D visual styles */
+.glass-panel {
+background: rgba(20, 20, 20, 0.6);
+backdrop-filter: blur(32px);
+border: 1px solid rgba(255, 255, 255, 0.08);
+box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+}
+/* Toggle Switch Logic */
+input:checked ~ .toggle-dot {
+transform: translateX(100%);
+}
+input:checked ~ .toggle-bg {
+background-color: #fd953f;
+}
+</style>
+<script src="https://www.aura.build/FxFilter.js"></script>
+<script>
+// Configure Tailwind to include our custom 3D transform utilities
+tailwind.config = {
+theme: {
+extend: {
+// Add any custom theme extensions here if needed
+}
+},
+plugins: [
+function({ addUtilities }) {
+const rotateXUtilities = {};
+const rotateYUtilities = {};
+const rotateZUtilities = {};
+const rotateValues = [0, 5, 10, 15, 20, 30, 45, 75];
+// Generate rotate-x utilities
+rotateValues.forEach((value) => {
+rotateXUtilities[`.rotate-x-${value}`] = {
+'--tw-rotate-x': `${value}deg`,
+transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+};
+if (value !== 0) {
+rotateXUtilities[`.-rotate-x-${value}`] = {
+'--tw-rotate-x': `-${value}deg`,
+transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+};
+}
+});
+// Generate rotate-y utilities
+rotateValues.forEach((value) => {
+rotateYUtilities[`.rotate-y-${value}`] = {
+'--tw-rotate-y': `${value}deg`,
+transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+};
+if (value !== 0) {
+rotateYUtilities[`.-rotate-y-${value}`] = {
+'--tw-rotate-y': `-${value}deg`,
+transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+};
+}
+});
+// Generate rotate-z utilities
+rotateValues.forEach((value) => {
+rotateZUtilities[`.rotate-z-${value}`] = {
+'--tw-rotate-z': `${value}deg`,
+transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+};
+if (value !== 0) {
+rotateZUtilities[`.-rotate-z-${value}`] = {
+'--tw-rotate-z': `-${value}deg`,
+transform: `
+translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0))
+rotateX(var(--tw-rotate-x, 0))
+rotateY(var(--tw-rotate-y, 0))
+rotateZ(var(--tw-rotate-z, 0))
+skewX(var(--tw-skew-x, 0))
+skewY(var(--tw-skew-y, 0))
+scaleX(var(--tw-scale-x, 1))
+scaleY(var(--tw-scale-y, 1))
+`.replace(/\\s+/g, ' ').trim(),
+};
+}
+});
+// Perspective utilities
+const perspectiveUtilities = {
+".perspective-none": { perspective: "none" },
+".perspective-dramatic": { perspective: "100px" },
+".perspective-near": { perspective: "300px" },
+".perspective-normal": { perspective: "500px" },
+".perspective-midrange": { perspective: "800px" },
+".perspective-distant": { perspective: "1200px" },
+};
+// Transform style utilities
+const transformStyleUtilities = {
+".transform-style-preserve-3d": { "transform-style": "preserve-3d" },
+".transform-style-flat": { "transform-style": "flat" },
+};
+addUtilities({
+...rotateXUtilities,
+...rotateYUtilities,
+...rotateZUtilities,
+...perspectiveUtilities,
+...transformStyleUtilities,
+});
+}
+]
+};
+</script>
+<link id="all-fonts-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist">
+.font-geist { font-family: 'Geist', sans-serif !important; }
+</style><link id="all-fonts-link-font-roboto" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-roboto">
+.font-roboto { font-family: 'Roboto', sans-serif !important; }
+</style><link id="all-fonts-link-font-montserrat" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-montserrat">
+.font-montserrat { font-family: 'Montserrat', sans-serif !important; }
+</style><link id="all-fonts-link-font-poppins" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-poppins">
+.font-poppins { font-family: 'Poppins', sans-serif !important; }
+</style><link id="all-fonts-link-font-playfair" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&amp;display=swap"><style id="all-fonts-style-font-playfair">
+.font-playfair { font-family: 'Playfair Display', serif !important; }
+</style><link id="all-fonts-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-instrument-serif">
+.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }
+</style><link id="all-fonts-link-font-merriweather" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;display=swap"><style id="all-fonts-style-font-merriweather">
+.font-merriweather { font-family: 'Merriweather', serif !important; }
+</style><link id="all-fonts-link-font-bricolage" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-bricolage">
+.font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }
+</style><link id="all-fonts-link-font-jakarta" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-jakarta">
+.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }
+</style><link id="all-fonts-link-font-manrope" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-manrope">
+.font-manrope { font-family: 'Manrope', sans-serif !important; }
+</style><link id="all-fonts-link-font-space-grotesk" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-space-grotesk">
+.font-space-grotesk { font-family: 'Space Grotesk', sans-serif !important; }
+</style><link id="all-fonts-link-font-work-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-work-sans">
+.font-work-sans { font-family: 'Work Sans', sans-serif !important; }
+</style><link id="all-fonts-link-font-pt-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-pt-serif">
+.font-pt-serif { font-family: 'PT Serif', serif !important; }
+</style><link id="all-fonts-link-font-geist-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist-mono">
+.font-geist-mono { font-family: 'Geist Mono', monospace !important; }
+</style><link id="all-fonts-link-font-space-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-space-mono">
+.font-space-mono { font-family: 'Space Mono', monospace !important; }
+</style><link id="all-fonts-link-font-quicksand" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-quicksand">
+.font-quicksand { font-family: 'Quicksand', sans-serif !important; }
+</style><link id="all-fonts-link-font-nunito" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-nunito">
+.font-nunito { font-family: 'Nunito', sans-serif !important; }
+</style><style id="border-gradient-shared-style">
+[style*="--border-gradient"]::before {
+content: "";
+position: absolute;
+inset: 0;
+padding: 1px;
+border-radius: var(--border-radius-before, inherit);
+-webkit-mask: linear-gradient(#fff 0 0) content-box,
+linear-gradient(#fff 0 0);
+-webkit-mask-composite: xor;
+mask-composite: exclude;
+background: var(--border-gradient);
+pointer-events: none;
+}</style>  <style>
+/* 3D Transform utilities */
+.rotate-x-0 { --tw-rotate-x: 0deg; transform: translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0)) rotateX(var(--tw-rotate-x, 0)) rotateY(var(--tw-rotate-y, 0)) rotateZ(var(--tw-rotate-z, 0)) skewX(var(--tw-skew-x, 0)) skewY(var(--tw-skew-y, 0)) scaleX(var(--tw-scale-x, 1)) scaleY(var(--tw-scale-y, 1)) !important; }
+.rotate-y-0 { --tw-rotate-y: 0deg; transform: translate3d(var(--tw-translate-x, 0), var(--tw-translate-y, 0), var(--tw-translate-z, 0)) rotateX(var(--tw-rotate-x, 0)) rotateY(var(--tw-rotate-y, 0)) rotateZ(var(--tw-rotate-z, 0)) skewX(var(--tw-skew-x, 0)) skewY(var(--tw-skew-y, 0)) scaleX(var(--tw-scale-x, 1)) scaleY(var(--tw-scale-y, 1)) !important; }
+.perspective-none { perspective: none !important; }
+.perspective-dramatic { perspective: 100px !important; }
+.perspective-near { perspective: 300px !important; }
+.perspective-normal { perspective: 500px !important; }
+.perspective-midrange { perspective: 800px !important; }
+.perspective-distant { perspective: 1200px !important; }
+.transform-style-preserve-3d { transform-style: preserve-3d !important; }
+.transform-style-flat { transform-style: flat !important; }
+</style></head>
+  <body class="text-neutral-400 flex flex-col min-h-screen overflow-x-hidden selection:bg-purple-500/30 selection:text-purple-200">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Background (component) added by Aura -->
+<div class="aura-background-component top-0 w-full h-screen -z-10 absolute" data-alpha-mask="0" style="; mask-image: linear-gradient(to bottom, transparent, black 0%, black 0%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 0%, black 0%, transparent)"><div class="aura-background-component top-0 w-full -z-10 absolute h-full">
+  <div data-us-project="uFY4IYPs2LU8fWm96Im2" class="absolute w-full h-full left-0 top-0 -z-10"></div>
+  <script type="text/javascript">
+    !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head || document.body).appendChild(i)}}();
+  </script>
+</div></div>
+    
+
+    
+
+    <!-- Navigation -->
+    <nav class="fixed z-50 bg-[#050505]/80 border-white/5 border-b top-0 right-0 left-0 backdrop-blur-md">
+      <div class="lg:px-12 flex h-16 max-w-[90rem] mr-auto ml-auto pr-6 pl-6 items-center justify-between">
+        <div class="flex items-center gap-12">
+          <!-- Logo -->
+          <a href="#" class="flex items-center gap-2 text-white hover:text-orange-400 transition-colors group">
+            <div class="relative flex items-center justify-center w-6 h-6"></div>
+            <span class="text-lg font-medium tracking-tight font-display bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/92f8c97d-c6ce-4088-95e1-67dfbfddffa0_320w.png)] bg-cover bg-center pt-6 pr-12 pb-6 pl-12"></span>
+          </a>
+
+          <!-- Desktop Links -->
+          <div class="hidden md:flex items-center gap-6 text-sm font-normal text-neutral-500">
+            <a href="#features" class="hover:text-white transition-colors">
+              Features
+            </a>
+            <a href="#showcase" class="hover:text-white transition-colors">
+              Showcase
+            </a>
+            <a href="#pricing" class="hover:text-white transition-colors">
+              Pricing
+            </a>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex items-center gap-4">
+          <a href="#" class="text-xs font-medium text-neutral-500 hover:text-white transition-colors hidden sm:block">
+            Log in
+          </a>
+          <a href="#" class="group inline-flex items-center justify-center overflow-hidden transition-all focus:outline-none rounded-full pt-[1px] pr-[1px] pb-[1px] pl-[1px] relative">
+            <span class="absolute inset-[-1000%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#333_0%,#fff_50%,#333_100%)]"></span>
+            <span class="inline-flex cursor-pointer items-center justify-center hover:bg-neutral-900 transition-colors text-xs font-medium text-white bg-neutral-950 w-full h-full rounded-full pt-2 pr-5 pb-2 pl-5 backdrop-blur-3xl">
+              Open App
+            </span>
+          </a>
+        </div>
+      </div>
+      <div class="absolute bottom-0 left-0 right-0 h-px bg-transparent overflow-hidden beam-border-h pointer-events-none"></div>
+    </nav>
+
+    <!-- Main Hero -->
+    <main class="lg:px-12 min-h-screen flex flex-col pt-32 pr-6 pb-20 pl-6 relative justify-center">
+      <div class="absolute inset-0 grid-bg pointer-events-none z-0"></div>
+      <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[40vw] h-[40vw] bg-gray-900/20 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 lg:gap-24 w-full max-w-[90rem] z-10 mr-auto ml-auto relative gap-x-12 gap-y-12 items-center">
+        <div class="lg:col-span-6 flex flex-col gap-x-8 gap-y-8">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 w-fit animate-on-scroll visible">
+            <span class="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></span>
+            <span class="text-[10px] uppercase text-orange-200 tracking-widest font-mono">
+              Flux 2.0 is live
+            </span>
+          </div>
+
+          <h1 class="md:text-7xl lg:text-8xl leading-[0.95] animate-on-scroll text-5xl font-medium text-white tracking-tighter font-display visible" style="animation-delay: 100ms">
+            Design in
+            <span class="bg-clip-text text-transparent bg-gradient-to-l from-[#fd953f] to-orange-600 pr-2 pl-2">
+              3D
+            </span>
+            .
+            <br>
+            Ship to web.
+          </h1>
+
+          <p class="text-lg text-neutral-400 font-light max-w-md leading-relaxed animate-on-scroll visible" style="animation-delay: 200ms;">
+            A collaborative design tool for the browser. Create organic shapes,
+            interactive scenes, and export production-ready React components in
+            seconds.
+          </p>
+
+          <div class="flex flex-wrap animate-on-scroll gap-x-4 gap-y-4 items-center visible" style="animation-delay: 300ms">
+            <button class="group flex overflow-hidden uppercase transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_40px_-10px_rgba(234,88,12,0.5)] focus:outline-none text-sm font-medium text-white tracking-widest font-geist rounded-full pt-5 pr-12 pb-5 pl-12 relative items-center justify-center">
+              <style>
+                @keyframes beam-spin { to { transform: rotate(360deg); } }
+                @keyframes dots-move {
+                    0% { background-position: 0 0; }
+                    100% { background-position: 24px 24px; }
+                }
+              </style>
+
+              <!-- Full Border Beam (Single Beam) -->
+              <div class="absolute inset-0 -z-20 rounded-full overflow-hidden p-[1px]">
+                <div class="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_0_300deg,#ea580c_360deg)]" style="animation: beam-spin 3s linear infinite;"></div>
+                <div class="absolute inset-[1px] rounded-full bg-black"></div>
+              </div>
+
+              <!-- Inner Background & Effects -->
+              <div class="overflow-hidden bg-zinc-950 rounded-full absolute top-[2px] right-[2px] bottom-[2px] left-[2px]">
+                <!-- Light Monotone Gradient Background -->
+                <div class="absolute inset-0 bg-gradient-to-b from-zinc-800/60 to-transparent"></div>
+
+                <!-- Animated Dots Pattern -->
+                <div class="opacity-30 mix-blend-overlay absolute top-0 right-0 bottom-0 left-0" style="background-image: radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1px); background-size: 12px 12px; animation: dots-move 8s linear infinite"></div>
+
+                <!-- Orange Glow on Hover -->
+                <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-1/2 bg-orange-500/10 blur-2xl rounded-full pointer-events-none transition-colors duration-500 group-hover:bg-orange-500/30"></div>
+              </div>
+
+              <!-- Content -->
+              <span class="relative z-10 text-white/90 transition-colors group-hover:text-white">
+                Start Building
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right relative z-10 ml-2 transition-transform duration-300 group-hover:translate-x-1">
+                <path d="M5 12h14" class=""></path>
+                <path d="m12 5 7 7-7 7" class=""></path>
+              </svg>
+            </button>
+
+            <div class="flex bg-white/5 rounded-full pt-3 pr-4 pb-3 pl-4 backdrop-blur-xl gap-x-4 gap-y-4 items-center" style="position: relative; --border-gradient: linear-gradient(225deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)); --border-radius-before: 9999px">
+              <div class="flex -space-x-2">
+                <div class="bg-neutral-700 w-6 h-6 bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/90ec73f0-6fd3-4d0c-922c-fcc592c983df_320w.webp)] bg-cover bg-center border-[#050505] border rounded-full"></div>
+                <div class="bg-neutral-600 w-6 h-6 bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/3e3e1091-f8e8-4022-a02a-fa37a35c59a5_320w.jpg)] bg-cover bg-center border-[#050505] border rounded-full"></div>
+                <div class="bg-neutral-500 w-6 h-6 bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/c4ee565a-2084-483b-8358-9fc06da5ee99_320w.jpg)] bg-cover bg-center border-[#050505] border rounded-full" style="transition: outline 0.1s ease-in-out;"></div>
+              </div>
+              <span class="text-xs text-neutral-400">
+                Used by 10k+ designers
+              </span>
+            </div>
+          </div>
+
+          <div class="mt-8 font-mono text-xs text-neutral-500 flex items-center gap-2 animate-on-scroll visible" style="animation-delay: 400ms;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="terminal" class="lucide lucide-terminal w-3 h-3"><path d="M12 19h8"></path><path d="m4 17 6-6-6-6"></path></svg>
+            <span class="">npm install @flux/react-three-fiber</span>
+          </div>
+        </div>
+
+        <div class="lg:col-span-6 animate-on-scroll h-[420px] md:h-[520px] lg:h-[620px] relative perspective-[1000px] visible" style="animation-delay: 500ms">
+          <div class="glass-panel overflow-hidden flex flex-col transform transition-transform hover:rotate-0 duration-700 ease-out rounded-xl absolute top-0 right-0 bottom-0 left-0 rotate-x-[5deg] rotate-y-[-5deg]">
+            <div class="flex bg-white/5 h-10 border-white/5 border-b pr-4 pl-4 backdrop-blur-md gap-x-2 gap-y-2 items-center">
+              <div class="flex gap-1.5">
+                <div class="w-2.5 h-2.5 rounded-full bg-red-500/20"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-green-500/20"></div>
+              </div>
+              <div class="mx-auto font-mono text-[10px] text-neutral-500">
+                scene.flux — Edited
+              </div>
+            </div>
+            <div class="flex-1 overflow-hidden bg-neutral-950 relative perspective-midrange">
+              <iframe src="https://my.spline.design/genkubgreetingrobot-ojzcjWInavuKpZSt2luvgvjl/" frameborder="0" allowfullscreen="" loading="lazy" class="absolute inset-0 w-full h-full border-none" data-container-bg="true"></iframe>
+              <div class="absolute top-0 right-0 bottom-0 left-0" style="background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 50px 50px; transform: perspective(500px) rotateX(60deg) translateY(100px) scale(2); opacity: 0.5"></div>
+              <div class="transform-style-preserve-3d animate-[spin-slow_10s_linear_infinite] w-32 h-32 absolute top-3/4 left-1/2" style="margin-left: -4rem; margin-top: -4rem">
+                <div class="backdrop-blur-[2px] bg-purple-500/10 border-purple-500/40 border absolute top-0 right-0 bottom-0 left-0" style="transform: translateZ(4rem)"></div>
+                <div class="absolute inset-0 border border-purple-500/40 bg-purple-500/10 backdrop-blur-[2px]" style="transform: rotateY(180deg) translateZ(4rem);"></div>
+                <div class="absolute inset-0 border border-purple-500/40 bg-purple-500/10 backdrop-blur-[2px]" style="transform: rotateY(90deg) translateZ(4rem);"></div>
+                <div class="absolute inset-0 border border-purple-500/40 bg-purple-500/10 backdrop-blur-[2px]" style="transform: rotateY(-90deg) translateZ(4rem);"></div>
+                <div class="absolute inset-0 border border-purple-500/40 bg-purple-500/10 backdrop-blur-[2px]" style="transform: rotateX(90deg) translateZ(4rem);"></div>
+                <div class="absolute inset-0 border border-purple-500/40 bg-purple-500/10 backdrop-blur-[2px]" style="transform: rotateX(-90deg) translateZ(4rem);"></div>
+                <div class="absolute top-1/2 left-1/2 w-16 h-16 -translate-x-1/2 -translate-y-1/2 bg-blue-500/20 rounded-full blur-md animate-pulse transform-style-preserve-3d"></div>
+              </div>
+              <div class="-translate-x-1/2 -translate-y-1/2 pointer-events-none z-20 w-0 h-0 absolute top-3/4 left-1/2">
+                <div class="absolute bottom-0 left-0 w-px h-20 bg-green-500 origin-bottom"></div>
+                <div class="absolute bottom-0 left-0 h-px w-20 bg-red-500 origin-left"></div>
+                <div class="absolute bottom-0 left-0 w-px h-16 bg-blue-500 origin-bottom transform rotate-45 translate-y-2 -translate-x-2"></div>
+              </div>
+              <div class="-translate-x-1/2 flex gap-1 z-30 bg-[#0A0A0A]/90 border-white/10 border rounded-full pt-1.5 pr-1.5 pb-1.5 pl-1.5 absolute bottom-6 left-1/2 shadow-2xl backdrop-blur-md items-center">
+                <button class="flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-[10px] font-medium text-white hover:bg-white/20 transition-all border border-white/5">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rotate-cw">
+                    <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path>
+                    <path d="M21 3v5h-5"></path>
+                  </svg>
+                  Rotate
+                </button>
+                <button class="flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-medium text-neutral-400 hover:text-white hover:bg-white/5 transition-all border border-transparent">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move">
+                    <path d="M12 2v20"></path>
+                    <path d="m15 19-3 3-3-3"></path>
+                    <path d="m19 9 3 3-3 3"></path>
+                    <path d="M2 12h20"></path>
+                    <path d="m5 9-3 3 3 3"></path>
+                    <path d="m9 5 3-3 3 3"></path>
+                  </svg>
+                  Move
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="-left-6 flex flex-col glass-panel transform translate-z-10 animate-float bg-neutral-800/40 w-12 rounded-lg pt-2 pr-2 pb-2 pl-2 absolute top-12 [--fx-filter:blur(10px)_liquid-glass(5,10)_saturate(1.25)_noise(0.5,1,0)] gap-x-2 gap-y-2">
+            <button class="p-1.5 hover:bg-white/10 rounded text-purple-400">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="mouse-pointer-2" class="lucide lucide-mouse-pointer-2 w-4 h-4"><path d="M4.037 4.688a.495.495 0 0 1 .651-.651l16 6.5a.5.5 0 0 1-.063.947l-6.124 1.58a2 2 0 0 0-1.438 1.435l-1.579 6.126a.5.5 0 0 1-.947.063z"></path></svg>
+            </button>
+            <button class="p-1.5 hover:bg-white/10 rounded">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="box" class="lucide lucide-box w-4 h-4"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></svg>
+            </button>
+            <button class="p-1.5 hover:bg-white/10 rounded">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="move" class="lucide lucide-move w-4 h-4"><path d="M12 2v20"></path><path d="m15 19-3 3-3-3"></path><path d="m19 9 3 3-3 3"></path><path d="M2 12h20"></path><path d="m5 9-3 3 3 3"></path><path d="m9 5 3-3 3 3"></path></svg>
+            </button>
+            <button class="p-1.5 hover:bg-white/10 rounded">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="scaling" class="lucide lucide-scaling w-4 h-4"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M14 15H9v-5"></path><path d="M16 3h5v5"></path><path d="M21 3 9 15"></path></svg>
+            </button>
+            <div class="h-px w-full bg-white/10 my-1"></div>
+            <button class="p-1.5 hover:bg-white/10 rounded">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="image" class="lucide lucide-image w-4 h-4"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg>
+            </button>
+          
+                
+                
+            
+                
+                
+            
+                
+                
+            
+                
+                
+            
+                
+                
+            
+                
+                
+            
+                
+                
+            </div>
+          <div class="-right-4 glass-panel transform translate-z-20 animate-float -bottom-4 w-48 rounded-lg pt-4 pr-4 pb-4 pl-4 absolute [--fx-filter:blur(10px)_liquid-glass(5,10)_saturate(1.25)_noise(0.5,1,0)]" style="animation-delay: 1s">
+            <div class="flex justify-between items-center mb-4">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-neutral-500">
+                Material
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="layers" class="lucide lucide-layers w-3 h-3 text-neutral-500"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"></path><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"></path><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"></path></svg>
+            </div>
+            <div class="space-y-3">
+              <div class="space-y-1">
+                <div class="flex justify-between text-[10px] text-neutral-400">
+                  <span class="">Roughness</span>
+                  <span>0.4</span>
+                </div>
+                <div class="h-1 bg-white/10 rounded-full overflow-hidden">
+                  <div class="h-full w-[40%] bg-purple-500 rounded-full"></div>
+                </div>
+              </div>
+              <div class="space-y-1">
+                <div class="flex justify-between text-[10px] text-neutral-400">
+                  <span class="">Metalness</span>
+                  <span>0.8</span>
+                </div>
+                <div class="h-1 bg-white/10 rounded-full overflow-hidden">
+                  <div class="bg-orange-500 w-[80%] h-full rounded-full"></div>
+                </div>
+              </div>
+              <div class="flex gap-2 pt-2">
+                <div class="w-6 h-6 rounded bg-purple-500/50 border border-white/20"></div>
+                <div class="bg-orange-500/50 w-6 h-6 border-white/20 border rounded"></div>
+                <div class="w-6 h-6 rounded bg-white/10 border border-white/10 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="plus" class="lucide lucide-plus w-3 h-3"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+                </div>
+              </div>
+            </div>
+          
+                
+                
+            
+                
+                
+            
+                
+                
+            
+                
+                
+            
+                
+                
+            
+                
+                
+            
+                
+                
+            </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Metrics -->
+    <section class="lg:px-12 overflow-hidden group bg-[#080808] border-white/5 border-t pt-24 pr-6 pb-24 pl-6 relative">
+      <div class="group-hover:opacity-100 transition-opacity duration-1000 bg-gradient-to-b from-purple-900/5 to-transparent opacity-0 absolute top-0 right-0 bottom-0 left-0"></div>
+
+      <div class="z-10 max-w-[90rem] mr-auto ml-auto relative">
+        <style>
+          @keyframes karaoke-reveal-left {
+            from {
+              background-position: 100% 0;
+            }
+
+            to {
+              background-position: 0 0;
+            }
+          }
+
+          @keyframes karaoke-reveal-right {
+            from {
+              background-position: 0 0;
+            }
+
+            to {
+              background-position: 100% 0;
+            }
+          }
+
+          .karaoke-line {
+            background-image: linear-gradient(to right, #ffffff 50%, #525252 50%);
+            background-size: 200% 100%;
+            background-position: 100% 0;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+            display: inline-block;
+          }
+
+          .karaoke-trigger.visible .karaoke-line {
+            animation-duration: 2.3s;
+            animation-timing-function: linear;
+            animation-fill-mode: forwards;
+            animation-delay: var(--delay, 0s);
+          }
+
+          .karaoke-trigger.visible .karaoke-line.direction-left {
+            animation-name: karaoke-reveal-left;
+          }
+
+          .karaoke-trigger.visible .karaoke-line.direction-right {
+            animation-name: karaoke-reveal-right;
+          }
+
+          .inline-icon {
+            display: inline-block;
+            height: 1.4rem;
+            width: 1.4rem;
+            margin: 0 0.3rem;
+            vertical-align: -0.25em;
+            opacity: 0.9;
+          }
+        </style>
+
+        <!-- Full-width text block -->
+        <div class="mb-20 max-w-none">
+          <h2 class="text-3xl md:text-5xl font-display font-normal leading-tight tracking-tight animate-on-scroll karaoke-trigger">
+            <!-- Line 1 -->
+            <span class="block karaoke-line direction-left" style="--delay: 0s">
+              Flux is the native engine for the spatial web.
+            </span>
+
+            <!-- Line 2 -->
+            <span class="block karaoke-line direction-left" style="--delay: 2.4s;">
+              Built for performance using WebGPU,
+            </span>
+
+            <!-- Line 3 -->
+            <span class="block karaoke-line direction-left" style="--delay: 4.8s;">
+              enabling designers to construct fidelity-first experiences
+            </span>
+
+            <!-- Line 4 -->
+            <span class="block karaoke-line direction-left" style="--delay: 7.2s;">
+              without writing a single line of shader code.
+            </span>
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-12 border-white/10 border-t pt-12 gap-x-12 gap-y-12">
+          <!-- 60 FPS -->
+          <div class="animate-on-scroll" style="animation-delay: 100ms;">
+            <div class="text-4xl lg:text-5xl font-display font-light text-white tracking-tighter mb-2">
+              <span class="count-digit" data-count="60">0</span>
+              <span class="text-xl text-neutral-600 align-top ml-1">FPS</span>
+            </div>
+            <p class="text-xs font-mono uppercase tracking-widest text-neutral-600">
+              Consistent Performance
+            </p>
+          </div>
+
+          <!-- 2 MB -->
+          <div class="animate-on-scroll" style="animation-delay: 200ms;">
+            <div class="text-4xl lg:text-5xl font-display font-light text-white tracking-tighter mb-2">
+              <span class="count-digit" data-count="2">0</span>
+              <span class="text-xl text-neutral-600 align-top ml-1">MB</span>
+            </div>
+            <p class="text-xs font-mono uppercase tracking-widest text-neutral-600">
+              Runtime Weight
+            </p>
+          </div>
+
+          <!-- 4K+ -->
+          <div class="animate-on-scroll" style="animation-delay: 300ms;">
+            <div class="text-4xl lg:text-5xl font-display font-light text-white tracking-tighter mb-2">
+              <span class="count-digit" data-count="4000">0</span>
+              <span class="text-xl text-neutral-600 align-top ml-1">+</span>
+            </div>
+            <p class="text-xs font-mono uppercase tracking-widest text-neutral-600">
+              Community Assets
+            </p>
+          </div>
+
+          <!-- 0.1s -->
+          <div class="animate-on-scroll" style="animation-delay: 400ms;">
+            <div class="text-4xl lg:text-5xl font-display font-light text-white tracking-tighter mb-2">
+              <span class="count-digit" data-count="0.1">0</span>
+              <span class="text-xl text-neutral-600 align-top ml-1">s</span>
+            </div>
+            <p class="text-xs font-mono uppercase tracking-widest text-neutral-600">
+              Export Time
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bento Grid Features -->
+    <section class="lg:px-12 bg-[#050505] pt-24 pr-6 pb-24 pl-6 relative" id="features">
+      <div class="max-w-[90rem] mx-auto">
+        <div class="flex flex-col gap-12 animate-on-scroll mb-12">
+          <!-- Header Section -->
+          <div class="flex flex-col md:flex-row w-full gap-x-6 gap-y-6 items-end justify-between">
+            <div class="">
+              <h2 class="text-4xl font-medium text-white tracking-tight font-display mb-2">
+                The Toolkit
+              </h2>
+              <p class="text-neutral-500 max-w-sm">
+                Everything you need to build immersive 3D web experiences.
+              </p>
+            </div>
+            <div class="flex gap-2">
+              <button class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 transition-colors text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-left" class="lucide lucide-chevron-left w-5 h-5"><path d="m15 18-6-6 6-6"></path></svg>
+              </button>
+              <button class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 transition-colors text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" class="lucide lucide-chevron-right w-5 h-5"><path d="m9 18 6-6-6-6"></path></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Feature Cards Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+            <!-- Physics Card -->
+            <div class="group relative h-[360px] bg-neutral-900/40 border border-white/10 rounded-2xl overflow-hidden hover:border-orange-500/40 transition-all duration-500 hover:shadow-[0_0_40px_-10px_rgba(249,115,22,0.2)] animate-on-scroll" style="animation-delay: 100ms;">
+              <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(249,115,22,0.1),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+
+              <!-- Physics Visual -->
+              <div class="absolute inset-0 overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                  <!-- Bouncing Sphere -->
+                  <div class="w-16 h-16 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 shadow-lg shadow-orange-500/20 animate-[bounce_2s_infinite] relative z-10">
+                    <div class="absolute inset-0 rounded-full border border-white/20"></div>
+                  </div>
+                  <!-- Orbiting Element -->
+                  <div class="absolute w-40 h-40 border border-white/5 rounded-full animate-[spin_8s_linear_infinite]">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-neutral-700 rounded-full border border-white/10"></div>
+                  </div>
+                  <!-- Floor -->
+                  <div class="absolute bottom-24 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+                </div>
+              </div>
+
+              <div class="z-20 bg-gradient-to-t from-neutral-950 via-neutral-950/80 to-transparent w-full pt-12 pr-8 pb-8 pl-8 absolute bottom-0 left-0">
+                <div class="w-10 h-10 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center mb-4 text-orange-400 group-hover:bg-orange-500/20 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                  </svg>
+                </div>
+                <h3 class="text-xl font-medium text-white mb-2 tracking-tight">
+                  Real-time Physics
+                </h3>
+                <p class="text-neutral-500 text-sm leading-relaxed">
+                  Simulate rigid bodies, soft bodies, and constraints directly
+                  in the browser.
+                </p>
+              </div>
+            </div>
+
+            <!-- Event System Card -->
+            <div class="group relative h-[360px] bg-neutral-900/40 border border-white/10 rounded-2xl overflow-hidden hover:border-blue-500/40 transition-all duration-500 hover:shadow-[0_0_40px_-10px_rgba(59,130,246,0.2)] animate-on-scroll" style="animation-delay: 200ms;">
+              <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(59,130,246,0.1),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+
+              <!-- Interaction Visual -->
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="relative">
+                  <!-- Interactive Button Mockup -->
+                  <div class="px-5 py-2.5 rounded-lg bg-neutral-800 border border-white/10 text-xs font-mono text-blue-300 flex items-center gap-2 group-hover:scale-105 group-hover:bg-blue-500/10 group-hover:border-blue-500/30 transition-all duration-300 shadow-xl cursor-pointer">
+                    <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                    onClick={() =&gt; fire()}
+                  </div>
+
+                  <!-- Floating Event Badges -->
+                  <div class="absolute -top-10 -right-10 px-2 py-1 bg-neutral-800/90 backdrop-blur border border-white/10 rounded text-[10px] text-neutral-400 animate-[bounce_3s_infinite_1s] opacity-0 group-hover:opacity-100 transition-opacity delay-100">
+                    onHover
+                  </div>
+                  <div class="absolute -bottom-10 -left-6 px-2 py-1 bg-neutral-800/90 backdrop-blur border border-white/10 rounded text-[10px] text-neutral-400 animate-[bounce_2.5s_infinite_0.5s] opacity-0 group-hover:opacity-100 transition-opacity delay-200">
+                    onFocus
+                  </div>
+
+                  <!-- Cursor Icon -->
+                  <svg class="absolute -bottom-8 -right-8 w-5 h-5 text-white drop-shadow-lg opacity-0 group-hover:opacity-100 group-hover:-translate-x-6 group-hover:-translate-y-6 transition-all duration-700 ease-out" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M5.5 3.21l10.8 5.4a1 1 0 0 1 .16 1.7l-4.2 2.1 2.1 4.2a1 1 0 0 1-1.8.9l-2.1-4.2-4.2 2.1a1 1 0 0 1-1.45-1.09l1.69-11.11z"></path>
+                  </svg>
+                </div>
+              </div>
+
+              <div class="absolute bottom-0 left-0 w-full p-8 z-20 bg-gradient-to-t from-neutral-950 via-neutral-950/80 to-transparent pt-12">
+                <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-4 text-blue-400 group-hover:bg-blue-500/20 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mouse-pointer-click">
+                    <path d="M14 4.1 12 6"></path>
+                    <path d="m5.1 8-2.9-.8"></path>
+                    <path d="m6 12-1.9 2"></path>
+                    <path d="M7.2 2.2 8 5.1"></path>
+                    <path d="M9.037 9.69a.498.498 0 0 1 .653-.653l11 4.5a.5.5 0 0 1-.074.949l-4.349 1.041a1 1 0 0 0-.74.739l-1.04 4.35a.5.5 0 0 1-.95.074z"></path>
+                  </svg>
+                </div>
+                <h3 class="text-xl font-medium text-white mb-2 tracking-tight">
+                  Event System
+                </h3>
+                <p class="text-neutral-500 text-sm leading-relaxed">
+                  Declarative events for 3D objects. Handles raycasting and hit
+                  testing automatically.
+                </p>
+              </div>
+            </div>
+
+            <!-- React Export Card -->
+            <div class="group relative h-[360px] bg-neutral-900/40 border border-white/10 rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-500 hover:shadow-[0_0_40px_-10px_rgba(16,185,129,0.2)] animate-on-scroll" style="animation-delay: 300ms;">
+              <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(16,185,129,0.1),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+
+              <!-- Code Visual -->
+              <div class="absolute inset-0 p-8">
+                <div class="relative w-full h-56 pt-2 px-4 pb-4 bg-neutral-950/50 rounded-lg border border-white/5 p-4 overflow-hidden group-hover:border-emerald-500/20 transition-colors duration-500">
+                  <div class="flex gap-1.5 mb-3 opacity-50">
+                    <div class="w-2.5 h-2.5 rounded-full bg-neutral-600"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-neutral-600"></div>
+                  </div>
+
+                  <div class="font-mono text-[10px] leading-5 text-neutral-500 whitespace-pre relative">
+                    <!-- Visible typing output -->
+                    <div id="code-typing-react-export" class="absolute top-0 left-0"><span class="text-purple-400"></span></div>
+
+                    <!-- Hidden template with syntax colors -->
+                    <div id="code-template-react-export" class="hidden">
+                      <span class="text-purple-400">export default</span>
+                      <span class="text-blue-400">function</span>
+                      <span class="text-yellow-200">App</span>
+                      () {'{'} &nbsp;&nbsp;
+                      <span class="text-purple-400">return</span>
+                      ( &nbsp;&nbsp;&nbsp;&nbsp;&lt;
+                      <span class="text-emerald-400">Canvas</span>
+                      &gt; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;
+                      <span class="text-emerald-400">Suspense</span>
+                      <span class="text-blue-300">fallback</span>
+                      ={'{'}null{'}'}&gt;
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;
+                      <span class="text-emerald-400">Experience</span>
+                      /&gt; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/
+                      <span class="text-emerald-400">Suspense</span>
+                      &gt; &nbsp;&nbsp;&nbsp;&nbsp;&lt;/
+                      <span class="text-emerald-400">Canvas</span>
+                      &gt; &nbsp;&nbsp;) {'}'}
+                    </div>
+                  </div>
+
+                  <!-- Scanline Effect -->
+                  <div class="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-500/5 to-transparent -translate-y-full group-hover:translate-y-full transition-transform duration-400 ease-in-out"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature Deep Dive -->
+    <section class="py-24 px-6 lg:px-12 bg-[#050505] border-t border-white/5">
+      <div class="max-w-[90rem] mr-auto ml-auto space-y-32">
+        <!-- Feature 1 -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 gap-x-16 gap-y-16 items-center">
+          <div class="order-2 lg:order-1 aspect-square lg:aspect-video overflow-hidden group bg-[#0A0A0A] border-white/10 border rounded-2xl relative animate-on-scroll">
+            <style>
+              @keyframes cursor-float-1 {
+                  0%, 100% { transform: translate3d(-20px, 40px, 0); }
+                  33% { transform: translate3d(60px, -30px, 0); }
+                  66% { transform: translate3d(-40px, -10px, 0); }
+              }
+              @keyframes cursor-float-2 {
+                  0%, 100% { transform: translate3d(40px, -40px, 0); }
+                  50% { transform: translate3d(-30px, 50px, 0); }
+              }
+              @keyframes comment-pop {
+                  0% { opacity: 0; transform: scale(0.8) translateY(10px); }
+                  10%, 90% { opacity: 1; transform: scale(1) translateY(0); }
+                  100% { opacity: 0; transform: scale(0.8) translateY(10px); }
+              }
+            </style>
+
+            <!-- Background Grid -->
+            <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_90%)]"></div>
+
+            <!-- Central Scene Container -->
+            <div class="flex overflow-hidden absolute top-0 right-0 bottom-0 left-0 perspective-[800px] items-center justify-center">
+              <!-- 3D Component -->
+              <div class="relative w-64 h-40 bg-[#111]/90 backdrop-blur-md border border-white/10 rounded-xl shadow-2xl transform transition-transform duration-700 ease-out group-hover:rotate-x-6 group-hover:rotate-y-6 rotate-x-12 rotate-y-[-12deg] flex flex-col p-1 z-10">
+                <!-- Window Bar -->
+                <div class="flex items-center gap-2 px-3 py-2 border-b border-white/5">
+                  <div class="flex gap-1.5">
+                    <div class="w-2.5 h-2.5 rounded-full bg-red-500/20"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/20"></div>
+                  </div>
+                  <div class="w-20 h-1.5 bg-white/5 rounded-full ml-auto"></div>
+                </div>
+                <!-- Content -->
+                <div class="flex-1 p-3 grid grid-cols-2 gap-3 relative">
+                  <div class="group-hover:bg-purple-500/10 transition-colors bg-purple-500/5 border-purple-500/10 border rounded"></div>
+                  <div class="bg-blue-500/5 rounded border border-blue-500/10 group-hover:bg-blue-500/10 transition-colors"></div>
+
+                  <!-- Comment Floating Attached -->
+                  <div class="absolute -right-24 top-0 bg-neutral-800 border border-white/10 rounded-lg p-3 shadow-xl z-50 w-40 animate-[comment-pop_8s_ease-in-out_infinite] origin-bottom-left">
+                    <div class="flex items-center gap-2 mb-1.5">
+                      <div class="flex text-[9px] font-bold text-black bg-gradient-to-tr from-green-500 to-emerald-400 w-5 h-5 border-white/10 border rounded-full items-center justify-center">
+                        JD
+                      </div>
+                      <span class="text-[9px] text-neutral-500">Just now</span>
+                    </div>
+                    <div class="text-[11px] text-neutral-300 leading-snug">
+                      Can we make this texture more responsive?
+                    </div>
+                    <!-- Connector -->
+                    <div class="absolute bottom-4 -left-1.5 w-3 h-3 bg-neutral-800 border-b border-l border-white/10 transform rotate-45"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- User 1 Cursor (Sarah - Purple) -->
+              <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+                <div class="animate-[cursor-float-1_12s_infinite_ease-in-out]">
+                  <svg class="w-5 h-5 text-purple-500 drop-shadow-[0_4px_12px_rgba(168,85,247,0.5)]" viewBox="0 0 24 24" fill="currentColor" style="transform: rotate(-25deg)">
+                    <path d="M5.5 3.21l10.8 5.4a1 1 0 0 1 .16 1.7l-4.2 2.1 2.1 4.2a1 1 0 0 1-1.8.9l-2.1-4.2-4.2 2.1a1 1 0 0 1-1.45-1.09l1.69-11.11z"></path>
+                  </svg>
+                  <div class="ml-3.5 -mt-1 px-2 py-0.5 rounded-full bg-purple-500 text-[10px] font-bold text-white shadow-sm whitespace-nowrap opacity-90">
+                    Sarah
+                  </div>
+                </div>
+              </div>
+
+              <!-- User 2 Cursor (John - Green) -->
+              <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+                <div class="animate-[cursor-float-2_15s_infinite_ease-in-out_1s]">
+                  <svg class="w-5 h-5 text-green-500 drop-shadow-[0_4px_12px_rgba(34,197,94,0.5)]" viewBox="0 0 24 24" fill="currentColor" style="transform: rotate(-25deg)">
+                    <path d="M5.5 3.21l10.8 5.4a1 1 0 0 1 .16 1.7l-4.2 2.1 2.1 4.2a1 1 0 0 1-1.8.9l-2.1-4.2-4.2 2.1a1 1 0 0 1-1.45-1.09l1.69-11.11z"></path>
+                  </svg>
+                  <div class="ml-3.5 -mt-1 px-2 py-0.5 rounded-full bg-green-500 text-[10px] font-bold text-black shadow-sm whitespace-nowrap opacity-90">
+                    John
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bottom Status Bar -->
+            <div class="absolute bottom-4 left-4 right-4 flex justify-between items-center">
+              <div class="flex -space-x-2">
+                <div class="w-8 h-8 rounded-full border-2 border-[#0A0A0A] bg-purple-500 flex items-center justify-center text-xs font-bold text-white">
+                  S
+                </div>
+                <div class="w-8 h-8 rounded-full border-2 border-[#0A0A0A] bg-green-500 flex items-center justify-center text-xs font-bold text-black">
+                  J
+                </div>
+                <div class="w-8 h-8 rounded-full border-2 border-[#0A0A0A] bg-neutral-700 flex items-center justify-center text-xs text-white text-[10px]">
+                  +2
+                </div>
+              </div>
+              <div class="px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-[10px] uppercase tracking-wider font-mono flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                Live
+              </div>
+            </div>
+          </div>
+          <div class="order-1 lg:order-2 animate-on-scroll" style="animation-delay: 200ms;">
+            <h3 class="text-3xl font-medium text-white tracking-tight font-display mb-4">
+              Multiplayer by Default
+            </h3>
+            <p class="leading-relaxed text-lg text-neutral-400 mb-8">
+              Work together in real-time. See cursors, share component states,
+              and leave comments directly in 3D space. No more screen sharing.
+            </p>
+            <ul class="space-y-4">
+              <li class="flex items-center gap-3 text-sm text-neutral-300">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check w-4 h-4 text-orange-500"><path d="M20 6 9 17l-5-5"></path></svg>
+                Live cursor tracking
+              </li>
+              <li class="flex items-center gap-3 text-sm text-neutral-300">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check w-4 h-4 text-orange-500"><path d="M20 6 9 17l-5-5"></path></svg>
+                Threaded spatial comments
+              </li>
+              <li class="flex items-center gap-3 text-sm text-neutral-300">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" class="lucide lucide-check w-4 h-4 text-orange-500"><path d="M20 6 9 17l-5-5"></path></svg>
+                Version history &amp; rollback
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 gap-x-16 gap-y-16 items-center">
+          <!-- Left Text Content -->
+          <div class="flex flex-col justify-center animate-on-scroll">
+            <h3 class="text-3xl font-medium text-white tracking-tight font-display mb-4">
+              Optimized for Production
+            </h3>
+            <p class="leading-relaxed text-lg text-neutral-400 mb-8">
+              Flux isn't just a prototyping tool. Our engine automatically
+              optimizes geometries, compresses textures, and bakes lighting for
+              maximum runtime performance.
+            </p>
+            <button class="group inline-flex items-center gap-2 text-sm text-white hover:text-orange-400 transition-colors w-fit">
+              <span class="border-b border-orange-500/50 pb-0.5 group-hover:border-orange-400 transition-colors">
+                Read the technical paper
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-4 h-4 transition-transform duration-300 group-hover:translate-x-1">
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Right Visual Schema -->
+          <div class="aspect-square lg:aspect-video overflow-hidden flex flex-col group select-none bg-[#0A0A0A] border-white/10 border rounded-2xl relative animate-on-scroll" style="animation-delay: 200ms;">
+            <style>
+              @keyframes flux-packet-1 {
+                0% { left: 24%; top: 25%; opacity: 0; transform: scale(0); }
+                10% { opacity: 1; transform: scale(1); }
+                50% { left: 50%; top: 50%; opacity: 1; transform: scale(0.5); }
+                51% { opacity: 0; }
+                100% { opacity: 0; }
+              }
+              @keyframes flux-packet-2 {
+                0% { left: 24%; top: 50%; opacity: 0; transform: scale(0); }
+                10% { opacity: 1; transform: scale(1); }
+                50% { left: 50%; top: 50%; opacity: 1; transform: scale(0.5); }
+                51% { opacity: 0; }
+                100% { opacity: 0; }
+              }
+              @keyframes flux-packet-3 {
+                0% { left: 24%; top: 75%; opacity: 0; transform: scale(0); }
+                10% { opacity: 1; transform: scale(1); }
+                50% { left: 50%; top: 50%; opacity: 1; transform: scale(0.5); }
+                51% { opacity: 0; }
+                100% { opacity: 0; }
+              }
+              @keyframes flux-spin { to { transform: rotate(360deg); } }
+              @keyframes flux-dash { to { stroke-dashoffset: -8; } }
+            </style>
+            <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(circle_at_center,black,transparent_80%)]"></div>
+            <div class="absolute inset-0 flex items-center justify-center perspective-[1000px]">
+              <div class="w-[90%] h-[80%] relative transform-style-3d transition-transform duration-700 group-hover:rotate-x-0 group-hover:rotate-y-0 rotate-x-6 rotate-y-[-6deg]">
+                <div class="absolute inset-0 bg-neutral-900/40 backdrop-blur-md border border-white/10 rounded-xl flex items-center justify-between px-6 py-6 shadow-2xl overflow-hidden">
+                  <svg class="absolute inset-0 w-full h-full pointer-events-none z-0">
+                    <path d="M24% 25% C 40% 25%, 40% 50%, 50% 50%" stroke="url(#lineGrad1)" stroke-width="1.5" fill="none" class="opacity-20"></path>
+                    <path d="M24% 50% L 50% 50%" stroke="url(#lineGrad2)" stroke-width="1.5" fill="none" class="opacity-20"></path>
+                    <path d="M24% 75% C 40% 75%, 40% 50%, 50% 50%" stroke="url(#lineGrad3)" stroke-width="1.5" fill="none" class="opacity-20"></path>
+                    <line x1="50%" y1="50%" x2="72%" y2="50%" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4 4" class="opacity-40" style="animation: flux-dash 1s linear infinite"></line>
+                    <defs></defs>
+                  </svg>
+                  <div class="flex flex-col justify-between h-full py-4 z-10 w-28">
+                    <div class="flex items-center gap-2.5 p-2 rounded-lg bg-neutral-800/80 border border-white/5 backdrop-blur shadow-lg transform transition-transform group-hover:translate-x-1 duration-500">
+                      <div class="p-1.5 rounded bg-blue-500/20 text-blue-400">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="m12 3-1.9 5.8a2 2 0 0 1-1.2 1.2l-5.8 1.9 5.8 1.9a2 2 0 0 1 1.2 1.2l1.9 5.8 1.9-5.8a2 2 0 0 1 1.2-1.2l5.8-1.9-5.8-1.9a2 2 0 0 1-1.2-1.2l-1.9-5.8Z"></path>
+                        </svg>
+                      </div>
+                      <div class="text-[9px] font-mono text-neutral-400">
+                        GEOMETRY
+                      </div>
+                    </div>
+                    <div class="flex items-center gap-2.5 p-2 rounded-lg bg-neutral-800/80 border border-white/5 backdrop-blur shadow-lg transform transition-transform group-hover:translate-x-1 duration-500 delay-75">
+                      <div class="p-1.5 rounded bg-purple-500/20 text-purple-400">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+                          <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                          <path d="m21 15-5-5L5 21"></path>
+                        </svg>
+                      </div>
+                      <div class="text-[9px] font-mono text-neutral-400">
+                        TEXTURES
+                      </div>
+                    </div>
+                    <div class="flex items-center gap-2.5 p-2 rounded-lg bg-neutral-800/80 border border-white/5 backdrop-blur shadow-lg transform transition-transform group-hover:translate-x-1 duration-500 delay-150">
+                      <div class="p-1.5 rounded bg-orange-500/20 text-orange-400">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <circle cx="12" cy="12" r="4"></circle>
+                          <path d="M12 2v2"></path>
+                          <path d="M12 20v2"></path>
+                          <path d="m4.93 4.93 1.41 1.41"></path>
+                          <path d="m17.66 17.66 1.41 1.41"></path>
+                          <path d="M2 12h2"></path>
+                          <path d="M20 12h2"></path>
+                          <path d="m6.34 17.66-1.41-1.41"></path>
+                          <path d="m19.07 4.93-1.41 1.41"></path>
+                        </svg>
+                      </div>
+                      <div class="text-[9px] font-mono text-neutral-400">
+                        LIGHTING
+                      </div>
+                    </div>
+                  </div>
+                  <div class="z-20 relative w-24 h-24 flex items-center justify-center">
+                    <div class="absolute inset-0 bg-orange-500/10 rounded-full animate-ping opacity-20"></div>
+                    <div class="w-16 h-16 bg-neutral-900 rounded-full border border-orange-500/30 flex items-center justify-center shadow-[0_0_20px_rgba(249,115,22,0.3)] relative">
+                      <svg class="w-20 h-20 absolute text-orange-500/20" viewBox="0 0 100 100" style="animation: flux-spin 10s linear infinite">
+                        <circle cx="50" cy="50" r="48" stroke="currentColor" stroke-width="1" fill="none" stroke-dasharray="10 20"></circle>
+                      </svg>
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-orange-500">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="z-10 w-36">
+                    <div class="bg-neutral-800/90 border border-green-500/30 rounded-xl p-3 shadow-2xl relative overflow-hidden">
+                      <div class="absolute inset-0 bg-green-500/5"></div>
+                      <div class="flex flex-col gap-2 relative">
+                        <div class="flex justify-between items-center border-b border-white/5 pb-2">
+                          <span class="text-[10px] font-semibold text-green-400 uppercase tracking-wide">
+                            Production
+                          </span>
+                          <div class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
+                        </div>
+                        <div class="space-y-1.5">
+                          <div class="flex justify-between text-[9px] text-neutral-400">
+                            <span>Mesh</span>
+                            <span class="text-neutral-200 font-mono">
+                              Instanced
+                            </span>
+                          </div>
+                          <div class="flex justify-between text-[9px] text-neutral-400">
+                            <span>Tex</span>
+                            <span class="text-neutral-200 font-mono">KTX2</span>
+                          </div>
+                          <div class="flex justify-between text-[9px] text-neutral-400">
+                            <span>Light</span>
+                            <span class="text-neutral-200 font-mono">
+                              Baked
+                            </span>
+                          </div>
+                        </div>
+                        <div class="mt-2 pt-2 border-t border-white/5">
+                          <div class="w-full bg-neutral-700 h-1 rounded-full overflow-hidden">
+                            <div class="bg-green-500 w-[95%] h-full shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
+                          </div>
+                          <div class="text-[8px] text-right mt-1 text-green-400 font-mono">
+                            -85% Size
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="absolute w-1.5 h-1.5 bg-blue-400 rounded-full shadow-[0_0_8px_currentColor]" style="animation: flux-packet-1 3s linear infinite"></div>
+                  <div class="absolute w-1.5 h-1.5 bg-purple-400 rounded-full shadow-[0_0_8px_currentColor]" style="animation: flux-packet-2 3s linear infinite 1s"></div>
+                  <div class="absolute w-1.5 h-1.5 bg-orange-400 rounded-full shadow-[0_0_8px_currentColor]" style="animation: flux-packet-3 3s linear infinite 0.5s"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="bg-gradient-to-b from-[#050505] to-[#0a0a0c] border-white/5 border-t pt-24 pb-24">
+      <div class="max-w-fit mr-auto ml-auto pt-12 pr-6 pb-12 pl-6">
+        <!-- IMPORTANT: keep this grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-20 items-center">
+          <!-- LEFT COLUMN: rotating testimonial ONLY -->
+          <div class="relative animate-on-scroll">
+            <!-- quote icon (static) -->
+            <div class="inline-flex items-center gap-2 mb-6 text-orange-400">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="quote" class="lucide lucide-quote w-6 h-6 fill-indigo-400/20"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"></path><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"></path></svg>
+            </div>
+
+            <!-- wrapper so the height stays stable while fading -->
+            <div id="left-testimonial-wrapper" class="relative overflow-visible min-h-[220px] md:min-h-[260px]">
+              <!-- Slide 1 -->
+              <div data-testimonial="" class="absolute inset-0 opacity-100 translate-y-0 transition-opacity transition-transform duration-300 ease-out flex flex-col justify-between" style="pointer-events: auto;">
+                <h2 class="text-4xl md:text-5xl font-medium tracking-tight text-white mb-8 leading-tight">
+                  "Nucleus transformed how we ship software. We went from
+                  monthly releases to shipping
+                  <span class="text-orange-400">15 times a day</span>
+                  ."
+                </h2>
+
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-full bg-slate-700 overflow-hidden border border-white/10">
+                    <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/c4ee565a-2084-483b-8358-9fc06da5ee99_320w.jpg" alt="User" class="object-cover w-full h-auto" style="transition: outline 0.1s ease-in-out;">
+                  </div>
+                  <div>
+                    <div class="text-white font-medium text-lg">
+                      Alex Richardson
+                    </div>
+                    <div class="text-slate-400">CTO at TechFlow</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 2 -->
+              <div data-testimonial="" class="absolute inset-0 opacity-0 translate-y-4 transition-opacity transition-transform duration-300 ease-out flex flex-col justify-between" style="pointer-events: none;">
+                <h2 class="text-4xl md:text-5xl font-medium tracking-tight text-white mb-8 leading-tight">
+                  "Deployments used to be stressful events. Now it’s just part
+                  of our daily flow — fast, safe, and predictable."
+                </h2>
+
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-full bg-slate-700 overflow-hidden border border-white/10">
+                    <img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg" alt="User" class="object-cover w-full h-auto" style="transition: outline 0.1s ease-in-out;">
+                  </div>
+                  <div>
+                    <div class="text-white font-medium text-lg">
+                      Priya Sharma
+                    </div>
+                    <div class="text-slate-400">
+                      Head of Platform Engineering
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 3 -->
+              <div data-testimonial="" class="absolute inset-0 opacity-0 translate-y-4 transition-opacity transition-transform duration-300 ease-out flex flex-col justify-between" style="pointer-events: none;">
+                <h2 class="text-4xl md:text-5xl font-medium tracking-tight text-white mb-8 leading-tight">
+                  "We cut release risk dramatically and our team finally has
+                  time to focus on features instead of firefighting."
+                </h2>
+
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-full bg-slate-700 overflow-hidden border border-white/10">
+                    <img src="https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg" alt="User" class="object-cover w-full h-auto">
+                  </div>
+                  <div>
+                    <div class="text-white font-medium text-lg">
+                      Diego Alvarez
+                    </div>
+                    <div class="text-slate-400">VP of Engineering</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 gap-6 animate-on-scroll" style="animation-delay: 200ms;">
+            <div class="gradient-border-mask bg-gradient-to-bl from-white/10 to-white/0 rounded-3xl pt-6 pr-6 pb-6 pl-6" style="position: relative; --border-gradient: linear-gradient(225deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)); --border-radius-before: 24px">
+              <div class="flex gap-1 mb-4 text-yellow-500">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star w-4 h-4 fill-current"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star w-4 h-4 fill-current"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star w-4 h-4 fill-current"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star w-4 h-4 fill-current"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star w-4 h-4 fill-current"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+              </div>
+              <p class="text-slate-300 text-lg mb-4">
+                "The developer experience is unmatched. It feels like the
+                platform reads my mind."
+              </p>
+              <p class="text-slate-500 text-sm font-medium">
+                Sarah Chen, Lead DevOps
+              </p>
+            </div>
+            <div class="gradient-border-mask md:translate-x-8 bg-gradient-to-l from-white/10 to-white/0 rounded-3xl pt-6 pr-6 pb-6 pl-6 translate-x-4" style="position: relative; --border-gradient: linear-gradient(225deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)); --border-radius-before: 24px">
+              <div class="flex gap-1 mb-4 text-yellow-500">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star w-4 h-4 fill-current"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star w-4 h-4 fill-current"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star w-4 h-4 fill-current"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star w-4 h-4 fill-current"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" class="lucide lucide-star w-4 h-4 fill-current"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+              </div>
+              <p class="text-slate-300 text-lg mb-4">
+                "Finally, a tool that bridges the gap between our dev and ops
+                teams effectively."
+              </p>
+              <p class="text-slate-500 text-sm font-medium">
+                Marcus Johnson, VP Engineering
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Pricing -->
+    <section class="lg:px-12 bg-[#050505] border-white/5 border-t pt-24 pr-6 pb-24 pl-6" id="pricing">
+      <section class="isolate overflow-hidden pt-24 pb-24 relative">
+        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_80%_at_50%_0%,rgba(255,255,255,0.05),transparent_60%)]"></div>
+
+        <div class="z-10 md:px-8 max-w-7xl mr-auto ml-auto pr-6 pl-6 relative">
+          <div class="text-center">
+            <h2 class="sm:text-5xl text-4xl font-medium text-white tracking-tight font-manrope animate-on-scroll" style="animation: fadeSlideIn 1.0s ease-out 0.1s both;">
+              Pricing Plans
+            </h2>
+
+            <div class="flex mt-6 gap-x-4 gap-y-4 items-center justify-center animate-on-scroll" style="animation: fadeSlideIn 1.0s ease-out 0.2s both;">
+              <span id="labelMonthly" class="text-sm text-white/50 transition-colors">
+                Monthly
+              </span>
+              <button id="billingToggle" class="relative inline-flex h-8 w-16 items-center rounded-full bg-white/10 p-1 ring-1 ring-white/15 transition cursor-pointer hover:bg-white/20" onclick="togglePricing()">
+                <span id="billingKnob" class="inline-flex h-6 w-6 translate-x-8 rounded-full bg-white shadow-[0_2px_8px_rgba(0,0,0,0.25)] transition-transform duration-300 will-change-transform"></span>
+              </button>
+              <span id="labelAnnual" class="text-sm text-white font-medium transition-colors">
+                Annual
+                <span id="annualBadge" class="ml-2 inline-flex items-center rounded-full bg-orange-500/20 px-2 py-0.5 text-[10px] text-orange-400 ring-1 ring-orange-500/40">
+                  Save 20%
+                </span>
+              </span>
+            </div>
+          </div>
+
+          <div class="grid gap-6 lg:grid-cols-3 mt-10 gap-x-6 gap-y-6">
+            <!-- Hobby / Starter -->
+            <div class="animate-on-scroll bg-[radial-gradient(circle_at_top_left,var(--tw-gradient-stops))] from-white/10 to-white/0 rounded-3xl pt-6 pr-6 pb-6 pl-6 backdrop-blur-xl" style="animation: fadeSlideIn 1.0s ease-out 0.3s both; position: relative; --border-gradient: linear-gradient(225deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)); --border-radius-before: 24px">
+              <div class="flex items-center justify-between">
+                <div class="">
+                  <div class="text-xs font-bold uppercase tracking-[0.2em] text-white/40">
+                    Hobby
+                  </div>
+                  <div class="mt-2 flex items-end gap-2">
+                    <div class="text-4xl font-medium tracking-tight text-white">
+                      $0
+                    </div>
+                    <div class="text-sm text-white/50">/mo</div>
+                  </div>
+                </div>
+              </div>
+
+              <button class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm font-medium tracking-tight text-white hover:bg-white/10 transition-all">
+                Start Creating
+              </button>
+
+              <ul class="mt-6 space-y-3 text-sm text-white/60">
+                <li class="flex items-start gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check h-4 w-4 text-white/40">
+                    <path d="M20 6 9 17l-5-5"></path>
+                  </svg>
+                  3 Published Scenes
+                </li>
+                <li class="flex items-start gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check h-4 w-4 text-white/40">
+                    <path d="M20 6 9 17l-5-5"></path>
+                  </svg>
+                  Basic WebGL Export
+                </li>
+                <li class="flex items-start gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check h-4 w-4 text-white/40">
+                    <path d="M20 6 9 17l-5-5"></path>
+                  </svg>
+                  Community Assets
+                </li>
+              </ul>
+            </div>
+
+            <!-- Pro (featured) -->
+            <div class="border-orange-500/30 border ring-1 ring-orange-500/20 rounded-3xl pt-2 pr-2 pb-2 pl-2 relative backdrop-blur-xl animate-on-scroll bg-[#111]" style="animation: fadeSlideIn 1.0s ease-out 0.4s both;">
+              <div class="overflow-hidden bg-gradient-to-b from-white/[0.08] to-transparent rounded-2xl relative h-full flex flex-col">
+                <div class="absolute inset-0">
+                  <div class="absolute inset-0 bg-[radial-gradient(60%_80%_at_80%_0%,rgba(249,115,22,0.15),transparent_60%)]"></div>
+                </div>
+
+                <div class="pt-6 pr-6 pb-6 pl-6 relative flex flex-col h-full">
+                  <div class="flex items-start justify-between">
+                    <div class="">
+                      <div class="text-xs font-bold uppercase tracking-[0.2em] text-orange-400">
+                        Pro
+                      </div>
+                      <div class="mt-2 flex items-end gap-2">
+                        <div class="text-4xl font-medium tracking-tight text-white price-value" data-monthly="$49" data-annual="$470">
+                          $470
+                        </div>
+                        <div class="text-sm text-white/60 price-period" data-period-monthly="/mo" data-period-annual="/yr">
+                          /yr
+                        </div>
+                      </div>
+                    </div>
+                    <span class="inline-flex items-center gap-1 rounded-full bg-orange-500/20 px-2 py-1 text-[10px] font-medium text-orange-300 ring-1 ring-orange-500/40">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles">
+                        <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path>
+                      </svg>
+                      Popular
+                    </span>
+                  </div>
+
+                  <button class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-orange-400 to-orange-500 px-4 py-3 text-sm font-medium tracking-tight text-black shadow-[0_4px_20px_rgba(249,115,22,0.3)] hover:from-orange-300 hover:to-orange-400 transition-all hover:scale-[1.02]">
+                    Upgrade to Pro
+                  </button>
+
+                  <ul class="mt-8 space-y-4 text-sm text-white/80">
+                    <li class="flex items-start gap-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle-2 h-4 w-4 text-orange-500">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="m9 12 2 2 4-4"></path>
+                      </svg>
+                      Unlimited Private Scenes
+                    </li>
+                    <li class="flex items-start gap-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle-2 h-4 w-4 text-orange-500">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="m9 12 2 2 4-4"></path>
+                      </svg>
+                      4K Texture &amp; Video Export
+                    </li>
+                    <li class="flex items-start gap-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle-2 h-4 w-4 text-orange-500">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="m9 12 2 2 4-4"></path>
+                      </svg>
+                      Physics Engine Access
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Enterprise -->
+            <div class="animate-on-scroll bg-[radial-gradient(circle_at_top_left,var(--tw-gradient-stops))] from-white/10 to-white/0 rounded-3xl pt-6 pr-6 pb-6 pl-6 backdrop-blur-xl" style="animation: fadeSlideIn 1.0s ease-out 0.5s both; position: relative; --border-gradient: linear-gradient(225deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)); --border-radius-before: 24px">
+              <div class="flex items-center justify-between">
+                <div class="">
+                  <div class="text-xs font-bold uppercase tracking-[0.2em] text-white/40">
+                    Teams
+                  </div>
+                  <div class="mt-2 flex items-end gap-2">
+                    <div class="text-4xl font-medium tracking-tight text-white">
+                      Custom
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium tracking-tight text-white/90 hover:bg-white/10 transition-all">
+                Contact Sales
+              </button>
+
+              <ul class="mt-6 space-y-3 text-sm text-white/60">
+                <li class="flex items-start gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check h-4 w-4 text-white/40">
+                    <path d="M20 6 9 17l-5-5"></path>
+                  </svg>
+                  Organization Management
+                </li>
+                <li class="flex items-start gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check h-4 w-4 text-white/40">
+                    <path d="M20 6 9 17l-5-5"></path>
+                  </svg>
+                  SSO &amp; SAML Auth
+                </li>
+                <li class="flex items-start gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check h-4 w-4 text-white/40">
+                    <path d="M20 6 9 17l-5-5" class=""></path>
+                  </svg>
+                  Dedicated Rendering Cluster
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <p class="animate-on-scroll text-xs text-neutral-500 text-center mt-8 font-mono" style="animation: fadeSlideIn 1.0s ease-out 0.6s both;">
+            Open source via
+            <span class="text-white/60">Apache 2.0</span>
+            license for non-commercial use.
+          </p>
+
+          <script>
+            let isAnnual = true;
+            function togglePricing() {
+              isAnnual = !isAnnual;
+              const knob = document.getElementById('billingKnob');
+              const labelMonthly = document.getElementById('labelMonthly');
+              const labelAnnual = document.getElementById('labelAnnual');
+              const prices = document.querySelectorAll('.price-value');
+              const periods = document.querySelectorAll('.price-period');
+
+              if (isAnnual) {
+                knob.style.transform = 'translateX(32px)';
+                labelAnnual.classList.add('text-white', 'font-medium');
+                labelAnnual.classList.remove('text-white/50');
+                labelMonthly.classList.add('text-white/50');
+                labelMonthly.classList.remove('text-white', 'font-medium');
+
+                prices.forEach(el => el.textContent = el.dataset.annual);
+                periods.forEach(el => el.textContent = el.dataset.periodAnnual);
+              } else {
+                knob.style.transform = 'translateX(0px)';
+                labelMonthly.classList.add('text-white', 'font-medium');
+                labelMonthly.classList.remove('text-white/50');
+                labelAnnual.classList.add('text-white/50');
+                labelAnnual.classList.remove('text-white', 'font-medium');
+
+                prices.forEach(el => el.textContent = el.dataset.monthly);
+                periods.forEach(el => el.textContent = el.dataset.periodMonthly);
+              }
+            }
+          </script>
+        </div>
+      </section>
+    </section>
+
+    <!-- Footer -->
+    <footer class="lg:px-12 overflow-hidden bg-[#050505] border-white/5 border-t pt-20 pr-6 pb-12 pl-6 relative">
+      <div class="max-w-[90rem] mx-auto relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20">
+          <div class="lg:col-span-8">
+            <h2 class="text-5xl lg:text-7xl font-display font-medium text-white tracking-tighter mb-8 animate-on-scroll">
+              Start creating
+              <br>
+              <span class="text-neutral-600">dimensionally.</span>
+            </h2>
+            <div class="flex gap-4 animate-on-scroll" style="animation-delay: 100ms;">
+              <a href="#" class="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 hover:bg-white hover:text-black transition-all text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="twitter" class="lucide lucide-twitter w-5 h-5"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+              </a>
+              <a href="#" class="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 hover:bg-white hover:text-black transition-all text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="github" class="lucide lucide-github w-5 h-5"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
+              </a>
+              <a href="#" class="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 hover:bg-white hover:text-black transition-all text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="disc" class="lucide lucide-disc w-5 h-5"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="lg:col-span-4 flex items-center justify-end animate-on-scroll" style="animation-delay: 200ms;">
+            <div class="w-full max-w-xs p-1 rounded-2xl bg-gradient-to-br from-white/10 to-white/5">
+              <div class="bg-[#0a0a0a] rounded-xl p-6">
+                <h3 class="text-white font-medium mb-2">Join the Beta</h3>
+                <p class="text-xs text-neutral-500 mb-4">
+                  Get early access to the physics engine.
+                </p>
+                <div class="flex gap-2">
+                  <input type="email" placeholder="email@domain.com" class="bg-white/5 border border-white/10 rounded px-3 py-2 text-xs text-white w-full focus:outline-none focus:border-purple-500 transition-colors">
+                  <button class="bg-white text-black rounded px-3 py-2 text-xs font-medium hover:bg-neutral-200">
+                    Join
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-white/5 pt-12 text-sm mb-12">
+          <div class="animate-on-scroll">
+            <h4 class="text-white font-medium mb-4">Product</h4>
+            <ul class="space-y-2 text-neutral-500">
+              <li>
+                <a href="#" class="hover:text-white transition-colors">
+                  Editor
+                </a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors">
+                  Interaction
+                </a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors">
+                  Physics
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="animate-on-scroll" style="animation-delay: 100ms;">
+            <h4 class="text-white font-medium mb-4">Company</h4>
+            <ul class="space-y-2 text-neutral-500">
+              <li>
+                <a href="#" class="hover:text-white transition-colors">About</a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors">Blog</a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors">
+                  Careers
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="animate-on-scroll" style="animation-delay: 200ms;">
+            <h4 class="text-white font-medium mb-4">Resources</h4>
+            <ul class="space-y-2 text-neutral-500">
+              <li>
+                <a href="#" class="hover:text-white transition-colors">
+                  Community
+                </a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors">
+                  Help Center
+                </a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors">Docs</a>
+              </li>
+            </ul>
+          </div>
+          <div class="animate-on-scroll" style="animation-delay: 300ms;">
+            <h4 class="text-white font-medium mb-4">Legal</h4>
+            <ul class="space-y-2 text-neutral-500">
+              <li>
+                <a href="#" class="hover:text-white transition-colors">
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors">
+                  Terms of Service
+                </a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors">
+                  Cookie Policy
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 text-xs text-neutral-600 font-mono">
+          <div>© 2024 Flux Systems Inc.</div>
+          <div class="flex gap-6 mt-4 md:mt-0">
+            <span>Designed in California</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+          lucide.createIcons({
+              attrs: {
+                  'stroke-width': 1.5
+              }
+          });
+
+          const observerOptions = {
+              root: null,
+              rootMargin: '0px',
+              threshold: 0.1
+          };
+
+          const observer = new IntersectionObserver((entries) => {
+              entries.forEach(entry => {
+                  if (entry.isIntersecting) {
+                      entry.target.classList.add('visible');
+                      observer.unobserve(entry.target);
+                  }
+              });
+          }, observerOptions);
+
+          document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+              observer.observe(el);
+          });
+      });
+    </script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const slides = document.querySelectorAll("[data-testimonial]");
+        if (!slides.length) return;
+
+        let current = 0;
+
+        function showSlide(nextIndex) {
+          slides.forEach((slide, index) => {
+            const isActive = index === nextIndex;
+
+            slide.style.pointerEvents = isActive ? "auto" : "none";
+            slide.classList.toggle("opacity-100", isActive);
+            slide.classList.toggle("translate-y-0", isActive);
+            slide.classList.toggle("opacity-0", !isActive);
+            slide.classList.toggle("translate-y-4", !isActive);
+          });
+
+          current = nextIndex;
+        }
+
+        showSlide(0);
+
+        setInterval(() => {
+          const next = (current + 1) % slides.length;
+          showSlide(next);
+        }, 5000);
+      });
+    </script>
+    <script>
+      const counters = document.querySelectorAll(".count-digit");
+      let hasAnimated = false;
+
+      function animateCounters() {
+        if (hasAnimated) return;
+        hasAnimated = true;
+
+        counters.forEach((counter) => {
+          const target = parseFloat(counter.dataset.count);
+          const isDecimal = String(target).includes(".");
+          const duration = 1500; // ms
+          const start = 0;
+          const startTime = performance.now();
+
+          function update(now) {
+            const progress = Math.min((now - startTime) / duration, 1);
+            const value = start + (target - start) * progress;
+
+            counter.textContent = isDecimal ? value.toFixed(2) : Math.floor(value);
+
+            if (progress < 1) requestAnimationFrame(update);
+          }
+
+          requestAnimationFrame(update);
+        });
+      }
+
+      // Trigger when the metrics grid enters viewport
+      const metricsSection = document.querySelector(".grid");
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) animateCounters();
+        },
+        { threshold: 0.3 }
+      );
+
+      observer.observe(metricsSection);
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const output = document.getElementById("code-typing-react-export");
+        const template = document.getElementById("code-template-react-export");
+
+        if (!output || !template) return;
+
+        const rawHtml = template.innerHTML.trim();
+
+        // Split into HTML tags / entities / text chunks
+        const tokens = rawHtml.match(/(&[a-zA-Z0-9#]+;|<[^>]+>|[^<&]+)/g) || [];
+
+        const typingSpeed = 25;   // ms per "character"
+        const resetDelay  = 1500; // pause at the end (ms)
+
+        let tokenIndex = 0;
+        let charIndex = 0;
+        let typedHtml = "";
+
+        function typeStep() {
+          if (tokenIndex >= tokens.length) {
+            // done → wait, then restart
+            setTimeout(() => {
+              tokenIndex = 0;
+              charIndex = 0;
+              typedHtml = "";
+              output.innerHTML = "";
+              typeStep();
+            }, resetDelay);
+            return;
+          }
+
+          const token = tokens[tokenIndex];
+
+          // If it's an HTML tag or entity, append it whole
+          const isTag = token.startsWith("<");
+          const isEntity = token.startsWith("&") && token.endsWith(";");
+
+          if (isTag || isEntity) {
+            typedHtml += token;
+            tokenIndex++;
+            charIndex = 0;
+          } else {
+            // Normal text → reveal one character at a time
+            typedHtml += token.charAt(charIndex);
+            charIndex++;
+
+            if (charIndex >= token.length) {
+              tokenIndex++;
+              charIndex = 0;
+            }
+          }
+
+          output.innerHTML = typedHtml;
+          setTimeout(typeStep, typingSpeed);
+        }
+
+        typeStep();
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const output = document.getElementById("code-typing-react-export");
+        const template = document.getElementById("code-template-react-export");
+
+        if (!output || !template) return;
+
+        const rawHtml = template.innerHTML.trim();
+
+        // Split into HTML tags / entities / text chunks
+        const tokens = rawHtml.match(/(&[a-zA-Z0-9#]+;|<[^>]+>|[^<&]+)/g) || [];
+
+        const typingSpeed = 12;   // ms per "character"
+        const resetDelay  = 700; // pause at the end (ms)
+
+        let tokenIndex = 0;
+        let charIndex = 0;
+        let typedHtml = "";
+
+        function typeStep() {
+          if (tokenIndex >= tokens.length) {
+            // done → wait, then restart
+            setTimeout(() => {
+              tokenIndex = 0;
+              charIndex = 0;
+              typedHtml = "";
+              output.innerHTML = "";
+              typeStep();
+            }, resetDelay);
+            return;
+          }
+
+          const token = tokens[tokenIndex];
+
+          // If it's an HTML tag or entity, append it whole
+          const isTag = token.startsWith("<");
+          const isEntity = token.startsWith("&") && token.endsWith(";");
+
+          if (isTag || isEntity) {
+            typedHtml += token;
+            tokenIndex++;
+            charIndex = 0;
+          } else {
+            // Normal text → reveal one character at a time
+            typedHtml += token.charAt(charIndex);
+            charIndex++;
+
+            if (charIndex >= token.length) {
+              tokenIndex++;
+              charIndex = 0;
+            }
+          }
+
+          output.innerHTML = typedHtml;
+          setTimeout(typeStep, typingSpeed);
+        }
+
+        typeStep();
+      });
+    </script>
+  
+</body></html>

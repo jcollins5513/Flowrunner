@@ -1,0 +1,55 @@
+{
+  "name": "Voyage Travel Landing Page Template",
+  "slug": "aero-travel",
+  "description": "A reusable travel landing page template designed to showcase curated journeys, destinations, pricing plans, and traveler testimonials for modern explorers.",
+  "tags": [
+    "Landing Page",
+    "Travel",
+    "Destinations",
+    "Experiences",
+    "Pricing",
+    "Testimonials",
+    "Features",
+    "Adventure",
+    "Tours",
+    "Booking"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/aero-travel",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "A reusable travel landing page template designed to showcase curated journeys, destinations, pricing plans, and traveler testimonials for modern explorers.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "aura",
+  "author": {
+    "name": "Aksonvady Phomhome",
+    "slug": "aksonvady",
+    "avatar_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/user-avatars/avatars/2e815afb-cac1-4c01-90e1-cf3810246e35-1747968317403.jpg",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/aero-travel.png?t=1763575002794",
+  "aura": {
+    "id": 4940,
+    "views": 1569,
+    "forks": 11,
+    "premium": true
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

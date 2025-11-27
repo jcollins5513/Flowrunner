@@ -1,0 +1,47 @@
+{
+  "name": "Aceternity UI",
+  "slug": "tracing-beam",
+  "description": "A Beam that follows the path of an SVG as the user scrolls. Adjusts beam length with scroll speed.",
+  "props": [
+    {
+      "Prop name": "className",
+      "Type": "string",
+      "Description": "The class name of the child component."
+    },
+    {
+      "Prop name": "children",
+      "Type": "React.ReactNode",
+      "Description": "The contents of your page"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/tracing-beamCopy",
+  "url": "https://ui.aceternity.com/components/tracing-beam",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "scroll-reactive",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A Beam that follows the path of an SVG as the user scrolls. Adjusts beam length with scroll speed.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { calsans } from \"@/fonts/calsans\";",
+    " \nimport { twMerge } from \"tailwind-merge\";",
+    "import { TracingBeam } from \"../ui/tracing-beam\";"
+  ],
+  "dependencies": [
+    "@/fonts/calsans",
+    "react",
+    "tailwind-merge"
+  ],
+  "client_only": true
+}

@@ -1,0 +1,55 @@
+{
+  "name": "Lumina Real Estate Dashboard Template",
+  "slug": "lumina-dashboard",
+  "description": "A reusable dashboard template designed for real estate professionals to track property listings, sales statistics, and client messages effectively.",
+  "tags": [
+    "Dashboard",
+    "Real Estate",
+    "Listings",
+    "Sales Statistics",
+    "Messages",
+    "Analytics",
+    "Property Management",
+    "Charts",
+    "User Profile",
+    "Search"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/lumina-dashboard",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "A reusable dashboard template designed for real estate professionals to track property listings, sales statistics, and client messages effectively.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "aura",
+  "author": {
+    "name": "Meng To",
+    "slug": "meng",
+    "avatar_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/user-avatars/avatars/9109ecbb-cdc4-4815-981e-2ea83be13765-1747961036177.png",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/lumina-dashboard.png",
+  "aura": {
+    "id": 5183,
+    "views": 2407,
+    "forks": 44,
+    "premium": true
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

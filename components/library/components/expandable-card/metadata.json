@@ -1,0 +1,45 @@
+{
+  "name": "Aceternity UI",
+  "slug": "expandable-card",
+  "description": "Click cards to expand them and show additional information",
+  "props": [],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/expandable-card-demo-standard@aceternity/expandable-card-demo-gridCopy",
+  "url": "https://ui.aceternity.com/components/expandable-card",
+  "type": "card",
+  "subtype": "",
+  "layout_role": "inline-block",
+  "recommended_slots": [
+    "grid.item",
+    "section.content"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "auto-height",
+  "z_index_role": "content",
+  "usage_notes": "Click cards to expand them and show additional information",
+  "theme_requirements": [],
+  "data_requirements": [
+    {
+      "name": "items",
+      "fields": [
+        "title",
+        "description",
+        "media"
+      ],
+      "type": "array"
+    }
+  ],
+  "domain_tags": [],
+  "imports": [
+    " \nimport React, { useEffect, useId, useRef, useState } from \"react\";",
+    "import { AnimatePresence, motion } from \"motion/react\";",
+    "import { useOutsideClick } from \"@/hooks/use-outside-click\";"
+  ],
+  "dependencies": [
+    "@/hooks/use-outside-click",
+    "motion/react",
+    "react"
+  ],
+  "client_only": true
+}

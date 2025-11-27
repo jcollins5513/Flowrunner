@@ -1,0 +1,51 @@
+{
+  "name": "Aceternity UI",
+  "slug": "wobble-card",
+  "description": "A card effect that translates and scales on mousemove, perfect for feature cards.",
+  "props": [
+    {
+      "Prop Name": "children",
+      "Type": "React.ReactNode",
+      "Required": "Yes",
+      "Description": "Content to be rendered inside the WobbleCard."
+    },
+    {
+      "Prop Name": "containerClassName",
+      "Type": "string",
+      "Required": "No",
+      "Description": "Optional className for styling the container."
+    },
+    {
+      "Prop Name": "className",
+      "Type": "string",
+      "Required": "No",
+      "Description": "Optional className for styling the children wrapper."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/wobble-cardCopy",
+  "url": "https://ui.aceternity.com/components/wobble-card",
+  "type": "hero",
+  "subtype": "",
+  "layout_role": "section",
+  "recommended_slots": [
+    "hero.primary",
+    "section.lead"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "A card effect that translates and scales on mousemove, perfect for feature cards.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    " \nimport React from \"react\";",
+    "import { WobbleCard } from \"../ui/wobble-card\";"
+  ],
+  "dependencies": [
+    "react"
+  ],
+  "client_only": true
+}

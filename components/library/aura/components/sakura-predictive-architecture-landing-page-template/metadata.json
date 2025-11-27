@@ -1,0 +1,55 @@
+{
+  "name": "SAKURA Predictive Architecture Landing Page Template",
+  "slug": "sakura",
+  "description": "This landing page template is designed for AI-driven predictive architecture and analytics platforms, featuring automated scaling, data infrastructure, and enterprise-grade reliability.",
+  "tags": [
+    "Landing Page",
+    "Hero",
+    "Features",
+    "Testimonials",
+    "Pricing",
+    "FAQ",
+    "CTA",
+    "AI",
+    "Predictive Analytics",
+    "Infrastructure"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/sakura",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "This landing page template is designed for AI-driven predictive architecture and analytics platforms, featuring automated scaling, data infrastructure, and enterprise-grade reliability.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "aura",
+  "author": {
+    "name": "Meng To",
+    "slug": "meng",
+    "avatar_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/user-avatars/avatars/9109ecbb-cdc4-4815-981e-2ea83be13765-1747961036177.png",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/sakura.png",
+  "aura": {
+    "id": 5418,
+    "views": 2972,
+    "forks": 21,
+    "premium": true
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

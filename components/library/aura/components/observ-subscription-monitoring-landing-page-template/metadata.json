@@ -1,0 +1,57 @@
+{
+  "name": "Observ Subscription Monitoring Landing Page Template",
+  "slug": "observ-ai",
+  "description": "This template provides a sleek, modern landing page designed for AI-powered subscription monitoring and financial insight platforms.",
+  "tags": [
+    "Landing Page",
+    "Hero",
+    "Features",
+    "Pricing",
+    "Testimonials",
+    "Analytics",
+    "Dashboard",
+    "SaaS",
+    "AI",
+    "Finance"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/observ-ai",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "This template provides a sleek, modern landing page designed for AI-powered subscription monitoring and financial insight platforms.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [
+    "saas"
+  ],
+  "source": "aura",
+  "author": {
+    "name": "Meng To",
+    "slug": "meng",
+    "avatar_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/user-avatars/avatars/9109ecbb-cdc4-4815-981e-2ea83be13765-1747961036177.png",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/observ-ai.png?t=1763306602781",
+  "aura": {
+    "id": 4984,
+    "views": 2155,
+    "forks": 18,
+    "premium": true
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "name": "Qolaba AI Studio Landing Page Template",
+  "slug": "qolaba-ai-studio-73",
+  "description": "This reusable landing page template showcases a unified AI intelligence platform for orchestrating LLMs, autonomous agents, and AI-powered workflows.",
+  "tags": [
+    "Landing Page",
+    "AI Studio",
+    "Automation",
+    "Features",
+    "Pricing",
+    "Workflows",
+    "Agents",
+    "File Uploads",
+    "Use Cases",
+    "Dark Mode"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/qolaba-ai-studio-73",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "This reusable landing page template showcases a unified AI intelligence platform for orchestrating LLMs, autonomous agents, and AI-powered workflows.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [
+    "marketing"
+  ],
+  "source": "aura",
+  "author": {
+    "name": "Marketing Qolaba",
+    "slug": "user-de52fe9a",
+    "avatar_url": "https://lh3.googleusercontent.com/a/ACg8ocJz27Kg_UqUqSv8-9-9BzPlmuV7w5spDqOGn123VzoCsUPoUw=s96-c",
+    "featured": false
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/qolaba-ai-studio-73.png?t=1763877886834",
+  "aura": {
+    "id": 5476,
+    "views": 774,
+    "forks": 34,
+    "premium": false
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "name": "Aceternity UI",
+  "slug": "glowing-effect",
+  "description": "A border glowing effect that adapts to any container or card, as seen on Cursor's website.",
+  "props": [
+    {
+      "Prop": "blur",
+      "Type": "number",
+      "Default": "0",
+      "Description": "The amount of blur applied to the glowing effect in pixels"
+    },
+    {
+      "Prop": "inactiveZone",
+      "Type": "number",
+      "Default": "0.7",
+      "Description": "The radius multiplier for the center zone where the effect is disabled. Value between 0 and 1"
+    },
+    {
+      "Prop": "proximity",
+      "Type": "number",
+      "Default": "0",
+      "Description": "The distance in pixels beyond the element's bounds where the effect remains active"
+    },
+    {
+      "Prop": "spread",
+      "Type": "number",
+      "Default": "20",
+      "Description": "The angular spread of the glowing effect in degrees"
+    },
+    {
+      "Prop": "variant",
+      "Type": "\"default\" | \"white\"",
+      "Default": "\"default\"",
+      "Description": "The color variant of the effect. \"default\" uses a multi-color gradient, while \"white\" uses a black and white scheme"
+    },
+    {
+      "Prop": "glow",
+      "Type": "boolean",
+      "Default": "false",
+      "Description": "When true, forces the effect to be visible regardless of hover state"
+    },
+    {
+      "Prop": "className",
+      "Type": "string",
+      "Default": "undefined",
+      "Description": "Additional CSS classes to apply to the effect container"
+    },
+    {
+      "Prop": "disabled",
+      "Type": "boolean",
+      "Default": "true",
+      "Description": "When true, disables the interactive glowing effect"
+    },
+    {
+      "Prop": "movementDuration",
+      "Type": "number",
+      "Default": "2",
+      "Description": "The duration of the glow movement animation in seconds"
+    },
+    {
+      "Prop": "borderWidth",
+      "Type": "number",
+      "Default": "1",
+      "Description": "The width of the glowing border in pixels"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/glowing-effectCopy",
+  "url": "https://ui.aceternity.com/components/glowing-effect",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "pointer-reactive",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A border glowing effect that adapts to any container or card, as seen on Cursor's website.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    " \nimport { Box, Lock, Search, Settings, Sparkles } from \"lucide-react\";",
+    "import { GlowingEffect } from \"@/components/ui/glowing-effect\";"
+  ],
+  "dependencies": [
+    "@/components/ui/glowing-effect",
+    "lucide-react"
+  ],
+  "client_only": true
+}

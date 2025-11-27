@@ -1,0 +1,41 @@
+{
+  "name": "Magic Card",
+  "slug": "magic-card",
+  "description": "Magic Card component from Magic UI.",
+  "tags": [],
+  "category": "component",
+  "installation": "",
+  "url": "https://magicui.design/docs/components/magic-card",
+  "type": "component",
+  "layout_role": "widget",
+  "recommended_slots": [
+    "section.content",
+    "marketing.feature"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "Magic UI component.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "magic",
+  "client_only": true,
+  "imports": [
+    "import { useTheme } from \"next-themes\"",
+    "import { Button } from \"@/components/ui/button\"",
+    "import {",
+    "import { Input } from \"@/components/ui/input\"",
+    "import { Label } from \"@/components/ui/label\"",
+    "import { MagicCard } from \"@/registry/magicui/magic-card\""
+  ],
+  "dependencies": [
+    "@/components/ui/button",
+    "@/components/ui/input",
+    "@/components/ui/label",
+    "@/registry/magicui/magic-card",
+    "next-themes"
+  ]
+}

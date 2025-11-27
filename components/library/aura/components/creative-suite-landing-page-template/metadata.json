@@ -1,0 +1,55 @@
+{
+  "name": "Creative Suite Landing Page Template",
+  "slug": "lumina-video",
+  "description": "This template provides a sleek, modern landing page designed for creative AI-powered video editing and storytelling platforms, showcasing features, steps, stats, and social proof.",
+  "tags": [
+    "Landing Page",
+    "Hero",
+    "Features",
+    "Steps",
+    "Testimonials",
+    "Stats",
+    "Contact",
+    "Social Media",
+    "Pricing",
+    "Case Studies"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/lumina-video",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "This template provides a sleek, modern landing page designed for creative AI-powered video editing and storytelling platforms, showcasing features, steps, stats, and social proof.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "aura",
+  "author": {
+    "name": "Meng To",
+    "slug": "meng",
+    "avatar_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/user-avatars/avatars/9109ecbb-cdc4-4815-981e-2ea83be13765-1747961036177.png",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/lumina-video.png",
+  "aura": {
+    "id": 5171,
+    "views": 10264,
+    "forks": 75,
+    "premium": true
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

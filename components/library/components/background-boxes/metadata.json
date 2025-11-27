@@ -1,0 +1,47 @@
+{
+  "name": "Aceternity UI",
+  "slug": "background-boxes",
+  "description": "A full width background box container that highlights on hover",
+  "props": [
+    {
+      "Prop name": "className",
+      "Type": "string(optional)",
+      "Description": "The class name of the Boxes component."
+    },
+    {
+      "Prop name": "rest",
+      "Type": "any(optional)",
+      "Description": "The rest of the props."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/background-boxesCopy",
+  "url": "https://ui.aceternity.com/components/background-boxes",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "pointer-reactive",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A full width background box container that highlights on hover",
+  "theme_requirements": [
+    "light-mode-friendly"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { Boxes } from \"../ui/background-boxes\";",
+    "import { cn } from \"@/lib/utils\";"
+  ],
+  "dependencies": [
+    "@/lib/utils",
+    "react"
+  ],
+  "client_only": true
+}

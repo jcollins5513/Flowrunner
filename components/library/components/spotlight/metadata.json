@@ -1,0 +1,48 @@
+{
+  "name": "Aceternity UI",
+  "slug": "spotlight",
+  "description": "A spotlight effect with Tailwind CSS, good for drawing attention to a particular element on the page.",
+  "props": [
+    {
+      "Prop name": "className",
+      "Type": "string",
+      "Description": "The class name of the spotlight component."
+    },
+    {
+      "Prop name": "fill",
+      "Type": "string",
+      "Description": "Hex color for the spotlight fill."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/spotlightCopy",
+  "url": "https://ui.aceternity.com/components/spotlight",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A spotlight effect with Tailwind CSS, good for drawing attention to a particular element on the page.",
+  "theme_requirements": [
+    "light-mode-friendly",
+    "tailwind-classes"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { cn } from \"@/lib/utils\";",
+    "import { Spotlight } from \"../ui/spotlight\";"
+  ],
+  "dependencies": [
+    "@/lib/utils",
+    "react"
+  ],
+  "client_only": false
+}

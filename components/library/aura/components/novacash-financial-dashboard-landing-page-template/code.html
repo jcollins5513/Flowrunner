@@ -1,0 +1,345 @@
+<html lang="en"><head><meta charset="UTF-8">
+<title>NovaCash Layout</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+<link id="all-fonts-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist">.font-geist { font-family: 'Geist', sans-serif !important; }</style><link id="all-fonts-link-font-roboto" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-roboto">.font-roboto { font-family: 'Roboto', sans-serif !important; }</style><link id="all-fonts-link-font-montserrat" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-montserrat">.font-montserrat { font-family: 'Montserrat', sans-serif !important; }</style><link id="all-fonts-link-font-poppins" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-poppins">.font-poppins { font-family: 'Poppins', sans-serif !important; }</style><link id="all-fonts-link-font-playfair" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&amp;display=swap"><style id="all-fonts-style-font-playfair">.font-playfair { font-family: 'Playfair Display', serif !important; }</style><link id="all-fonts-link-font-instrument-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-instrument-serif">.font-instrument-serif { font-family: 'Instrument Serif', serif !important; }</style><link id="all-fonts-link-font-merriweather" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;display=swap"><style id="all-fonts-style-font-merriweather">.font-merriweather { font-family: 'Merriweather', serif !important; }</style><link id="all-fonts-link-font-bricolage" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-bricolage">.font-bricolage { font-family: 'Bricolage Grotesque', sans-serif !important; }</style><link id="all-fonts-link-font-jakarta" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-jakarta">.font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif !important; }</style><link id="all-fonts-link-font-manrope" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-manrope">.font-manrope { font-family: 'Manrope', sans-serif !important; }</style><link id="all-fonts-link-font-space-grotesk" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-space-grotesk">.font-space-grotesk { font-family: 'Space Grotesk', sans-serif !important; }</style><link id="all-fonts-link-font-work-sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-work-sans">.font-work-sans { font-family: 'Work Sans', sans-serif !important; }</style><link id="all-fonts-link-font-pt-serif" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-pt-serif">.font-pt-serif { font-family: 'PT Serif', serif !important; }</style><link id="all-fonts-link-font-geist-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-geist-mono">.font-geist-mono { font-family: 'Geist Mono', monospace !important; }</style><link id="all-fonts-link-font-space-mono" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap"><style id="all-fonts-style-font-space-mono">.font-space-mono { font-family: 'Space Mono', monospace !important; }</style><link id="all-fonts-link-font-quicksand" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap"><style id="all-fonts-style-font-quicksand">.font-quicksand { font-family: 'Quicksand', sans-serif !important; }</style><link id="all-fonts-link-font-nunito" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&amp;display=swap"><style id="all-fonts-style-font-nunito">.font-nunito { font-family: 'Nunito', sans-serif !important; }</style><style id="border-gradient-shared-style">
+[style*="--border-gradient"]::before {
+content: "";
+position: absolute;
+inset: 0;
+padding: 1px;
+border-radius: var(--border-radius-before, inherit);
+-webkit-mask: linear-gradient(#fff 0 0) content-box,
+linear-gradient(#fff 0 0);
+-webkit-mask-composite: xor;
+mask-composite: exclude;
+background: var(--border-gradient);
+pointer-events: none;
+}</style></head>
+<body class="min-h-screen flex items-center justify-center bg-neutral-900">
+
+<!-- Background (component) added by Aura -->
+<div class="aura-background-component fixed top-0 w-full h-screen -z-10 hue-rotate-180 saturate-50" data-alpha-mask="80" style="; mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent)"><div class="aura-background-component top-0 w-full -z-10 absolute h-full">
+  <div data-us-project="qpSlPSWA2bdkUAYztz8z" class="absolute w-full h-full left-0 top-0 -z-10"></div>
+  <script type="text/javascript">
+    !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head || document.body).appendChild(i)}}();
+  </script>
+</div></div>
+  <div class="w-full max-w-6xl mx-auto px-4 py-6 md:py-10">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-5 lg:gap-6">
+      <!-- Top Left: Categories + card (first card orange) -->
+      <div class="md:col-span-2 overflow-hidden flex flex-col bg-orange-100 rounded-3xl pt-8 pr-6 pb-8 pl-6 relative justify-between">
+        <div class="flex items-start justify-between gap-4">
+          <div class="">
+            <p class="text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight text-neutral-900 mb-1">
+              Everyday spending, orchestrated.
+            </p>
+            <p class="text-sm md:text-base text-neutral-700 max-w-xs">
+              Group your spend into smart lanes so rent, travel, dining, and savings never compete for the same pound.
+            </p>
+          </div>
+          <div class="hidden sm:flex flex-col items-end gap-1">
+            <span class="inline-flex items-center gap-1 rounded-full bg-neutral-900/5 text-xs text-neutral-700 px-3 py-1">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              Live envelopes
+            </span>
+            <span class="inline-flex items-center gap-1 rounded-full bg-neutral-900/5 text-xs text-neutral-700 px-3 py-1">
+              <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+              Auto‑allocations
+            </span>
+          </div>
+        </div>
+
+        <div class="mt-6 grid grid-cols-2 gap-3 sm:gap-4">
+          <div class="rounded-2xl bg-neutral-900 text-orange-50 p-4 flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <p class="text-xs font-medium tracking-tight text-neutral-300">Rent lane</p>
+                <p class="text-lg font-semibold tracking-tight text-orange-100">£1,420</p>
+              </div>
+              <div class="h-8 w-8 rounded-xl bg-orange-500/20 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" style="width: 20px; height: 20px; color: rgb(253, 186, 116);" class="w-[20px] h-[20px]" id="rent-icon" stroke="currentColor" fill="none" data-solar="home-bold-duotone" data-icon-set="solar" data-icon-replaced="true" stroke-width="1.5"><defs><path id="SVG1WEi9bFG" d="M10.75 9.5a1.25 1.25 0 1 1 2.5 0a1.25 1.25 0 0 1-2.5 0"></path></defs><path fill="#fdba74" fill-rule="evenodd" d="m21.532 11.586l-.782-.626v10.29H22a.75.75 0 0 1 0 1.5H2a.75.75 0 1 1 0-1.5h1.25V10.96l-.781.626a.75.75 0 1 1-.937-1.172l8.125-6.5a3.75 3.75 0 0 1 4.686 0l8.125 6.5a.75.75 0 1 1-.936 1.172M12 6.75a2.75 2.75 0 1 0 0 5.5a2.75 2.75 0 0 0 0-5.5m1.746 6.562c-.459-.062-1.032-.062-1.697-.062h-.098c-.665 0-1.238 0-1.697.062c-.491.066-.963.215-1.345.597s-.531.854-.597 1.345c-.062.459-.062 1.032-.062 1.697v4.299h7.5v-4.423c0-.612-.004-1.143-.062-1.573c-.066-.491-.215-.963-.597-1.345s-.853-.531-1.345-.597" clip-rule="evenodd" class=""></path><g fill="#fdba74" fill-rule="evenodd" clip-rule="evenodd" opacity=".5"><use href="#SVG1WEi9bFG"></use><use href="#SVG1WEi9bFG"></use></g><path fill="#fdba74" d="M12.05 13.25c.664 0 1.237 0 1.696.062c.492.066.963.215 1.345.597s.531.853.597 1.345c.058.43.062.96.062 1.573v4.423h-7.5v-4.3c0-.664 0-1.237.062-1.696c.066-.492.215-.963.597-1.345s.854-.531 1.345-.597c.459-.062 1.032-.062 1.697-.062zM16 3h2.5a.5.5 0 0 1 .5.5v4.14l-3.5-2.8V3.5A.5.5 0 0 1 16 3" opacity=".5" class=""></path></svg>
+              </div>
+            </div>
+            <div class="flex items-center justify-between text-[0.7rem] text-neutral-400">
+              <span>Next debit in 3 days</span>
+              <span class="text-emerald-300 font-medium">On track</span>
+            </div>
+          </div>
+
+          <div class="rounded-2xl bg-white/80 text-neutral-900 p-4 flex flex-col justify-between border border-orange-200/60">
+            <div class="flex items-center justify-between mb-3">
+              <div class="">
+                <p class="text-xs font-medium tracking-tight text-neutral-500">Travel lane</p>
+                <p class="text-lg font-semibold tracking-tight">£680</p>
+              </div>
+              <div class="h-8 w-8 rounded-xl bg-orange-100 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" style="color: rgb(253, 186, 116); width: 20px; height: 20px;" class="w-[20px] h-[20px]" id="rent-icon" stroke="currentColor" fill="none" data-solar="planet-2-bold-duotone" data-icon-set="solar" data-icon-replaced="true" stroke-width="1.5"><path fill="#fdba74" d="M20 12a8 8 0 1 1-16 0a8 8 0 0 1 16 0" opacity=".5"></path><path fill="#fdba74" d="M19.009 6.784a.75.75 0 0 0-.138-1.494q-.637.06-1.345.2a.75.75 0 0 0-.472.309l1.117 1.097q.444-.075.838-.112"></path><path fill="#fdba74" fill-rule="evenodd" d="M20.937 5.38a.75.75 0 1 0-.346 1.459c.394.093.546.232.602.322c.063.102.133.366-.157.948a.75.75 0 0 0 1.343.67c.378-.759.563-1.65.086-2.413c-.344-.55-.923-.843-1.528-.987m-.225 5.581a.75.75 0 1 0-1.065-1.057c-.686.692-1.567 1.43-2.608 2.171a.75.75 0 0 0 .87 1.222c1.095-.78 2.044-1.572 2.803-2.336M3.587 14.947q.302-.378.706-.79l-.238-1.33a.75.75 0 0 0-.744.189q-.503.505-.896.995a.75.75 0 1 0 1.172.937m12.163-.243a.75.75 0 1 0-.77-1.287a35 35 0 0 1-3.092 1.645a.75.75 0 0 0 .638 1.357a37 37 0 0 0 3.224-1.715M2.815 16.25a.75.75 0 0 0-1.43-.455c-.191.601-.211 1.262.15 1.84c.453.724 1.307 1.006 2.154 1.087a.75.75 0 1 0 .143-1.493c-.694-.066-.948-.267-1.025-.39c-.05-.08-.102-.244.008-.589m7.268 1.203a.75.75 0 0 0-.527-1.404c-1.225.46-2.365.791-3.362.989a.75.75 0 0 0 .291 1.471c1.093-.216 2.313-.574 3.598-1.056" clip-rule="evenodd"></path></svg>
+              </div>
+            </div>
+            <div class="flex items-center justify-between text-[0.7rem] text-neutral-500">
+              <span>Weekend getaways</span>
+              <span class="text-emerald-600 font-medium">+£120 this month</span>
+            </div>
+          </div>
+
+          <div class="rounded-2xl bg-orange-50 text-neutral-900 p-4 flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <p class="text-xs font-medium tracking-tight text-neutral-500">Dining lane</p>
+                <p class="text-lg font-semibold tracking-tight">£320</p>
+              </div>
+              <div class="flex bg-orange-100 w-8 h-8 rounded-xl items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" style="color: rgb(253, 186, 116); width: 20px; height: 20px;" class="w-[20px] h-[20px]" id="rent-icon" stroke="currentColor" fill="none" data-solar="tea-cup-bold-duotone" data-icon-set="solar" data-icon-replaced="true" stroke-width="1.5"><g fill="#fdba74" fill-rule="evenodd" clip-rule="evenodd"><path d="M2.25 11.88c-.01.177.015.39.065.818l.401 3.428A5.515 5.515 0 0 0 8.193 21h3.614a5.52 5.52 0 0 0 5.028-3.25H19a3.75 3.75 0 1 0 0-7.5h-2.279a2 2 0 0 0-.618-.22c-.174-.03-.39-.03-.82-.03H4.717c-.43 0-.645 0-.819.03a2 2 0 0 0-1.646 1.85m15.487-.13q.008.065.012.13c.01.177-.014.39-.064.818l-.401 3.428l-.016.124H19a2.25 2.25 0 0 0 0-4.5z"></path><path d="M10.53 1.47a.75.75 0 0 1 0 1.06a.666.666 0 0 0 0 .94a2.164 2.164 0 0 1 0 3.06a.75.75 0 0 1-1.06-1.06c.26-.26.26-.68 0-.94a2.164 2.164 0 0 1 0-3.06a.75.75 0 0 1 1.06 0m-4.5 1.5a.75.75 0 0 1 0 1.06l-.116.116a.69.69 0 0 0-.064.904a2.19 2.19 0 0 1-.203 2.864l-.116.116A.75.75 0 0 1 4.47 6.97l.116-.116a.69.69 0 0 0 .064-.904a2.19 2.19 0 0 1 .204-2.864l.116-.116a.75.75 0 0 1 1.06 0m9.5 0a.75.75 0 0 1 0 1.06l-.116.116a.69.69 0 0 0-.064.904a2.19 2.19 0 0 1-.203 2.864l-.117.116a.75.75 0 1 1-1.06-1.06l.116-.116a.69.69 0 0 0 .064-.904a2.19 2.19 0 0 1 .204-2.864l.116-.116a.75.75 0 0 1 1.06 0" opacity=".5"></path></g></svg>
+              </div>
+            </div>
+            <div class="flex items-center justify-between text-[0.7rem] text-neutral-500">
+              <span>Weekly cap</span>
+              <span class="text-amber-600 font-medium">72% used</span>
+            </div>
+          </div>
+
+          <button class="rounded-2xl border border-neutral-900/10 bg-neutral-900/5 text-neutral-900 p-4 flex items-center justify-between hover:bg-neutral-900/10 transition">
+            <div class="">
+              <p class="text-sm font-medium tracking-tight">Add a new lane</p>
+              <p class="text-xs text-neutral-600">
+                Create a bucket for savings, goals, or one‑off plans.
+              </p>
+            </div>
+            <div class="flex flex-none text-orange-100 bg-neutral-900 w-9 h-9 rounded-full items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="" id="rent-icon" data-lucide="plus" data-icon-set="lucide" data-icon-replaced="true" style="color: rgb(253, 186, 116);"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+            </div>
+          </button>
+        </div>
+
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            if (window.lucide) {
+              // Icons are already custom inline; lucide script kept for potential future use.
+            }
+          });
+        </script>
+      </div>
+
+      <!-- Top Middle: Portrait (third card emerald) -->
+      <div class="overflow-hidden flex bg-center bg-emerald-50 bg-[url(https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/64ca547b-81d2-4430-ad64-ac776a77afb6_800w.webp)] bg-cover rounded-3xl items-center justify-center">
+        
+      </div>
+
+      <!-- Top Right: Phone mock (unchanged structure) -->
+      <div class="flex bg-gradient-to-br from-white/10 to-white/0 rounded-3xl pt-6 pr-4 pb-6 pl-4 backdrop-blur-lg items-center justify-center" style="position: relative; --border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)); --border-radius-before: 24px">
+        <div class="bg-neutral-900 rounded-[2.4rem] w-full max-w-[260px] aspect-[9/19] shadow-2xl flex flex-col">
+          <div class="px-4 pt-4 flex items-center justify-between text-[10px] text-neutral-300">
+            <span class="">9:41</span>
+            <div class="flex items-center gap-1">
+              <span class="iconify text-xs" data-icon="solar:wifi-bold-duotone"></span>
+              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="solar:battery-charge-bold-duotone" class="iconify text-xs iconify--solar"><path fill="currentColor" d="M3.172 5.172C2 6.343 2 8.229 2 12s0 5.657 1.172 6.828S6.229 20 10 20h1.5c3.771 0 5.657 0 6.828-1.172S19.5 15.771 19.5 12s0-5.657-1.172-6.828S15.271 4 11.5 4H10C6.229 4 4.343 4 3.172 5.172" opacity=".5"></path><path fill="currentColor" d="M19.491 14c.009-.6.009-1.264.009-2c0-.735 0-1.4-.009-2H20c.942 0 1.414 0 1.707.293S22 11.057 22 12s0 1.414-.293 1.707S20.942 14 20 14zm-7.415-4.52a.75.75 0 0 0-1.152-.96l-2.5 3A.75.75 0 0 0 9 12.75h1.899l-1.475 1.77a.75.75 0 0 0 1.152.96l2.5-3a.75.75 0 0 0-.576-1.23h-1.899z"></path></svg>
+            </div>
+          </div>
+          <div class="flex-1 bg-emerald-50 rounded-[2rem] mx-1 mt-1 mb-2 px-4 pt-5 pb-4 flex flex-col">
+            <div class="flex items-center justify-between mb-3">
+              <div class="">
+                <p class="text-xs font-medium text-emerald-700 tracking-tight">Growth Tracker</p>
+                <p class="text-[10px] text-neutral-500">PERFORMANCE • LIVE</p>
+              </div>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-medium">
+                +19.3%
+              </span>
+            </div>
+
+            <div class="bg-neutral-900 rounded-2xl px-3 py-3 mb-3">
+              <div class="flex items-center justify-between mb-2">
+                <p class="text-[10px] text-neutral-400">Analytics</p>
+                <p class="text-sm font-semibold tracking-tight text-amber-300">$6,214</p>
+              </div>
+              <div class="flex items-center justify-between">
+                <p class="text-[10px] text-neutral-400">Reserve</p>
+                <p class="text-sm font-semibold tracking-tight text-emerald-300">$3,908</p>
+              </div>
+            </div>
+
+            <div class="flex-1 mb-3">
+              <div class="h-16 w-full bg-gradient-to-t from-emerald-200 via-emerald-100 to-transparent rounded-xl flex items-end px-1 gap-1">
+                <div class="w-[7%] bg-emerald-400 rounded-t-lg h-5"></div>
+                <div class="w-[7%] bg-emerald-500 rounded-t-lg h-8"></div>
+                <div class="w-[7%] bg-emerald-400 rounded-t-lg h-6"></div>
+                <div class="w-[7%] bg-emerald-300 rounded-t-lg h-10"></div>
+                <div class="w-[7%] bg-emerald-500 rounded-t-lg h-14"></div>
+                <div class="w-[7%] bg-emerald-400 rounded-t-lg h-9"></div>
+                <div class="w-[7%] bg-emerald-500 rounded-t-lg h-12"></div>
+                <div class="w-[7%] bg-emerald-400 rounded-t-lg h-7"></div>
+                <div class="w-[7%] bg-emerald-500 rounded-t-lg h-11"></div>
+                <div class="w-[7%] bg-emerald-400 rounded-t-lg h-6"></div>
+                <div class="w-[7%] bg-emerald-300 rounded-t-lg h-8"></div>
+                <div class="w-[7%] bg-emerald-500 rounded-t-lg h-13"></div>
+                <div class="w-[7%] bg-emerald-400 rounded-t-lg h-9"></div>
+                <div class="w-[7%] bg-emerald-500 rounded-t-lg h-12"></div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <p class="text-sm font-semibold tracking-tight text-neutral-900 mb-1">
+                Accelerate Your Money Momentum
+              </p>
+              <p class="text-[10px] text-neutral-500 leading-snug">
+                Track, forecast, and tune your cash flow with live insights tailored to your spending rhythm.
+              </p>
+            </div>
+
+            <button class="mt-auto bg-neutral-900 text-emerald-100 text-xs font-medium rounded-xl py-2 flex items-center justify-center gap-1">
+              Continue
+              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="solar:arrow-right-up-bold-duotone" class="iconify text-sm iconify--solar"><path fill="currentColor" fill-rule="evenodd" d="M17.47 15.53a.75.75 0 0 0 1.28-.53V6a.75.75 0 0 0-.75-.75H9a.75.75 0 0 0-.53 1.28z" clip-rule="evenodd"></path><path fill="currentColor" d="M5.47 17.47a.75.75 0 1 0 1.06 1.06l6.97-6.97l-1.06-1.06z" opacity=".5"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Middle Left: Globe + cards (second row first amber already) -->
+      <div class="bg-amber-200 rounded-3xl px-6 py-6 flex flex-col justify-between">
+        <div class="relative w-full pt-4">
+          <div class="relative mx-auto h-40 w-40">
+            <div class="absolute inset-0 rounded-full border border-amber-400 border-dashed"></div>
+            <div class="absolute inset-4 rounded-full border border-amber-500 border-dashed"></div>
+            <div class="absolute inset-8 rounded-full border border-amber-600 border-dashed"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <p class="text-xs font-medium text-amber-900 tracking-tight">Global Wallet</p>
+            </div>
+          </div>
+          <div class="absolute left-0 top-6">
+            <div class="bg-amber-900 text-amber-50 text-[10px] px-3 py-2 rounded-xl shadow-sm flex items-center gap-2">
+              <span class="inline-flex h-5 w-5 items-center justify-center rounded-full bg-amber-700">
+                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="solar:card-2-bold-duotone" class="iconify text-[12px] iconify--solar"><path fill="currentColor" d="M10 20h4c3.771 0 5.657 0 6.828-1.172S22 15.771 22 12c0-.442-.002-1.608-.004-2H2c-.002.392 0 1.558 0 2c0 3.771 0 5.657 1.171 6.828S6.23 20 10 20" opacity=".5" class=""></path><path fill="currentColor" d="M5.25 13.5a.75.75 0 0 1 .75-.75h2a.75.75 0 0 1 0 1.5H6a.75.75 0 0 1-.75-.75m0 3a.75.75 0 0 1 .75-.75h4a.75.75 0 0 1 0 1.5H6a.75.75 0 0 1-.75-.75"></path><path fill="currentColor" fill-rule="evenodd" d="M17.197 12.293c-.323-.043-.72-.043-1.152-.043h-.09c-.433 0-.83 0-1.152.043c-.356.048-.731.16-1.04.47s-.422.684-.47 1.04c-.043.323-.043.72-.043 1.152v.09c0 .433 0 .83.043 1.152c.048.356.16.731.47 1.04s.684.422 1.04.47c.323.043.72.043 1.152.043h.09c.433 0 .83 0 1.152-.043c.356-.048.731-.16 1.04-.47s.422-.684.47-1.04c.043-.323.043-.72.043-1.152v-.09c0-.433 0-.83-.043-1.152c-.048-.356-.16-.731-.47-1.04s-.684-.422-1.04-.47m-2.371 1.529l-.003.001l-.001.003l-.005.01a.7.7 0 0 0-.037.167c-.028.21-.03.504-.03.997s.002.787.03.997a.7.7 0 0 0 .042.177l.001.003l.003.001l.01.005c.022.009.07.024.167.037c.21.028.504.03.997.03s.787-.002.997-.03a.7.7 0 0 0 .177-.042l.003-.001l.001-.003l.005-.01a.7.7 0 0 0 .037-.167c.028-.21.03-.504.03-.997s-.002-.787-.03-.997a.7.7 0 0 0-.042-.177l-.001-.003l-.003-.001l-.01-.005a.7.7 0 0 0-.167-.037c-.21-.028-.504-.03-.997-.03s-.787.002-.997.03a.7.7 0 0 0-.177.042" clip-rule="evenodd" class=""></path><path fill="currentColor" d="M9.995 4h4.01c3.781 0 5.672 0 6.846 1.116c.846.803 1.083 1.96 1.149 3.884v1H2V9c.066-1.925.303-3.08 1.149-3.884C4.323 4 6.214 4 9.995 4"></path></svg>
+              </span>
+              <div class="">
+                <p class="font-medium">$452.00</p>
+                <p class="text-[9px] opacity-80">USD wallet</p>
+              </div>
+            </div>
+          </div>
+          <div class="absolute right-0 bottom-2">
+            <div class="bg-amber-50 text-amber-900 text-[10px] px-3 py-2 rounded-xl shadow-sm flex items-center gap-2">
+              <span class="inline-flex h-5 w-5 items-center justify-center rounded-full bg-amber-200">
+                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="solar:refresh-circle-bold-duotone" class="iconify text-[12px] iconify--solar"><circle cx="12" cy="12" r="10" fill="currentColor" opacity=".5"></circle><path fill="currentColor" d="M7.378 11.63h-.75zm0 .926l-.562.497a.75.75 0 0 0 1.08.044zm2.141-1.015a.75.75 0 0 0-1.038-1.082zm-2.958-1.038a.75.75 0 1 0-1.122.994zm8.37-1.494a.75.75 0 1 0 1.102-1.018zM12.045 6.25c-2.986 0-5.416 2.403-5.416 5.38h1.5c0-2.137 1.747-3.88 3.916-3.88zm-5.416 5.38v.926h1.5v-.926zm1.269 1.467l1.622-1.556l-1.038-1.082l-1.622 1.555zm.042-1.039l-1.378-1.555l-1.122.994l1.377 1.556zm8.094-4.067a5.42 5.42 0 0 0-3.99-1.741v1.5a3.92 3.92 0 0 1 2.889 1.26zm.585 3.453l.56-.498a.75.75 0 0 0-1.08-.043zm-2.139 1.014a.75.75 0 1 0 1.04 1.082zm2.96 1.04a.75.75 0 0 0 1.12-.997zm-8.393 1.507a.75.75 0 0 0-1.094 1.026zm2.888 2.745c2.993 0 5.434-2.4 5.434-5.38h-1.5c0 2.135-1.753 3.88-3.934 3.88zm5.434-5.38v-.926h-1.5v.926zm-1.27-1.467l-1.619 1.555l1.04 1.082l1.618-1.555zm-.04 1.04l1.38 1.554l1.122-.996l-1.381-1.555zM7.952 16.03a5.45 5.45 0 0 0 3.982 1.719v-1.5c-1.143 0-2.17-.48-2.888-1.245z"></path></svg>
+              </span>
+              <div>
+                <p class="font-medium">Rewards syncing</p>
+                <p class="text-[9px] opacity-80">3 transfers in queue</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Middle Center: Logo -->
+      <div class="flex flex-col md:col-span-2 bg-gradient-to-br from-white/10 to-white/0 rounded-3xl pt-8 pr-4 pb-8 pl-4 backdrop-blur-lg items-center justify-center" style="position: relative; --border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)); --border-radius-before: 24px">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="h-10 w-14 rounded-2xl bg-amber-400 flex items-center justify-center">
+            <div class="h-6 w-10 bg-neutral-950 rounded-xl rotate-[-8deg] flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="solar:play-bold-duotone" class="iconify text-amber-300 text-lg iconify--solar"><path fill="currentColor" fill-rule="evenodd" d="M23 12c0-1.035-.53-2.07-1.591-2.647L8.597 2.385C6.534 1.264 4 2.724 4 5.033V12z" clip-rule="evenodd"></path><path fill="currentColor" d="m8.597 21.615l12.812-6.968A2.99 2.99 0 0 0 23 12H4v6.967c0 2.31 2.534 3.769 4.597 2.648" opacity=".5"></path></svg>
+            </div>
+          </div>
+          <span class="text-4xl md:text-5xl font-semibold tracking-tight text-amber-200">
+            novacash
+          </span>
+        </div>
+        <p class="text-xs md:text-sm text-neutral-400 max-w-sm text-center">
+          The smart balance layer that keeps your everyday spending and long‑term plans aligned.
+        </p>
+      </div>
+
+      <!-- Middle Right: Keywords (second row 3rd, yellow card) -->
+      <div class="flex flex-col bg-yellow-200 rounded-3xl pt-6 pr-5 pb-6 pl-5 gap-x-3 gap-y-3 justify-center">
+        <div class="inline-flex items-center gap-2 flex-wrap">
+          <span class="text-xs font-medium text-neutral-900 bg-yellow-100 rounded-full pt-1 pr-3 pb-1 pl-3">
+            Cashflow
+          </span>
+          <span class="text-xs font-medium text-neutral-900 bg-yellow-100 rounded-full pt-1 pr-3 pb-1 pl-3">
+            Clarity
+          </span>
+        </div>
+        <div class="inline-flex items-center gap-2 flex-wrap">
+          <span class="px-3 py-1 rounded-full bg-amber-400 text-neutral-900 text-xs font-semibold tracking-tight">
+            Insights
+          </span>
+          <span class="text-xs font-medium text-neutral-900 bg-yellow-100 rounded-full pt-1 pr-3 pb-1 pl-3">
+            Automation
+          </span>
+        </div>
+        <div class="inline-flex items-center gap-2 flex-wrap">
+          <span class="text-xs font-medium text-neutral-900 bg-yellow-100 rounded-full pt-1 pr-3 pb-1 pl-3">
+            Goals
+          </span>
+          <span class="text-xs font-medium text-neutral-900 bg-yellow-100 rounded-full pt-1 pr-3 pb-1 pl-3">
+            Signals
+          </span>
+        </div>
+      </div>
+
+      <!-- Bottom Left: Managed card -->
+      <div class="flex flex-col bg-gradient-to-br from-white/10 to-white/0 rounded-3xl pt-6 pr-6 pb-6 pl-6 backdrop-blur-lg justify-between" style="position: relative; --border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)); --border-radius-before: 24px">
+        <div class="flex items-start justify-between mb-6">
+          <div class="">
+            <p class="text-3xl md:text-4xl font-semibold tracking-tight text-amber-100">
+              £4,860
+            </p>
+            <p class="text-xs text-amber-50/80">Under guidance</p>
+          </div>
+          <div class="text-right">
+            <p class="text-[11px] text-amber-100/80">DEC</p>
+            <p class="text-[11px] text-amber-100/60">2025</p>
+          </div>
+        </div>
+        <div class="flex-1 flex flex-col justify-end">
+          <div class="h-28 w-full flex items-end gap-[3px]">
+            <div class="flex-1 bg-amber-200/50 rounded-t-sm h-6"></div>
+            <div class="flex-1 bg-amber-200/50 rounded-t-sm h-4"></div>
+            <div class="flex-1 bg-amber-200/50 rounded-t-sm h-9"></div>
+            <div class="flex-1 bg-amber-300 rounded-t-sm h-16"></div>
+            <div class="flex-1 bg-amber-200/50 rounded-t-sm h-10"></div>
+            <div class="flex-1 bg-amber-200/50 rounded-t-sm h-7"></div>
+            <div class="flex-1 bg-amber-200/50 rounded-t-sm h-12"></div>
+            <div class="flex-1 bg-amber-200/50 rounded-t-sm h-5"></div>
+            <div class="flex-1 bg-amber-200/50 rounded-t-sm h-8"></div>
+            <div class="flex-1 bg-amber-200/50 rounded-t-sm h-6"></div>
+            <div class="flex-1 bg-amber-200/50 rounded-t-sm h-9"></div>
+            <div class="flex-1 bg-amber-200/50 rounded-t-sm h-11"></div>
+          </div>
+          <div class="mt-3 flex items-center justify-between">
+            <p class="text-[11px] text-amber-50/70">Your balance in motion</p>
+            <span class="text-[10px] text-emerald-900 flex-none font-medium bg-amber-300 rounded-full pt-1 pr-2 pb-1 pl-2">
+              +15% vs last month
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Middle: Billboard + portrait -->
+      <div class="overflow-hidden md:col-span-2 flex flex-col md:flex-row bg-neutral-900 rounded-3xl">
+        <div class="flex-1 bg-center flex bg-gradient-to-br from-white/10 to-white/0 bg-cover rounded-l-3xl backdrop-blur-lg items-end" style="position: relative; --border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0))">
+          <div class="bg-gradient-to-br from-white/10 to-white/0 w-full pt-4 pr-5 pb-4 pl-5" style="position: relative; --border-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0))">
+            <div class="flex items-center gap-2 mb-2">
+              <p class="text-[11px] text-neutral-400">novacash.com</p>
+              <span class="h-1 w-1 rounded-full bg-neutral-500"></span>
+              <p class="text-[11px] text-neutral-400">NovaCash</p>
+            </div>
+            <p class="text-2xl md:text-3xl font-semibold tracking-tight text-amber-200 leading-tight">
+              LET YOUR BALANCE
+
+              LEAD THE WAY
+            </p>
+          </div>
+        </div>
+        <div class="w-full md:w-56 bg-neutral-900 flex items-center justify-center">
+          <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/a545dd10-7379-4c9c-a1cf-27d0d38935c7_800w.webp" alt="Customer with card" class="w-full h-full object-cover">
+        </div>
+      </div>
+
+      <!-- Bottom Right: Face image / alt visual -->
+      <div class="bg-amber-100 rounded-3xl overflow-hidden">
+        <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/953076e5-6fce-4fea-99a8-b70c6f1e09a4_800w.webp" alt="Confident saver" class="w-full h-full object-cover">
+      </div>
+    </div>
+  </div>
+
+</body></html>

@@ -1,0 +1,33 @@
+{
+  "name": "Aceternity UI",
+  "slug": "grid-and-dot-backgrounds",
+  "description": "A simple grid and dots background to make your sections stand out.",
+  "props": [],
+  "category": "",
+  "tags": [],
+  "installation": "npmimotionclsxtailwind-mergeCopy",
+  "url": "https://ui.aceternity.com/components/grid-and-dot-backgrounds",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A simple grid and dots background to make your sections stand out.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import { cn } from \"@/lib/utils\";",
+    "import React from \"react\";"
+  ],
+  "dependencies": [
+    "@/lib/utils",
+    "react"
+  ],
+  "client_only": false
+}

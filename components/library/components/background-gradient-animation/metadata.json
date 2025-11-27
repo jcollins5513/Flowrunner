@@ -1,0 +1,117 @@
+{
+  "name": "Aceternity UI",
+  "slug": "background-gradient-animation",
+  "description": "A smooth and elegant background gradient animation that changes the gradient position over time.",
+  "props": [
+    {
+      "Prop Name": "gradientBackgroundStart",
+      "Type": "string",
+      "Default Value": "\"rgb(108, 0, 162)\"",
+      "Description": "The starting color of the background gradient, specified as an RGB value."
+    },
+    {
+      "Prop Name": "gradientBackgroundEnd",
+      "Type": "string",
+      "Default Value": "\"rgb(0, 17, 82)\"",
+      "Description": "The ending color of the background gradient, specified as an RGB value."
+    },
+    {
+      "Prop Name": "firstColor",
+      "Type": "string",
+      "Default Value": "\"18, 113, 255\"",
+      "Description": "The first color used in the animation, specified as an RGB value without the rgb tag."
+    },
+    {
+      "Prop Name": "secondColor",
+      "Type": "string",
+      "Default Value": "\"221, 74, 255\"",
+      "Description": "The second color used in the animation, specified as an RGB value without the rgb tag."
+    },
+    {
+      "Prop Name": "thirdColor",
+      "Type": "string",
+      "Default Value": "\"100, 220, 255\"",
+      "Description": "The third color used in the animation, specified as an RGB value without the rgb tag."
+    },
+    {
+      "Prop Name": "fourthColor",
+      "Type": "string",
+      "Default Value": "\"200, 50, 50\"",
+      "Description": "The fourth color used in the animation, specified as an RGB value without the rgb tag."
+    },
+    {
+      "Prop Name": "fifthColor",
+      "Type": "string",
+      "Default Value": "\"180, 180, 50\"",
+      "Description": "The fifth color used in the animation, specified as an RGB value without the rgb tag."
+    },
+    {
+      "Prop Name": "pointerColor",
+      "Type": "string",
+      "Default Value": "\"140, 100, 255\"",
+      "Description": "The color of the pointer, specified as an RGB value without the rgb tag."
+    },
+    {
+      "Prop Name": "size",
+      "Type": "string",
+      "Default Value": "\"80%\"",
+      "Description": "The size of the animated elements."
+    },
+    {
+      "Prop Name": "blendingValue",
+      "Type": "string",
+      "Default Value": "\"hard-light\"",
+      "Description": "The blending mode used for the animated elements."
+    },
+    {
+      "Prop Name": "children",
+      "Type": "React.ReactNode",
+      "Default Value": "undefined",
+      "Description": "Children components to be rendered inside the component."
+    },
+    {
+      "Prop Name": "className",
+      "Type": "string",
+      "Default Value": "undefined",
+      "Description": "Additional CSS class for styling."
+    },
+    {
+      "Prop Name": "interactive",
+      "Type": "boolean",
+      "Default Value": "true",
+      "Description": "Determines if the animation is interactive or not."
+    },
+    {
+      "Prop Name": "containerClassName",
+      "Type": "string",
+      "Default Value": "undefined",
+      "Description": "Additional CSS class for the container."
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/background-gradient-animationCopy",
+  "url": "https://ui.aceternity.com/components/background-gradient-animation",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A smooth and elegant background gradient animation that changes the gradient position over time.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { BackgroundGradientAnimation } from \"../ui/background-gradient-animation\";"
+  ],
+  "dependencies": [
+    "react"
+  ],
+  "client_only": false
+}

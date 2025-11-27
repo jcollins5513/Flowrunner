@@ -1,0 +1,641 @@
+<html lang="en" class="h-full antialiased selection:bg-orange-500 selection:text-white"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Qolaba AI Studio — Unified Intelligence Platform</title>
+<meta name="description" content="The operating system for AI automation.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+tailwind.config = {
+darkMode: 'class',
+theme: {
+extend: {
+fontFamily: { inter: ['Inter', 'sans-serif'] },
+colors: {
+brand: { 500: '#f97316', 600: '#ea580c' }
+},
+animation: {
+'blob': 'blob 10s infinite',
+'dash': 'dash 3s linear infinite',
+'enter': 'enter 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+},
+keyframes: {
+blob: {
+'0%': { transform: 'translate(0px, 0px) scale(1)' },
+'33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+'66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+'100%': { transform: 'translate(0px, 0px) scale(1)' },
+},
+dash: {
+'0%': { strokeDashoffset: '40' },
+'100%': { strokeDashoffset: '0' },
+},
+enter: {
+'0%': { opacity: '0', transform: 'translateY(10px)' },
+'100%': { opacity: '1', transform: 'translateY(0)' },
+}
+}
+}
+}
+}
+</script>
+<style>
+/* Base Settings */
+html {
+height: 100%;
+scroll-behavior: smooth;
+}
+body {
+background-color: #000000;
+color: #e5e5e5;
+margin: 0;
+padding: 0;
+-webkit-font-smoothing: antialiased;
+/* Mobile: Allow native scroll. Desktop: constrained later */
+overflow-x: hidden;
+width: 100%;
+}
+/* Custom Scrollbar (Desktop Only) */
+@media (min-width: 768px) {
+.custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #444; }
+/* Lock body scroll on desktop to create the 'app frame' feel */
+body { height: 100%; overflow: hidden; }
+}
+/* Utilities */
+.bg-grid-pattern {
+background-size: 40px 40px;
+background-image:
+linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+-webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+}
+.glass-card {
+background: linear-gradient(145deg, rgba(20, 20, 23, 0.6) 0%, rgba(10, 10, 12, 0.8) 100%);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.reveal-text {
+opacity: 0;
+transform: translateY(30px);
+transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-text.revealed { opacity: 1; transform: translateY(0); }
+/* Mobile Optimization */
+.mobile-touch-target { min-height: 44px; min-width: 44px; }
+/* Shining Border Effect */
+.border-shine {
+position: absolute;
+inset: 0;
+border-radius: inherit;
+pointer-events: none;
+padding: 1px;
+background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.2) 50%, transparent 60%);
+background-size: 200% 200%;
+-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+-webkit-mask-composite: xor;
+mask-composite: exclude;
+opacity: 0;
+transition: opacity 0.5s;
+}
+.group:hover .border-shine { opacity: 1; animation: shine-move 1.5s linear infinite; }
+@keyframes shine-move { 0% { background-position: 100% 100%; } 100% { background-position: 0% 0%; } }
+/* Desktop Cursor */
+@media (min-width: 768px) and (hover: hover) {
+body { cursor: none; }
+.cursor-dot { width: 8px; height: 8px; background-color: #f97316; position: fixed; border-radius: 50%; z-index: 9999; pointer-events: none; transform: translate(-50%, -50%); }
+.cursor-ring { width: 32px; height: 32px; border: 1px solid rgba(249, 115, 22, 0.5); background: rgba(249, 115, 22, 0.05); position: fixed; border-radius: 50%; z-index: 9999; pointer-events: none; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s, background-color 0.2s; will-change: transform; }
+body.hovering .cursor-ring { width: 50px; height: 50px; background-color: rgba(249, 115, 22, 0.1); border-color: #f97316; }
+}
+@media (max-width: 767px) {
+.cursor-dot, .cursor-ring { display: none; }
+}
+</style></head>
+
+<body class="font-inter bg-black text-gray-200">
+
+
+
+
+
+
+
+<!-- Background (component) added by Aura -->
+<div class="aura-background-component fixed top-0 w-full h-screen -z-10" data-alpha-mask="80" style="; mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent)"><div class="aura-background-component top-0 w-full -z-10 absolute h-full">
+  <div data-us-project="ZHhDKfVqqu8PKOSMwfuA" class="absolute w-full h-full left-0 top-0 -z-10"></div>
+  <script type="text/javascript">
+    !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head || document.body).appendChild(i)}}();
+  </script>
+</div></div>
+
+<!-- Desktop Cursor Elements -->
+<div id="cursor-dot" class="cursor-dot"></div>
+<div id="cursor-ring" class="cursor-ring"></div>
+
+<!-- Background Layer (Fixed) -->
+<div class="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#050505]">
+    <div class="absolute inset-0 bg-grid-pattern opacity-30"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/80"></div>
+    <!-- Reduced blur/opacity for mobile performance -->
+    <div class="absolute top-[-10%] left-[-10%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-purple-900/20 rounded-full mix-blend-screen filter blur-[60px] md:blur-[120px] animate-blob opacity-40 will-change-transform"></div>
+    <div class="absolute top-[20%] right-[-10%] w-[250px] md:w-[500px] h-[250px] md:h-[500px] bg-orange-900/20 rounded-full mix-blend-screen filter blur-[60px] md:blur-[120px] animate-blob animation-delay-2000 opacity-40 will-change-transform"></div>
+</div>
+
+<!-- Layout Wrapper -->
+<!-- Mobile: min-h-screen, standard block flow. Desktop: h-full flex column -->
+<div class="relative z-10 w-full min-h-screen md:h-full flex flex-col md:p-5">
+    
+    <!-- Content Frame -->
+    <!-- Mobile: Transparent, auto height, no border. Desktop: Rounded, bordered, scrollable container -->
+    <div id="main-frame" class="relative flex-1 w-full md:bg-[#0a0a0a]/60 md:backdrop-blur-sm md:rounded-[32px] md:border md:border-white/10 md:overflow-y-auto md:overflow-x-hidden custom-scrollbar md:shadow-2xl">
+        
+        <!-- Header -->
+        <header class="sticky top-0 w-full z-50 border-b border-white/5 bg-[#050505]/80 md:bg-transparent backdrop-blur-xl">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+                <!-- Branding -->
+                <div class="flex items-center gap-2.5 group cursor-pointer interactable select-none">
+                    <div class="relative w-8 h-8 flex items-center justify-center bg-gradient-to-br from-orange-500 to-red-600 rounded-lg shadow-lg shadow-orange-500/20 transition-transform duration-300 group-hover:scale-105">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v20M2 12h20"></path>
+                        </svg>
+                    </div>
+                    <span class="font-semibold text-lg tracking-tight text-white">Qolaba</span>
+                </div>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex gap-8 text-sm font-medium text-gray-400">
+                    <a href="#automation" class="hover:text-white transition-colors interactable">Automation</a>
+                    <a href="#features" class="hover:text-white transition-colors interactable">Features</a>
+                    <a href="#pricing" class="hover:text-white transition-colors interactable">Pricing</a>
+                </nav>
+
+                <!-- Desktop CTA -->
+                <div class="hidden md:flex items-center gap-4">
+                    <a href="#" class="text-sm font-medium text-gray-400 hover:text-white transition-colors interactable">Log In</a>
+                    <button class="text-sm font-semibold bg-white text-black px-4 py-2 rounded-full hover:bg-gray-200 transition-all shadow-[0_0_15px_rgba(255,255,255,0.1)] interactable hover:scale-105 active:scale-95">
+                        Start Building
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Trigger -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-toggle" class="text-gray-300 hover:text-white p-2 -mr-2 interactable mobile-touch-target flex items-center justify-center" aria-label="Open Menu">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="relative pb-20 pt-8 md:pt-20">
+
+            <!-- HERO -->
+            <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20 md:mb-32 overflow-hidden">
+                <div class="text-center mb-16 mt-4 md:mt-10">
+                    <!-- Headline -->
+                    <h1 class="text-4xl sm:text-5xl md:text-7xl font-semibold tracking-tighter mb-6 relative inline-block interactable animate-enter opacity-0 leading-[1.15]">
+                        <span class="absolute -inset-10 blur-3xl bg-gradient-to-r from-orange-600/20 via-purple-600/10 to-red-600/20 opacity-60 rounded-full pointer-events-none"></span>
+                        <span class="relative text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-gray-400">
+                            Qolaba AI Studio
+                        </span>
+                    </h1>
+                    <!-- Subhead -->
+                    <p class="text-base md:text-lg text-gray-400 mb-10 max-w-2xl mx-auto animate-enter opacity-0 leading-relaxed px-4" style="animation-delay: 100ms;">
+                        The operating system for unified intelligence. Orchestrate LLMs, generate assets, and deploy autonomous agents in a single workspace.
+                    </p>
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-enter opacity-0 px-4" style="animation-delay: 200ms;">
+                        <button class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-gray-200 transition-all interactable shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
+                            Start for Free <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                        <button class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-white hover:bg-white/10 transition-all interactable hover:scale-105 active:scale-95 backdrop-blur-md">
+                            View Documentation
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bento Stats -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-24 md:mb-32 reveal-text px-1 md:px-0">
+                    <div class="glass-card p-8 rounded-2xl md:rounded-[32px] flex flex-col items-center justify-center min-h-[160px] md:min-h-[220px] group interactable text-center relative overflow-hidden">
+                         <div class="border-shine"></div>
+                        <div class="text-5xl md:text-6xl font-medium tracking-tighter text-white mb-2 shadow-orange-500/50 drop-shadow-lg">
+                            <span class="counter" data-target="70">0</span>%
+                        </div>
+                        <div class="text-xs font-bold text-gray-500 uppercase tracking-[0.2em]">Faster Execution</div>
+                    </div>
+                    <div class="glass-card p-8 rounded-2xl md:rounded-[32px] flex flex-col items-center justify-center min-h-[160px] md:min-h-[220px] group interactable text-center relative overflow-hidden">
+                        <div class="border-shine"></div>
+                        <div class="text-5xl md:text-6xl font-medium tracking-tighter text-white mb-2 shadow-purple-500/50 drop-shadow-lg">
+                            <span class="counter" data-target="60">0</span>+
+                        </div>
+                        <div class="text-xs font-bold text-gray-500 uppercase tracking-[0.2em]">Models Integrated</div>
+                    </div>
+                    <div class="glass-card p-8 rounded-2xl md:rounded-[32px] flex flex-col items-center justify-center min-h-[160px] md:min-h-[220px] group interactable text-center relative overflow-hidden">
+                         <div class="border-shine"></div>
+                        <div class="text-5xl md:text-6xl font-medium tracking-tighter text-white mb-2 shadow-blue-500/50 drop-shadow-lg">
+                            <span class="counter" data-target="300">0</span>%
+                        </div>
+                        <div class="text-xs font-bold text-gray-500 uppercase tracking-[0.2em]">ROI Efficiency</div>
+                    </div>
+                </div>
+
+                <!-- FEATURES -->
+                <div id="features" class="space-y-6 md:space-y-8 px-1 md:px-0">
+                    <!-- Feature 1 -->
+                    <div class="glass-card rounded-2xl md:rounded-3xl overflow-hidden group interactable reveal-text relative">
+                        <div class="border-shine"></div>
+                        <div class="grid lg:grid-cols-2">
+                            <div class="p-8 md:p-16 flex flex-col justify-center relative order-2 lg:order-1">
+                                <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                                <h3 class="text-2xl md:text-3xl font-medium text-white mb-4 tracking-tight leading-tight relative z-10">World-Class Models. One API.</h3>
+                                <p class="text-sm md:text-base text-gray-400 leading-relaxed relative z-10">Access GPT-4.5, Claude 3.5, Gemini, and LLaMA seamlessly. Switch models mid-execution based on complexity and cost.</p>
+                            </div>
+                            <div class="bg-black/30 border-b lg:border-b-0 lg:border-l border-white/5 h-[300px] md:h-[400px] p-6 md:p-10 relative flex items-center justify-center overflow-hidden order-1 lg:order-2">
+                                <div class="absolute inset-0 bg-grid-pattern opacity-30"></div>
+                                <!-- UI Card -->
+                                <div class="w-full max-w-[320px] bg-[#0f0f11] rounded-xl border border-white/10 p-4 shadow-2xl transform transition-transform duration-500 lg:group-hover:scale-105 lg:group-hover:-rotate-1 z-10">
+                                    <div class="flex items-center justify-between mb-4 border-b border-white/5 pb-3">
+                                        <div class="text-xs font-medium text-gray-400">Model Selection</div>
+                                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div class="p-3 rounded-lg bg-white/5 border border-blue-500/30 flex items-center justify-between">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-8 h-8 rounded bg-blue-500/20 flex items-center justify-center"><i data-lucide="zap" class="w-4 h-4 text-blue-400"></i></div>
+                                                <div><div class="text-xs font-semibold text-white">GPT-4 Turbo</div><div class="text-[10px] text-gray-500">OpenAI</div></div>
+                                            </div>
+                                            <i data-lucide="check" class="w-4 h-4 text-blue-500"></i>
+                                        </div>
+                                        <div class="p-3 rounded-lg border border-white/5 hover:bg-white/5 transition-colors flex items-center justify-between">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-8 h-8 rounded bg-purple-500/20 flex items-center justify-center"><i data-lucide="sparkles" class="w-4 h-4 text-purple-400"></i></div>
+                                                <div><div class="text-xs font-semibold text-gray-300">Claude 3.5</div><div class="text-[10px] text-gray-500">Anthropic</div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="glass-card rounded-2xl md:rounded-3xl overflow-hidden group interactable reveal-text relative">
+                         <div class="border-shine"></div>
+                        <div class="grid lg:grid-cols-2">
+                            <div class="bg-black/30 border-b lg:border-b-0 lg:border-r border-white/5 h-[300px] md:h-[400px] p-6 md:p-10 relative flex items-center justify-center overflow-hidden order-1">
+                                 <div class="absolute inset-0 bg-gradient-to-t from-purple-900/20 to-transparent opacity-40"></div>
+                                <!-- UI Card -->
+                                <div class="w-full max-w-[320px] bg-[#0f0f11] rounded-xl border border-white/10 p-5 shadow-2xl transform transition-transform duration-500 lg:group-hover:translate-x-2 z-10">
+                                    <div class="flex items-center gap-2 mb-4 text-xs font-bold text-purple-400 uppercase tracking-widest">
+                                        <i data-lucide="bot" class="w-4 h-4"></i> New Agent
+                                    </div>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block text-[10px] text-gray-500 mb-1.5 uppercase">Identity</label>
+                                            <div class="px-3 py-2 bg-black/50 border border-white/10 rounded text-sm text-white">Marketing Specialist</div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-[10px] text-gray-500 mb-1.5 uppercase">Goal</label>
+                                            <div class="px-3 py-2 bg-black/50 border border-white/10 rounded text-sm text-gray-400">Generate high-converting ad copy...</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-8 md:p-16 flex flex-col justify-center relative order-2">
+                                <div class="absolute inset-0 bg-gradient-to-bl from-purple-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                                <h3 class="text-2xl md:text-3xl font-medium text-white mb-4 tracking-tight leading-tight relative z-10">Autonomous Agents, No Code Required.</h3>
+                                <p class="text-sm md:text-base text-gray-400 leading-relaxed relative z-10">Train custom agents on your data. Define personality, memory, and tools. Deploy them to Slack, Discord, or your own app in minutes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AUTOMATION VISUALIZER -->
+            <section id="automation" class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 mb-20 md:mb-32 reveal-text">
+                <div class="text-center mb-10">
+                    <h2 class="text-2xl md:text-3xl font-semibold text-white mb-2 tracking-tight interactable">Visual Automation</h2>
+                    <p class="text-gray-400">Drag, drop, and orchestrate complex AI workflows.</p>
+                </div>
+
+                <!-- Canvas Container -->
+                <div class="glass-card rounded-xl md:rounded-2xl shadow-2xl overflow-hidden relative group interactable border border-white/10 bg-[#080808]">
+                     <div class="border-shine"></div>
+                    
+                    <!-- Toolbar -->
+                    <div class="h-12 border-b border-white/5 bg-white/[0.02] flex items-center justify-between px-4 relative z-20">
+                        <div class="flex items-center gap-4">
+                            <div class="flex gap-2">
+                                <div class="w-2.5 h-2.5 rounded-full bg-red-500/30 border border-red-500/50"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/30 border border-yellow-500/50"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-green-500/30 border border-green-500/50"></div>
+                            </div>
+                            <div class="text-xs text-gray-400 font-mono hidden sm:block">workflow_v2.json</div>
+                        </div>
+                        <button class="bg-white text-black text-[10px] md:text-xs font-bold px-3 py-1.5 rounded hover:bg-gray-200 transition-colors">Run Flow</button>
+                    </div>
+
+                    <!-- Flow Area -->
+                    <div class="relative h-[400px] w-full bg-[#050505] overflow-hidden">
+                        <!-- Grid Background -->
+                        <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#444 1px, transparent 1px); background-size: 24px 24px;"></div>
+                        
+                        <!-- Connecting Lines -->
+                        <svg class="absolute inset-0 w-full h-full pointer-events-none z-0">
+                            <!-- Desktop Path -->
+                            <path d="M220 120 C 300 120, 350 200, 450 200" fill="none" stroke="#333" stroke-width="2" class="hidden md:block"></path>
+                            <path d="M220 120 C 300 120, 350 200, 450 200" fill="none" stroke="#f97316" stroke-width="2" stroke-dasharray="6" class="animate-dash opacity-80 hidden md:block"></path>
+                            
+                            <!-- Mobile Path (Vertical) -->
+                            <path d="M160 100 L 160 160" fill="none" stroke="#333" stroke-width="2" class="md:hidden"></path>
+                             <path d="M160 100 L 160 160" fill="none" stroke="#f97316" stroke-width="2" stroke-dasharray="4" class="animate-dash opacity-80 md:hidden"></path>
+
+                             <!-- Connection 2 -->
+                             <path d="M650 200 L 750 200" fill="none" stroke="#333" stroke-width="2" class="hidden md:block"></path>
+                             <path d="M160 220 L 160 270" fill="none" stroke="#333" stroke-width="2" class="md:hidden"></path>
+                        </svg>
+
+                        <!-- Node 1 -->
+                        <div class="absolute top-[40px] left-[50%] -translate-x-1/2 md:translate-x-0 md:top-[80px] md:left-[50px] w-[180px] glass-card rounded-xl z-10 border-l-4 border-l-pink-500 shadow-lg">
+                            <div class="p-2 border-b border-white/5 flex items-center gap-2">
+                                <i data-lucide="webhook" class="w-3.5 h-3.5 text-pink-500"></i>
+                                <span class="text-[10px] font-bold text-white uppercase">Trigger</span>
+                            </div>
+                            <div class="p-2.5 bg-black/40">
+                                <div class="text-[10px] text-gray-400 font-mono">Incoming Webhook</div>
+                            </div>
+                            <!-- Dot -->
+                            <div class="absolute bottom-[-5px] left-1/2 -translate-x-1/2 md:top-1/2 md:left-auto md:-right-1.5 md:translate-x-0 w-3 h-3 bg-pink-500 rounded-full border-2 border-[#080808]"></div>
+                        </div>
+
+                        <!-- Node 2 -->
+                        <div class="absolute top-[160px] left-[50%] -translate-x-1/2 md:translate-x-0 md:top-[160px] md:left-[450px] w-[200px] glass-card rounded-xl z-10 border-l-4 border-l-orange-500 shadow-[0_0_30px_rgba(249,115,22,0.1)]">
+                            <div class="p-2 border-b border-white/5 flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="cpu" class="w-3.5 h-3.5 text-orange-500"></i>
+                                    <span class="text-[10px] font-bold text-white uppercase">LLM Process</span>
+                                </div>
+                                <span class="flex h-1.5 w-1.5 rounded-full bg-orange-500 animate-pulse"></span>
+                            </div>
+                            <div class="p-2.5 bg-black/40 space-y-1.5">
+                                <div class="flex items-center justify-between text-[10px]">
+                                    <span class="text-gray-500">Model</span>
+                                    <span class="text-gray-300">GPT-4</span>
+                                </div>
+                                <div class="h-1 w-full bg-gray-800 rounded-full overflow-hidden">
+                                    <div class="h-full w-2/3 bg-orange-500 rounded-full"></div>
+                                </div>
+                            </div>
+                             <!-- Dots -->
+                             <div class="absolute top-[-5px] left-1/2 -translate-x-1/2 md:top-1/2 md:left-[-5px] md:translate-x-0 w-3 h-3 bg-gray-600 rounded-full border-2 border-[#080808]"></div>
+                             <div class="absolute bottom-[-5px] left-1/2 -translate-x-1/2 md:top-1/2 md:left-auto md:-right-1.5 md:translate-x-0 w-3 h-3 bg-orange-500 rounded-full border-2 border-[#080808]"></div>
+                        </div>
+
+                        <!-- Node 3 -->
+                        <div class="absolute top-[270px] md:top-[160px] left-[50%] -translate-x-1/2 md:translate-x-0 md:left-[750px] w-[180px] glass-card rounded-xl z-10 border-l-4 border-l-blue-500 opacity-80">
+                             <div class="p-2 border-b border-white/5 flex items-center gap-2">
+                                <i data-lucide="database" class="w-3.5 h-3.5 text-blue-500"></i>
+                                <span class="text-[10px] font-bold text-white uppercase">Store Data</span>
+                            </div>
+                             <div class="absolute top-[-5px] left-1/2 -translate-x-1/2 md:top-1/2 md:left-[-5px] md:translate-x-0 w-3 h-3 bg-gray-600 rounded-full border-2 border-[#080808]"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- PRICING -->
+            <section id="pricing" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+                <div class="text-center mb-12 md:mb-16 reveal-text">
+                    <h2 class="text-2xl md:text-3xl font-semibold text-white mb-4 interactable">Simple Pricing</h2>
+                    <p class="text-gray-400">Start for free, scale as you grow.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto mb-16 reveal-text">
+                    <!-- Hobby -->
+                    <div class="glass-card p-6 rounded-2xl flex flex-col group interactable">
+                        <h3 class="text-lg font-medium text-white mb-2">Hobby</h3>
+                        <div class="text-3xl font-semibold text-white mb-6">$0<span class="text-sm font-normal text-gray-500">/mo</span></div>
+                        <ul class="space-y-3 mb-8 flex-1">
+                            <li class="flex items-center gap-3 text-sm text-gray-300"><i data-lucide="check" class="w-4 h-4 text-white"></i> 500 credits/mo</li>
+                            <li class="flex items-center gap-3 text-sm text-gray-300"><i data-lucide="check" class="w-4 h-4 text-white"></i> Community Support</li>
+                        </ul>
+                        <button class="w-full py-3 md:py-2.5 rounded-lg border border-white/10 text-white hover:bg-white/10 transition-colors text-sm font-medium active:scale-95 transform duration-100">Get Started</button>
+                    </div>
+                    
+                    <!-- Pro -->
+                    <div class="glass-card p-6 rounded-2xl border-orange-500/50 flex flex-col relative overflow-hidden md:scale-105 shadow-2xl shadow-orange-900/20 interactable">
+                        <div class="border-shine" style="background: linear-gradient(45deg, transparent 40%, rgba(249,115,22,0.5) 50%, transparent 60%);"></div>
+                        <div class="relative z-10 flex flex-col h-full">
+                            <div class="absolute top-0 right-0 bg-orange-600 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg">POPULAR</div>
+                            <h3 class="text-lg font-medium text-white mb-2">Pro</h3>
+                            <div class="text-3xl font-semibold text-white mb-6">$49<span class="text-sm font-normal text-gray-500">/mo</span></div>
+                            <ul class="space-y-3 mb-8 flex-1">
+                                <li class="flex items-center gap-3 text-sm text-white"><i data-lucide="check" class="w-4 h-4 text-orange-500"></i> 50,000 credits/mo</li>
+                                <li class="flex items-center gap-3 text-sm text-white"><i data-lucide="check" class="w-4 h-4 text-orange-500"></i> Priority Support</li>
+                            </ul>
+                            <button class="w-full py-3 md:py-2.5 rounded-lg bg-gradient-to-r from-orange-600 to-red-600 text-white hover:brightness-110 transition-all text-sm font-medium shadow-lg active:scale-95 transform duration-100">Upgrade to Pro</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Enterprise -->
+                    <div class="glass-card p-6 rounded-2xl flex flex-col group interactable">
+                        <h3 class="text-lg font-medium text-white mb-2">Enterprise</h3>
+                        <div class="text-3xl font-semibold text-white mb-6">Custom</div>
+                        <ul class="space-y-3 mb-8 flex-1">
+                            <li class="flex items-center gap-3 text-sm text-gray-300"><i data-lucide="check" class="w-4 h-4 text-white"></i> Dedicated GPU</li>
+                            <li class="flex items-center gap-3 text-sm text-gray-300"><i data-lucide="check" class="w-4 h-4 text-white"></i> Private VPC</li>
+                        </ul>
+                        <button class="w-full py-3 md:py-2.5 rounded-lg border border-white/10 text-white hover:bg-white/10 transition-colors text-sm font-medium active:scale-95 transform duration-100">Contact Sales</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="border-t border-white/10 bg-black text-gray-400 py-12 relative z-10 text-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+                    <div>
+                        <h4 class="text-white font-semibold mb-4">Product</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="hover:text-orange-500 transition-colors py-1 block">Models</a></li>
+                            <li><a href="#" class="hover:text-orange-500 transition-colors py-1 block">Agents</a></li>
+                            
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-semibold mb-4">Company</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="hover:text-orange-500 transition-colors py-1 block">About</a></li>
+                            <li><a href="#" class="hover:text-orange-500 transition-colors py-1 block">Blog</a></li>
+                            
+                        </ul>
+                    </div>
+                     <div class="col-span-2 md:col-span-2 flex flex-col md:items-end">
+                        <h4 class="text-white font-semibold mb-4">Subscribe</h4>
+                        <p class="mb-4 text-xs leading-relaxed max-w-xs md:text-right">Latest AI models and updates delivered to your inbox.</p>
+                        <div class="flex w-full max-w-xs">
+                            <input type="email" placeholder="email@domain.com" class="w-full bg-white/5 border border-white/10 rounded-l-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-orange-500 appearance-none">
+                            <button class="bg-orange-600 px-4 py-2 rounded-r-lg text-white font-medium hover:bg-orange-700 transition-colors">Join</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row justify-between items-center border-t border-white/5 pt-8 gap-4">
+                    <div class="flex items-center gap-2">
+                        <div class="w-6 h-6 bg-gradient-to-br from-orange-500 to-red-600 rounded flex items-center justify-center">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M12 2v20M2 12h20"></path></svg>
+                        </div>
+                        <span class="text-white font-semibold">Qolaba Inc.</span>
+                    </div>
+                    <div class="text-xs text-gray-600">© 2025 Qolaba AI. All rights reserved.</div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+
+<!-- Mobile Menu Overlay (Fixed Z-Max) -->
+<div id="mobile-menu-overlay" class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
+    <div id="mobile-menu-drawer" class="absolute top-0 right-0 w-[85%] max-w-[320px] h-full bg-[#0a0a0a] border-l border-white/10 shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 ease-out">
+        <div class="h-16 flex items-center justify-between px-6 border-b border-white/5">
+            <span class="font-semibold text-white">Menu</span>
+            <button id="close-mobile-menu" class="text-gray-400 hover:text-white p-2 mobile-touch-target"><i data-lucide="x" class="w-6 h-6"></i></button>
+        </div>
+        <nav class="p-6 space-y-4 overflow-y-auto">
+            <a href="#automation" class="block text-xl font-medium text-gray-300 hover:text-white mobile-link py-2">Automation</a>
+            <a href="#features" class="block text-xl font-medium text-gray-300 hover:text-white mobile-link py-2">Features</a>
+            <a href="#pricing" class="block text-xl font-medium text-gray-300 hover:text-white mobile-link py-2">Pricing</a>
+            <div class="h-px bg-white/10 my-4"></div>
+            <a href="#" class="block text-center w-full py-4 bg-white text-black font-bold rounded-lg text-lg active:scale-95 transition-transform">Start Building</a>
+            <a href="#" class="block text-center w-full py-4 text-gray-400 font-medium hover:text-white">Log In</a>
+        </nav>
+    </div>
+</div>
+
+<script>
+    // Initialize Icons
+    lucide.createIcons();
+
+    // Mobile Menu Logic
+    const mobileBtn = document.getElementById('mobile-toggle');
+    const closeBtn = document.getElementById('close-mobile-menu');
+    const mobileOverlay = document.getElementById('mobile-menu-overlay');
+    const mobileDrawer = document.getElementById('mobile-menu-drawer');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+    
+    function toggleMenu(open) {
+        if(open) {
+            mobileOverlay.classList.remove('hidden');
+            // Small delay to allow display:block to apply before opacity transition
+            setTimeout(() => {
+                mobileOverlay.classList.remove('opacity-0');
+                mobileDrawer.classList.remove('translate-x-full');
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        } else {
+            mobileOverlay.classList.add('opacity-0');
+            mobileDrawer.classList.add('translate-x-full');
+            setTimeout(() => {
+                mobileOverlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+    }
+
+    mobileBtn.addEventListener('click', () => toggleMenu(true));
+    closeBtn.addEventListener('click', () => toggleMenu(false));
+    mobileLinks.forEach(l => l.addEventListener('click', () => toggleMenu(false)));
+    mobileOverlay.addEventListener('click', (e) => { 
+        if(e.target === mobileOverlay) toggleMenu(false); 
+    });
+
+    // Device Detection & Scroll Logic
+    const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+    
+    // Determine the scroll root based on device
+    // Desktop: The #main-frame div scrolls. Mobile: The viewport/document scrolls.
+    const scrollRoot = isDesktop ? document.getElementById('main-frame') : null;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          
+          // Counter Logic
+          const counters = entry.target.querySelectorAll('.counter');
+          counters.forEach(c => {
+             if(!c.getAttribute('done')) {
+                 c.setAttribute('done', 'true');
+                 const target = +c.getAttribute('data-target');
+                 let count = 0;
+                 const duration = 1500; // ms
+                 const startTime = performance.now();
+                 
+                 const updateCount = (currentTime) => {
+                     const elapsed = currentTime - startTime;
+                     const progress = Math.min(elapsed / duration, 1);
+                     
+                     // Ease out quart
+                     const ease = 1 - Math.pow(1 - progress, 4);
+                     
+                     c.innerText = Math.ceil(target * ease);
+                     
+                     if(progress < 1) {
+                         requestAnimationFrame(updateCount);
+                     } else {
+                         c.innerText = target;
+                     }
+                 };
+                 requestAnimationFrame(updateCount);
+             }
+          });
+        }
+      });
+    }, { 
+        root: scrollRoot, 
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px" // Trigger slightly before element is fully in view
+    });
+    
+    document.querySelectorAll('.reveal-text').forEach(el => observer.observe(el));
+
+    // Desktop Cursor (Only init if truly desktop with hover)
+    if (window.matchMedia("(min-width: 768px) and (hover: hover)").matches) {
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+        
+        // Initial hide to prevent jumping
+        dot.style.opacity = '0';
+        ring.style.opacity = '0';
+
+        let isVisible = false;
+
+        document.addEventListener('mousemove', e => {
+            if(!isVisible) {
+                dot.style.opacity = '1';
+                ring.style.opacity = '1';
+                isVisible = true;
+            }
+            dot.style.left = ring.style.left = e.clientX + 'px';
+            dot.style.top = ring.style.top = e.clientY + 'px';
+            
+            const isHover = e.target.closest('.interactable, a, button, input');
+            document.body.classList.toggle('hovering', !!isHover);
+        });
+        
+        document.addEventListener('mouseleave', () => {
+             dot.style.opacity = '0';
+             ring.style.opacity = '0';
+             isVisible = false;
+        });
+    }
+</script>
+
+</body></html>

@@ -1,0 +1,53 @@
+{
+  "name": "Aceternity UI",
+  "slug": "evervault-card",
+  "description": "A cool card with amazing hover effect, reveals encrypted text and a mixed gradient.",
+  "props": [
+    {
+      "Prop name": "className",
+      "Type": "string",
+      "Description": "The class name of the child component."
+    },
+    {
+      "Prop name": "title",
+      "Type": "string",
+      "Description": "The text that stays on the card"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/evervault-cardCopy",
+  "url": "https://ui.aceternity.com/components/evervault-card",
+  "type": "card",
+  "subtype": "",
+  "layout_role": "inline-block",
+  "recommended_slots": [
+    "grid.item",
+    "section.content"
+  ],
+  "interaction_profile": "pointer-reactive",
+  "preferred_size": "auto-height",
+  "z_index_role": "content",
+  "usage_notes": "A cool card with amazing hover effect, reveals encrypted text and a mixed gradient.",
+  "theme_requirements": [],
+  "data_requirements": [
+    {
+      "name": "items",
+      "fields": [
+        "title",
+        "description",
+        "media"
+      ],
+      "type": "array"
+    }
+  ],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { EvervaultCard, Icon } from \"../ui/evervault-card\";"
+  ],
+  "dependencies": [
+    "react"
+  ],
+  "client_only": false
+}

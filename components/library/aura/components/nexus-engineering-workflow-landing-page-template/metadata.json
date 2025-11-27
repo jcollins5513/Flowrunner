@@ -1,0 +1,55 @@
+{
+  "name": "Nexus Engineering Workflow Landing Page Template",
+  "slug": "nexus",
+  "description": "A reusable landing page template designed for engineering teams to showcase a high-performance product orchestration and deployment workflow system.",
+  "tags": [
+    "Landing Page",
+    "Engineering",
+    "Workflow",
+    "Product Releases",
+    "Automation",
+    "AI Assistance",
+    "Infrastructure",
+    "Features",
+    "CTA",
+    "Dark Mode"
+  ],
+  "category": "Web",
+  "installation": "",
+  "url": "https://www.aura.build/share/nexus",
+  "type": "template",
+  "layout_role": "section",
+  "recommended_slots": [
+    "landing.hero",
+    "landing.section",
+    "gallery"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "full-width",
+  "z_index_role": "content",
+  "usage_notes": "A reusable landing page template designed for engineering teams to showcase a high-performance product orchestration and deployment workflow system.",
+  "theme_requirements": [
+    "tailwindcss"
+  ],
+  "data_requirements": [],
+  "domain_tags": [],
+  "source": "aura",
+  "author": {
+    "name": "Aksonvady Phomhome",
+    "slug": "aksonvady",
+    "avatar_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/user-avatars/avatars/2e815afb-cac1-4c01-90e1-cf3810246e35-1747968317403.jpg",
+    "featured": true
+  },
+  "preview_image_url": "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/preview-images/nexus.png",
+  "aura": {
+    "id": 5568,
+    "views": 622,
+    "forks": 9,
+    "premium": true
+  },
+  "client_only": true,
+  "imports": [],
+  "dependencies": [
+    "tailwindcss"
+  ]
+}

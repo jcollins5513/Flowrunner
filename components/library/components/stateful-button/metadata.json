@@ -1,0 +1,70 @@
+{
+  "name": "Aceternity UI",
+  "slug": "stateful-button",
+  "description": "A button that shows a loading state when clicked, and a success state when the action is completed.",
+  "props": [
+    {
+      "Prop": "className",
+      "Type": "string",
+      "Default": "undefined",
+      "Description": "Additional CSS classes to apply to the button. Will be merged with default styling."
+    },
+    {
+      "Prop": "children",
+      "Type": "React.ReactNode",
+      "Default": "-",
+      "Description": "The content to display inside the button (text, icons, etc.)"
+    },
+    {
+      "Prop": "onClick",
+      "Type": "(event: React.MouseEvent<HTMLButtonElement>) => void | Promise<void>",
+      "Default": "undefined",
+      "Description": "Click handler that triggers the loading → success animation sequence. Can be async."
+    },
+    {
+      "Prop": "disabled",
+      "Type": "boolean",
+      "Default": "false",
+      "Description": "Whether the button is disabled"
+    },
+    {
+      "Prop": "type",
+      "Type": "\"button\" | \"submit\" | \"reset\"",
+      "Default": "\"button\"",
+      "Description": "The button type attribute"
+    },
+    {
+      "Prop": "...buttonProps",
+      "Type": "React.ButtonHTMLAttributes<HTMLButtonElement>",
+      "Default": "-",
+      "Description": "All other standard HTML button attributes are supported"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/stateful-buttonCopy",
+  "url": "https://ui.aceternity.com/components/stateful-button",
+  "type": "button",
+  "subtype": "",
+  "layout_role": "inline",
+  "recommended_slots": [
+    "cta.primary",
+    "cta.secondary"
+  ],
+  "interaction_profile": "interactive",
+  "preferred_size": "inline",
+  "z_index_role": "content",
+  "usage_notes": "A button that shows a loading state when clicked, and a success state when the action is completed.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    " \nimport React from \"react\";",
+    "import { Button } from \"@/components/ui/stateful-button\";"
+  ],
+  "dependencies": [
+    "@/components/ui/stateful-button",
+    "react"
+  ],
+  "client_only": true
+}

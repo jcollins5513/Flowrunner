@@ -1,0 +1,405 @@
+<html lang="en" class="cursor-none"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nomad Ventures - Seamless Fleet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Manrope:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root {
+--color-accent: #f97316;
+--bg-dark: #050505;
+}
+body {
+font-family: 'Inter', sans-serif;
+background-color: var(--bg-dark);
+color: #e5e5e5;
+overflow-x: hidden;
+}
+/* Custom Cursor */
+.cursor-dot, .cursor-ring {
+position: fixed;
+top: 0; left: 0;
+transform: translate(-50%, -50%);
+border-radius: 50%;
+z-index: 9999;
+pointer-events: none;
+}
+.cursor-dot {
+width: 8px; height: 8px;
+background-color: var(--color-accent);
+box-shadow: 0 0 15px 2px rgba(249, 115, 22, 0.8);
+transition: width 0.1s, height 0.1s;
+}
+.cursor-ring {
+width: 32px; height: 32px;
+border: 1.5px solid rgba(249, 115, 22, 0.4);
+background-color: rgba(249, 115, 22, 0.05);
+transition: all 0.1s ease-out;
+}
+body.hovering .cursor-ring {
+width: 50px; height: 50px;
+border-color: var(--color-accent);
+background-color: rgba(249, 115, 22, 0.15);
+}
+/* Backgrounds */
+.bg-grid-pattern {
+background-size: 40px 40px;
+background-image:
+linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+}
+.blob {
+position: absolute;
+border-radius: 50%;
+filter: blur(80px);
+opacity: 0.4;
+animation: blob-bounce 10s infinite ease-in-out;
+}
+@keyframes blob-bounce {
+0%, 100% { transform: translate(0, 0) scale(1); }
+33% { transform: translate(30px, -50px) scale(1.1); }
+66% { transform: translate(-20px, 20px) scale(0.9); }
+}
+/* Glass Card */
+.glass-card {
+background: linear-gradient(145deg, rgba(30, 30, 35, 0.7) 0%, rgba(20, 20, 25, 0.6) 100%);
+backdrop-filter: blur(40px);
+border: 1px solid rgba(255, 255, 255, 0.08);
+box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+.border-shine {
+position: absolute; inset: 0; border-radius: inherit; pointer-events: none; padding: 1px;
+background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.2) 50%, transparent 60%);
+background-size: 200% 200%;
+-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+-webkit-mask-composite: xor; mask-composite: exclude;
+animation: shine-move 4s linear infinite;
+}
+@keyframes shine-move { 0% { background-position: 100% 100%; } 100% { background-position: 0% 0%; } }
+.text-glow { text-shadow: 0 0 20px rgba(249, 115, 22, 0.5); }
+.font-mono { font-family: 'Space Mono', monospace; }
+/* Animations */
+.fade-in-up { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; transform: translateY(20px); }
+@keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+/* Hide scrollbar but allow scrolling */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style></head>
+<body class="selection:bg-orange-500/30">
+
+    <!-- Custom Cursor -->
+    <div id="cursor-dot" class="cursor-dot"></div>
+    <div id="cursor-ring" class="cursor-ring"></div>
+
+    <!-- Background Elements (Fixed) -->
+    <div class="fixed inset-0 pointer-events-none -z-10">
+        <div class="absolute inset-0 bg-grid-pattern"></div>
+        <div class="blob bg-orange-600/20 w-96 h-96 top-[-10%] left-[-10%]"></div>
+        <div class="blob bg-blue-600/20 w-96 h-96 bottom-[-10%] right-[-10%] animation-delay-2000"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#050505]/80 to-[#050505]"></div>
+    </div>
+
+    <!-- Fixed Header -->
+    <header class="fixed top-0 left-0 w-full p-6 lg:px-12 lg:py-8 flex justify-between items-center z-50 mix-blend-screen">
+        <div class="flex items-center gap-3 interactable cursor-pointer">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center shadow-lg shadow-orange-500/20">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" class="stroke-current"><path d="M12 2v20M2 12h20"></path></svg>
+            </div>
+            <span class="font-manrope font-bold text-lg tracking-tight text-white">Nomad<span class="text-orange-500">.ai</span></span>
+        </div>
+        <nav class="hidden md:flex space-x-8 text-xs font-mono text-gray-400 bg-black/20 backdrop-blur-md px-6 py-3 rounded-full border border-white/5">
+            <a href="#" class="hover:text-white transition-colors interactable">AUTOMATION</a>
+            <a href="#" class="hover:text-white transition-colors interactable">FLEET</a>
+            <a href="#" class="hover:text-white transition-colors interactable">PRICING</a>
+        </nav>
+        <button class="glass-card px-5 py-2.5 rounded-full text-xs font-semibold text-white hover:bg-white/10 transition-all interactable border border-white/10 hover:border-orange-500/50">
+            Sign In
+        </button>
+    </header>
+
+    <main>
+        <!-- SECTION 1: Hero (Vertical) -->
+        <section class="relative min-h-screen flex flex-col justify-center px-6 lg:px-12 pt-24">
+            <div class="max-w-5xl w-full mx-auto z-10">
+                <!-- Badge -->
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-mono mb-8 fade-in-up interactable">
+                    <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span></span>
+                    V4.0 Neural Fleet Live
+                </div>
+
+                <!-- Headline -->
+                <h1 class="text-5xl md:text-8xl font-manrope font-semibold text-white tracking-tight mb-8 fade-in-up delay-100 leading-[1.1]">
+                    Autonomous <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-pink-500 to-purple-500 text-glow">Exploration.</span>
+                </h1>
+
+                <!-- Description -->
+                <div class="grid md:grid-cols-2 gap-12 items-start fade-in-up delay-200">
+                    <p class="text-gray-400 text-lg leading-relaxed">
+                        The operating system for modern adventure. Solar-powered, Starlink-connected, and fully autonomous mobile basecamps that traverse the globe while you work.
+                    </p>
+                    
+                    <!-- Search Input -->
+                    <div class="relative w-full interactable group">
+                        <div class="absolute -inset-0.5 bg-gradient-to-r from-orange-500 to-purple-600 rounded-xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                        <div class="relative flex items-center bg-[#0a0a0a] border border-white/10 rounded-lg p-1.5">
+                            <i data-lucide="search" class="w-4 h-4 text-gray-500 ml-3"></i>
+                            <input type="text" placeholder="Where is your next waypoint?" class="w-full bg-transparent border-none text-white px-4 py-2 focus:outline-none placeholder-gray-600 text-sm font-mono">
+                            <button class="bg-white text-black px-5 py-2 rounded-md font-semibold text-xs tracking-wide uppercase hover:bg-gray-200 transition-colors">
+                                Launch
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 animate-bounce">
+                <span class="text-[10px] font-mono uppercase tracking-widest text-gray-500">Explore Fleet</span>
+                <i data-lucide="arrow-down" class="w-4 h-4 text-gray-500"></i>
+            </div>
+        </section>
+
+        <!-- SECTION 2: Horizontal Scroll Trigger (Tall Container) -->
+        <!-- This section is 400vh tall. The content inside sticks for 100vh, creating the horizontal scroll effect -->
+        <section id="scroll-section" class="relative h-[400vh]">
+            
+            <!-- Sticky Wrapper -->
+            <div class="sticky top-0 h-screen overflow-hidden flex items-center bg-[#050505]">
+                
+                <!-- Progress Bar (Optional visual aid) -->
+                <div class="absolute top-0 left-0 w-full h-0.5 bg-white/5 z-20">
+                    <div id="progress-bar" class="h-full bg-orange-500 w-0 transition-all duration-75 ease-linear"></div>
+                </div>
+
+                <div class="absolute top-8 left-6 lg:left-12 z-20 flex items-center gap-3 mix-blend-difference">
+                    <div class="w-12 h-[1px] bg-white/30"></div>
+                    <span class="text-xs font-mono text-white/50 uppercase tracking-widest">Fleet 2024</span>
+                </div>
+
+                <!-- Horizontal Track -->
+                <div id="horizontal-track" class="flex items-center gap-8 px-6 lg:px-24 w-max will-change-transform">
+                    
+                    <!-- Intro Text Card -->
+                    <div class="w-[80vw] md:w-[40vw] flex flex-col justify-center pr-12">
+                        <h2 class="text-4xl md:text-6xl font-manrope font-semibold text-white tracking-tight mb-6">
+                            Engineered for <br> <span class="text-gray-500">Disconnection.</span>
+                        </h2>
+                        <p class="text-gray-400 max-w-md text-sm leading-relaxed">
+                            Our fleet is equipped with Level 4 autonomy, military-grade solar arrays, and redundant satellite uplinks. Scroll to inspect the units.
+                        </p>
+                    </div>
+
+                    <!-- Card 1: Sprinter -->
+                    <div class="w-[85vw] md:w-[600px] h-[60vh] relative group interactable rounded-2xl overflow-hidden shrink-0 border border-white/10">
+                        <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/92f32f69-d505-41b4-bd51-c76bdf6f5997_1600w.jpg" alt="Sprinter" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+                        <div class="relative z-10 p-8 flex flex-col h-full justify-between">
+                            <div class="flex justify-end">
+                                <div class="glass-card px-3 py-1 rounded-full text-[10px] font-mono text-orange-400 uppercase tracking-wider border-orange-500/20">
+                                    Most Popular
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-end border-b border-white/20 pb-4 mb-4">
+                                    <div>
+                                        <h3 class="text-3xl font-semibold text-white font-manrope">Sprinter X1</h3>
+                                        <p class="text-xs text-gray-400 font-mono mt-1">AUTONOMOUS READY • 2 PAX</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-2xl font-semibold text-white">$189</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="text-[10px] bg-white/10 px-2 py-1 rounded text-gray-300 border border-white/5 backdrop-blur-sm">Starlink High-Perf</span>
+                                    <span class="text-[10px] bg-white/10 px-2 py-1 rounded text-gray-300 border border-white/5 backdrop-blur-sm">800W Solar</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Stats -->
+                    <div class="w-[70vw] md:w-[400px] h-[60vh] glass-card rounded-2xl p-10 relative overflow-hidden flex flex-col justify-center items-center text-center shrink-0 interactable">
+                        <div class="border-shine"></div>
+                        <div class="absolute top-6 right-6 text-orange-500">
+                            <i data-lucide="zap" class="w-6 h-6"></i>
+                        </div>
+                        <div class="text-7xl font-semibold text-white mb-2 font-manrope tracking-tighter">Zero</div>
+                        <div class="text-xs text-gray-400 font-mono uppercase tracking-widest mb-6">Emissions while idle</div>
+                        <p class="text-gray-500 text-sm leading-relaxed max-w-[200px]">
+                            Advanced LiFePO4 battery banks allow for silent HVAC operation for up to 48 hours without engine start.
+                        </p>
+                    </div>
+
+                    <!-- Card 3: Terra Rover -->
+                    <div class="w-[85vw] md:w-[600px] h-[60vh] relative group interactable rounded-2xl overflow-hidden shrink-0 border border-white/10">
+                        <img src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Rover" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+                        <div class="relative z-10 p-8 flex flex-col h-full justify-between">
+                            <div class="flex justify-end">
+                                <div class="glass-card px-3 py-1 rounded-full text-[10px] font-mono text-purple-400 uppercase tracking-wider border-purple-500/20">
+                                    Off-Grid Beast
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-end border-b border-white/20 pb-4 mb-4">
+                                    <div>
+                                        <h3 class="text-3xl font-semibold text-white font-manrope">Terra Rover</h3>
+                                        <p class="text-xs text-gray-400 font-mono mt-1">EXTREME TERRAIN • 4 PAX</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-2xl font-semibold text-white">$249</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="text-[10px] bg-white/10 px-2 py-1 rounded text-gray-300 border border-white/5 backdrop-blur-sm">35" Tires</span>
+                                    <span class="text-[10px] bg-white/10 px-2 py-1 rounded text-gray-300 border border-white/5 backdrop-blur-sm">Water Filtration</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                     <!-- Card 4: Testimonial -->
+                     <div class="w-[80vw] md:w-[500px] h-[60vh] glass-card rounded-2xl p-10 relative overflow-hidden flex flex-col justify-between shrink-0 interactable">
+                        <div class="border-shine"></div>
+                        <i data-lucide="quote" class="w-10 h-10 text-orange-500 opacity-50"></i>
+                        <p class="text-2xl text-white font-manrope font-medium leading-snug tracking-tight">
+                            "The AI route planning was seamless. We found campsites that weren't even on the map. It felt like cheating."
+                        </p>
+                        <div class="flex items-center gap-4 border-t border-white/5 pt-6">
+                            <div class="w-12 h-12 bg-gray-700 rounded-full overflow-hidden border border-white/10">
+                                <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/9306e964-743f-4746-b85b-870737f72f8f_320w.jpg" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <div class="text-sm font-semibold text-white">Sarah Jenkins</div>
+                                <div class="text-xs text-gray-500 font-mono">Verified User • Oct 2023</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- End Spacer -->
+                    <div class="w-[10vw] shrink-0"></div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Footer / CTA (Vertical again) -->
+        <section class="relative py-32 px-6 lg:px-12 bg-[#050505] border-t border-white/5 z-30">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl md:text-5xl font-manrope font-semibold text-white tracking-tight mb-6">
+                    Ready to disconnect?
+                </h2>
+                <p class="text-gray-400 mb-10">
+                    Join 14,000+ explorers waiting for their autonomous delivery.
+                </p>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-4">
+                    <button class="interactable bg-white text-black px-8 py-4 rounded-full font-semibold text-sm hover:bg-gray-200 transition-all transform hover:scale-105">
+                        Start Reservation
+                    </button>
+                    <button class="interactable text-gray-400 hover:text-white text-sm px-8 py-4 font-mono transition-colors flex items-center gap-2">
+                        View Fleet Details <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+                
+                <div class="mt-32 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-gray-600 font-mono">
+                    <div>© 2024 Nomad Ventures Inc.</div>
+                    <div class="flex gap-6 mt-4 md:mt-0">
+                        <a href="#" class="hover:text-gray-400">Privacy</a>
+                        <a href="#" class="hover:text-gray-400">Terms</a>
+                        <a href="#" class="hover:text-gray-400">Map</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        // --- Custom Cursor Logic ---
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorRing = document.getElementById('cursor-ring');
+        
+        document.addEventListener('mousemove', (e) => {
+            // Simple follow with slight delay handled by CSS transition
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            cursorDot.style.left = `${x}px`;
+            cursorDot.style.top = `${y}px`;
+            
+            // Request animation frame for smoother ring movement if desired, 
+            // but CSS transition works well for "floating" feel
+            cursorRing.style.left = `${x}px`;
+            cursorRing.style.top = `${y}px`;
+
+            // Hover State
+            const target = e.target;
+            if (target.closest('.interactable') || target.tagName === 'A' || target.tagName === 'BUTTON' || target.closest('.glass-card')) {
+                document.body.classList.add('hovering');
+            } else {
+                document.body.classList.remove('hovering');
+            }
+        });
+
+        // --- Seamless Horizontal Scroll Logic ---
+        // We use the scroll position of the window relative to the sticky container
+        // to transform the horizontal track.
+        
+        const scrollSection = document.getElementById('scroll-section');
+        const track = document.getElementById('horizontal-track');
+        const progressBar = document.getElementById('progress-bar');
+        
+        function handleScroll() {
+            const stickyTop = scrollSection.offsetTop;
+            const stickyHeight = scrollSection.offsetHeight;
+            const windowHeight = window.innerHeight;
+            const scrollY = window.scrollY;
+            
+            // Calculate how far we are into the section
+            // Start when top of section hits top of viewport
+            const start = stickyTop;
+            // End when bottom of section hits bottom of viewport
+            const end = stickyTop + stickyHeight - windowHeight;
+            
+            let progress = (scrollY - start) / (end - start);
+            
+            // Clamp progress between 0 and 1
+            progress = Math.max(0, Math.min(1, progress));
+            
+            // Calculate maximum horizontal scroll distance
+            // Width of track minus width of viewport
+            const trackWidth = track.scrollWidth;
+            const viewportWidth = window.innerWidth;
+            const maxTranslate = trackWidth - viewportWidth;
+            
+            // Apply transform
+            // We scroll to the left, so negative translateX
+            const translateX = -(progress * maxTranslate);
+            
+            track.style.transform = `translateX(${translateX}px)`;
+            
+            // Update visual progress bar
+            if(progressBar) progressBar.style.width = `${progress * 100}%`;
+        }
+
+        // Listen to scroll
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        
+        // Initial calculation in case of refresh
+        handleScroll();
+        
+        // Handle resize to recalculate widths
+        window.addEventListener('resize', handleScroll);
+
+    </script>
+
+</body></html>

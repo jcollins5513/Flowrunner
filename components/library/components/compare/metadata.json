@@ -1,0 +1,93 @@
+{
+  "name": "Aceternity UI",
+  "slug": "compare",
+  "description": "A comparison component between two images, slide or drag to compare",
+  "props": [
+    {
+      "Prop": "firstImage",
+      "Type": "string",
+      "Default": "\"\"",
+      "Description": "URL of the first image"
+    },
+    {
+      "Prop": "secondImage",
+      "Type": "string",
+      "Default": "\"\"",
+      "Description": "URL of the second image"
+    },
+    {
+      "Prop": "className",
+      "Type": "string",
+      "Default": "undefined",
+      "Description": "Additional CSS classes for the container"
+    },
+    {
+      "Prop": "firstImageClassName",
+      "Type": "string",
+      "Default": "undefined",
+      "Description": "Additional CSS classes for the first image"
+    },
+    {
+      "Prop": "secondImageClassname",
+      "Type": "string",
+      "Default": "undefined",
+      "Description": "Additional CSS classes for the second image"
+    },
+    {
+      "Prop": "initialSliderPercentage",
+      "Type": "number",
+      "Default": "50",
+      "Description": "Initial position of the slider (0-100)"
+    },
+    {
+      "Prop": "slideMode",
+      "Type": "\"hover\" | \"drag\"",
+      "Default": "\"hover\"",
+      "Description": "Mode of interaction for the slider"
+    },
+    {
+      "Prop": "showHandlebar",
+      "Type": "boolean",
+      "Default": "true",
+      "Description": "Whether to show the slider handle"
+    },
+    {
+      "Prop": "autoplay",
+      "Type": "boolean",
+      "Default": "false",
+      "Description": "Enable automatic sliding"
+    },
+    {
+      "Prop": "autoplayDuration",
+      "Type": "number",
+      "Default": "5000",
+      "Description": "Duration of one autoplay cycle in milliseconds"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/compare@aceternity/sparklesCopy",
+  "url": "https://ui.aceternity.com/components/compare",
+  "type": "widget",
+  "subtype": "",
+  "layout_role": "content-block",
+  "recommended_slots": [
+    "generic"
+  ],
+  "interaction_profile": "static",
+  "preferred_size": "flexible",
+  "z_index_role": "content",
+  "usage_notes": "A comparison component between two images, slide or drag to compare",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { Compare } from \"@/components/ui/compare\";"
+  ],
+  "dependencies": [
+    "@/components/ui/compare",
+    "react"
+  ],
+  "client_only": false
+}

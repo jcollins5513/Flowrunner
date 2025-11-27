@@ -1,0 +1,55 @@
+{
+  "name": "Aceternity UI",
+  "slug": "background-ripple-effect",
+  "description": "A grid of cells that ripple when clicked.",
+  "props": [
+    {
+      "Prop": "rows",
+      "Type": "number",
+      "Default": "8",
+      "Description": "Number of rows in the grid.",
+      "Required": "No"
+    },
+    {
+      "Prop": "cols",
+      "Type": "number",
+      "Default": "27",
+      "Description": "Number of columns in the grid.",
+      "Required": "No"
+    },
+    {
+      "Prop": "cellSize",
+      "Type": "number",
+      "Default": "56",
+      "Description": "Size of each square cell in pixels.",
+      "Required": "No"
+    }
+  ],
+  "category": "",
+  "tags": [],
+  "installation": "npxshadcn@latestadd@aceternity/background-ripple-effectCopy",
+  "url": "https://ui.aceternity.com/components/background-ripple-effect",
+  "type": "background",
+  "subtype": "",
+  "layout_role": "background-layer",
+  "recommended_slots": [
+    "hero.background",
+    "section.background"
+  ],
+  "interaction_profile": "animated",
+  "preferred_size": "full-bleed",
+  "z_index_role": "background",
+  "usage_notes": "A grid of cells that ripple when clicked.",
+  "theme_requirements": [],
+  "data_requirements": [],
+  "domain_tags": [],
+  "imports": [
+    "import React from \"react\";",
+    "import { BackgroundRippleEffect } from \"@/components/ui/background-ripple-effect\";"
+  ],
+  "dependencies": [
+    "@/components/ui/background-ripple-effect",
+    "react"
+  ],
+  "client_only": true
+}
