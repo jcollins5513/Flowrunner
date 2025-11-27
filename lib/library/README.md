@@ -1,92 +1,136 @@
-# Library System
+# Library Component Integration
 
-The library system provides integration with external component libraries (Aura, Magic, Aceternity) to enhance FlowRunner's pattern selection and layout generation.
+This system integrates components from Magic UI, Aceternity, and the component library into FlowRunner's renderer. Components are automatically selected based on vibe, pattern, and context, with graceful fallback to default components.
 
-## Aura Template Integration
+## Architecture
 
-The aura library contains full landing page templates that can be used to:
+### Core Components
 
-1. **Guide Pattern Selection**: Analyze aura templates to suggest which FlowRunner pattern family/variant to use
-2. **Enhance Layout Generation**: Use aura templates as reference for layout structures
-3. **Provide Visual Inspiration**: Map aura templates to patterns for design reference
+1. **Component Registry** (`component-registry.ts`)
+   - Loads and indexes all library components from metadata files
+   - Provides fast lookup by type, slot, vibe, and pattern
+   - Caches component metadata for performance
 
-### Usage
+2. **Component Selector** (`component-selector.ts`)
+   - Intelligently selects library components based on:
+     - DSL component type (title, button, etc.)
+     - Vibe (energetic → animated-gradient-text)
+     - Pattern family (HERO_CENTER_TEXT → hero-highlight)
+     - Slot position (hero.background → background-beams)
 
-#### Basic Pattern Suggestion
+3. **Component Loader** (`component-loader.ts`)
+   - Dynamically loads React components from library files
+   - Handles different export patterns
+   - Caches loaded components
+
+4. **Feature Gating** (`feature-gate.ts`)
+   - Checks user access to library components (paid feature)
+   - Placeholder implementation - connect to subscription system
+   - Returns `false` by default until subscription system is connected
+
+5. **Component Wrappers** (`wrappers/`)
+   - Wrap library components to integrate with DSL
+   - Apply FlowRunner palette and vibe
+   - Handle errors gracefully with fallback
+
+6. **Component Factory Integration** (`lib/renderer/component-factory.tsx`)
+   - Enhanced to support library components
+   - Automatically selects and renders library components when available
+   - Falls back to default components if library component unavailable
+
+7. **Background Effects** (`components/renderer/ScreenRenderer.tsx`)
+   - Renders background components (hero-highlight, background-beams, etc.)
+   - Applied as background layer with proper z-indexing
+
+## Usage
+
+### Automatic Selection
+
+Library components are automatically selected based on context:
 
 ```typescript
-import { suggestPatternFromAura } from '@/lib/library/aura-pattern-guide'
+// In ScreenRenderer, library context is passed automatically
+<ScreenRenderer
+  dsl={screenDSL}
+  userId={userId}
+  enableLibraryComponents={true}
+/>
+```
 
-const suggestion = await suggestPatternFromAura({
-  domain: 'saas',
-  description: 'landing page with hero section',
-  tags: ['hero', 'cta']
-})
+### Explicit Selection
 
-if (suggestion.patternFamily) {
-  // Use suggested pattern
-  console.log(`Suggested: ${suggestion.patternFamily} variant ${suggestion.patternVariant}`)
-  console.log(`Confidence: ${suggestion.confidence}`)
+Components can explicitly specify a library component:
+
+```typescript
+const component: Component = {
+  type: 'title',
+  content: 'Welcome',
+  props: {
+    libraryComponent: 'animated-gradient-text', // Explicit selection
+    // or
+    libraryComponent: 'magic/animated-gradient-text', // With source
+  }
 }
 ```
 
-#### Enhance Existing Pattern Selection
+## Component Selection Rules
+
+### Text Components (title, subtitle, text)
+- `energetic` → `animated-gradient-text`, `animated-shiny-text`
+- `playful` → `morphing-text`, `word-rotate`
+- `professional` → `text-reveal`, `line-shadow-text`
+- `tech` → `typing-animation`, `sparkles-text`
+
+### Button Components
+- `playful` → `rainbow-button`, `ripple-button`
+- `modern` → `shimmer-button`, `moving-border`
+- `energetic` → `border-beam`
+
+### Card Components
+- Forms → `magic-card`
+- Feature cards → `3d-card-effect`, `glare-card`, `comet-card`
+
+### Background Components
+- Hero sections → `hero-highlight`, `background-beams`, `aurora-background`
+- Sections → `background-gradient`, `wavy-background`, `meteors`
+
+## Feature Gating
+
+Library components are a paid feature. The system checks access via:
 
 ```typescript
-import { enhancePatternWithAura } from '@/lib/library/aura-pattern-guide'
+import { canUseLibraryComponents } from '@/lib/library/feature-gate'
 
-const enhanced = await enhancePatternWithAura(
-  'HERO_CENTER_TEXT',
-  2,
-  { domain: 'saas', vibe: 'modern' }
-)
-
-console.log(`Enhanced variant: ${enhanced.enhancedVariant}`)
-console.log(`Reference templates:`, enhanced.referenceTemplates)
+const hasAccess = await canUseLibraryComponents(userId)
 ```
 
-#### Get Reference Templates
+**Current Implementation:**
+- Returns `false` by default (no access)
+- Can be overridden for testing: `ENABLE_LIBRARY_COMPONENTS=true`
+- TODO: Connect to subscription system
 
-```typescript
-import { getAuraReferencesForPattern } from '@/lib/library/aura-pattern-guide'
+## Known Limitations
 
-const references = await getAuraReferencesForPattern('ONB_HERO_TOP', 3)
+1. **Registry Directory**: Many components import from `@/registry/magicui/...` which doesn't exist yet. Components will fail to load until registry is set up or components are extracted from demos.
 
-references.forEach((ref) => {
-  console.log(`${ref.name}: ${ref.confidence} confidence`)
-  // Use ref.screenshotPath for visual reference
-})
-```
+2. **Component Extraction**: Demo components wrap actual components. The loader attempts to extract them, but some may need manual setup.
 
-### Architecture
+3. **Import Paths**: Component imports may need adjustment based on your project structure.
 
-- **`aura-analyzer.ts`**: Analyzes HTML and metadata to extract layout patterns
-- **`aura-pattern-matcher.ts`**: Matches aura templates to FlowRunner patterns
-- **`aura-loader.ts`**: Loads and indexes aura templates from the library directory
-- **`aura-pattern-guide.ts`**: High-level API for using aura templates in pattern selection
+## Future Enhancements
 
-### Integration Points
+1. Set up registry directory with actual component implementations
+2. Extract components from demo wrappers automatically
+3. Connect feature gating to subscription system
+4. Add component preview/selection UI
+5. Support component props customization
+6. Add component usage analytics
 
-The aura template system can be integrated into:
+## Testing
 
-1. **Template Selection** (`lib/flow/templates/selector.ts`): Use aura templates to inform pattern selection
-2. **Screen Generation** (`lib/flows/build-screen-dsl.ts`): Enhance pattern selection with aura guidance
-3. **Next Screen Generation** (`lib/flows/next-screen-generator.ts`): Use aura templates to suggest next screen patterns
+To test library components:
 
-### Pattern Mapping
-
-Aura templates are mapped to FlowRunner patterns based on:
-
-- **Metadata tags**: Direct tag matching (e.g., "pricing" → `PRICING_TABLE`)
-- **Layout analysis**: HTML structure analysis (e.g., hero position → pattern family)
-- **Description keywords**: Semantic matching from template descriptions
-
-### Confidence Scores
-
-All pattern suggestions include confidence scores (0-1):
-
-- **0.8-1.0**: High confidence - strong match, safe to use
-- **0.6-0.8**: Medium confidence - good match, consider with context
-- **0.4-0.6**: Low confidence - weak match, use as fallback only
-- **<0.4**: Very low confidence - not recommended
-
+1. Set `ENABLE_LIBRARY_COMPONENTS=true` in environment
+2. Or modify `feature-gate.ts` to return `true` temporarily
+3. Components will automatically be selected based on vibe/pattern
+4. Check console for loading errors (expected until registry is set up)

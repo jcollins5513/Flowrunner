@@ -19,6 +19,10 @@ import { telemetry } from '@/lib/renderer/telemetry'
 import { validateScreenDSL } from '@/lib/dsl/validator'
 import { validateDSLAgainstPattern } from '@/lib/patterns/validator'
 import { cn } from '@/lib/utils'
+import { canUseLibraryComponents } from '@/lib/library/feature-gate'
+import { selectBackgroundComponent } from '@/lib/library/component-selector'
+import { BackgroundWrapper } from '@/lib/library/wrappers/background-wrapper'
+import type { LibraryContext } from '@/lib/renderer/component-factory'
 
 export interface ComponentInteractionContext {
   event: React.MouseEvent

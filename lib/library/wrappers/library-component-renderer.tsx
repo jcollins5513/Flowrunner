@@ -11,6 +11,7 @@ import type { Component } from '@/lib/dsl/types'
 import type { Palette, Vibe } from '@/lib/dsl/types'
 import type { PatternFamily } from '@/lib/patterns/families'
 import { selectLibraryComponent } from '../component-selector'
+import { getComponentBySlug } from '../component-registry'
 import { TextWrapper } from './text-wrapper'
 import { ButtonWrapper } from './button-wrapper'
 import { CardWrapper } from './card-wrapper'
@@ -51,30 +52,52 @@ export function LibraryComponentRenderer({
 
     let cancelled = false
 
-    selectLibraryComponent({
-      componentType: component.type,
-      vibe,
-      palette,
-      pattern,
-      slot,
-      hasAccess,
-    })
-      .then((comp) => {
+    // Check if component explicitly specifies a library component
+    const explicitLibraryComponent = component.props?.libraryComponent as string | undefined
+
+    const loadComponent = async () => {
+      try {
+        let comp: any = null
+
+        if (explicitLibraryComponent) {
+          // Try to find by slug (could be "animated-gradient-text" or "magic/animated-gradient-text")
+          const [source, slug] = explicitLibraryComponent.includes('/')
+            ? explicitLibraryComponent.split('/')
+            : [undefined, explicitLibraryComponent]
+
+          comp = await getComponentBySlug(slug, source as any)
+        }
+
+        // If no explicit component or not found, use selector
+        if (!comp) {
+          comp = await selectLibraryComponent({
+            componentType: component.type,
+            vibe,
+            palette,
+            pattern,
+            slot,
+            hasAccess,
+          })
+        }
+
         if (!cancelled) {
           setLibraryComponent(comp)
           setLoading(false)
         }
-      })
-      .catch(() => {
+      } catch (error) {
         if (!cancelled) {
+          console.warn('Failed to load library component:', error)
           setLoading(false)
         }
-      })
+      }
+    }
+
+    loadComponent()
 
     return () => {
       cancelled = true
     }
-  }, [component.type, vibe, palette, pattern, slot, hasAccess])
+  }, [component.type, component.props?.libraryComponent, vibe, palette, pattern, slot, hasAccess])
 
   // If loading or no library component, render default
   if (loading || !libraryComponent) {
