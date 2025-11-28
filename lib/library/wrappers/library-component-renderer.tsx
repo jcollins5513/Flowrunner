@@ -63,18 +63,17 @@ export function LibraryComponentRenderer({
             ? explicitLibraryComponent.split('/')
             : [undefined, explicitLibraryComponent]
 
-          // Use API route to avoid importing server-only modules
-          const params = new URLSearchParams({ slug })
-          if (source) {
-            params.set('source', source)
-          }
-          const response = await fetch(`/api/library/components/by-slug?${params.toString()}`)
+          // Use API route instead of direct import (server-only)
+          const response = await fetch(
+            `/api/library/components/by-slug?slug=${encodeURIComponent(slug)}${source ? `&source=${encodeURIComponent(source)}` : ''}`
+          )
           const data = await response.json()
           comp = data.component
         }
 
         // If no explicit component or not found, use selector via API route
         if (!comp) {
+          // Use API route instead of direct import (server-only)
           const response = await fetch('/api/library/components/select', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

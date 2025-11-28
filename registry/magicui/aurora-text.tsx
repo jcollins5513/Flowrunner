@@ -1,44 +1,23 @@
-"use client"
+import { HTMLAttributes } from "react"
 
-import React, { memo } from "react"
+import { cn } from "@/lib/utils"
 
-interface AuroraTextProps {
-  children: React.ReactNode
-  className?: string
-  colors?: string[]
-  speed?: number
+type AuroraTextProps = HTMLAttributes<HTMLSpanElement>
+
+const AuroraText = ({ children, className, ...props }: AuroraTextProps) => {
+  return (
+    <span
+      className={cn(
+        "relative inline-flex items-center px-2 py-1",
+        "bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400 bg-clip-text text-transparent",
+        "before:absolute before:inset-0 before:-z-10 before:blur-2xl before:bg-gradient-to-r before:from-indigo-500/40 before:via-sky-400/40 before:to-emerald-400/40",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </span>
+  )
 }
 
-export const AuroraText = memo(
-  ({
-    children,
-    className = "",
-    colors = ["#FF0080", "#7928CA", "#0070F3", "#38bdf8"],
-    speed = 1,
-  }: AuroraTextProps) => {
-    const gradientStyle = {
-      backgroundImage: `linear-gradient(135deg, ${colors.join(", ")}, ${
-        colors[0]
-      })`,
-      WebkitBackgroundClip: "text",
-      WebkitTextFillColor: "transparent",
-      animationDuration: `${10 / speed}s`,
-    }
-
-    return (
-      <span className={`relative inline-block ${className}`}>
-        <span className="sr-only">{children}</span>
-        <span
-          className="animate-aurora relative bg-[length:200%_auto] bg-clip-text text-transparent"
-          style={gradientStyle}
-          aria-hidden="true"
-        >
-          {children}
-        </span>
-      </span>
-    )
-  }
-)
-
-AuroraText.displayName = "AuroraText"
-
+export { AuroraText }

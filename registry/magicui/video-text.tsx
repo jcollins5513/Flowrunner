@@ -7,18 +7,22 @@ export interface VideoTextProps {
   children: React.ReactNode
   className?: string
   videoSrc?: string
+  src?: string
 }
 
 export function VideoText({
   children,
   className,
   videoSrc,
+  src,
 }: VideoTextProps) {
+  const finalVideoSrc = src || videoSrc
+  
   return (
     <div className={cn("relative", className)}>
-      {videoSrc ? (
+      {finalVideoSrc ? (
         <video
-          src={videoSrc}
+          src={finalVideoSrc}
           autoPlay
           loop
           muted

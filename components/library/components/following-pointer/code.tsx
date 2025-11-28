@@ -1,4 +1,4 @@
-import { FollowerPointerCard } from "../ui/following-pointer";
+import { FollowerPointerCard } from "@/components/ui/following-pointer";
  
 export function FollowingPointerDemo() {
   return (
@@ -68,4 +68,3 @@ const TitleComponent = ({
     <p>{title}</p>
   </div>
 );
-Select Language

@@ -12,7 +12,7 @@ export function TextAnimateDemo9() {
           rotate: 45,
           scale: 0.5,
         },
-        show: (i) => ({
+        show: (i: number) => ({
           opacity: 1,
           y: 0,
           rotate: 0,
@@ -38,7 +38,7 @@ export function TextAnimateDemo9() {
             },
           },
         }),
-        exit: (i) => ({
+        exit: (i: number) => ({
           opacity: 0,
           y: 30,
           rotate: 45,

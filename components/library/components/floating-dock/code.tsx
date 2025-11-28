@@ -77,4 +77,3 @@ export function FloatingDockDemo() {
     </div>
   );
 }
-Select Language

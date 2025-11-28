@@ -1,62 +1,56 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import { HTMLAttributes, useMemo } from "react"
 
 import { cn } from "@/lib/utils"
 
-interface MeteorsProps {
+type MeteorsProps = HTMLAttributes<HTMLDivElement> & {
   number?: number
-  minDelay?: number
-  maxDelay?: number
-  minDuration?: number
-  maxDuration?: number
-  angle?: number
-  className?: string
 }
 
-export const Meteors = ({
-  number = 20,
-  minDelay = 0.2,
-  maxDelay = 1.2,
-  minDuration = 2,
-  maxDuration = 10,
-  angle = 215,
-  className,
-}: MeteorsProps) => {
-  const [meteorStyles, setMeteorStyles] = useState<Array<React.CSSProperties>>(
-    []
-  )
+type Meteor = {
+  id: number
+  delay: number
+  duration: number
+  top: string
+  left: string
+}
 
-  useEffect(() => {
-    const styles = [...new Array(number)].map(() => ({
-      "--angle": -angle + "deg",
-      top: "-5%",
-      left: `calc(0% + ${Math.floor(Math.random() * window.innerWidth)}px)`,
-      animationDelay: Math.random() * (maxDelay - minDelay) + minDelay + "s",
-      animationDuration:
-        Math.floor(Math.random() * (maxDuration - minDuration) + minDuration) +
-        "s",
+const Meteors = ({ className, number = 20, ...props }: MeteorsProps) => {
+  const meteors = useMemo<Meteor[]>(() => {
+    return Array.from({ length: number }, (_, index) => ({
+      id: index,
+      delay: Math.random() * 4,
+      duration: 1.5 + Math.random() * 2,
+      top: `${Math.random() * 100}%`,
+      left: `${Math.random() * 100}%`,
     }))
-    setMeteorStyles(styles)
-  }, [number, minDelay, maxDelay, minDuration, maxDuration, angle])
+  }, [number])
 
   return (
-    <>
-      {[...meteorStyles].map((style, idx) => (
-        // Meteor Head
+    <div className={cn("absolute inset-0 overflow-hidden", className)} {...props}>
+      <style>
+        {`
+          @keyframes meteor {
+            0% { transform: translate3d(0, 0, 0); opacity: 1; }
+            100% { transform: translate3d(-200px, 320px, 0); opacity: 0; }
+          }
+        `}
+      </style>
+      {meteors.map((meteor) => (
         <span
-          key={idx}
-          style={{ ...style }}
-          className={cn(
-            "animate-meteor pointer-events-none absolute size-0.5 rotate-[var(--angle)] rounded-full bg-zinc-500 shadow-[0_0_0_1px_#ffffff10]",
-            className
-          )}
-        >
-          {/* Meteor Tail */}
-          <div className="pointer-events-none absolute top-1/2 -z-10 h-px w-[50px] -translate-y-1/2 bg-gradient-to-r from-zinc-500 to-transparent" />
-        </span>
+          key={meteor.id}
+          className="pointer-events-none absolute h-px w-24 rotate-[130deg] bg-gradient-to-r from-transparent via-white to-white/0 opacity-70"
+          style={{
+            top: meteor.top,
+            left: meteor.left,
+            animation: `meteor ${meteor.duration}s linear infinite`,
+            animationDelay: `${meteor.delay}s`,
+          }}
+        />
       ))}
-    </>
+    </div>
   )
 }
 
+export { Meteors }

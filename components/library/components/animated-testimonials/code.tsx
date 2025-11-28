@@ -40,4 +40,3 @@ export function AnimatedTestimonialsDemo() {
   ];
   return <AnimatedTestimonials testimonials={testimonials} />;
 }
-Select Language

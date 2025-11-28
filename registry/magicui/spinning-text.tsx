@@ -4,19 +4,38 @@ import React from "react"
 import { cn } from "@/lib/utils"
 
 export interface SpinningTextProps {
-  text: string
+  text?: string
+  children?: React.ReactNode
   className?: string
+  reverse?: boolean
+  duration?: number
+  radius?: number
 }
 
-export function SpinningText({ text, className }: SpinningTextProps) {
+export function SpinningText({ 
+  text, 
+  children, 
+  className,
+  reverse = false,
+  duration = 4,
+  radius = 6,
+}: SpinningTextProps) {
+  const content = children || text || ""
+  const animationDirection = reverse ? "reverse" : "normal"
+  
   return (
     <div
       className={cn(
-        "inline-block animate-spin",
+        "inline-block",
         className
       )}
+      style={{
+        animation: `spin ${duration}s linear infinite`,
+        animationDirection,
+        transform: `rotateX(${radius}deg)`,
+      }}
     >
-      {text}
+      {content}
     </div>
   )
 }

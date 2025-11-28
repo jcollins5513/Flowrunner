@@ -13,4 +13,3 @@ export function EncryptedTextDemoSecond() {
     </p>
   );
 }
-Select Language

@@ -1,5 +1,5 @@
 "use client";
-import { DirectionAwareHover } from "../ui/direction-aware-hover";
+import { DirectionAwareHover } from "@/components/ui/direction-aware-hover";
  
 export function DirectionAwareHoverDemo() {
   const imageUrl =
@@ -13,4 +13,3 @@ export function DirectionAwareHoverDemo() {
     </div>
   );
 }
-Select Language

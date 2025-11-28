@@ -35,4 +35,3 @@ export function CometCardDemo() {
     </CometCard>
   );
 }
-Select Language

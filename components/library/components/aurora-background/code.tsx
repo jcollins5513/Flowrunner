@@ -2,7 +2,7 @@
  
 import { motion } from "motion/react";
 import React from "react";
-import { AuroraBackground } from "../ui/aurora-background";
+import { AuroraBackground } from "@/components/ui/aurora-background";
  
 export function AuroraBackgroundDemo() {
   return (
@@ -30,4 +30,3 @@ export function AuroraBackgroundDemo() {
     </AuroraBackground>
   );
 }
-Select Language

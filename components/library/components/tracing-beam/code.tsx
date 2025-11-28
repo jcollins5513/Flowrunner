@@ -3,7 +3,7 @@ import React from "react";
 import { calsans } from "@/fonts/calsans";
  
 import { twMerge } from "tailwind-merge";
-import { TracingBeam } from "../ui/tracing-beam";
+import { TracingBeam } from "@/components/ui/tracing-beam";
  
 export function TracingBeamDemo() {
   return (
@@ -115,4 +115,3 @@ const dummyContent = [
       "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&q=80&w=3506&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
 ];
-Select Language

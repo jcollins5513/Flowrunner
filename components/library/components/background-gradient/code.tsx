@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { BackgroundGradient } from "../ui/background-gradient";
+import { BackgroundGradient } from "@/components/ui/background-gradient";
 import { IconAppWindow } from "@tabler/icons-react";
  
  
@@ -34,4 +34,3 @@ export function BackgroundGradientDemo() {
     </div>
   );
 }
-Select Language

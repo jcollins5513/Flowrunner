@@ -1,7 +1,7 @@
 "use client";
  
 import React from "react";
-import { WobbleCard } from "../ui/wobble-card";
+import { WobbleCard } from "@/components/ui/wobble-card";
  
 export function WobbleCardDemo() {
   return (
@@ -57,4 +57,3 @@ export function WobbleCardDemo() {
     </div>
   );
 }
-Select Language

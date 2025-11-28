@@ -189,4 +189,3 @@ const DummyContent = () => {
     </div>
   );
 };
-Select Language

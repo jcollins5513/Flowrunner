@@ -81,4 +81,3 @@ const GridItem = ({ area, icon, title, description }: GridItemProps) => {
     </li>
   );
 };
-Select Language

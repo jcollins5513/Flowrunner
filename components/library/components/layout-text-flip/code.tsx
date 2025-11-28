@@ -18,4 +18,3 @@ export function LayoutTextFlipDemo() {
     </div>
   );
 }
-Select Language

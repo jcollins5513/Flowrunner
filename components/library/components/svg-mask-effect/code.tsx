@@ -21,4 +21,3 @@ export function SVGMaskEffectDemo() {
     </div>
   );
 }
-Select Language

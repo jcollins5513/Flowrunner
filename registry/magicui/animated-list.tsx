@@ -1,74 +1,38 @@
 "use client"
 
-import React, {
-  ComponentPropsWithoutRef,
-  useEffect,
-  useMemo,
-  useState,
-} from "react"
-import { AnimatePresence, motion, MotionProps } from "motion/react"
+import { Children, HTMLAttributes, ReactElement, cloneElement } from "react"
 
 import { cn } from "@/lib/utils"
 
-export function AnimatedListItem({ children }: { children: React.ReactNode }) {
-  const animations: MotionProps = {
-    initial: { scale: 0, opacity: 0 },
-    animate: { scale: 1, opacity: 1, originY: 0 },
-    exit: { scale: 0, opacity: 0 },
-    transition: { type: "spring", stiffness: 350, damping: 40 },
-  }
+type AnimatedListProps = HTMLAttributes<HTMLDivElement>
+
+const AnimatedList = ({ children, className, ...props }: AnimatedListProps) => {
+  const items = Children.toArray(children) as ReactElement[]
+  const doubled = [...items, ...items] // loop the list for a marquee effect
 
   return (
-    <motion.div {...animations} layout className="mx-auto w-full">
-      {children}
-    </motion.div>
+    <div className={cn("relative h-full overflow-hidden", className)} {...props}>
+      <div
+        className="animate-[scrollList_18s_linear_infinite]"
+        style={{
+          display: "grid",
+          gap: "0.75rem",
+        }}
+      >
+        {doubled.map((child, index) =>
+          cloneElement(child, { key: `${child.key ?? index}-${index}` })
+        )}
+      </div>
+      <style>
+        {`
+          @keyframes scrollList {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+          }
+        `}
+      </style>
+    </div>
   )
 }
 
-export interface AnimatedListProps extends ComponentPropsWithoutRef<"div"> {
-  children: React.ReactNode
-  delay?: number
-}
-
-export const AnimatedList = React.memo(
-  ({ children, className, delay = 1000, ...props }: AnimatedListProps) => {
-    const [index, setIndex] = useState(0)
-    const childrenArray = useMemo(
-      () => React.Children.toArray(children),
-      [children]
-    )
-
-    useEffect(() => {
-      if (index < childrenArray.length - 1) {
-        const timeout = setTimeout(() => {
-          setIndex((prevIndex) => (prevIndex + 1) % childrenArray.length)
-        }, delay)
-
-        return () => clearTimeout(timeout)
-      }
-    }, [index, delay, childrenArray.length])
-
-    const itemsToShow = useMemo(() => {
-      const result = childrenArray.slice(0, index + 1).reverse()
-      return result
-    }, [index, childrenArray])
-
-    return (
-      <div
-        className={cn(`flex flex-col items-center gap-4`, className)}
-        {...props}
-      >
-        <AnimatePresence>
-          {itemsToShow.map((item) => (
-            <AnimatedListItem key={(item as React.ReactElement).key}>
-              {item}
-            </AnimatedListItem>
-          ))}
-        </AnimatePresence>
-      </div>
-    )
-  }
-)
-
-AnimatedList.displayName = "AnimatedList"
-
+export { AnimatedList }

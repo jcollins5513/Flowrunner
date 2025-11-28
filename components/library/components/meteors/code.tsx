@@ -1,5 +1,5 @@
 import React from "react";
-import { Meteors } from "../ui/meteors";
+import { Meteors } from "@/components/ui/meteors";
  
 export function MeteorsDemo() {
   return (
@@ -45,4 +45,3 @@ export function MeteorsDemo() {
     </div>
   );
 }
-Select Language

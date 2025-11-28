@@ -1,6 +1,6 @@
 import React from "react";
 import { cn } from "@/lib/utils";
-import { Spotlight } from "../ui/spotlight";
+import { Spotlight } from "@/components/ui/spotlight";
  
 export function SpotlightPreview() {
   return (
@@ -30,4 +30,3 @@ export function SpotlightPreview() {
     </div>
   );
 }
-Select Language

@@ -279,4 +279,3 @@ export const Globe = ({ className }: { className?: string }) => {
     />
   );
 };
-Select Language

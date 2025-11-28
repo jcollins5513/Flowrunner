@@ -130,7 +130,7 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
       .then((res) => res.json())
       .then((data) => {
         if (!cancelled) {
-          setBackgroundComponent(data.component)
+          setBackgroundComponent(data.component || null)
         }
       })
       .catch(() => {

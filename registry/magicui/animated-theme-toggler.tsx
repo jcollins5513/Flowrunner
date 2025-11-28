@@ -1,60 +1,60 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { Moon, Sun } from "lucide-react"
-import { motion } from "motion/react"
-import { useTheme } from "next-themes"
+import { useEffect, useState } from "react"
 
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
 
-export function AnimatedThemeToggler({
-  className,
-}: {
+type AnimatedThemeTogglerProps = {
   className?: string
-}) {
-  const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+}
+
+const AnimatedThemeToggler = ({ className }: AnimatedThemeTogglerProps) => {
+  const [isDark, setIsDark] = useState(false)
 
   useEffect(() => {
-    setMounted(true)
+    const root = document.documentElement
+    const currentlyDark = root.classList.contains("dark")
+    setIsDark(currentlyDark)
   }, [])
 
-  if (!mounted) {
-    return null
-  }
-
-  const isDark = theme === "dark"
+  useEffect(() => {
+    const root = document.documentElement
+    if (isDark) {
+      root.classList.add("dark")
+    } else {
+      root.classList.remove("dark")
+    }
+  }, [isDark])
 
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      onClick={() => setTheme(isDark ? "light" : "dark")}
-      className={cn("relative", className)}
-      aria-label="Toggle theme"
+    <button
+      type="button"
+      className={cn(
+        "flex items-center gap-2 rounded-full border border-border/80 bg-background px-4 py-2 text-sm font-medium shadow-sm ring-1 ring-border/60 transition hover:-translate-y-[1px] hover:shadow-lg",
+        className
+      )}
+      onClick={() => setIsDark((prev) => !prev)}
     >
-      <motion.div
-        initial={false}
-        animate={{
-          rotate: isDark ? 180 : 0,
-          scale: isDark ? 1 : 0.8,
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 200,
-          damping: 20,
-        }}
-        className="absolute"
-      >
-        {isDark ? (
-          <Moon className="h-5 w-5" />
-        ) : (
-          <Sun className="h-5 w-5" />
-        )}
-      </motion.div>
-      <span className="sr-only">Toggle theme</span>
-    </Button>
+      <span className="relative flex size-6 items-center justify-center">
+        <Sun
+          className={cn(
+            "absolute h-5 w-5 text-amber-500 transition-all duration-300",
+            isDark ? "scale-0 opacity-0 rotate-90" : "scale-100 opacity-100"
+          )}
+        />
+        <Moon
+          className={cn(
+            "absolute h-5 w-5 text-slate-300 transition-all duration-300",
+            isDark ? "scale-100 opacity-100" : "scale-0 opacity-0 -rotate-90"
+          )}
+        />
+      </span>
+      <span className="text-foreground/80">
+        {isDark ? "Switch to Light" : "Switch to Dark"}
+      </span>
+    </button>
   )
 }
 
+export { AnimatedThemeToggler }

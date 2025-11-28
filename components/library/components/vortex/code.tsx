@@ -1,5 +1,5 @@
 import React from "react";
-import { Vortex } from "../ui/vortex";
+import { Vortex } from "@/components/ui/vortex";
  
 export function VortexDemo() {
   return (
@@ -25,4 +25,3 @@ export function VortexDemo() {
     </div>
   );
 }
-Select Language

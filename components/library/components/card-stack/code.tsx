@@ -1,5 +1,5 @@
 "use client";
-import { CardStack } from "../ui/card-stack";
+import { CardStack } from "@/components/ui/card-stack";
 import { cn } from "@/lib/utils";
 export function CardStackDemo() {
   return (
@@ -69,4 +69,3 @@ const CARDS = [
     ),
   },
 ];
-Select Language

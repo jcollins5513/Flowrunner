@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { StickyScroll } from "../ui/sticky-scroll-reveal";
+import { StickyScroll } from "@/components/ui/sticky-scroll-reveal";
  
  
 const content = [
@@ -58,4 +58,3 @@ export function StickyScrollRevealDemo() {
     </div>
   );
 }
-Select Language

@@ -38,4 +38,3 @@ export function CodeBlockDemo() {
     </div>
   );
 }
-Select Language
