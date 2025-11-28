@@ -4,13 +4,15 @@ import React from "react"
 import { cn } from "@/lib/utils"
 
 export interface ClientTweetCardProps {
-  children: React.ReactNode
+  children?: React.ReactNode
   className?: string
+  id?: string
 }
 
 export function ClientTweetCard({
   children,
   className,
+  id,
 }: ClientTweetCardProps) {
   return (
     <div
@@ -19,7 +21,11 @@ export function ClientTweetCard({
         className
       )}
     >
-      {children}
+      {children || (
+        <div className="text-muted-foreground">
+          Tweet {id || "placeholder"}
+        </div>
+      )}
     </div>
   )
 }

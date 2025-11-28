@@ -51,10 +51,12 @@ function GlobeComponent({
       
       // Configure globe
       globeInstance.current.globeImageUrl("//unpkg.com/three-globe/example/img/earth-blue-marble.jpg");
-      globeInstance.current.backgroundImageUrl("//unpkg.com/three-globe/example/img/night-sky.png");
+      // backgroundImageUrl is not available in this version of three-globe
+      // globeInstance.current.backgroundImageUrl("//unpkg.com/three-globe/example/img/night-sky.png");
       
       if (globeConfig.globeColor) {
-        globeInstance.current.globeMaterial({ color: globeConfig.globeColor });
+        // globeMaterial is not available in this version of three-globe
+        // globeInstance.current.globeMaterial({ color: globeConfig.globeColor });
       }
       
       if (globeConfig.showAtmosphere) {
@@ -72,7 +74,7 @@ function GlobeComponent({
           .arcEndLng((d: any) => d.endLng)
           .arcColor((d: any) => d.color)
           .arcAltitude((d: any) => d.arcAlt)
-          .arcStroke((d: any) => [1, 1, 1, 0.4]);
+          .arcStroke((d: any) => d.strokeWidth || 1);
       }
     }
   }, [data, globeConfig]);

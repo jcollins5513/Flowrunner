@@ -1,9 +1,25 @@
 "use client";
  
-import { Tabs } from "@/components/ui/tabs";
- 
+import React, { useState, useEffect } from "react";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+
+type Tab = {
+  title: string;
+  value: string;
+  content: React.ReactNode;
+};
+
+type TabsProps = {
+  tabs: Tab[];
+  containerClassName?: string;
+  activeTabClassName?: string;
+  tabClassName?: string;
+  contentClassName?: string;
+  defaultValue?: string;
+};
+
 export function TabsDemo() {
-  const tabs = [
+  const tabs: Tab[] = [
     {
       title: "Product",
       value: "product",
@@ -58,8 +74,58 @@ export function TabsDemo() {
  
   return (
     <div className="h-[20rem] md:h-[40rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start my-40">
-      <Tabs tabs={tabs} />
+      <CustomTabs tabs={tabs} defaultValue={tabs[0]?.value} />
     </div>
+  );
+}
+
+function CustomTabs({ 
+  tabs, 
+  containerClassName,
+  activeTabClassName,
+  tabClassName,
+  contentClassName,
+  defaultValue 
+}: TabsProps) {
+  // Ensure activeTab is always a string, never undefined
+  const [activeTab, setActiveTab] = useState(
+    defaultValue || tabs[0]?.value || ""
+  );
+
+  // If activeTab is empty and we have tabs, set it to the first tab
+  useEffect(() => {
+    if (!activeTab && tabs.length > 0 && tabs[0]?.value) {
+      setActiveTab(tabs[0].value);
+    }
+  }, [activeTab, tabs]);
+
+  return (
+    <Tabs 
+      value={activeTab || undefined} 
+      onValueChange={setActiveTab}
+      className={containerClassName}
+    >
+      <TabsList className={tabClassName}>
+        {tabs.map((tab) => (
+          <TabsTrigger 
+            key={tab.value} 
+            value={tab.value}
+            className={activeTab === tab.value ? activeTabClassName : undefined}
+          >
+            {tab.title}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+      {tabs.map((tab) => (
+        <TabsContent 
+          key={tab.value} 
+          value={tab.value}
+          className={contentClassName}
+        >
+          {tab.content}
+        </TabsContent>
+      ))}
+    </Tabs>
   );
 }
  

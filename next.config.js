@@ -35,6 +35,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.vercel.app',
       },
+      {
+        protocol: 'https',
+        hostname: 'assets.example.com',
+      },
       ...(process.env.VERCEL_URL
         ? [
             {
@@ -45,6 +49,7 @@ const nextConfig = {
         : []),
     ],
   },
+  transpilePackages: ['@react-three/fiber', '@react-three/drei', 'three', 'three-stdlib'],
 }
 
 module.exports = nextConfig

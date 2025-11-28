@@ -11,6 +11,8 @@ export interface ScrollVelocityContainerProps {
 export interface ScrollVelocityRowProps {
   children: React.ReactNode
   className?: string
+  baseVelocity?: number
+  direction?: number
 }
 
 export function ScrollVelocityContainer({
@@ -23,9 +25,22 @@ export function ScrollVelocityContainer({
 export function ScrollVelocityRow({
   children,
   className,
+  baseVelocity = 0,
+  direction = 1,
 }: ScrollVelocityRowProps) {
+  // Use a sensible default if baseVelocity is 0 or not provided
+  const animationDuration = baseVelocity > 0 ? baseVelocity : 20;
+  
   return (
-    <div className={cn("flex gap-4 whitespace-nowrap", className)}>
+    <div 
+      className={cn("flex gap-4 whitespace-nowrap", className)}
+      style={{
+        animation: baseVelocity > 0 
+          ? `scroll ${animationDuration}s linear infinite`
+          : undefined,
+        animationDirection: direction > 0 ? 'normal' : 'reverse',
+      }}
+    >
       {children}
     </div>
   )
