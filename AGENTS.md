@@ -1,246 +1,202 @@
-# FlowRunner — Codex Instructions
+# FlowRunner — Codex Instructions (Revised: Deterministic Layout + Safe/Advanced Component System)
 
 ## Project Overview
 
-FlowRunner is an AI-driven visual UI composer that generates multi-screen, fully illustrated, themed UI flows. The system transforms natural-language prompts into complete UI screens powered by AI-generated hero images, reusable image libraries, layout pattern families, and a Zod-validated DSL.
+FlowRunner is an AI‑driven UI generation engine that converts natural‑language prompts into **deterministic multi‑screen flows**. The system produces consistent structure using a strict Row/Column/Stack layout DSL, and applies visual identity through themed style packs, AI‑generated images, and advanced component upgrades.
 
-**Core Principle**: FlowRunner generates UI screens where the visual identity comes from AI-generated hero images, and the layout adapts to the images—not the other way around.
-
----
-
-## Critical Layout Requirements
-
-### Container-Based Layout System
-
-**ALWAYS use container-based layouts for all UI components and screens.**
-
-1. **Container Wrappers**: All screen layouts must be wrapped in container elements with max-width constraints:
-   - Use semantic container elements (`<div>`, `<section>`, `<main>`) with max-width classes or styles
-   - Prefer Tailwind container utilities: `container`, `container-sm`, `container-md`, `container-lg`, `container-xl`
-   - Apply `mx-auto` for centering containers
-   - Example: `<div className="container mx-auto px-4">...</div>`
-
-2. **Container Queries**: When implementing responsive layouts:
-   - Use CSS Container Queries (`@container`) for component-level responsiveness
-   - Define container context with `container-type: inline-size` or `container-type: size`
-   - Use container query units (`cqw`, `cqh`, `cqi`, `cqb`, `cqmin`, `cqmax`) for sizing within containers
-   - Example: `@container (min-width: 768px) { ... }`
-
-3. **Pattern Layout Structure**: All pattern layouts must:
-   - Wrap the entire screen in a container element
-   - Use container-based grid/flex layouts within the container
-   - Never use full-width layouts without container constraints
-   - Ensure hero images and components respect container boundaries
-
-4. **Component-Level Containers**: Individual components should:
-   - Be wrapped in their own container contexts when needed
-   - Use container queries for internal responsive behavior
-   - Maintain consistent spacing and padding within containers
-
-**DO NOT**:
-- Use full-width layouts without container wrappers
-- Apply viewport-based units (`vw`, `vh`) without container constraints
-- Create layouts that break container boundaries
-- Use absolute positioning that escapes container bounds (unless explicitly required by pattern)
+**Core Principle:**  
+**Structure is deterministic. Style is expressive.**
 
 ---
 
-## Architecture Principles
+## Layout Requirements
 
-### 1. Deterministic Pipeline
+FlowRunner does **NOT** use container‑based layout as the foundation.  
+It uses a strict structural model:
 
-FlowRunner follows a strict, deterministic pipeline. Every implementation must respect this order:
+### Layout Primitives
+- `row`
+- `column`
+- `stack`
+- `slot`
 
-1. Prompt Intake → Intent Object
-2. Domain → Flow Template
-3. Template → Screen Sequence
-4. Screen → Pattern Family
-5. Pattern → Variant (5 per family)
-6. Generate Hero Image
-7. Extract Palette & Vibe
-8. Fill Components with Creative Text
-9. Assemble DSL
-10. Validate via Zod
-11. Persist Revision
-12. Render UI
+### Grid System
+- 12‑column grid  
+- Fixed spans per breakpoint  
+- No arbitrary CSS units  
 
-**Never skip steps or change the order.**
+### Pattern Library
+- Each screen uses *one* pattern family + pattern variant  
+- Patterns define layout only  
+- Stored in `lib/patterns/definitions/`
 
-### 2. Pattern System
-
-- **12 pattern families** with **5 variants each** (60 total patterns)
-- All patterns are JSON-defined in `lib/patterns/definitions/`
-- Patterns must be Zod-validated before use
-- Pattern contracts are fixed—do not invent new layout structures
-- Pattern positions use grid coordinates (x, y, width, height)
-- All patterns must support container-based layouts
-
-### 3. DSL (Domain-Specific Language)
-
-- DSL is Zod-validated—all schemas in `lib/dsl/`
-- Required fields: `hero_image`, `palette`, `vibe`, `pattern_family`, `pattern_variant`, `components`
-- Never add new DSL fields without updating schemas and validation
-- All DSL documents must pass Zod validation before rendering
-
-### 4. Image System
-
-- Hero images are **mandatory** for every screen
-- Never replace hero images with gradients or placeholders
-- All images must be stored with metadata (prompt, seed, aspect ratio, style, palette, vibe)
-- Image library is in `lib/db/` (Prisma + SQLite)
-- Images must be reusable and searchable
-
-### 5. React Renderer
-
-- Renderer is in `components/renderer/`
-- `ScreenRenderer.tsx` is the main renderer component
-- `PatternLayout.tsx` applies pattern definitions
-- All components must respect container-based layouts
-- Components are in `components/renderer/` (Button, Title, Subtitle, HeroImage, etc.)
+### Components Fill Slots
+Patterns define **where**.  
+The registry decides **what**.
 
 ---
 
-## Code Standards
+## Component System
 
-### TypeScript
+FlowRunner has two component tiers:
 
-- Use strict TypeScript—all types must be defined
-- Import types from `lib/dsl/types.ts` and `types/` directory
-- Use Zod schemas for runtime validation
-- Never use `any` types
+### 1. SAFE COMPONENTS (Default)
+Used for:
+- All initial screen generations  
+- Basic text, buttons, cards, containers  
+- Derived from shadcn, simple Aceternity components  
 
-### React
+### 2. ADVANCED COMPONENTS (Premium)
+Only unlocked after user interaction:
+- MagicUI  
+- Cinematic hero sections  
+- Animated backgrounds  
+- 3D cards  
+- Advanced gallery modules  
 
-- Use functional components with hooks
-- Prefer `useMemo` and `useCallback` for expensive operations
-- Use React 18+ features (Suspense, concurrent rendering)
-- All components must be container-aware
+#### Upgrade Flow
+1. User clicks a safe component  
+2. Options:
+   - Link to another screen
+   - Replace with advanced (paywalled)
+3. Choosing advanced rewrites DSL  
+4. Render updates accordingly  
 
-### Styling
+### Metadata Requirements
+Every component must include:
+- `tier`: safe | advanced  
+- `type`: button | card | hero | gallery | etc.  
+- `role`: hero.title | hero.media | section.card | etc.  
+- `screenTypes`: applicable screen types  
+- `complexity`: simple | standard | high  
 
-- Use Tailwind CSS for utility classes
-- Apply container-based layout classes
-- Use CSS variables for palette colors (defined in `app/globals.css`)
-- Support dark mode via `.dark` class
-- Use container queries for responsive design
-
-### File Structure
-
-- DSL schemas: `lib/dsl/`
-- Pattern definitions: `lib/patterns/definitions/`
-- Renderer components: `components/renderer/`
-- UI components: `components/ui/`
-- Database: `lib/db/` (Prisma)
-- Types: `types/`
+These belong in `lib/library/component-registry.ts`.
 
 ---
 
-## What to Build
+## Component Loading & Registry
 
-### ✅ Completed
+### Key Files
+- component-loader.ts  
+- component-registry.ts  
+- component-selector.ts  
+- library-component-renderer.tsx  
 
-- DSL schemas with Zod validation
-- Pattern definition system (12 families × 5 variants)
-- Image metadata database schema
-- Basic renderer infrastructure
-- Pattern layout system
+### Rules
+1. Explicit imports only  
+2. Tier + category must be defined  
+3. Selector must honor:
+   - slot.role  
+   - screenType  
+   - requestedCategory  
+   - userTier  
+4. Safe components used by default  
+5. Advanced requires premium  
 
-### 🚧 In Progress / To Build
+---
 
-- Full flow-engine (multi-screen flow generation)
-- Complete editing layer (MagicPath-style)
-- Navigation layer (click-through flow creation)
-- Image library UI and search
-- Community system (sharing, remixing)
-- Export infrastructure (Figma, Cursor)
-- Nano-Banana image editing integration
+## Pipeline (Updated & Enforced)
+
+1. **Prompt Intake → Prompt Rewriting**
+   - User’s raw prompt is sent to the LLM first  
+   - LLM rewrites the prompt to improve clarity, specificity, and structure  
+   - If required structural details are missing (screen type, content type, hero needs, flow intent),  
+     LLM must ask the user targeted clarifying questions  
+   - Only after all answers are collected does the pipeline continue  
+
+2. Intent → Screen Type  
+3. Screen Type → Pattern Family  
+4. Choose Pattern Variant  
+5. Generate Hero Image (stub or real)  
+6. Extract Colors/Palette  
+7. Apply Style Pack  
+8. Build Layout DSL  
+9. Fill Slots with Safe Components  
+10. Zod Validate  
+11. Persist Revision  
+12. Render  
+13. Allow User Edits (link screens, replace with advanced)  
+
+This order is **mandatory**.
+
+---
+
+## Visual Identity System
+
+### Hero Images
+- Required for every screen  
+- AI‑generated or library-sourced  
+- Must store: palette, vibe, prompt  
+
+### Style Packs
+AI‑generated theme tokens:
+- Colors  
+- Shadows  
+- Radius  
+- Typography  
+- Surface textures  
+
+### Advanced Style Enhancements
+- MagicUI animations  
+- 3D components  
+- Cinematic hero compositions  
+
+---
+
+## Export System (Premium)
+
+Exporting is paywalled and matches the advanced tier.
+
+### Figma Export (Premium)
+- Converts DSL → Figma frames  
+- Maps rows/columns/stacks → layers  
+- Converts components → Figma variants  
+- Includes palette + hero images  
+- Output must be deterministic  
+
+### Cursor Export (Premium)
+- Exports DSL → React component tree  
+- Generates folder structure  
+- Includes hero images + theme tokens  
+- Matches the final screen exactly  
+
+### Export Rules
+- Only available to paid users  
+- Free users see disabled export buttons  
+- Exports must reflect the final DSL, not regenerated content  
 
 ---
 
 ## What NOT to Do
 
-**NEVER**:
-- Invent new layout structures (use existing patterns only)
-- Add new components without updating component library
-- Add new DSL fields without schema updates
-- Skip hero images (they are mandatory)
-- Replace images with gradients or placeholders
-- Break the deterministic pipeline
-- Use full-width layouts without containers
-- Create layouts that ignore container constraints
+Never:
+- Use container-based layout  
+- Allow AI to invent structure  
+- Use advanced components during generation  
+- Skip hero images  
+- Modify patterns without updating schemas  
+- Add components without registry metadata  
+- Break deterministic pipeline order  
+
+---
+
+## Key Files
+
+- master-plan.md  
+- granular-plan.md  
+- lib/dsl/*  
+- lib/patterns/definitions/*  
+- components/renderer/*  
+- lib/library/*  
+- prisma/schema.prisma  
 
 ---
 
 ## Testing Requirements
 
-- All DSL schemas must have validation tests
-- Pattern definitions must be validated
-- Renderer components must be tested
-- Use Vitest for unit tests
-- Use Playwright for E2E tests
-- Test files in `tests/` directory
-
----
-
-## Database
-
-- Prisma ORM with SQLite
-- Schema in `prisma/schema.prisma`
-- Database client in `lib/db/client.ts`
-- All revisions must be stored with full metadata
-
----
-
-## Pattern Families
-
-The 12 pattern families are:
-1. `ONB_HERO_TOP` - Onboarding hero top
-2. `FEAT_IMAGE_TEXT_RIGHT` - Feature image text right
-3. `FEAT_IMAGE_TEXT_LEFT` - Feature image text left
-4. `DEMO_DEVICE_FULLBLEED` - Demo device full bleed
-5. `ACT_FORM_MINIMAL` - Action form minimal
-6. `HERO_CENTER_TEXT` - Hero center text
-7. `NEWSLETTER_SIGNUP` - Newsletter signup
-8. `PRICING_TABLE` - Pricing table
-9. `PRODUCT_DETAIL` - Product detail
-10. `TESTIMONIAL_CARD_GRID` - Testimonial card grid
-11. `DASHBOARD_OVERVIEW` - Dashboard overview
-12. `CTA_SPLIT_SCREEN` - CTA split screen
-
-Each family has 5 variants. All variants are JSON files in `lib/patterns/definitions/{FAMILY}/variant-{1-5}.json`.
-
----
-
-## Key Files to Reference
-
-- `master-plan.md` - High-level project roadmap (DO NOT MODIFY)
-- `granular-plan.md` - Detailed task breakdown
-- `lib/dsl/schemas.ts` - Zod validation schemas
-- `lib/patterns/schema.ts` - Pattern definition schema
-- `components/renderer/ScreenRenderer.tsx` - Main renderer
-- `lib/renderer/pattern-layout.tsx` - Pattern layout application
-
----
-
-## Working Agreements
-
-- Always run `npm test` after modifying code
-- Run `npm run lint` before committing
-- Update `granular-plan.md` when completing tasks (check off items)
-- Never modify `master-plan.md` unless explicitly instructed
-- Always use container-based layouts for UI
-- Validate all DSL documents with Zod before rendering
-- Store all generated images with full metadata
-- Follow the deterministic pipeline strictly
-
----
-
-## Questions?
-
-When in doubt:
-1. Check `master-plan.md` for high-level guidance
-2. Review existing pattern definitions for examples
-3. Look at `components/renderer/` for renderer patterns
-4. Ensure container-based layouts are used
-5. Validate with Zod schemas
-
+- Validate DSL with Zod  
+- Ensure pattern schemas pass  
+- Verify registry metadata completeness  
+- Test safe → advanced swapping  
+- Test deterministic render output  
+- Test paywall restrictions  
