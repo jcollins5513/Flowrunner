@@ -282,7 +282,7 @@ export function buildScreenDSLFromPlan(
     } else if (slot === 'subtitle') {
       components.push({
         type: 'subtitle',
-        content: plan.description || 'Let's get you onboarded with a quick overview.',
+        content: plan.textPlan.contentFocus || "Let's get you onboarded with a quick overview.",
         props: {
           fontSize: 'text-lg',
           textAlign: 'text-center',
