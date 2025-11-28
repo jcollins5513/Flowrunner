@@ -1,72 +1,73 @@
-"use client"
-
-import { HTMLAttributes, ReactNode, useMemo } from "react"
+import React from "react"
 
 import { cn } from "@/lib/utils"
 
-type OrbitingCirclesProps = HTMLAttributes<HTMLDivElement> & {
-  children: ReactNode
-  radius?: number
-  speed?: number
+export interface OrbitingCirclesProps
+  extends React.HTMLAttributes<HTMLDivElement> {
+  className?: string
+  children?: React.ReactNode
   reverse?: boolean
+  duration?: number
+  delay?: number
+  radius?: number
+  path?: boolean
   iconSize?: number
+  speed?: number
 }
 
-const OrbitingCircles = ({
-  children,
+export function OrbitingCircles({
   className,
-  radius = 140,
-  speed = 12,
-  reverse = false,
-  iconSize = 48,
+  children,
+  reverse,
+  duration = 20,
+  radius = 160,
+  path = true,
+  iconSize = 30,
+  speed = 1,
   ...props
-}: OrbitingCirclesProps) => {
-  const items = useMemo(() => {
-    const array = Array.isArray(children) ? children : [children]
-    const cleaned = array.filter(Boolean) as ReactNode[]
-    const angleStep = (2 * Math.PI) / cleaned.length
-    return cleaned.map((child, index) => {
-      const angle = angleStep * index
-      return { child, angle, index }
-    })
-  }, [children])
-
+}: OrbitingCirclesProps) {
+  const calculatedDuration = duration / speed
   return (
-    <div
-      className={cn("relative flex items-center justify-center", className)}
-      {...props}
-    >
-      {items.map((item) => (
-        <div
-          key={item.index}
-          className="absolute"
-          style={{
-            width: radius * 2,
-            height: radius * 2,
-            animation: `spin ${speed}s linear infinite`,
-            animationDirection: reverse ? "reverse" : "normal",
-            transformOrigin: "center",
-            transform: `rotate(${(item.angle * 180) / Math.PI}deg)`,
-          }}
+    <>
+      {path && (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          version="1.1"
+          className="pointer-events-none absolute inset-0 size-full"
         >
+          <circle
+            className="stroke-black/10 stroke-1 dark:stroke-white/10"
+            cx="50%"
+            cy="50%"
+            r={radius}
+            fill="none"
+          />
+        </svg>
+      )}
+      {React.Children.map(children, (child, index) => {
+        const angle = (360 / React.Children.count(children)) * index
+        return (
           <div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-background/80 p-3 shadow-lg ring-1 ring-border/60 backdrop-blur"
-            style={{
-              transform: `translate(${radius}px, -50%) rotate(${
-                reverse ? -item.angle : item.angle
-              }rad)`,
-              width: iconSize,
-              height: iconSize,
-            }}
+            style={
+              {
+                "--duration": calculatedDuration,
+                "--radius": radius,
+                "--angle": angle,
+                "--icon-size": `${iconSize}px`,
+              } as React.CSSProperties
+            }
+            className={cn(
+              `animate-orbit absolute flex size-[var(--icon-size)] transform-gpu items-center justify-center rounded-full`,
+              { "[animation-direction:reverse]": reverse },
+              className
+            )}
+            {...props}
           >
-            <div className="flex size-full items-center justify-center text-foreground/80">
-              {item.child}
-            </div>
+            {child}
           </div>
-        </div>
-      ))}
-    </div>
+        )
+      })}
+    </>
   )
 }
 
-export { OrbitingCircles }

@@ -1,44 +1,95 @@
-"use client"
+import { SVGProps } from "react"
 
-import { HTMLAttributes } from "react"
-
-import { cn } from "@/lib/utils"
-
-type IphoneProps = HTMLAttributes<HTMLDivElement> & {
-  videoSrc: string
-  autoPlay?: boolean
-  muted?: boolean
-  loop?: boolean
+export interface IphoneProps extends SVGProps<SVGSVGElement> {
+  width?: number
+  height?: number
+  src?: string
+  videoSrc?: string
 }
 
-const Iphone = ({
-  className,
+export function Iphone({
+  width = 375,
+  height = 812,
+  src,
   videoSrc,
-  autoPlay = true,
-  muted = true,
-  loop = true,
   ...props
-}: IphoneProps) => {
+}: IphoneProps) {
   return (
-    <div
-      className={cn(
-        "relative mx-auto aspect-[1125/2436] w-full max-w-[434px] overflow-hidden rounded-[38px] border-4 border-black/80 bg-black shadow-xl ring-1 ring-black/60 dark:border-white/10 dark:ring-white/10",
-        className
-      )}
+    <svg
+      width={width}
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <div className="absolute inset-x-14 top-0 z-10 h-7 rounded-b-2xl bg-black/70 backdrop-blur dark:bg-white/10" />
-      <video
-        src={videoSrc}
-        className="size-full object-cover"
-        autoPlay={autoPlay}
-        muted={muted}
-        playsInline
-        loop={loop}
+      <path
+        d="M0 60C0 26.8629 26.8629 0 60 0H315C348.137 0 375 26.8629 375 60V752C375 785.137 348.137 812 315 812H60C26.8629 812 0 785.137 0 752V60Z"
+        className="fill-[#E5E5E5] dark:fill-[#404040]"
       />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30" />
-    </div>
+      <path
+        d="M2 61C2 28.3563 28.3563 2 61 2H314C346.644 2 373 28.3563 373 61V751C373 783.644 346.644 810 314 810H61C28.3563 810 2 783.644 2 751V61Z"
+        className="fill-white dark:fill-[#262626]"
+      />
+      <rect
+        x="10"
+        y="20"
+        width="355"
+        height="772"
+        rx="40"
+        className="fill-[#E5E5E5] stroke-[#E5E5E5] stroke-[0.5] dark:fill-[#404040] dark:stroke-[#404040]"
+      />
+      <rect
+        x="12"
+        y="22"
+        width="351"
+        height="768"
+        rx="38"
+        className="fill-black dark:fill-white"
+      />
+      {src && (
+        <image
+          href={src}
+          width="351"
+          height="768"
+          x="12"
+          y="22"
+          rx="38"
+          className="object-cover"
+          preserveAspectRatio="xMidYMid slice"
+          clipPath="url(#iphone-screen)"
+        />
+      )}
+      {videoSrc && (
+        <foreignObject
+          x="12"
+          y="22"
+          width="351"
+          height="768"
+          clipPath="url(#iphone-screen)"
+        >
+          <video
+            className="size-full object-cover"
+            src={videoSrc}
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        </foreignObject>
+      )}
+      <defs>
+        <clipPath id="iphone-screen">
+          <rect
+            x="12"
+            y="22"
+            width="351"
+            height="768"
+            rx="38"
+          />
+        </clipPath>
+      </defs>
+    </svg>
   )
 }
 
-export { Iphone }

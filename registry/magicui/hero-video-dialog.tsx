@@ -1,96 +1,152 @@
+/* eslint-disable @next/next/no-img-element */
 "use client"
 
-import { HTMLAttributes, useMemo, useState } from "react"
-import { Play } from "lucide-react"
+import { useState } from "react"
+import { Play, XIcon } from "lucide-react"
+import { AnimatePresence, motion } from "motion/react"
 
 import { cn } from "@/lib/utils"
 
-type HeroVideoDialogProps = HTMLAttributes<HTMLDivElement> & {
+type AnimationStyle =
+  | "from-bottom"
+  | "from-center"
+  | "from-top"
+  | "from-left"
+  | "from-right"
+  | "fade"
+  | "top-in-bottom-out"
+  | "left-in-right-out"
+
+interface HeroVideoProps {
+  animationStyle?: AnimationStyle
   videoSrc: string
   thumbnailSrc: string
   thumbnailAlt?: string
-  animationStyle?: "top-in-bottom-out" | "fade" | "none"
+  className?: string
 }
 
-const overlayAnimations: Record<
-  NonNullable<HeroVideoDialogProps["animationStyle"]>,
-  string
-> = {
-  "top-in-bottom-out":
-    "animate-[slide-down_260ms_ease-out] data-[state=closed]:animate-[slide-up_200ms_ease-in]",
-  fade: "animate-[fade-in_160ms_ease-out] data-[state=closed]:animate-[fade-out_140ms_ease-in]",
-  none: "",
+const animationVariants = {
+  "from-bottom": {
+    initial: { y: "100%", opacity: 0 },
+    animate: { y: 0, opacity: 1 },
+    exit: { y: "100%", opacity: 0 },
+  },
+  "from-center": {
+    initial: { scale: 0.5, opacity: 0 },
+    animate: { scale: 1, opacity: 1 },
+    exit: { scale: 0.5, opacity: 0 },
+  },
+  "from-top": {
+    initial: { y: "-100%", opacity: 0 },
+    animate: { y: 0, opacity: 1 },
+    exit: { y: "-100%", opacity: 0 },
+  },
+  "from-left": {
+    initial: { x: "-100%", opacity: 0 },
+    animate: { x: 0, opacity: 1 },
+    exit: { x: "-100%", opacity: 0 },
+  },
+  "from-right": {
+    initial: { x: "100%", opacity: 0 },
+    animate: { x: 0, opacity: 1 },
+    exit: { x: "100%", opacity: 0 },
+  },
+  fade: {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 },
+  },
+  "top-in-bottom-out": {
+    initial: { y: "-100%", opacity: 0 },
+    animate: { y: 0, opacity: 1 },
+    exit: { y: "100%", opacity: 0 },
+  },
+  "left-in-right-out": {
+    initial: { x: "-100%", opacity: 0 },
+    animate: { x: 0, opacity: 1 },
+    exit: { x: "100%", opacity: 0 },
+  },
 }
 
-const HeroVideoDialog = ({
+export function HeroVideoDialog({
+  animationStyle = "from-center",
   videoSrc,
   thumbnailSrc,
-  thumbnailAlt = "Hero video thumbnail",
-  animationStyle = "fade",
+  thumbnailAlt = "Video thumbnail",
   className,
-  ...props
-}: HeroVideoDialogProps) => {
-  const [open, setOpen] = useState(false)
-  const animationClass = useMemo(
-    () => overlayAnimations[animationStyle] ?? overlayAnimations.fade,
-    [animationStyle]
-  )
+}: HeroVideoProps) {
+  const [isVideoOpen, setIsVideoOpen] = useState(false)
+  const selectedAnimation = animationVariants[animationStyle]
 
   return (
-    <div className={cn("relative w-full", className)} {...props}>
+    <div className={cn("relative", className)}>
       <button
         type="button"
-        className="group relative block w-full overflow-hidden rounded-2xl border border-border/60 shadow-lg transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-        onClick={() => setOpen(true)}
+        aria-label="Play video"
+        className="group relative cursor-pointer border-0 bg-transparent p-0"
+        onClick={() => setIsVideoOpen(true)}
       >
         <img
           src={thumbnailSrc}
           alt={thumbnailAlt}
-          className="h-full w-full object-cover"
-          loading="lazy"
+          width={1920}
+          height={1080}
+          className="w-full rounded-md border shadow-lg transition-all duration-200 ease-out group-hover:brightness-[0.8]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent transition-opacity group-hover:opacity-70" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="flex size-14 items-center justify-center rounded-full bg-white/90 text-black shadow-lg transition group-hover:scale-105 group-hover:bg-white">
-            <Play className="h-6 w-6" />
-          </span>
-        </div>
-      </button>
-
-      {open ? (
-        <div
-          role="dialog"
-          aria-modal="true"
-          className={cn(
-            "fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm",
-            animationClass
-          )}
-          onClick={() => setOpen(false)}
-          data-state="open"
-        >
-          <div
-            className="relative aspect-video w-[90vw] max-w-5xl overflow-hidden rounded-2xl bg-black shadow-2xl ring-1 ring-white/10"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <iframe
-              src={videoSrc}
-              title="Hero video"
-              className="size-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              className="absolute right-3 top-3 rounded-full bg-white/10 px-3 py-1 text-sm text-white transition hover:bg-white/20"
+        <div className="absolute inset-0 flex scale-[0.9] items-center justify-center rounded-2xl transition-all duration-200 ease-out group-hover:scale-100">
+          <div className="bg-primary/10 flex size-28 items-center justify-center rounded-full backdrop-blur-md">
+            <div
+              className={`from-primary/30 to-primary relative flex size-20 scale-100 items-center justify-center rounded-full bg-gradient-to-b shadow-md transition-all duration-200 ease-out group-hover:scale-[1.2]`}
             >
-              Close
-            </button>
+              <Play
+                className="size-8 scale-100 fill-white text-white transition-transform duration-200 ease-out group-hover:scale-105"
+                style={{
+                  filter:
+                    "drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06))",
+                }}
+              />
+            </div>
           </div>
         </div>
-      ) : null}
+      </button>
+      <AnimatePresence>
+        {isVideoOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Escape" || e.key === "Enter" || e.key === " ") {
+                setIsVideoOpen(false)
+              }
+            }}
+            onClick={() => setIsVideoOpen(false)}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md"
+          >
+            <motion.div
+              {...selectedAnimation}
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
+              className="relative mx-4 aspect-video w-full max-w-4xl md:mx-0"
+            >
+              <motion.button className="absolute -top-16 right-0 rounded-full bg-neutral-900/50 p-2 text-xl text-white ring-1 backdrop-blur-md dark:bg-neutral-100/50 dark:text-black">
+                <XIcon className="size-5" />
+              </motion.button>
+              <div className="relative isolate z-[1] size-full overflow-hidden rounded-2xl border-2 border-white">
+                <iframe
+                  src={videoSrc}
+                  title="Hero Video player"
+                  className="size-full rounded-2xl"
+                  allowFullScreen
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                ></iframe>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
 
-export { HeroVideoDialog }

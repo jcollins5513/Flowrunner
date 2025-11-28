@@ -1,57 +1,82 @@
 "use client"
 
-import { HTMLAttributes, useEffect, useRef, useState } from "react"
+import { useRef } from "react"
+import {
+  AnimatePresence,
+  motion,
+  MotionProps,
+  useInView,
+  UseInViewOptions,
+  Variants,
+} from "motion/react"
 
-import { cn } from "@/lib/utils"
+type MarginType = UseInViewOptions["margin"]
 
-type BlurFadeProps = HTMLAttributes<HTMLDivElement> & {
+interface BlurFadeProps extends MotionProps {
+  children: React.ReactNode
+  className?: string
+  variant?: {
+    hidden: { y: number }
+    visible: { y: number }
+  }
+  duration?: number
   delay?: number
+  offset?: number
+  direction?: "up" | "down" | "left" | "right"
   inView?: boolean
+  inViewMargin?: MarginType
+  blur?: string
 }
 
-const BlurFade = ({
+export function BlurFade({
   children,
   className,
+  variant,
+  duration = 0.4,
   delay = 0,
+  offset = 6,
+  direction = "down",
   inView = false,
+  inViewMargin = "-50px",
+  blur = "6px",
   ...props
-}: BlurFadeProps) => {
-  const [visible, setVisible] = useState(inView)
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (inView) {
-      setVisible(true)
-      return
-    }
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setVisible(true)
-          }
-        })
-      },
-      { threshold: 0.15 }
-    )
-    if (ref.current) observer.observe(ref.current)
-    return () => observer.disconnect()
-  }, [inView])
-
+}: BlurFadeProps) {
+  const ref = useRef(null)
+  const inViewResult = useInView(ref, { once: true, margin: inViewMargin })
+  const isInView = !inView || inViewResult
+  const defaultVariants: Variants = {
+    hidden: {
+      [direction === "left" || direction === "right" ? "x" : "y"]:
+        direction === "right" || direction === "down" ? -offset : offset,
+      opacity: 0,
+      filter: `blur(${blur})`,
+    },
+    visible: {
+      [direction === "left" || direction === "right" ? "x" : "y"]: 0,
+      opacity: 1,
+      filter: `blur(0px)`,
+    },
+  }
+  const combinedVariants = variant || defaultVariants
   return (
-    <div
-      ref={ref}
-      className={cn(
-        "transition duration-700 ease-out",
-        visible ? "translate-y-0 opacity-100 blur-0" : "translate-y-3 opacity-0 blur-sm",
-        className
-      )}
-      style={{ transitionDelay: `${delay}s` }}
-      {...props}
-    >
-      {children}
-    </div>
+    <AnimatePresence>
+      <motion.div
+        ref={ref}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        exit="hidden"
+        variants={combinedVariants}
+        transition={{
+          delay: 0.04 + delay,
+          duration,
+          ease: "easeOut",
+        }}
+        className={className}
+        {...props}
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
   )
 }
 
-export { BlurFade }

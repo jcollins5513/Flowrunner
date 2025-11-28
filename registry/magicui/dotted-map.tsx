@@ -1,78 +1,85 @@
-import { HTMLAttributes, useMemo } from "react"
+"use client"
 
+import { useMemo } from "react"
 import { cn } from "@/lib/utils"
 
-type Marker = {
+interface Marker {
   lat: number
   lng: number
   size?: number
-  color?: string
 }
 
-type DottedMapProps = HTMLAttributes<SVGSVGElement> & {
+interface DottedMapProps {
   markers?: Marker[]
+  className?: string
+  width?: number
+  height?: number
 }
 
-const buildDots = (cols: number, rows: number) => {
-  const dots: Array<{ cx: number; cy: number }> = []
-  for (let x = 0; x < cols; x += 1) {
-    for (let y = 0; y < rows; y += 1) {
-      dots.push({ cx: x, cy: y })
-    }
-  }
-  return dots
-}
-
-const project = (lat: number, lng: number, width: number, height: number) => {
+// Convert lat/lng to x/y coordinates for a world map
+function latLngToXY(lat: number, lng: number, width: number, height: number) {
   const x = ((lng + 180) / 360) * width
   const y = ((90 - lat) / 180) * height
   return { x, y }
 }
 
-const DottedMap = ({ markers = [], className, ...props }: DottedMapProps) => {
-  const cols = 72
-  const rows = 36
-  const dots = useMemo(() => buildDots(cols, rows), [cols, rows])
+export function DottedMap({
+  markers = [],
+  className,
+  width = 800,
+  height = 400,
+}: DottedMapProps) {
+  const markerPositions = useMemo(() => {
+    return markers.map((marker) => {
+      const { x, y } = latLngToXY(marker.lat, marker.lng, width, height)
+      return {
+        x,
+        y,
+        size: marker.size || 0.3,
+      }
+    })
+  }, [markers, width, height])
 
   return (
-    <svg
-      viewBox={`0 0 ${cols} ${rows}`}
-      className={cn("size-full text-muted-foreground/40", className)}
-      role="img"
-      aria-label="Dotted world map"
-      preserveAspectRatio="xMidYMid meet"
-      {...props}
-    >
-      <defs>
-        <radialGradient id="dotGradient" r="65%">
-          <stop offset="0%" stopColor="currentColor" stopOpacity="0.95" />
-          <stop offset="100%" stopColor="currentColor" stopOpacity="0.05" />
-        </radialGradient>
-      </defs>
-      {dots.map((dot) => (
-        <circle
-          key={`${dot.cx}-${dot.cy}`}
-          cx={dot.cx}
-          cy={dot.cy}
-          r={0.18}
-          fill="url(#dotGradient)"
-        />
-      ))}
-      {markers.map((marker, index) => {
-        const { x, y } = project(marker.lat, marker.lng, cols, rows)
-        return (
-          <circle
-            key={`${marker.lat}-${marker.lng}-${index}`}
-            cx={x}
-            cy={y}
-            r={marker.size ?? 0.6}
-            fill={marker.color ?? "hsl(var(--primary))"}
-            className="drop-shadow"
+    <div className={cn("relative size-full", className)}>
+      <svg
+        width="100%"
+        height="100%"
+        viewBox={`0 0 ${width} ${height}`}
+        className="absolute inset-0"
+        preserveAspectRatio="xMidYMid meet"
+      >
+        {/* World map outline (simplified) */}
+        <g className="stroke-gray-300 dark:stroke-gray-700 fill-transparent stroke-1">
+          {/* Simplified continents - just basic shapes for visual reference */}
+          <path
+            d="M 100 150 Q 150 100 200 120 Q 250 140 300 130 Q 350 120 400 140 Q 450 160 500 150 Q 550 140 600 150 Q 650 160 700 150"
+            fill="none"
+            strokeWidth="1"
+            opacity="0.3"
           />
-        )
-      })}
-    </svg>
+        </g>
+
+        {/* Markers */}
+        {markerPositions.map((marker, index) => (
+          <circle
+            key={index}
+            cx={marker.x}
+            cy={marker.y}
+            r={marker.size * 10}
+            className="fill-primary animate-pulse"
+            opacity="0.8"
+          >
+            <animate
+              attributeName="r"
+              values={`${marker.size * 8};${marker.size * 12};${marker.size * 8}`}
+              dur="2s"
+              repeatCount="indefinite"
+            />
+          </circle>
+        ))}
+      </svg>
+    </div>
   )
 }
 
-export { DottedMap }
