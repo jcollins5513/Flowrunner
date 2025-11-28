@@ -5,6 +5,11 @@ import { assembleScreenFromPrompt } from '@/lib/flow/prompt-to-render'
 import type { HeroImageWithPalette } from '@/lib/images/orchestrator'
 import type { ScreenDSL } from '@/lib/dsl/types'
 import { persistHeroImageMetadata } from '@/lib/db/hero-image-persistence'
+import { IntentInterpreter } from '@/lib/ai/intent/interpreter'
+import { MockIntentProvider } from '@/lib/ai/intent/providers/mock'
+import { ImageOrchestrator } from '@/lib/images/orchestrator'
+import { ImageGenerationService } from '@/lib/images/generation/service'
+import { MockImageProvider } from '@/lib/images/generation/providers/mock'
 
 vi.mock('@/lib/db/hero-image-persistence', () => ({
   persistHeroImageMetadata: vi.fn(async (heroImage: HeroImageWithPalette) => ({
@@ -39,6 +44,13 @@ describe('Prompt → render pipeline', () => {
   it('assembles a screen from prompt with palette + vibe flowing into the renderer', async () => {
     const result = await assembleScreenFromPrompt('friendly onboarding hero', {
       prebuiltHeroImage: heroImage,
+      imageOrchestrator: new ImageOrchestrator({
+        service: new ImageGenerationService({ provider: new MockImageProvider() }),
+        autoExtractPalette: false,
+        autoInferVibe: false,
+        autoPersist: false,
+      }),
+      interpreterOptions: { interpreter: new IntentInterpreter(new MockIntentProvider()) },
       persist: false,
     })
 
@@ -51,7 +63,7 @@ describe('Prompt → render pipeline', () => {
 
     await waitFor(() => {
       expect(screen.queryByText(/DSL Validation Failed/i)).toBeNull()
-      expect(screen.getByText(/Continue/i)).toBeInTheDocument()
+      expect(screen.getByText(/Get started/i)).toBeInTheDocument()
     })
   })
 

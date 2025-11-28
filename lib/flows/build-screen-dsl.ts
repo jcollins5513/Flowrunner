@@ -4,30 +4,13 @@
 import type { ScreenDSL, Component, PatternFamily, PatternVariant, Palette, Vibe } from '../dsl/types'
 import type { ScreenContext } from './types'
 import type { ScreenGenerationPlan } from '../flow/templates/selector'
-// Import type from DSL types (client-safe, doesn't import server-only modules)
 import type { HeroImageWithPalette } from '../dsl/types'
+import type { PatternDefinition } from '../patterns/schema'
 import { loadPattern } from '../patterns/loader'
+import { deterministicId } from '../utils/deterministic'
 
-/**
- * Pattern suggestion heuristics
- * Suggests next pattern based on current pattern
- */
-const PATTERN_SUGGESTIONS: Partial<Record<PatternFamily, PatternFamily[]>> = {
-  ONB_HERO_TOP: ['FEAT_IMAGE_TEXT_RIGHT', 'ACT_FORM_MINIMAL', 'HERO_CENTER_TEXT'],
-  FEAT_IMAGE_TEXT_RIGHT: ['ACT_FORM_MINIMAL', 'PRODUCT_DETAIL', 'DASHBOARD_OVERVIEW'],
-  FEAT_IMAGE_TEXT_LEFT: ['ACT_FORM_MINIMAL', 'PRODUCT_DETAIL'],
-  ACT_FORM_MINIMAL: ['DASHBOARD_OVERVIEW', 'PRODUCT_DETAIL', 'FEAT_IMAGE_TEXT_RIGHT'],
-  PRODUCT_DETAIL: ['ACT_FORM_MINIMAL', 'DASHBOARD_OVERVIEW'],
-  DASHBOARD_OVERVIEW: ['PRODUCT_DETAIL', 'FEAT_IMAGE_TEXT_RIGHT'],
-  DEMO_DEVICE_FULLBLEED: ['ACT_FORM_MINIMAL', 'PRODUCT_DETAIL'],
-  HERO_CENTER_TEXT: ['FEAT_IMAGE_TEXT_RIGHT', 'ACT_FORM_MINIMAL'],
-  NEWSLETTER_SIGNUP: ['DASHBOARD_OVERVIEW', 'FEAT_IMAGE_TEXT_RIGHT'],
-  PRICING_TABLE: ['ACT_FORM_MINIMAL', 'PRODUCT_DETAIL'],
-  TESTIMONIAL_CARD_GRID: ['ACT_FORM_MINIMAL', 'PRODUCT_DETAIL'],
-  CTA_SPLIT_SCREEN: ['ACT_FORM_MINIMAL', 'DASHBOARD_OVERVIEW'],
-}
-
-const SUPPORTED_COMPONENT_SLOTS: Component['type'][] = ['title', 'subtitle', 'text', 'button', 'form', 'image']
+// Supported component types - defined locally to avoid importing server-only modules
+const SUPPORTED_COMPONENT_TYPES: Component['type'][] = ['title', 'subtitle', 'button', 'form', 'text', 'image']
 
 const CTA_TONE_PRESETS: Record<string, string[]> = {
   friendly: ['Get started free', 'Invite your team'],
@@ -38,11 +21,11 @@ const CTA_TONE_PRESETS: Record<string, string[]> = {
   minimal: ['Begin', 'Continue'],
 }
 
-const CTA_PATTERN_FALLBACKS: Partial<Record<PatternFamily, string>> = {
-  ONB_HERO_TOP: 'Start your journey',
-  ACT_FORM_MINIMAL: 'Request access',
-  PRICING_TABLE: 'Choose a plan',
-  CTA_SPLIT_SCREEN: 'Talk to sales',
+const CTA_PATTERN_FALLBACKS: Partial<Record<PatternFamily, string[]>> = {
+  ONB_HERO_TOP: ['Start your journey', 'Begin onboarding'],
+  ACT_FORM_MINIMAL: ['Request access', 'Submit'],
+  PRICING_TABLE: ['Choose a plan'],
+  CTA_SPLIT_SCREEN: ['Talk to sales'],
 }
 
 const DEFAULT_FORM_FIELDS = [
@@ -52,16 +35,10 @@ const DEFAULT_FORM_FIELDS = [
   { id: 'goal', label: 'Primary goal', placeholder: 'e.g. onboard trial users', type: 'text', required: false },
 ]
 
-type ComponentBuildMeta = {
-  buttonLabel?: string
-  buttonSource?: 'custom' | 'tone' | 'pattern' | 'default'
-  hasForm: boolean
-}
-
 const humanize = (value?: string) => {
   if (!value) return ''
   return value
-    .split(/[_\s]+/)
+    .split(/[\s_]+/)
     .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
     .join(' ')
 }
@@ -70,135 +47,175 @@ const describeAudience = (context: ScreenContext) => {
   if (context.flowMetadata?.domain) {
     return `${humanize(context.flowMetadata.domain)} teams`
   }
-  return 'growing teams'
+  return 'your audience'
 }
 
-const formatStyleCues = (styleCues?: readonly string[]) => {
-  if (!styleCues?.length) {
-    return 'Modern & confident'
-  }
-  return styleCues.map((cue) => humanize(cue)).join(' • ')
+const orderedSlots = (patternDefinition: PatternDefinition): Component['type'][] => {
+  return Object.entries(patternDefinition.layout.positions)
+    .filter(([slot]) => slot !== 'hero_image')
+    .sort(([, a], [, b]) => (a.y === b.y ? a.x - b.x : a.y - b.y))
+    .map(([slot]) => {
+      if (!SUPPORTED_COMPONENT_TYPES.includes(slot as Component['type'])) {
+        throw new Error(`Unsupported component slot ${slot}`)
+      }
+      return slot as Component['type']
+    })
+}
+
+const ensureRequiredSlots = (patternDefinition: PatternDefinition) => {
+  const layoutSlots = new Set(Object.keys(patternDefinition.layout.positions))
+  patternDefinition.componentSlots.required.forEach((slot) => {
+    if (!layoutSlots.has(slot)) {
+      throw new Error(`Required slot ${slot} missing from pattern layout`)
+    }
+    if (!SUPPORTED_COMPONENT_TYPES.includes(slot as Component['type'])) {
+      throw new Error(`Required slot ${slot} is not supported by renderer components`)
+    }
+  })
 }
 
 const selectCtaLabel = (
   tone: string,
-  family: PatternFamily,
+  pattern: PatternDefinition,
   customLabel?: string
 ): string => {
-  if (customLabel) return customLabel
-  const tonePreset = CTA_TONE_PRESETS[tone.toLowerCase()]
-  if (tonePreset && tonePreset.length > 0) {
-    return tonePreset[Math.floor(Math.random() * tonePreset.length)]
+  if (customLabel?.trim()) {
+    return customLabel.trim()
   }
-  const patternFallback = CTA_PATTERN_FALLBACKS[family]
-  if (patternFallback) return patternFallback
-  return 'Get started'
+  const toneOptions = CTA_TONE_PRESETS[tone.toLowerCase()]
+  if (toneOptions?.length) {
+    return toneOptions[0]
+  }
+  const patternOptions = CTA_PATTERN_FALLBACKS[pattern.family as PatternFamily]
+  if (patternOptions?.length) {
+    return patternOptions[0]
+  }
+  return 'Continue'
 }
 
 const buildComponentsForPattern = (
-  patternDefinition: any,
+  patternDefinition: PatternDefinition,
   plan: ScreenGenerationPlan,
   context: ScreenContext,
   heroImage: HeroImageWithPalette
-): { components: Component[]; meta: ComponentBuildMeta; slotOrder: string[] } => {
-  const { textPlan, heroPlan } = plan
+): Component[] => {
+  ensureRequiredSlots(patternDefinition)
+
   const components: Component[] = []
-  const slotOrder: string[] = []
-  let hasForm = false
-  let buttonLabel: string | undefined
-  let buttonSource: 'custom' | 'tone' | 'pattern' | 'default' = 'default'
+  const slots = orderedSlots(patternDefinition)
+  const focus = plan.textPlan.contentFocus ?? plan.name
+  const cuesText = plan.textPlan.styleCues.map(humanize).filter(Boolean).join(' • ')
+  const audience = describeAudience(context)
 
-  // Get pattern slots
-  const slots = patternDefinition.slots || []
-
-  for (const slot of slots) {
-    slotOrder.push(slot.name)
-
-    switch (slot.name) {
-      case 'title':
+  slots.forEach((slot) => {
+    switch (slot) {
+      case 'title': {
+        if (!focus) {
+          if (patternDefinition.componentSlots.required.includes(slot)) {
+            throw new Error('Missing content for required title slot')
+          }
+          return
+        }
         components.push({
           type: 'title',
-          content: plan.name || 'Welcome',
-          props: {
-            fontSize: slot.style?.fontSize || 'text-4xl',
-            fontWeight: slot.style?.fontWeight || 'font-bold',
-            textAlign: slot.style?.textAlign || 'text-center',
-          },
+          content: focus,
         })
         break
-
-      case 'subtitle':
+      }
+      case 'subtitle': {
+        if (!cuesText) {
+          if (patternDefinition.componentSlots.required.includes(slot)) {
+            throw new Error('Missing content for required subtitle slot')
+          }
+          return
+        }
+        const subtitle = `${humanize(plan.textPlan.tone)} • ${cuesText}`
         components.push({
           type: 'subtitle',
-          content: textPlan.contentFocus || plan.heroPlan.vibe || `Built for ${describeAudience(context)}`,
-          props: {
-            fontSize: slot.style?.fontSize || 'text-xl',
-            fontWeight: slot.style?.fontWeight || 'font-normal',
-            textAlign: slot.style?.textAlign || 'text-center',
-          },
+          content: subtitle,
         })
         break
-
-      case 'text':
+      }
+      case 'text': {
+        const description = focus
+          ? `${focus}. Designed for ${audience} seeking a ${humanize(plan.textPlan.tone).toLowerCase()} experience.`
+          : undefined
+        if (!description) {
+          if (patternDefinition.componentSlots.required.includes(slot)) {
+            throw new Error('Missing content for required text slot')
+          }
+          return
+        }
         components.push({
           type: 'text',
-          content: textPlan.contentFocus || `${textPlan.tone} narrative` || 'Discover what makes us different.',
-          props: {
-            fontSize: slot.style?.fontSize || 'text-base',
-            fontWeight: slot.style?.fontWeight || 'font-normal',
-            textAlign: slot.style?.textAlign || 'text-left',
-          },
+          content: description,
         })
         break
-
-      case 'button':
-        const ctaLabel = selectCtaLabel(
-          context.flowMetadata?.theme || 'modern',
-          plan.pattern.family as PatternFamily,
-          textPlan.customFields?.ctaLabel
-        )
-        buttonLabel = ctaLabel
-        buttonSource = textPlan.customFields?.ctaLabel ? 'custom' : 'tone'
+      }
+      case 'button': {
+        const label = selectCtaLabel(plan.textPlan.tone, patternDefinition, plan.textPlan.customFields?.hero_cta_label)
         components.push({
           type: 'button',
-          content: ctaLabel,
-          props: {
-            variant: slot.style?.variant || 'primary',
-            size: slot.style?.size || 'lg',
-          },
+          content: label,
+          props: { variant: 'primary', size: 'lg' },
         })
         break
-
-      case 'form':
-        hasForm = true
-        const formFields = textPlan.customFields?.formFields 
-          ? JSON.parse(textPlan.customFields.formFields) 
-          : DEFAULT_FORM_FIELDS
+      }
+      case 'form': {
+        const formTitle = plan.textPlan.customFields?.form_title ?? focus
+        if (!formTitle) {
+          if (patternDefinition.componentSlots.required.includes(slot)) {
+            throw new Error('Missing content for required form slot')
+          }
+          return
+        }
+        const submitLabel = selectCtaLabel(
+          plan.textPlan.tone,
+          patternDefinition,
+          plan.textPlan.customFields?.form_submit_label
+        )
         components.push({
           type: 'form',
-          content: JSON.stringify({ fields: formFields }),
+          content: formTitle,
           props: {
-            fields: formFields,
-            submitLabel: textPlan.customFields?.formSubmitLabel || 'Submit',
+            description:
+              plan.textPlan.customFields?.form_description ??
+              `Share a few details so we can tailor the experience for ${audience}.`,
+            fields: DEFAULT_FORM_FIELDS,
+            submitLabel,
           },
         })
         break
-
-      case 'image':
-        // Hero image is handled separately in DSL
+      }
+      case 'image': {
+        if (!heroImage.image?.url && patternDefinition.componentSlots.required.includes(slot)) {
+          throw new Error('Hero image URL required for image slot')
+        }
+        components.push({
+          type: 'image',
+          content: plan.heroPlan.imagePrompt,
+          props: {
+            url: heroImage.image.url,
+            id: heroImage.imageId ?? deterministicId('image', `${plan.screenId}-${plan.heroPlan.imagePrompt}`),
+          },
+        })
+        break
+      }
+      default:
         break
     }
-  }
+  })
 
-  return {
-    components,
-    meta: {
-      buttonLabel,
-      buttonSource,
-      hasForm,
-    },
-    slotOrder,
-  }
+  const requiredSlots = patternDefinition.componentSlots.required.filter((slot) =>
+    SUPPORTED_COMPONENT_TYPES.includes(slot as Component['type'])
+  )
+  requiredSlots.forEach((slot) => {
+    if (!components.some((component) => component.type === slot)) {
+      throw new Error(`Missing components for required slots: ${slot}`)
+    }
+  })
+
+  return components
 }
 
 /**
@@ -212,9 +229,9 @@ export function buildScreenDSLFromPlan(
   const { pattern } = plan
   const { palette, vibe } = context
 
+  const patternDefinition = loadPattern(pattern.family as PatternFamily, (pattern.variant as PatternVariant) || 1)
+
   // Use generated palette if available, otherwise use context palette
-  // Ensure all required fields are present (normalize from optional palette)
-  // The orchestrator's Palette has optional fields, so we need to ensure all are present
   const paletteFromImage = heroImage.palette
   const finalPalette: Palette = {
     primary: (paletteFromImage?.primary ?? palette.primary) || '#3B82F6',
@@ -222,46 +239,27 @@ export function buildScreenDSLFromPlan(
     accent: (paletteFromImage?.accent ?? palette.accent) || '#F59E0B',
     background: (paletteFromImage?.background ?? palette.background) || '#FFFFFF',
   }
-  // Ensure vibe is valid, default to 'modern' if not
+
   const validVibes: Vibe[] = ['playful', 'professional', 'bold', 'minimal', 'modern', 'retro', 'elegant', 'energetic', 'calm', 'tech', 'creative', 'corporate']
-  const finalVibe: Vibe = (heroImage.vibe && validVibes.includes(heroImage.vibe as Vibe)) 
+  const finalVibe: Vibe = (heroImage.vibe && validVibes.includes(heroImage.vibe as Vibe))
     ? (heroImage.vibe as Vibe)
-    : (vibe && validVibes.includes(vibe)) 
-      ? vibe 
+    : (vibe && validVibes.includes(vibe))
+      ? vibe
       : 'modern'
 
-  // Build components from textPlan
-  const patternDefinition = loadPattern(pattern.family as PatternFamily, (pattern.variant as PatternVariant) || 1)
-  let { components } = buildComponentsForPattern(patternDefinition, plan, context, heroImage)
+  const components = buildComponentsForPattern(patternDefinition, plan, context, heroImage)
 
-  // Ensure components array is never empty - add fallback title if needed
-  if (components.length === 0) {
-    console.warn('No components generated from pattern, adding fallback title component')
-    components.push({
-      type: 'title',
-      content: plan.name || 'Welcome',
-      props: {
-        fontSize: 'text-4xl',
-        fontWeight: 'font-bold',
-        textAlign: 'text-center',
-      },
-    })
-  }
-
-  // Ensure hero_image has required fields
   if (!heroImage.image?.url) {
     throw new Error('Hero image URL is required')
   }
 
-  // Ensure URL is valid (Zod requires valid URL format)
   try {
     new URL(heroImage.image.url)
   } catch {
     throw new Error(`Invalid hero image URL: ${heroImage.image.url}`)
   }
 
-  // Ensure ID is always a string
-  const heroImageId = heroImage.imageId || `hero-${Date.now()}`
+  const heroImageId = heroImage.imageId || deterministicId('hero', `${plan.screenId}-${heroImage.image.url}-${pattern.family}-${pattern.variant}`)
 
   return {
     hero_image: {
@@ -279,12 +277,6 @@ export function buildScreenDSLFromPlan(
     pattern_family: pattern.family as PatternFamily,
     pattern_variant: (pattern.variant as PatternVariant) || 1,
     components,
-    ...(context.patternFamily || plan.name ? {
-      metadata: {
-        ...(context.patternFamily && { generatedFrom: context.patternFamily }),
-        ...(plan.name && { planName: plan.name }),
-      },
-    } : {}),
   }
 }
 

@@ -15,6 +15,8 @@ import { EditableText } from '@/components/editing/EditableText'
 import { EditableForm } from '@/components/editing/EditableForm'
 import { LibraryComponentRenderer } from '@/lib/library/wrappers/library-component-renderer'
 
+export const SUPPORTED_COMPONENT_TYPES: Component['type'][] = ['title', 'subtitle', 'button', 'form', 'text', 'image']
+
 export interface LibraryContext {
   vibe: Vibe
   palette: Palette

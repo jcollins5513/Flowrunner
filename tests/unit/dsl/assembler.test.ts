@@ -9,13 +9,24 @@ import type {
 } from '@/lib/dsl/types'
 import type { HeroImageWithPalette } from '@/lib/images/orchestrator'
 import type { TextGenerationResult } from '@/lib/ai/text-generation/types'
+import type { PatternDefinition } from '@/lib/patterns/schema'
+import { loadPattern } from '@/lib/patterns/loader'
 
 describe('DSLAssembler', () => {
   let assembler: DSLAssembler
   let mockHeroImage: HeroImageWithPalette
+  let patternDefinition: PatternDefinition
+  let baseComponents: ScreenDSL['components']
 
-  beforeEach(() => {
+  beforeEach(async () => {
     assembler = new DSLAssembler()
+
+    patternDefinition = await loadPattern('ONB_HERO_TOP', 1)
+    baseComponents = [
+      { type: 'title', content: 'Test Title' },
+      { type: 'subtitle', content: 'Test Subtitle' },
+      { type: 'button', content: 'Get started' },
+    ]
 
     mockHeroImage = {
       image: {
@@ -47,6 +58,8 @@ describe('DSLAssembler', () => {
         heroImage: mockHeroImage,
         patternFamily: 'ONB_HERO_TOP' as PatternFamily,
         patternVariant: 1 as PatternVariant,
+        patternDefinition,
+        components: baseComponents,
       }
 
       const result = await assembler.assemble(input)
@@ -68,6 +81,8 @@ describe('DSLAssembler', () => {
         heroImage: mockHeroImage,
         patternFamily: 'ONB_HERO_TOP' as PatternFamily,
         patternVariant: 1 as PatternVariant,
+        patternDefinition,
+        components: baseComponents,
       }
 
       const result = await assembler.assemble(input)
@@ -101,8 +116,13 @@ describe('DSLAssembler', () => {
 
       const input = {
         heroImage: mockHeroImage,
-        patternFamily: 'FEAT_IMAGE_TEXT_RIGHT' as PatternFamily,
+        patternFamily: 'PRODUCT_DETAIL' as PatternFamily,
         patternVariant: 1 as PatternVariant,
+        patternDefinition: await loadPattern('PRODUCT_DETAIL', 1),
+        components: [
+          { type: 'title', content: 'Product title' },
+          { type: 'subtitle', content: 'Product subtitle' },
+        ],
         supportingImages: [supportingImage],
       }
 
@@ -118,6 +138,8 @@ describe('DSLAssembler', () => {
         heroImage: mockHeroImage,
         patternFamily: 'ONB_HERO_TOP' as PatternFamily,
         patternVariant: 1 as PatternVariant,
+        patternDefinition,
+        components: baseComponents,
       }
 
       const result = await assembler.assemble(input)
@@ -140,6 +162,8 @@ describe('DSLAssembler', () => {
         heroImage: mockHeroImage,
         patternFamily: 'ONB_HERO_TOP' as PatternFamily,
         patternVariant: 1 as PatternVariant,
+        patternDefinition,
+        components: baseComponents,
         paletteOverride: overridePalette,
       }
 
@@ -156,6 +180,8 @@ describe('DSLAssembler', () => {
         heroImage: mockHeroImage,
         patternFamily: 'ONB_HERO_TOP' as PatternFamily,
         patternVariant: 1 as PatternVariant,
+        patternDefinition,
+        components: baseComponents,
         vibeOverride: 'playful' as Vibe,
       }
 
@@ -175,8 +201,9 @@ describe('DSLAssembler', () => {
 
       const input = {
         heroImage: mockHeroImage,
-        patternFamily: 'ONB_HERO_TOP' as PatternFamily,
+        patternFamily: 'FEAT_IMAGE_TEXT_RIGHT' as PatternFamily,
         patternVariant: 1 as PatternVariant,
+        patternDefinition: await loadPattern('FEAT_IMAGE_TEXT_RIGHT', 1),
         textGeneration: textGen,
       }
 
@@ -196,6 +223,10 @@ describe('DSLAssembler', () => {
           content: 'Custom Title',
         },
         {
+          type: 'subtitle' as const,
+          content: 'Custom Subtitle',
+        },
+        {
           type: 'button' as const,
           content: 'Custom Button',
         },
@@ -206,13 +237,15 @@ describe('DSLAssembler', () => {
         patternFamily: 'ONB_HERO_TOP' as PatternFamily,
         patternVariant: 1 as PatternVariant,
         components,
+        patternDefinition,
       }
 
-      const result = await assembler.assemble(input, { autoGenerateComponents: false })
+      const result = await assembler.assemble(input)
 
-      expect(result.dsl.components.length).toBe(2)
+      expect(result.dsl.components.length).toBe(3)
       expect(result.dsl.components[0].content).toBe('Custom Title')
-      expect(result.dsl.components[1].content).toBe('Custom Button')
+      expect(result.dsl.components[1].content).toBe('Custom Subtitle')
+      expect(result.dsl.components[2].content).toBe('Custom Button')
     })
 
     it('should build navigation object', async () => {
@@ -226,6 +259,8 @@ describe('DSLAssembler', () => {
         heroImage: mockHeroImage,
         patternFamily: 'ONB_HERO_TOP' as PatternFamily,
         patternVariant: 1 as PatternVariant,
+        patternDefinition,
+        components: baseComponents,
         navigation,
       }
 
@@ -246,6 +281,8 @@ describe('DSLAssembler', () => {
         heroImage: mockHeroImage,
         patternFamily: 'ONB_HERO_TOP' as PatternFamily,
         patternVariant: 1 as PatternVariant,
+        patternDefinition,
+        components: baseComponents,
         metadata,
       }
 
@@ -254,8 +291,6 @@ describe('DSLAssembler', () => {
       expect(result.dsl.metadata).toBeDefined()
       expect(result.dsl.metadata?.customField).toBe('customValue')
       expect(result.dsl.metadata?.version).toBe('1.0.0')
-      expect(result.dsl.metadata?.assembledAt).toBeDefined()
-      expect(result.dsl.metadata?.heroImageId).toBe('img-123')
     })
 
     it('should validate DSL and throw on validation error', async () => {
@@ -263,12 +298,11 @@ describe('DSLAssembler', () => {
         heroImage: mockHeroImage,
         patternFamily: 'ONB_HERO_TOP' as PatternFamily,
         patternVariant: 1 as PatternVariant,
+        patternDefinition,
         components: [], // Empty components should fail validation
       }
 
-      await expect(
-        assembler.assemble(input, { autoGenerateComponents: false })
-      ).rejects.toThrow()
+      await expect(assembler.assemble(input)).rejects.toThrow()
     })
 
     it('should return validation errors when throwOnValidationError is false', async () => {
@@ -276,11 +310,18 @@ describe('DSLAssembler', () => {
         heroImage: mockHeroImage,
         patternFamily: 'ONB_HERO_TOP' as PatternFamily,
         patternVariant: 1 as PatternVariant,
-        components: [], // Empty components should fail validation
+        patternDefinition,
+        components: baseComponents,
+        paletteOverride: {
+          // Invalid primary color to trigger validation error
+          primary: 'blue' as unknown as Palette['primary'],
+          secondary: '#111111',
+          accent: '#222222',
+          background: '#ffffff',
+        },
       }
 
       const result = await assembler.assemble(input, {
-        autoGenerateComponents: false,
         throwOnValidationError: false,
       })
 
@@ -309,6 +350,8 @@ describe('DSLAssembler', () => {
         heroImage: minimalHeroImage,
         patternFamily: 'ONB_HERO_TOP' as PatternFamily,
         patternVariant: 1 as PatternVariant,
+        patternDefinition,
+        components: baseComponents,
       }
 
       const result = await assembler.assemble(input)

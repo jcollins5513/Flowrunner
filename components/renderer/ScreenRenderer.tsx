@@ -20,7 +20,6 @@ import { validateScreenDSL } from '@/lib/dsl/validator'
 import { validateDSLAgainstPattern } from '@/lib/patterns/validator'
 import { cn } from '@/lib/utils'
 import { canUseLibraryComponents } from '@/lib/library/feature-gate'
-import { selectBackgroundComponent } from '@/lib/library/component-selector'
 import { BackgroundWrapper } from '@/lib/library/wrappers/background-wrapper'
 import type { LibraryContext } from '@/lib/renderer/component-factory'
 
@@ -117,15 +116,21 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
 
     let cancelled = false
 
-    selectBackgroundComponent({
-      vibe: dsl.vibe,
-      pattern: dsl.pattern_family,
-      slot: 'hero.background',
-      hasAccess: hasLibraryAccess,
+    // Use API route to avoid importing server-only modules
+    fetch('/api/library/components/background', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        vibe: dsl.vibe,
+        pattern: dsl.pattern_family,
+        slot: 'hero.background',
+        hasAccess: hasLibraryAccess,
+      }),
     })
-      .then((comp) => {
+      .then((res) => res.json())
+      .then((data) => {
         if (!cancelled) {
-          setBackgroundComponent(comp)
+          setBackgroundComponent(data.component)
         }
       })
       .catch(() => {
@@ -299,21 +304,6 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
 
   const computeSlotStyle = (position: { x: number; y: number; width: number; height?: number }) => {
     if (pattern.layout.structure === 'grid') {
-      // Check if we're on mobile with single column layout
-      const isSingleColumn = layoutConfig.gridTemplate === '1fr' || layoutConfig.gridTemplate?.match(/^1fr\s*$/)
-      
-      if (isSingleColumn) {
-        // Normalize positions for single column: all components at x:0, stack vertically
-        // Components originally on the right (x > 0) should stack after left column components
-        // Use a large multiplier to ensure right column items come after left column
-        const normalizedY = position.x === 0 ? position.y : position.y + (position.x * 1000)
-        return {
-          gridColumn: '1 / 2',
-          gridRow: `${normalizedY + 1} / ${normalizedY + (position.height || 1) + 1}`,
-        }
-      }
-      
-      // Multi-column layout: use original positions
       return {
         gridColumn: `${position.x + 1} / ${position.x + position.width + 1}`,
         gridRow: `${position.y + 1} / ${position.y + (position.height || 1) + 1}`,

@@ -16,6 +16,10 @@ import { validateScreenDSL } from './validator'
 import type { HeroImageWithPalette } from '../images/orchestrator'
 import type { TextGenerationResult } from '../ai/text-generation/types'
 import { PATTERN_FAMILY_METADATA } from '../patterns/metadata'
+import { deterministicId } from '../utils/deterministic'
+import { validateDSLAgainstPattern } from '../patterns/validator'
+import type { PatternDefinition } from '../patterns/schema'
+import { SUPPORTED_COMPONENT_TYPES } from '../renderer/component-factory'
 
 /**
  * Input data for assembling a ScreenDSL
@@ -25,6 +29,7 @@ export interface DSLAssemblyInput {
   heroImage: HeroImageWithPalette
   patternFamily: PatternFamily
   patternVariant: PatternVariant
+  patternDefinition?: PatternDefinition
 
   // Optional inputs
   supportingImages?: HeroImageWithPalette[]
@@ -53,12 +58,6 @@ export interface DSLAssemblyOptions {
    * If false, returns validation errors in the result
    */
   throwOnValidationError?: boolean
-
-  /**
-   * Whether to use pattern metadata to generate required components
-   * if components are not provided (default: true)
-   */
-  autoGenerateComponents?: boolean
 }
 
 /**
@@ -78,11 +77,7 @@ export class DSLAssembler {
    * Assemble a complete ScreenDSL from input data
    */
   async assemble(input: DSLAssemblyInput, options: DSLAssemblyOptions = {}): Promise<DSLAssemblyResult> {
-    const {
-      validate = true,
-      throwOnValidationError = true,
-      autoGenerateComponents = true,
-    } = options
+    const { validate = true, throwOnValidationError = true } = options
 
     // Step 1: Assemble hero_image from image metadata
     const hero_image = this.assembleHeroImage(input.heroImage)
@@ -97,10 +92,7 @@ export class DSLAssembler {
     const vibe = this.assembleVibe(input.heroImage, input.vibeOverride)
 
     // Step 5: Assemble components array with generated text
-    const components = await this.assembleComponents(
-      input,
-      autoGenerateComponents
-    )
+    const components = await this.assembleComponents(input)
 
     // Step 6: Build navigation object
     const navigation = this.assembleNavigation(input.navigation)
@@ -109,7 +101,7 @@ export class DSLAssembler {
     const animations = this.assembleAnimations(input.animations)
 
     // Step 8: Assemble metadata object
-    const metadata = this.assembleMetadata(input.metadata, input)
+    const metadata = this.assembleMetadata(input.metadata)
 
     // Step 9: Create complete ScreenDSL object
     const dsl: ScreenDSL = {
@@ -137,6 +129,20 @@ export class DSLAssembler {
           validationErrors: validationResult.formattedErrors || ['Unknown validation error'],
         }
       }
+
+      if (input.patternDefinition) {
+        const patternValidation = validateDSLAgainstPattern(dsl, input.patternDefinition)
+        if (!patternValidation.valid) {
+          const formattedErrors = patternValidation.errors.map((error) => `${error.field}:${error.code}`)
+          if (throwOnValidationError) {
+            throw new Error(`Pattern validation failed: ${formattedErrors.join(', ')}`)
+          }
+          return {
+            dsl,
+            validationErrors: formattedErrors,
+          }
+        }
+      }
     }
 
     return { dsl }
@@ -158,8 +164,11 @@ export class DSLAssembler {
         }
       : undefined
 
+    const idSeed = `${imageId ?? ''}-${image.url}-${image.prompt ?? ''}-${image.seed ?? ''}`
+    const stableId = imageId ?? deterministicId('hero', idSeed)
+
     return {
-      id: imageId || `hero-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      id: stableId,
       url: image.url,
       prompt: image.prompt,
       seed: image.seed,
@@ -221,33 +230,66 @@ export class DSLAssembler {
     return heroImage.vibe ?? 'modern'
   }
 
+  private validateComponentTypes(
+    components: Component[],
+    patternDefinition?: PatternDefinition,
+    patternFamily?: PatternFamily
+  ): void {
+    const allowedTypes = new Set(SUPPORTED_COMPONENT_TYPES)
+    const slotContract = patternDefinition?.componentSlots ?? PATTERN_FAMILY_METADATA[patternFamily as PatternFamily]?.componentSlots
+    const requiredSlots = new Set(slotContract?.required ?? [])
+    const optionalSlots = new Set(slotContract?.optional ?? [])
+
+    const providedTypes = new Set<Component['type']>()
+
+    components.forEach((component) => {
+      if (!allowedTypes.has(component.type)) {
+        throw new Error(`Unsupported component type ${component.type}`)
+      }
+
+      if (patternDefinition) {
+        const layoutSlots = new Set(Object.keys(patternDefinition.layout.positions))
+        if (!layoutSlots.has(component.type)) {
+          throw new Error(`Component ${component.type} does not match pattern layout positions`)
+        }
+      }
+
+      if (slotContract) {
+        const isKnownSlot = requiredSlots.has(component.type) || optionalSlots.has(component.type)
+        if (!isKnownSlot) {
+          throw new Error(`Component ${component.type} is not declared in componentSlots`)
+        }
+      }
+
+      providedTypes.add(component.type)
+    })
+
+    requiredSlots.forEach((slot) => {
+      if (!providedTypes.has(slot as Component['type'])) {
+        throw new Error(`Missing required component for slot ${slot}`)
+      }
+    })
+  }
+
   /**
    * Assemble components array with generated text
    */
-  private async assembleComponents(
-    input: DSLAssemblyInput,
-    autoGenerate: boolean
-  ): Promise<Component[]> {
-    // If components are provided, use them
+  private async assembleComponents(input: DSLAssemblyInput): Promise<Component[]> {
     if (input.components && input.components.length > 0) {
+      this.validateComponentTypes(input.components, input.patternDefinition, input.patternFamily)
       return input.components
     }
 
-    // If text generation result is provided, build components from it
     if (input.textGeneration) {
-      return this.buildComponentsFromTextGeneration(
+      const generated = this.buildComponentsFromTextGeneration(
         input.textGeneration,
         input.patternFamily
       )
+      this.validateComponentTypes(generated, input.patternDefinition, input.patternFamily)
+      return generated
     }
 
-    // If auto-generate is enabled, create components based on pattern requirements
-    if (autoGenerate) {
-      return this.generateComponentsFromPattern(input.patternFamily)
-    }
-
-    // Default: return empty array (will fail validation, but that's expected)
-    return []
+    throw new Error('Components must be supplied for DSL assembly; auto-generation is disabled')
   }
 
   /**
@@ -293,13 +335,7 @@ export class DSLAssembler {
     if (required.includes('form') && textGen.formLabels.length > 0) {
       components.push({
         type: 'form',
-        content: JSON.stringify({
-          fields: textGen.formLabels.map((label) => ({
-            name: label.toLowerCase().replace(/\s+/g, '_'),
-            label,
-            type: 'text',
-          })),
-        }),
+        content: textGen.formLabels.join(' • '),
         props: {
           fields: textGen.formLabels.map((label) => ({
             name: label.toLowerCase().replace(/\s+/g, '_'),
@@ -332,71 +368,12 @@ export class DSLAssembler {
       })
     }
 
-    return components
-  }
-
-  /**
-   * Generate components from pattern requirements
-   */
-  private generateComponentsFromPattern(patternFamily: PatternFamily): Component[] {
-    const metadata = PATTERN_FAMILY_METADATA[patternFamily]
-    const { required, optional } = metadata.componentSlots
-    const components: Component[] = []
-
-    // Add required components with default content
-    if (required.includes('title')) {
-      components.push({
-        type: 'title',
-        content: 'Welcome',
-      })
-    }
-
-    if (required.includes('subtitle')) {
-      components.push({
-        type: 'subtitle',
-        content: 'Get started today',
-      })
-    }
-
-    if (required.includes('text')) {
-      components.push({
-        type: 'text',
-        content: 'This is placeholder text that should be replaced with generated content.',
-      })
-    }
-
-    if (required.includes('button')) {
-      components.push({
-        type: 'button',
-        content: 'Continue',
-      })
-    }
-
-    if (required.includes('form')) {
-      components.push({
-        type: 'form',
-        content: JSON.stringify({
-          fields: [
-            { name: 'email', label: 'Email', type: 'email' },
-            { name: 'name', label: 'Name', type: 'text' },
-          ],
-        }),
-        props: {
-          fields: [
-            { name: 'email', label: 'Email', type: 'email' },
-            { name: 'name', label: 'Name', type: 'text' },
-          ],
-        },
-      })
-    }
-
-    // Add some optional components
-    if (optional.includes('subtitle') && !required.includes('subtitle')) {
-      components.push({
-        type: 'subtitle',
-        content: 'Additional information',
-      })
-    }
+    const providedTypes = new Set(components.map((component) => component.type))
+    required.forEach((slot) => {
+      if (!providedTypes.has(slot as Component['type'])) {
+        throw new Error(`Missing required component content for slot ${slot}`)
+      }
+    })
 
     return components
   }
@@ -441,28 +418,17 @@ export class DSLAssembler {
    * Assemble metadata object
    */
   private assembleMetadata(
-    providedMetadata?: Record<string, unknown>,
-    input?: DSLAssemblyInput
+    providedMetadata?: Record<string, unknown>
   ): Record<string, unknown> | undefined {
-    const metadata: Record<string, unknown> = {
-      ...providedMetadata,
-      assembledAt: new Date().toISOString(),
-      assemblerVersion: '1.0.0',
-    }
-
-    if (input?.heroImage.imageId) {
-      metadata.heroImageId = input.heroImage.imageId
-    }
-
-    if (input?.heroImage.image.metadata) {
-      metadata.imageMetadata = input.heroImage.image.metadata
-    }
-
-    if (Object.keys(metadata).length === 0) {
+    if (!providedMetadata) {
       return undefined
     }
 
-    return metadata
+    const metadata: Record<string, unknown> = {
+      ...providedMetadata,
+    }
+
+    return Object.keys(metadata).length > 0 ? metadata : undefined
   }
 
 

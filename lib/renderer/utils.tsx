@@ -18,19 +18,9 @@ export interface SlotPosition {
  */
 export function computeSlotPosition(
   position: SlotPosition,
-  layoutStructure: 'grid' | 'flex',
-  isSingleColumn = false
+  layoutStructure: 'grid' | 'flex'
 ): CSSProperties {
   if (layoutStructure === 'grid') {
-    if (isSingleColumn) {
-      // Normalize positions for single column: all components at x:0, stack vertically
-      const normalizedY = position.x === 0 ? position.y : position.y + (position.x * 1000)
-      return {
-        gridColumn: '1 / 2',
-        gridRow: `${normalizedY + 1} / ${normalizedY + (position.height || 1) + 1}`,
-      }
-    }
-
     // Multi-column layout: use original positions
     return {
       gridColumn: `${position.x + 1} / ${position.x + position.width + 1}`,

@@ -13,21 +13,14 @@ describe('Renderer utilities', () => {
     const position = { x: 1, y: 2, width: 2, height: 1 }
 
     it('computes grid position correctly', () => {
-      const styles = computeSlotPosition(position, 'grid', false)
+      const styles = computeSlotPosition(position, 'grid')
 
       expect(styles).toHaveProperty('gridColumn', '2 / 4')
       expect(styles).toHaveProperty('gridRow', '3 / 4')
     })
 
-    it('normalizes positions for single column layout', () => {
-      const styles = computeSlotPosition(position, 'grid', true)
-
-      expect(styles).toHaveProperty('gridColumn', '1 / 2')
-      expect(styles.gridRow).toContain('3')
-    })
-
     it('computes flex position correctly', () => {
-      const styles = computeSlotPosition(position, 'flex', false)
+      const styles = computeSlotPosition(position, 'flex')
 
       expect(styles).toHaveProperty('order', 2)
       expect(styles).toHaveProperty('flex', 2)

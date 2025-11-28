@@ -10,8 +10,6 @@ import React, { useEffect, useState } from 'react'
 import type { Component } from '@/lib/dsl/types'
 import type { Palette, Vibe } from '@/lib/dsl/types'
 import type { PatternFamily } from '@/lib/patterns/families'
-import { selectLibraryComponent } from '../component-selector'
-import { getComponentBySlug } from '../component-registry'
 import { TextWrapper } from './text-wrapper'
 import { ButtonWrapper } from './button-wrapper'
 import { CardWrapper } from './card-wrapper'
@@ -65,19 +63,32 @@ export function LibraryComponentRenderer({
             ? explicitLibraryComponent.split('/')
             : [undefined, explicitLibraryComponent]
 
-          comp = await getComponentBySlug(slug, source as any)
+          // Use API route to avoid importing server-only modules
+          const params = new URLSearchParams({ slug })
+          if (source) {
+            params.set('source', source)
+          }
+          const response = await fetch(`/api/library/components/by-slug?${params.toString()}`)
+          const data = await response.json()
+          comp = data.component
         }
 
-        // If no explicit component or not found, use selector
+        // If no explicit component or not found, use selector via API route
         if (!comp) {
-          comp = await selectLibraryComponent({
-            componentType: component.type,
-            vibe,
-            palette,
-            pattern,
-            slot,
-            hasAccess,
+          const response = await fetch('/api/library/components/select', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              componentType: component.type,
+              vibe,
+              palette,
+              pattern,
+              slot,
+              hasAccess,
+            }),
           })
+          const data = await response.json()
+          comp = data.component
         }
 
         if (!cancelled) {

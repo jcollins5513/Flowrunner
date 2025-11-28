@@ -5,15 +5,18 @@ import type { FlowTemplate } from './templates/schema'
 import { loadPattern } from '../patterns/loader'
 import { validateDSLAgainstPattern } from '../patterns/validator'
 import type { PatternDefinition } from '../patterns/schema'
-import type { Component, PatternFamily, PatternVariant, ScreenDSL } from '../dsl/types'
+import type { PatternFamily, PatternVariant, ScreenDSL } from '../dsl/types'
 import { dslAssembler } from '../dsl/assembler'
 import { ImageGenerationService } from '../images/generation/service'
-import { MockImageProvider } from '../images/generation/providers/mock'
+import { OpenAIImageProvider } from '../images/generation/providers/openai'
 import { ImageOrchestrator, type HeroImageWithPalette } from '../images/orchestrator'
 import { persistHeroImageMetadata } from '../db/hero-image-persistence'
 import { createScreenWithValidation } from '../db/dsl-persistence'
 import { validateScreenDSL } from '../dsl/validator'
 import { pipelineTelemetry } from '../telemetry/pipeline'
+import { buildComponentsFromContext } from './content/deterministic-content'
+import { deterministicId, deterministicSeed } from '../utils/deterministic'
+import type { Intent } from '../ai/intent/intent.schema'
 
 export interface PromptToRenderOptions {
   screenIndex?: number
@@ -41,56 +44,13 @@ export interface FlowIntentResult {
   templateId: string
 }
 
-const defaultOrchestrator = new ImageOrchestrator({
-  service: new ImageGenerationService({ provider: new MockImageProvider() }),
-  autoExtractPalette: true,
-  autoInferVibe: true,
-  autoPersist: true,
-})
-
-const buildComponentsFromPlan = (
-  plan: ScreenGenerationPlan,
-  pattern: PatternDefinition
-): Component[] => {
-  const components: Component[] = []
-  const { required, optional } = pattern.componentSlots
-
-  if (required.includes('title')) {
-    components.push({ type: 'title', content: plan.name })
-  }
-
-  if (required.includes('subtitle')) {
-    components.push({ type: 'subtitle', content: plan.textPlan.contentFocus ?? plan.heroPlan.vibe })
-  } else if (optional.includes('subtitle') && plan.textPlan.contentFocus) {
-    components.push({ type: 'subtitle', content: plan.textPlan.contentFocus })
-  }
-
-  if (required.includes('text')) {
-    components.push({ type: 'text', content: plan.textPlan.colorMood })
-  } else if (optional.includes('text')) {
-    components.push({ type: 'text', content: `${plan.textPlan.tone} narrative` })
-  }
-
-  if (required.includes('button')) {
-    components.push({ type: 'button', content: 'Continue' })
-  } else if (optional.includes('button')) {
-    components.push({ type: 'button', content: 'Learn more' })
-  }
-
-  if (required.includes('form')) {
-    components.push({
-      type: 'form',
-      content: JSON.stringify({ fields: [{ name: 'email', label: 'Email', type: 'email' }] }),
-      props: { fields: [{ name: 'email', label: 'Email', type: 'email' }] },
-    })
-  }
-
-  if (optional.includes('image') && !required.includes('image')) {
-    components.push({ type: 'image', content: plan.heroPlan.imagePrompt })
-  }
-
-  return components
-}
+const createDefaultOrchestrator = () =>
+  new ImageOrchestrator({
+    service: new ImageGenerationService({ provider: new OpenAIImageProvider() }),
+    autoExtractPalette: true,
+    autoInferVibe: true,
+    autoPersist: true,
+  })
 
 const resolvePattern = (plan: ScreenGenerationPlan): PatternDefinition => {
   try {
@@ -117,7 +77,18 @@ export const assembleScreenFromPrompt = async (
     () => Promise.resolve(resolvePattern(plan)),
     { family: plan.pattern.family, variant: plan.pattern.variant },
   )) as PatternDefinition
-  const orchestrator = options.imageOrchestrator ?? defaultOrchestrator
+  pipelineTelemetry.logStage('pattern_resolution', 'success', {
+    metadata: {
+      templateId: plan.templateId,
+      screenId: plan.screenId,
+      family: plan.pattern.family,
+      variant: plan.pattern.variant,
+    },
+  })
+  const orchestrator = options.imageOrchestrator ?? createDefaultOrchestrator()
+
+  const heroSeedBase = deterministicSeed(`${prompt}-${plan.pattern.family}-${plan.pattern.variant}`)
+  const heroSeed = heroSeedBase === 0 ? 1 : heroSeedBase
 
   const heroImage =
     options.prebuiltHeroImage ??
@@ -127,9 +98,25 @@ export const assembleScreenFromPrompt = async (
         orchestrator.generateHeroImageWithPalette({
           prompt: plan.heroPlan.imagePrompt,
           aspectRatio: plan.heroPlan.aspectRatio,
+          seed: heroSeed,
+          style: pipeline.intent.visualTheme,
+          colorMood: plan.heroPlan.colorMood,
+          visualTheme: pipeline.intent.visualTheme,
         }),
-      { patternFamily: plan.pattern.family, patternVariant: plan.pattern.variant },
+      {
+        patternFamily: plan.pattern.family,
+        patternVariant: plan.pattern.variant,
+        seed: heroSeed,
+      },
     )) as HeroImageWithPalette)
+
+  pipelineTelemetry.logStage('image_generation_trace', 'success', {
+    metadata: {
+      seed: heroSeed,
+      prompt: plan.heroPlan.imagePrompt,
+      aspectRatio: plan.heroPlan.aspectRatio,
+    },
+  })
 
   pipelineTelemetry.logStage('palette_and_vibe', 'success', {
     metadata: {
@@ -151,10 +138,21 @@ export const assembleScreenFromPrompt = async (
 
   const heroWithId: HeroImageWithPalette = {
     ...heroImage,
-    imageId: persistedImageId ?? heroImage.imageId ?? `hero-${Date.now()}`,
+    imageId:
+      persistedImageId ??
+      heroImage.imageId ??
+      deterministicId(
+        'hero',
+        `${prompt}-${plan.pattern.family}-${plan.pattern.variant}-${plan.screenId ?? 'screen'}`,
+      ),
   }
 
-  const components = buildComponentsFromPlan(plan, pattern)
+  const components = buildComponentsFromContext({
+    intent: pipeline.intent as Intent,
+    plan,
+    pattern,
+    prompt,
+  })
 
   const assembly = (await pipelineTelemetry.timeStage(
     'dsl_assembly',
@@ -164,6 +162,7 @@ export const assembleScreenFromPrompt = async (
           heroImage: heroWithId,
           patternFamily: plan.pattern.family as PatternFamily,
           patternVariant: plan.pattern.variant as PatternVariant,
+          patternDefinition: pattern,
           components,
           metadata: {
             templateId: plan.templateId,
