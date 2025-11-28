@@ -16,9 +16,9 @@ const buildDefaultInterpreter = (): IntentInterpreter => {
   try {
     return new IntentInterpreter(new OpenAIIntentProvider())
   } catch (error) {
-    pipelineTelemetry.logStage('intent_provider_fallback', 'error', {
+    pipelineTelemetry.logStage('intent_interpretation', 'error', {
       message: 'openai_intent_unavailable',
-      metadata: { reason: error instanceof Error ? error.message : 'unknown' },
+      metadata: { reason: error instanceof Error ? error.message : 'unknown', fallback: 'mock_provider' },
     })
     return new IntentInterpreter(new MockIntentProvider())
   }
@@ -50,25 +50,6 @@ export const runPromptToTemplatePipeline = async (
     () => Promise.resolve(mapTemplateToScreenSequence(template, intent)),
     { templateId: template.id ?? 'unlabeled_template' },
   )) as ScreenGenerationPlan[]
-
-  pipelineTelemetry.logStage('pipeline_trace', 'success', {
-    metadata: {
-      promptLength: prompt.length,
-      intent: {
-        domain: intent.domain,
-        tone: intent.tone,
-        styleCues: intent.styleCues,
-        colorMood: intent.colorMood,
-        visualTheme: intent.visualTheme,
-      },
-      templateId: template.id,
-      screens: sequence.map((screen) => ({
-        screenId: screen.screenId,
-        patternFamily: screen.pattern.family,
-        patternVariant: screen.pattern.variant,
-      })),
-    },
-  })
 
   return {
     intent,

@@ -58,7 +58,7 @@ export function renderComponent({
   const isEditing = editMode && editingComponentId === `${screenId}-${componentIndex}`
 
   // Check if component explicitly specifies a library component
-  const explicitLibraryComponent = component.props?.libraryComponent as string | undefined
+  const explicitLibraryComponent = component.props?.libraryComponent as string | false | undefined
 
   // Try to use library component if context is provided and component doesn't explicitly opt out
   const useLibraryComponent =

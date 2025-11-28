@@ -204,11 +204,11 @@ async function loadComponentsFromSource(
       } else if (metadata.type === 'button' || metadata.category === 'button') {
         componentType = 'button'
       } else if (
-        metadata.type === 'component' &&
-        (metadata.category === 'text' ||
-          slug.includes('text') ||
-          slug.includes('gradient') ||
-          slug.includes('typing'))
+        metadata.type === 'text' ||
+        metadata.category === 'text' ||
+        slug.includes('text') ||
+        slug.includes('gradient') ||
+        slug.includes('typing')
       ) {
         componentType = 'text'
       }

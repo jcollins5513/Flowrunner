@@ -37,7 +37,7 @@ const orderedSlots = (pattern: PatternDefinition): string[] =>
 
 const selectCTA = (tone: Intent['tone'], pattern: PatternDefinition): string => {
   const toneOptions = TONE_CTA_PRESETS[tone] ?? []
-  const patternOptions = PATTERN_CTA_FALLBACKS[pattern.family] ?? []
+  const patternOptions = PATTERN_CTA_FALLBACKS[pattern.family as PatternFamily] ?? []
   return [...toneOptions, ...patternOptions, DEFAULT_CTA][0] ?? DEFAULT_CTA
 }
 

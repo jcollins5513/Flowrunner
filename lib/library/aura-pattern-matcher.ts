@@ -6,7 +6,7 @@
  */
 
 import type { PatternFamily } from '../patterns/families'
-import type { PatternVariant } from '../patterns/schema'
+import type { PatternVariant } from '../dsl/types'
 import {
   analyzeAuraTemplate,
   mapAuraToPatternFamily,

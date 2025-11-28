@@ -110,7 +110,7 @@ export const assembleScreenFromPrompt = async (
       },
     )) as HeroImageWithPalette)
 
-  pipelineTelemetry.logStage('image_generation_trace', 'success', {
+  pipelineTelemetry.logStage('image_generation', 'success', {
     metadata: {
       seed: heroSeed,
       prompt: plan.heroPlan.imagePrompt,

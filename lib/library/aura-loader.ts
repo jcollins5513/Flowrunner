@@ -101,7 +101,7 @@ export async function loadAllAuraTemplates(
 ): Promise<AuraTemplate[]> {
   const slugs = await listAuraTemplates()
   const templates = await Promise.all(
-    slugs.map(async (slug) => {
+    slugs.map(async (slug): Promise<AuraTemplate | null> => {
       const metadata = await loadAuraTemplateMetadata(slug)
       if (!metadata) {
         return null
@@ -123,9 +123,7 @@ export async function loadAllAuraTemplates(
     })
   )
 
-  return templates.filter(
-    (template): template is AuraTemplate => template !== null
-  )
+  return templates.filter((template): template is AuraTemplate => template !== null)
 }
 
 /**
