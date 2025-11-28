@@ -248,6 +248,50 @@ export function buildScreenDSLFromPlan(
     })
   }
 
+  // If any required slots are missing, add safe defaults so Zod validation passes
+  const requiredSlots = patternDefinition.componentSlots?.required ?? []
+  for (const slot of requiredSlots) {
+    const alreadyExists = components.some((component) => component.type === slot)
+    if (alreadyExists) continue
+
+    if (slot === 'title') {
+      components.push({
+        type: 'title',
+        content: plan.name || 'Welcome',
+        props: {
+          fontSize: 'text-4xl',
+          fontWeight: 'font-bold',
+          textAlign: 'text-center',
+        },
+      })
+    } else if (slot === 'subtitle') {
+      components.push({
+        type: 'subtitle',
+        content: plan.description || 'Let’s get you onboarded with a quick overview.',
+        props: {
+          fontSize: 'text-lg',
+          textAlign: 'text-center',
+        },
+      })
+    } else if (slot === 'button') {
+      components.push({
+        type: 'button',
+        content: 'Get Started',
+        props: {
+          variant: 'primary',
+          action: 'primary',
+          align: 'center',
+        },
+      })
+    } else {
+      // Generic fallback for any other required slot types
+      components.push({
+        type: slot as any,
+        content: plan.name || slot,
+      })
+    }
+  }
+
   // Ensure hero_image has required fields
   if (!heroImage.image?.url) {
     throw new Error('Hero image URL is required')
@@ -287,4 +331,3 @@ export function buildScreenDSLFromPlan(
     } : {}),
   }
 }
-

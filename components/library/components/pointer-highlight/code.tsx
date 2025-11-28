@@ -10,4 +10,3 @@ export function PointerHighlightDemo() {
     </div>
   );
 }
-Select Language

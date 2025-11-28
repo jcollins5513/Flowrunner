@@ -51,4 +51,3 @@ const CheckIcon = () => {
     </svg>
   );
 };
-Select Language

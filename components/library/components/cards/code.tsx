@@ -357,4 +357,3 @@ export const MetaIconOutline = ({ className }: { className?: string }) => {
     </svg>
   );
 };
-Select Language

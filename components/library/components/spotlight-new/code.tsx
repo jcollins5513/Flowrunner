@@ -18,4 +18,3 @@ export function SpotlightNewDemo() {
     </div>
   );
 }
-Select Language

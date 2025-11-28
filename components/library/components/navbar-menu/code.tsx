@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { HoveredLink, Menu, MenuItem, ProductItem } from "../ui/navbar-menu";
+import { HoveredLink, Menu, MenuItem, ProductItem } from "@/components/ui/navbar-menu";
 import { cn } from "@/lib/utils";
  
 export function NavbarDemo() {
@@ -69,4 +69,3 @@ function Navbar({ className }: { className?: string }) {
     </div>
   );
 }
-Select Language

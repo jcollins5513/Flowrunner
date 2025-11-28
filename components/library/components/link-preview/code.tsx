@@ -29,4 +29,3 @@ export function LinkPreviewDemo() {
     </div>
   );
 }
-Select Language

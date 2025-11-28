@@ -19,4 +19,3 @@ export function BackgroundRippleEffectDemo() {
     </div>
   );
 }
-Select Language

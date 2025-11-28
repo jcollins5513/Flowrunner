@@ -65,4 +65,3 @@ export function WorldMapDemo() {
     </div>
   );
 }
-Select Language

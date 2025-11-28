@@ -20,7 +20,6 @@ import { validateScreenDSL } from '@/lib/dsl/validator'
 import { validateDSLAgainstPattern } from '@/lib/patterns/validator'
 import { cn } from '@/lib/utils'
 import { canUseLibraryComponents } from '@/lib/library/feature-gate'
-import { selectBackgroundComponent } from '@/lib/library/component-selector'
 import { BackgroundWrapper } from '@/lib/library/wrappers/background-wrapper'
 import type { LibraryContext } from '@/lib/renderer/component-factory'
 
@@ -117,15 +116,21 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
 
     let cancelled = false
 
-    selectBackgroundComponent({
-      vibe: dsl.vibe,
-      pattern: dsl.pattern_family,
-      slot: 'hero.background',
-      hasAccess: hasLibraryAccess,
+    // Use API route instead of direct import (server-only)
+    fetch('/api/library/components/background', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        vibe: dsl.vibe,
+        pattern: dsl.pattern_family,
+        slot: 'hero.background',
+        hasAccess: hasLibraryAccess,
+      }),
     })
-      .then((comp) => {
+      .then((res) => res.json())
+      .then((data) => {
         if (!cancelled) {
-          setBackgroundComponent(comp)
+          setBackgroundComponent(data.component || null)
         }
       })
       .catch(() => {

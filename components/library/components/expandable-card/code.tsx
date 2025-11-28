@@ -316,4 +316,3 @@ const cards = [
     },
   },
 ];
-Select Language

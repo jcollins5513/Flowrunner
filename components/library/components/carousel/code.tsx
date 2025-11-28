@@ -30,4 +30,3 @@ export function CarouselDemo() {
     </div>
   );
 }
-Select Language

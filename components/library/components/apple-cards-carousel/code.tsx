@@ -89,4 +89,3 @@ const data = [
     content: <DummyContent />,
   },
 ];
-Select Language

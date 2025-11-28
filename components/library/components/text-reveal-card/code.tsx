@@ -4,7 +4,7 @@ import {
   TextRevealCard,
   TextRevealCardDescription,
   TextRevealCardTitle,
-} from "../ui/text-reveal-card";
+} from "@/components/ui/text-reveal-card";
  
 export function TextRevealCardPreview() {
   return (
@@ -24,4 +24,3 @@ export function TextRevealCardPreview() {
     </div>
   );
 }
-Select Language

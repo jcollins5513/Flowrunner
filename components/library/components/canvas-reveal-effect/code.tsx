@@ -121,4 +121,3 @@ export const Icon = ({ className, ...rest }: any) => {
     </svg>
   );
 };
-Select Language

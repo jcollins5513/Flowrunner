@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Lens } from "../ui/lens";
+import { Lens } from "@/components/ui/lens";
  
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
@@ -469,4 +469,3 @@ const Rays = ({ className }: { className?: string }) => {
     </svg>
   );
 };
-Select Language

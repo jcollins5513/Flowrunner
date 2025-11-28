@@ -1,4 +1,4 @@
-import { GlareCard } from "../ui/glare-card";
+import { GlareCard } from "@/components/ui/glare-card";
  
 export function GlareCardDemo() {
   return (
@@ -23,4 +23,3 @@ export function GlareCardDemo() {
     </GlareCard>
   );
 }
-Select Language

@@ -69,4 +69,3 @@ export function DraggableCardDemo() {
     </DraggableCardContainer>
   );
 }
-Select Language

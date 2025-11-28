@@ -30,4 +30,3 @@ export function FocusCardsDemo() {
  
   return <FocusCards cards={cards} />;
 }
-Select Language

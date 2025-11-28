@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "motion/react";
 import React from "react";
-import { ImagesSlider } from "../ui/images-slider";
+import { ImagesSlider } from "@/components/ui/images-slider";
  
 export function ImagesSliderDemo() {
   const images = [
@@ -36,4 +36,3 @@ export function ImagesSliderDemo() {
     </ImagesSlider>
   );
 }
-Select Language

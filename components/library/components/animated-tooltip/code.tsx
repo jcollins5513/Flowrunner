@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { AnimatedTooltip } from "../ui/animated-tooltip";
+import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
 const people = [
   {
     id: 1,
@@ -53,4 +53,3 @@ export function AnimatedTooltipPreview() {
     </div>
   );
 }
-Select Language

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { HeroParallax } from "../ui/hero-parallax";
+import { HeroParallax } from "@/components/ui/hero-parallax";
  
 export function HeroParallaxDemo() {
   return <HeroParallax products={products} />;
@@ -100,4 +100,3 @@ export const products = [
       "https://aceternity.com/images/products/thumbnails/new/efreeinvoice.png",
   },
 ];
-Select Language

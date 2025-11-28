@@ -19,4 +19,3 @@ export function ColourfulTextDemo() {
     </div>
   );
 }
-Select Language

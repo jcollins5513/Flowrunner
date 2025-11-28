@@ -20,4 +20,3 @@ export function GridBackgroundDemo() {
     </div>
   );
 }
-Select Language

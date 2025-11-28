@@ -16,4 +16,3 @@ export function StatefulButtonDemo() {
     </div>
   );
 }
-Select Language

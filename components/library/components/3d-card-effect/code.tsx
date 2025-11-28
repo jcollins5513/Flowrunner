@@ -51,4 +51,3 @@ export function ThreeDCardDemo() {
     </CardContainer>
   );
 }
-Select Language

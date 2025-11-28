@@ -152,4 +152,3 @@ export function TimelineDemo() {
     </div>
   );
 }
-Select Language

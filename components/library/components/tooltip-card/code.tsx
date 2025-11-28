@@ -89,4 +89,3 @@ const TestimonialCard = () => {
     </div>
   );
 };
-Select Language

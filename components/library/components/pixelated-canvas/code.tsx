@@ -28,4 +28,3 @@ export function PixelatedCanvasDemo() {
     </div>
   );
 }
-Select Language

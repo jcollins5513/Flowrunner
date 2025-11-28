@@ -41,4 +41,3 @@ export function ThreeDMarqueeDemo() {
     </div>
   );
 }
-Select Language

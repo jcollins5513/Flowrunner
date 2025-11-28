@@ -18,4 +18,3 @@ export function BackgroundBeamsWithCollisionDemo() {
     </BackgroundBeamsWithCollision>
   );
 }
-Select Language
