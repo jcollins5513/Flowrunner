@@ -14,7 +14,7 @@ import { EditableButton } from '@/components/editing/EditableButton'
 import { EditableText } from '@/components/editing/EditableText'
 import { EditableForm } from '@/components/editing/EditableForm'
 import { LibraryComponentRenderer } from '@/lib/library/wrappers/library-component-renderer'
-import type { ComponentCategory } from '@/lib/library/component-types'
+import type { ComponentTier } from '@/lib/library/component-types'
 
 export const SUPPORTED_COMPONENT_TYPES: Component['type'][] = ['title', 'subtitle', 'button', 'form', 'text', 'image']
 
@@ -26,7 +26,7 @@ export interface LibraryContext {
   hasAccess: boolean
   screenType?: string
   formFactor?: 'mobile' | 'web' | 'both'
-  categoryPreference?: ComponentCategory
+  tierPreference?: ComponentTier
 }
 
 export interface ComponentRendererProps {
@@ -119,26 +119,26 @@ export function renderComponent({
         )
       }
       // Try library component, fallback to default
-      if (useLibraryComponent && libraryContext) {
-        return (
-          <LibraryComponentRenderer
-            component={component}
-            vibe={libraryContext.vibe}
-          palette={libraryContext.palette}
-          pattern={libraryContext.pattern}
-          slot={libraryContext.slot}
-          hasAccess={libraryContext.hasAccess}
-          screenType={libraryContext.screenType}
-          categoryPreference={libraryContext.categoryPreference}
-          formFactor={libraryContext.formFactor}
-          style={style}
-          className={className}
-          defaultRender={() => (
-            <Title key={component.content} content={component.content} {...commonProps} />
-          )}
-          />
-        )
-      }
+        if (useLibraryComponent && libraryContext) {
+          return (
+            <LibraryComponentRenderer
+              component={component}
+              vibe={libraryContext.vibe}
+              palette={libraryContext.palette}
+              pattern={libraryContext.pattern}
+              slot={libraryContext.slot}
+              hasAccess={libraryContext.hasAccess}
+              screenType={libraryContext.screenType}
+              tierPreference={libraryContext.tierPreference}
+              formFactor={libraryContext.formFactor}
+              style={style}
+              className={className}
+              defaultRender={() => (
+                <Title key={component.content} content={component.content} {...commonProps} />
+              )}
+            />
+          )
+        }
       return <Title key={component.content} content={component.content} {...commonProps} />
     }
     case 'subtitle': {
@@ -165,7 +165,7 @@ export function renderComponent({
             slot={libraryContext.slot}
             hasAccess={libraryContext.hasAccess}
             screenType={libraryContext.screenType}
-            categoryPreference={libraryContext.categoryPreference}
+            tierPreference={libraryContext.tierPreference}
             formFactor={libraryContext.formFactor}
             style={style}
             className={className}
@@ -198,34 +198,34 @@ export function renderComponent({
       }
       
       // Try library component
-      if (useLibraryComponent && libraryContext) {
-        return (
-          <LibraryComponentRenderer
-            component={component}
-            vibe={libraryContext.vibe}
-          palette={libraryContext.palette}
-          pattern={libraryContext.pattern}
-          slot={libraryContext.slot}
-          hasAccess={libraryContext.hasAccess}
-          screenType={libraryContext.screenType}
-          categoryPreference={libraryContext.categoryPreference}
-          formFactor={libraryContext.formFactor}
-          style={style}
-          className={className}
-          onClick={onClick}
-          defaultRender={() => (
-            <Button
-                key={component.content}
-                content={component.content}
-                onClick={onClick}
-                variant={buttonVariant}
-                size={buttonSize}
-                {...commonProps}
-              />
-            )}
-          />
-        )
-      }
+        if (useLibraryComponent && libraryContext) {
+          return (
+            <LibraryComponentRenderer
+              component={component}
+              vibe={libraryContext.vibe}
+              palette={libraryContext.palette}
+              pattern={libraryContext.pattern}
+              slot={libraryContext.slot}
+              hasAccess={libraryContext.hasAccess}
+              screenType={libraryContext.screenType}
+              tierPreference={libraryContext.tierPreference}
+              formFactor={libraryContext.formFactor}
+              style={style}
+              className={className}
+              onClick={onClick}
+              defaultRender={() => (
+                <Button
+                  key={component.content}
+                  content={component.content}
+                  onClick={onClick}
+                  variant={buttonVariant}
+                  size={buttonSize}
+                  {...commonProps}
+                />
+              )}
+            />
+          )
+        }
       
       return (
         <Button
@@ -274,7 +274,7 @@ export function renderComponent({
             slot={libraryContext.slot}
             hasAccess={libraryContext.hasAccess}
             screenType={libraryContext.screenType}
-            categoryPreference={libraryContext.categoryPreference}
+            tierPreference={libraryContext.tierPreference}
             formFactor={libraryContext.formFactor}
             style={style}
             className={className}
@@ -337,7 +337,7 @@ export function renderComponent({
             slot={libraryContext.slot}
             hasAccess={libraryContext.hasAccess}
             screenType={libraryContext.screenType}
-            categoryPreference={libraryContext.categoryPreference}
+            tierPreference={libraryContext.tierPreference}
             formFactor={libraryContext.formFactor}
             style={style}
             className={className}

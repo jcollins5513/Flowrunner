@@ -2,15 +2,30 @@
  * Type definitions for library component integration
  */
 
+import type React from 'react'
+import { z } from 'zod'
+
 import type { Vibe } from '../dsl/types'
 import type { PatternFamily } from '../patterns/families'
-import type React from 'react'
 
-export type ComponentCategory = 'safe' | 'advanced'
+export type ComponentTier = 'safe' | 'advanced'
 
-export type ComponentLibrary = 'shadcn' | 'aceternity' | 'magicui' | 'custom'
+export type ComponentCategory =
+  | 'action'
+  | 'content'
+  | 'layout'
+  | 'navigation'
+  | 'form'
+  | 'hero'
+  | 'background'
+  | 'media'
+  | 'input'
+
+export type ComponentLibrary = 'shadcn' | 'aceternity' | 'magicui' | 'custom' | 'heroui'
 
 export type ComponentSource = 'magic' | 'aceternity' | 'components'
+
+export type ComponentComplexity = 'simple' | 'standard' | 'high'
 
 export type LibraryComponentType =
   | 'background'
@@ -26,26 +41,42 @@ export type LibraryComponentType =
   | 'icon'
   | 'list'
 
+export interface ComponentAffinities {
+  slots?: Record<string, number>
+  screenTypes?: Record<string, number>
+  complexity?: Partial<Record<ComponentComplexity, number>>
+  vibes?: Partial<Record<Vibe, number>>
+}
+
 export interface LibraryComponent {
   id: string
   name: string
   library: ComponentLibrary
+  tier: ComponentTier
   category: ComponentCategory
   role: string
   type: LibraryComponentType
-  /**
-   * Optional screen intent tags (e.g. onboarding, pricing)
-   */
+  allowedSlots?: string[]
+  slotRoles?: string[]
   screenTypes?: string[]
   /**
    * Form factor support for the component.
    */
   formFactor?: 'mobile' | 'web' | 'both'
   /**
+   * How visually complex the component is.
+   */
+  complexity: ComponentComplexity
+  affinities?: ComponentAffinities
+  /**
    * Optional source indicator for backwards compatibility with existing
    * component folders.
    */
   source?: ComponentSource
+  /**
+   * Optional schema describing supported props for DSL validation.
+   */
+  propsSchema?: z.ZodTypeAny
   /**
    * Concrete component implementation if already loaded.
    */
@@ -87,14 +118,31 @@ export interface ComponentSelectionContext {
    */
   screenType?: string
   /**
-   * Preferred category for this selection. Defaults to safe.
+   * Preferred tier for this selection. Defaults to safe.
    */
-  categoryPreference?: ComponentCategory
+  tierPreference?: ComponentTier
   /**
    * Form factor hint for the selector.
    */
   formFactor?: 'mobile' | 'web' | 'both'
+  /**
+   * Requested complexity target for the component.
+   */
+  requestedComplexity?: ComponentComplexity
+  /**
+   * Requested category (action/content/etc) used for preference scoring.
+   */
+  requestedCategory?: ComponentCategory
+  /**
+   * Explicit registry id to use (e.g., when user upgrades an element).
+   */
+  requestedComponentId?: string
+  /**
+   * Whether the caller wants upgrade options returned alongside safe defaults.
+   */
+  allowUpgrades?: boolean
+  /**
+   * Whether the caller explicitly allows advanced components (premium replacement).
+   */
+  allowAdvancedSelection?: boolean
 }
-
-
-

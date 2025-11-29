@@ -14,8 +14,13 @@ import { TextWrapper } from './text-wrapper'
 import { ButtonWrapper } from './button-wrapper'
 import { CardWrapper } from './card-wrapper'
 import { selectLibraryComponent } from '../component-selector'
-import type { ComponentCategory, LibraryComponent } from '../component-types'
+import type {
+  ComponentComplexity,
+  ComponentTier,
+  LibraryComponent,
+} from '../component-types'
 import { loadComponentImplementation } from '../component-loader'
+import type { UpgradeOption } from '../component-upgrades'
 
 export interface LibraryComponentRendererProps {
   component: Component
@@ -25,11 +30,12 @@ export interface LibraryComponentRendererProps {
   slot?: string
   hasAccess: boolean
   screenType?: string
-  categoryPreference?: ComponentCategory
+  tierPreference?: ComponentTier
   formFactor?: 'mobile' | 'web' | 'both'
   style?: React.CSSProperties
   className?: string
   onClick?: React.MouseEventHandler<HTMLButtonElement>
+  onUpgradesAvailable?: (component: Component, upgrades: UpgradeOption[]) => void
   defaultRender: () => React.ReactElement
 }
 
@@ -43,14 +49,16 @@ export function LibraryComponentRenderer({
   style,
   className,
   onClick,
+  onUpgradesAvailable,
   defaultRender,
   screenType,
-  categoryPreference,
+  tierPreference,
   formFactor,
 }: LibraryComponentRendererProps): React.ReactElement {
   const [libraryComponent, setLibraryComponent] = useState<LibraryComponent | null>(null)
   const [implementation, setImplementation] = useState<React.ComponentType<any> | null>(null)
   const [loading, setLoading] = useState(true)
+  const [upgradeOptions, setUpgradeOptions] = useState<UpgradeOption[]>([])
 
   useEffect(() => {
     if (!hasAccess) {
@@ -60,10 +68,14 @@ export function LibraryComponentRenderer({
 
     let cancelled = false
 
-    const explicitCategory =
-      categoryPreference || (component.props?.categoryPreference as ComponentCategory | undefined)
+    const explicitTier = tierPreference || (component.props?.tierPreference as ComponentTier | undefined)
     const explicitScreenType = screenType || (component.props?.screenType as string | undefined) || undefined
     const explicitFormFactor = formFactor ?? 'web'
+    const explicitRequestedComponentId = component.props?.libraryComponent as string | undefined
+    const explicitComplexity =
+      (component.props?.requestedComplexity as ComponentComplexity | undefined) || undefined
+    const allowAdvancedSelection =
+      (component.props?.allowAdvancedSelection as boolean | undefined) ?? Boolean(explicitRequestedComponentId)
 
     const loadComponent = async () => {
       try {
@@ -74,9 +86,14 @@ export function LibraryComponentRenderer({
           pattern,
           slot,
           hasAccess,
-          categoryPreference: explicitCategory,
+          tierPreference: explicitTier,
           screenType: explicitScreenType,
           formFactor: explicitFormFactor,
+          requestedComponentId: explicitRequestedComponentId,
+          allowUpgrades: hasAccess,
+          allowAdvancedSelection,
+          requestedComplexity: explicitComplexity,
+          requestedCategory: component.props?.requestedCategory as any,
         })
 
         if (cancelled) return
@@ -86,15 +103,16 @@ export function LibraryComponentRenderer({
           return
         }
 
-        const loaded = await loadComponentImplementation(selection)
+        const loaded = await loadComponentImplementation(selection.component)
         if (cancelled) return
 
         if (!loaded) {
-          console.error('[LibraryComponentRenderer] Failed to load implementation for:', selection.id)
+          console.error('[LibraryComponentRenderer] Failed to load implementation for:', selection.component.id)
         }
 
-        setLibraryComponent(selection)
+        setLibraryComponent(selection.component)
         setImplementation(() => loaded)
+        setUpgradeOptions(selection.upgrades)
         setLoading(false)
       } catch (error) {
         if (!cancelled) {
@@ -112,9 +130,13 @@ export function LibraryComponentRenderer({
       cancelled = true
     }
   }, [
-    categoryPreference,
-    component.props?.categoryPreference,
+    tierPreference,
+    component.props?.tierPreference,
     component.props?.screenType,
+    component.props?.libraryComponent,
+    component.props?.requestedComplexity,
+    component.props?.requestedCategory,
+    component.props?.allowAdvancedSelection,
     component.type,
     formFactor,
     hasAccess,
@@ -124,6 +146,12 @@ export function LibraryComponentRenderer({
     slot,
     vibe,
   ])
+
+  useEffect(() => {
+    if (onUpgradesAvailable) {
+      onUpgradesAvailable(component, upgradeOptions)
+    }
+  }, [component, onUpgradesAvailable, upgradeOptions])
 
   // If loading or no library component, render default
   if (loading || !libraryComponent || !implementation) {

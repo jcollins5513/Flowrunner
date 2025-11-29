@@ -1,131 +1,396 @@
-import componentsIndex from '@/components/library/index.json'
-import magicComponentsIndex from '@/components/library/magic/index.json'
-import type React from 'react'
-import type {
-  ComponentLibrary,
-  ComponentSource,
-} from './component-types'
-import type { ComponentCategory, LibraryComponent, LibraryComponentType } from './component-types'
+import { z } from 'zod'
 
-const HIGH_IMPACT_VIBES: string[] = ['bold', 'energetic', 'playful']
+import type {
+  ComponentComplexity,
+  ComponentTier,
+  LibraryComponent,
+  LibraryComponentType,
+} from './component-types'
+import type { ComponentSource } from './component-types'
+
 const DEFAULT_SCREEN_TYPES = ['marketing', 'onboarding', 'pricing', 'dashboard']
 
-type LibraryIndexComponent = {
-  name: string
-  sanitized_name: string
-  type: string
-  recommended_slots?: string[]
+const COMMON_PROPS_SCHEMA = z.object({
+  className: z.string().optional(),
+})
+
+function createLoader(source: ComponentSource, slug: string, exportName: string) {
+  return async () => {
+    const module =
+      source === 'magic'
+        ? await import(`@/components/library/magic/components/${slug}/code`)
+        : await import(`@/components/library/components/${slug}/code`)
+    const component = module[exportName]
+
+    if (!component) {
+      throw new Error(`No export named ${exportName} found for component ${slug}`)
+    }
+
+    return component
+  }
 }
 
-const manualRegistry: LibraryComponent[] = [
+function sharedAffinities(
+  screenTypes: string[],
+  complexity: ComponentComplexity
+): LibraryComponent['affinities'] {
+  return {
+    screenTypes: Object.fromEntries(screenTypes.map((screen) => [screen, 1])),
+    complexity: { [complexity]: 1 },
+  }
+}
+
+const safeComponents: LibraryComponent[] = [
   {
     id: 'safe.text.generate',
     name: 'Text Generate Effect',
-    library: 'shadcn',
-    category: 'safe',
+    library: 'aceternity',
+    tier: 'safe',
+    category: 'content',
     role: 'hero',
     type: 'text',
-    screenTypes: ['onboarding', 'pricing', 'dashboard'],
+    allowedSlots: ['hero.title', 'hero.subtitle', 'section.heading'],
+    slotRoles: ['hero', 'text'],
+    screenTypes: DEFAULT_SCREEN_TYPES,
     formFactor: 'both',
+    complexity: 'standard',
+    affinities: {
+      ...sharedAffinities(DEFAULT_SCREEN_TYPES, 'standard'),
+      slots: { 'hero.title': 1, 'hero.subtitle': 0.9 },
+    },
     source: 'components',
-    load: async () => (await import('./component-adapters')).TextGenerateAdapter,
+    propsSchema: COMMON_PROPS_SCHEMA.extend({
+      words: z.string().optional(),
+    }),
+    load: createLoader('components', 'text-generate-effect', 'TextGenerateEffectDemo'),
+  },
+  {
+    id: 'safe.button.stateful',
+    name: 'Stateful Button',
+    library: 'aceternity',
+    tier: 'safe',
+    category: 'action',
+    role: 'cta',
+    type: 'button',
+    allowedSlots: ['cta', 'hero.primaryCta', 'form.submit'],
+    slotRoles: ['cta'],
+    screenTypes: ['marketing', 'onboarding', 'dashboard'],
+    formFactor: 'both',
+    complexity: 'simple',
+    affinities: {
+      ...sharedAffinities(['marketing', 'onboarding'], 'simple'),
+      slots: { cta: 1, 'form.submit': 0.6 },
+    },
+    source: 'components',
+    propsSchema: COMMON_PROPS_SCHEMA.extend({
+      label: z.string().optional(),
+      href: z.string().optional(),
+    }),
+    load: createLoader('components', 'stateful-button', 'StatefulButtonDemo'),
+  },
+  {
+    id: 'safe.card.hover',
+    name: 'Card Hover Effect',
+    library: 'aceternity',
+    tier: 'safe',
+    category: 'content',
+    role: 'feature',
+    type: 'card',
+    allowedSlots: ['section.card', 'feature.card', 'list.item'],
+    slotRoles: ['card'],
+    screenTypes: ['marketing', 'dashboard'],
+    formFactor: 'both',
+    complexity: 'standard',
+    affinities: {
+      ...sharedAffinities(['marketing'], 'standard'),
+      slots: { 'section.card': 1, 'feature.card': 0.8 },
+    },
+    source: 'components',
+    propsSchema: COMMON_PROPS_SCHEMA.extend({
+      items: z.array(z.any()).optional(),
+    }),
+    load: createLoader('components', 'card-hover-effect', 'CardHoverEffectDemo'),
+  },
+  {
+    id: 'safe.background.beams',
+    name: 'Background Beams',
+    library: 'aceternity',
+    tier: 'safe',
+    category: 'background',
+    role: 'background',
+    type: 'background',
+    allowedSlots: ['hero.background', 'section.background'],
+    slotRoles: ['background'],
+    screenTypes: ['marketing', 'onboarding'],
+    formFactor: 'both',
+    complexity: 'standard',
+    affinities: {
+      ...sharedAffinities(['marketing', 'onboarding'], 'standard'),
+      slots: { 'hero.background': 1, 'section.background': 0.7 },
+    },
+    source: 'components',
+    propsSchema: COMMON_PROPS_SCHEMA,
+    load: createLoader('components', 'background-beams', 'BackgroundBeams'),
   },
   {
     id: 'safe.hero.highlight',
-    name: 'Hero Highlight Demo',
-    library: 'shadcn',
-    category: 'safe',
+    name: 'Hero Highlight',
+    library: 'aceternity',
+    tier: 'safe',
+    category: 'hero',
     role: 'hero',
     type: 'hero',
-    screenTypes: ['onboarding', 'marketing'],
+    allowedSlots: ['hero'],
+    slotRoles: ['hero'],
+    screenTypes: ['marketing', 'onboarding'],
     formFactor: 'both',
+    complexity: 'standard',
+    affinities: {
+      ...sharedAffinities(['marketing', 'onboarding'], 'standard'),
+      slots: { hero: 1 },
+    },
     source: 'components',
-    load: async () => (await import('./component-adapters')).HeroHighlightAdapter,
+    propsSchema: COMMON_PROPS_SCHEMA.extend({
+      heading: z.string().optional(),
+      subheading: z.string().optional(),
+    }),
+    load: createLoader('components', 'hero-highlight', 'HeroHighlightDemo'),
   },
   {
-    id: 'safe.button.primary',
-    name: 'Shadcn Primary Button',
-    library: 'shadcn',
-    category: 'safe',
-    role: 'cta',
-    type: 'button',
-    screenTypes: ['onboarding', 'pricing', 'dashboard'],
+    id: 'safe.form.signup',
+    name: 'Signup Form',
+    library: 'aceternity',
+    tier: 'safe',
+    category: 'form',
+    role: 'form',
+    type: 'form',
+    allowedSlots: ['form', 'section.form', 'hero.form'],
+    slotRoles: ['form'],
+    screenTypes: ['marketing', 'onboarding', 'pricing'],
     formFactor: 'both',
+    complexity: 'standard',
+    affinities: {
+      ...sharedAffinities(['marketing', 'onboarding'], 'standard'),
+      slots: { form: 1, 'section.form': 0.8 },
+    },
     source: 'components',
-    load: async () => (await import('@/components/ui/button')).Button,
+    propsSchema: COMMON_PROPS_SCHEMA.extend({
+      submitLabel: z.string().optional(),
+      fields: z.array(z.record(z.any())).optional(),
+    }),
+    load: createLoader('components', 'signup-form', 'SignupFormDemo'),
   },
   {
-    id: 'safe.background.aurora',
-    name: 'Aurora Background',
-    library: 'shadcn',
-    category: 'safe',
-    role: 'background',
-    type: 'background',
-    screenTypes: ['onboarding', 'marketing'],
+    id: 'safe.navigation.menu',
+    name: 'Navbar Menu',
+    library: 'aceternity',
+    tier: 'safe',
+    category: 'navigation',
+    role: 'navigation',
+    type: 'navigation',
+    allowedSlots: ['navigation.primary', 'header.navigation'],
+    slotRoles: ['navigation'],
+    screenTypes: ['marketing', 'dashboard'],
     formFactor: 'both',
+    complexity: 'simple',
+    affinities: {
+      ...sharedAffinities(['marketing', 'dashboard'], 'simple'),
+      slots: { 'navigation.primary': 1 },
+    },
     source: 'components',
-    load: async () => (await import('@/components/ui/aurora-background')).AuroraBackground,
+    propsSchema: COMMON_PROPS_SCHEMA,
+    load: createLoader('components', 'navbar-menu', 'NavbarDemo'),
   },
   {
-    id: 'advanced.text.animated-gradient',
-    name: 'Animated Gradient Text',
-    library: 'magicui',
-    category: 'advanced',
-    role: 'hero',
-    type: 'text',
-    screenTypes: ['onboarding', 'marketing'],
+    id: 'safe.gallery.carousel',
+    name: 'Carousel Gallery',
+    library: 'aceternity',
+    tier: 'safe',
+    category: 'media',
+    role: 'gallery',
+    type: 'gallery',
+    allowedSlots: ['gallery', 'media.gallery', 'hero.media'],
+    slotRoles: ['media'],
+    screenTypes: DEFAULT_SCREEN_TYPES,
     formFactor: 'both',
-    source: 'magic',
-    load: async () =>
-      (await import('@/components/library/magic/components/animated-gradient-text/code')).AnimatedGradientTextDemo,
+    complexity: 'standard',
+    affinities: {
+      ...sharedAffinities(DEFAULT_SCREEN_TYPES, 'standard'),
+      slots: { gallery: 1, 'hero.media': 0.6 },
+    },
+    source: 'components',
+    propsSchema: COMMON_PROPS_SCHEMA,
+    load: createLoader('components', 'carousel', 'CarouselDemo'),
   },
-  {
-    id: 'advanced.text.word-rotate',
-    name: 'Word Rotate',
-    library: 'magicui',
-    category: 'advanced',
-    role: 'body',
-    type: 'text',
-    screenTypes: ['onboarding', 'dashboard'],
-    formFactor: 'both',
-    source: 'magic',
-    load: async () => (await import('@/components/library/magic/components/word-rotate/code')).WordRotateDemo,
-  },
+]
+
+const advancedComponents: LibraryComponent[] = [
   {
     id: 'advanced.button.shimmer',
     name: 'Shimmer Button',
     library: 'magicui',
-    category: 'advanced',
+    tier: 'advanced',
+    category: 'action',
     role: 'cta',
     type: 'button',
-    screenTypes: ['onboarding', 'pricing'],
+    allowedSlots: ['cta', 'hero.primaryCta'],
+    slotRoles: ['cta'],
+    screenTypes: ['marketing', 'onboarding', 'pricing'],
     formFactor: 'both',
+    complexity: 'high',
+    affinities: {
+      ...sharedAffinities(['marketing', 'onboarding'], 'high'),
+      slots: { cta: 1, 'hero.primaryCta': 0.9 },
+      vibes: { energetic: 1, bold: 0.9 },
+    },
     source: 'magic',
-    load: async () => (await import('@/components/library/magic/components/shimmer-button/code')).ShimmerButtonDemo,
+    propsSchema: COMMON_PROPS_SCHEMA.extend({
+      label: z.string().optional(),
+    }),
+    load: createLoader('magic', 'shimmer-button', 'ShimmerButtonDemo'),
+  },
+  {
+    id: 'advanced.button.rainbow',
+    name: 'Rainbow Button',
+    library: 'magicui',
+    tier: 'advanced',
+    category: 'action',
+    role: 'cta',
+    type: 'button',
+    allowedSlots: ['cta', 'hero.primaryCta'],
+    slotRoles: ['cta'],
+    screenTypes: ['marketing', 'onboarding'],
+    formFactor: 'both',
+    complexity: 'high',
+    affinities: {
+      ...sharedAffinities(['marketing', 'onboarding'], 'high'),
+      slots: { cta: 1 },
+      vibes: { playful: 1, energetic: 0.8 },
+    },
+    source: 'magic',
+    propsSchema: COMMON_PROPS_SCHEMA.extend({
+      label: z.string().optional(),
+    }),
+    load: createLoader('magic', 'rainbow-button', 'RainbowButtonDemo'),
   },
   {
     id: 'advanced.card.magic',
     name: 'Magic Card',
     library: 'magicui',
-    category: 'advanced',
-    role: 'form',
+    tier: 'advanced',
+    category: 'content',
+    role: 'feature',
     type: 'card',
-    screenTypes: ['onboarding', 'dashboard'],
+    allowedSlots: ['section.card', 'feature.card', 'form'],
+    slotRoles: ['card', 'form'],
+    screenTypes: ['dashboard', 'onboarding'],
     formFactor: 'both',
+    complexity: 'high',
+    affinities: {
+      ...sharedAffinities(['dashboard', 'onboarding'], 'high'),
+      slots: { 'section.card': 1, form: 0.7 },
+      vibes: { modern: 0.8, bold: 0.7 },
+    },
     source: 'magic',
-    load: async () => (await import('@/components/library/magic/components/magic-card/code')).MagicCardDemo,
+    propsSchema: COMMON_PROPS_SCHEMA,
+    load: createLoader('magic', 'magic-card', 'MagicCardDemo'),
+  },
+  {
+    id: 'advanced.background.retro-grid',
+    name: 'Retro Grid Background',
+    library: 'magicui',
+    tier: 'advanced',
+    category: 'background',
+    role: 'background',
+    type: 'background',
+    allowedSlots: ['hero.background', 'section.background'],
+    slotRoles: ['background'],
+    screenTypes: ['marketing', 'onboarding'],
+    formFactor: 'both',
+    complexity: 'high',
+    affinities: {
+      ...sharedAffinities(['marketing'], 'high'),
+      slots: { 'hero.background': 1 },
+      vibes: { energetic: 1, playful: 0.8 },
+    },
+    source: 'magic',
+    propsSchema: COMMON_PROPS_SCHEMA,
+    load: createLoader('magic', 'retro-grid', 'RetroGridDemo'),
+  },
+  {
+    id: 'advanced.hero.video',
+    name: 'Hero Video Dialog',
+    library: 'magicui',
+    tier: 'advanced',
+    category: 'hero',
+    role: 'hero',
+    type: 'hero',
+    allowedSlots: ['hero', 'hero.media'],
+    slotRoles: ['hero'],
+    screenTypes: ['marketing', 'onboarding'],
+    formFactor: 'both',
+    complexity: 'high',
+    affinities: {
+      ...sharedAffinities(['marketing', 'onboarding'], 'high'),
+      slots: { hero: 1, 'hero.media': 0.7 },
+      vibes: { energetic: 1, tech: 0.8 },
+    },
+    source: 'magic',
+    propsSchema: COMMON_PROPS_SCHEMA.extend({
+      videoSrc: z.string().optional(),
+      thumbnailSrc: z.string().optional(),
+    }),
+    load: createLoader('magic', 'hero-video-dialog', 'HeroVideoDialogDemoTopInBottomOut'),
+  },
+  {
+    id: 'advanced.navigation.dock',
+    name: 'Dock Navigation',
+    library: 'magicui',
+    tier: 'advanced',
+    category: 'navigation',
+    role: 'navigation',
+    type: 'navigation',
+    allowedSlots: ['navigation.primary', 'footer.navigation'],
+    slotRoles: ['navigation'],
+    screenTypes: ['dashboard', 'marketing'],
+    formFactor: 'both',
+    complexity: 'high',
+    affinities: {
+      ...sharedAffinities(['dashboard'], 'high'),
+      slots: { 'navigation.primary': 1 },
+      vibes: { modern: 1, tech: 0.9 },
+    },
+    source: 'magic',
+    propsSchema: COMMON_PROPS_SCHEMA,
+    load: createLoader('magic', 'dock', 'DockDemo'),
+  },
+  {
+    id: 'advanced.text.morphing',
+    name: 'Morphing Text',
+    library: 'magicui',
+    tier: 'advanced',
+    category: 'content',
+    role: 'hero',
+    type: 'text',
+    allowedSlots: ['hero.title', 'section.heading'],
+    slotRoles: ['hero', 'text'],
+    screenTypes: DEFAULT_SCREEN_TYPES,
+    formFactor: 'both',
+    complexity: 'high',
+    affinities: {
+      ...sharedAffinities(DEFAULT_SCREEN_TYPES, 'high'),
+      slots: { 'hero.title': 1 },
+      vibes: { energetic: 1, playful: 0.8 },
+    },
+    source: 'magic',
+    propsSchema: COMMON_PROPS_SCHEMA.extend({
+      texts: z.array(z.string()).optional(),
+    }),
+    load: createLoader('magic', 'morphing-text', 'MorphingTextDemo'),
   },
 ]
 
-const registry: LibraryComponent[] = [
-  ...manualRegistry,
-  ...componentsIndex.components.map((component) =>
-    normalizeComponent(component, 'safe', 'aceternity', 'components')
-  ),
-  ...magicComponentsIndex.components.map((component) =>
-    normalizeComponent(component, 'advanced', 'magicui', 'magic')
-  ),
-]
+const registry: LibraryComponent[] = [...safeComponents, ...advancedComponents]
 
 export function getComponentRegistry(): LibraryComponent[] {
   return registry
@@ -139,135 +404,12 @@ export function getComponentById(id: string): LibraryComponent | undefined {
   return registry.find((component) => component.id === id)
 }
 
-export function getComponentsByCategory(category: ComponentCategory): LibraryComponent[] {
-  return registry.filter((component) => component.category === category)
+export function getComponentsByTier(tier: ComponentTier): LibraryComponent[] {
+  return registry.filter((component) => component.tier === tier)
 }
 
-export function prefersAdvanced(vibe: string, requested?: ComponentCategory): ComponentCategory {
+export function prefersAdvanced(vibe: string, requested?: ComponentTier): ComponentTier {
   if (requested) return requested
-  return HIGH_IMPACT_VIBES.includes(vibe) ? 'advanced' : 'safe'
-}
-
-function normalizeComponent(
-  component: LibraryIndexComponent,
-  category: ComponentCategory,
-  library: ComponentLibrary,
-  source: ComponentSource
-): LibraryComponent {
-  const type = mapLibraryType(component)
-  const role = deriveRole(component, type)
-
-  return {
-    id: `${category}.${component.sanitized_name}`,
-    name: component.name,
-    library,
-    category,
-    role,
-    type,
-    screenTypes: deriveScreenTypes(role, type),
-    formFactor: 'both',
-    source,
-    load: createLoader(source, component.sanitized_name),
-  }
-}
-
-function deriveRole(
-  component: LibraryIndexComponent,
-  type: LibraryComponentType
-): string {
-  const preferredSlot = component.recommended_slots?.[0]
-  if (preferredSlot) {
-    const [slotRole, secondary] = preferredSlot.split('.')
-    if (slotRole) return slotRole
-    if (secondary) return secondary
-  }
-
-  if (type === 'background') return 'background'
-  if (type === 'navigation') return 'navigation'
-  if (type === 'hero') return 'hero'
-  if (type === 'form') return 'form'
-  return 'content'
-}
-
-function deriveScreenTypes(role: string, type: LibraryComponentType): string[] {
-  if (role === 'hero' || type === 'hero' || type === 'media') {
-    return ['marketing', 'onboarding']
-  }
-  if (role === 'navigation') {
-    return ['dashboard', 'marketing']
-  }
-  if (type === 'background') {
-    return ['marketing', 'onboarding']
-  }
-  if (type === 'form') {
-    return ['onboarding', 'pricing', 'dashboard']
-  }
-
-  return DEFAULT_SCREEN_TYPES
-}
-
-function mapLibraryType(component: LibraryIndexComponent): LibraryComponentType {
-  const normalized = component.type.toLowerCase()
-  const slug = component.sanitized_name.toLowerCase()
-
-  if (normalized === 'component') return 'widget'
-  if (normalized === 'hero' || slug.includes('hero')) return 'hero'
-  if (normalized === 'navigation' || slug.includes('navbar') || slug.includes('sidebar')) return 'navigation'
-  if (normalized === 'form' || slug.includes('form')) return 'form'
-  if (normalized === 'background' || slug.includes('background')) return 'background'
-  if (normalized === 'text' || slug.includes('text') || slug.includes('typography')) return 'text'
-  if (normalized === 'card' || slug.includes('card')) return 'card'
-  if (normalized === 'button' || slug.includes('button')) return 'button'
-  if (slug.includes('gallery') || slug.includes('carousel') || slug.includes('slider')) return 'gallery'
-  if (slug.includes('icon')) return 'icon'
-  if (slug.includes('list') || slug.includes('timeline') || slug.includes('steps')) return 'list'
-  if (slug.includes('image') || slug.includes('media') || slug.includes('video')) return 'media'
-  if (normalized === 'widget') return 'widget'
-
-  return 'widget'
-}
-
-function createLoader(source: ComponentSource, slug: string) {
-  return async (): Promise<React.ComponentType<any>> => {
-    const module =
-      source === 'magic'
-        ? await import(`@/components/library/magic/components/${slug}/code`)
-        : await import(`@/components/library/components/${slug}/code`)
-
-    const component = findDemoExport(module, slug)
-    if (!component) {
-      throw new Error(`No demo export found for component ${slug}`)
-    }
-
-    return component
-  }
-}
-
-function findDemoExport(module: Record<string, any>, slug: string): React.ComponentType<any> | undefined {
-  const pascal = toPascalCase(slug)
-  const candidateNames = [`${pascal}Demo`, `${pascal}Component`, pascal, 'Demo']
-
-  for (const candidate of candidateNames) {
-    if (typeof module[candidate] === 'function') {
-      return module[candidate]
-    }
-  }
-
-  const demoKey = Object.keys(module).find(
-    (key) => key.toLowerCase().includes('demo') && typeof module[key] === 'function'
-  )
-  if (demoKey) return module[demoKey]
-
-  const firstComponentKey = Object.keys(module).find((key) => typeof module[key] === 'function')
-  if (firstComponentKey) return module[firstComponentKey]
-
-  return undefined
-}
-
-function toPascalCase(value: string): string {
-  return value
-    .split(/[-_\s]+/)
-    .filter(Boolean)
-    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
-    .join('')
+  const energeticVibes: string[] = ['bold', 'energetic', 'playful']
+  return energeticVibes.includes(vibe) ? 'advanced' : 'safe'
 }
