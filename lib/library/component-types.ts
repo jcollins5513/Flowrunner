@@ -12,7 +12,19 @@ export type ComponentLibrary = 'shadcn' | 'aceternity' | 'magicui' | 'custom'
 
 export type ComponentSource = 'magic' | 'aceternity' | 'components'
 
-export type LibraryComponentType = 'background' | 'card' | 'button' | 'text' | 'widget'
+export type LibraryComponentType =
+  | 'background'
+  | 'card'
+  | 'button'
+  | 'text'
+  | 'widget'
+  | 'hero'
+  | 'navigation'
+  | 'form'
+  | 'media'
+  | 'gallery'
+  | 'icon'
+  | 'list'
 
 export interface LibraryComponent {
   id: string
@@ -45,7 +57,21 @@ export interface LibraryComponent {
 }
 
 export interface ComponentSelectionContext {
-  componentType: 'title' | 'subtitle' | 'button' | 'form' | 'text' | 'image'
+  componentType:
+    | 'title'
+    | 'subtitle'
+    | 'button'
+    | 'form'
+    | 'text'
+    | 'image'
+    | 'media'
+    | 'icon'
+    | 'list'
+    | 'card'
+    | 'gallery'
+    | 'background'
+    | 'navigation'
+    | 'hero'
   vibe: Vibe
   palette: {
     primary: string

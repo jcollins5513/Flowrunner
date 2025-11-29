@@ -50,7 +50,21 @@ export interface HeroImage {
 }
 
 export interface Component {
-  type: 'title' | 'subtitle' | 'button' | 'form' | 'text' | 'image'
+  type:
+    | 'title'
+    | 'subtitle'
+    | 'button'
+    | 'form'
+    | 'text'
+    | 'image'
+    | 'media'
+    | 'icon'
+    | 'list'
+    | 'card'
+    | 'gallery'
+    | 'background'
+    | 'navigation'
+    | 'hero'
   content: string
   props?: {
     // Existing props

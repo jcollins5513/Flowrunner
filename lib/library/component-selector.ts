@@ -92,15 +92,41 @@ function normalizeSlotRole(slot?: string): string | undefined {
   return slot
 }
 
-function matchType(componentType: ComponentSelectionContext['componentType']): LibraryComponentType[] {
-  if (componentType === 'title' || componentType === 'subtitle' || componentType === 'text') {
+export function matchType(
+  componentType: ComponentSelectionContext['componentType']
+): LibraryComponentType[] {
+  if (componentType === 'title' || componentType === 'subtitle') {
+    return ['text', 'hero']
+  }
+  if (componentType === 'text') {
     return ['text']
   }
   if (componentType === 'button') {
     return ['button']
   }
   if (componentType === 'form') {
-    return ['card']
+    return ['form', 'card']
+  }
+  if (componentType === 'image' || componentType === 'media' || componentType === 'hero') {
+    return ['hero', 'media', 'gallery', 'background']
+  }
+  if (componentType === 'icon') {
+    return ['icon', 'button', 'text']
+  }
+  if (componentType === 'list') {
+    return ['list', 'card', 'widget']
+  }
+  if (componentType === 'card') {
+    return ['card', 'widget']
+  }
+  if (componentType === 'gallery') {
+    return ['gallery', 'media', 'background']
+  }
+  if (componentType === 'background') {
+    return ['background', 'hero']
+  }
+  if (componentType === 'navigation') {
+    return ['navigation']
   }
   return []
 }

@@ -40,16 +40,22 @@ HeroHighlightAdapter.displayName = 'HeroHighlightAdapter'
 /**
  * Text Generate adapter that accepts content as words prop
  */
-export function TextGenerateAdapter({ 
-  children,
-  className,
-  ...props 
-}: { 
-  children: React.ReactNode
-  className?: string
-  [key: string]: any
-}) {
-  const words = typeof children === 'string' ? children : String(children)
+export function TextGenerateAdapter(
+  {
+    children,
+    className,
+    ...props 
+  }: { 
+    children?: React.ReactNode
+    className?: string
+    [key: string]: any
+  } = {}
+) {
+  const content = children ?? ''
+  const words =
+    typeof content === 'string'
+      ? content
+      : React.Children.toArray(content).join(' ')
   return (
     <TextGenerateEffect 
       words={words} 
@@ -58,4 +64,3 @@ export function TextGenerateAdapter({
     />
   )
 }
-
