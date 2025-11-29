@@ -13,6 +13,9 @@ import type { PatternFamily } from '@/lib/patterns/families'
 import { TextWrapper } from './text-wrapper'
 import { ButtonWrapper } from './button-wrapper'
 import { CardWrapper } from './card-wrapper'
+import { selectLibraryComponent } from '../component-selector'
+import type { ComponentCategory, LibraryComponent } from '../component-types'
+import { loadComponentImplementation } from '../component-loader'
 
 export interface LibraryComponentRendererProps {
   component: Component
@@ -21,6 +24,9 @@ export interface LibraryComponentRendererProps {
   pattern: PatternFamily
   slot?: string
   hasAccess: boolean
+  screenType?: string
+  categoryPreference?: ComponentCategory
+  formFactor?: 'mobile' | 'web' | 'both'
   style?: React.CSSProperties
   className?: string
   onClick?: React.MouseEventHandler<HTMLButtonElement>
@@ -38,8 +44,12 @@ export function LibraryComponentRenderer({
   className,
   onClick,
   defaultRender,
+  screenType,
+  categoryPreference,
+  formFactor,
 }: LibraryComponentRendererProps): React.ReactElement {
-  const [libraryComponent, setLibraryComponent] = useState<any>(null)
+  const [libraryComponent, setLibraryComponent] = useState<LibraryComponent | null>(null)
+  const [implementation, setImplementation] = useState<React.ComponentType<any> | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -50,56 +60,37 @@ export function LibraryComponentRenderer({
 
     let cancelled = false
 
-    // Check if component explicitly specifies a library component
-    const explicitLibraryComponent = component.props?.libraryComponent as string | undefined
+    const explicitCategory =
+      categoryPreference || (component.props?.categoryPreference as ComponentCategory | undefined)
+    const explicitScreenType = screenType || (component.props?.screenType as string | undefined) || undefined
+    const explicitFormFactor = formFactor ?? 'web'
 
     const loadComponent = async () => {
-      try {
-        let comp: any = null
+      const selection = await selectLibraryComponent({
+        componentType: component.type,
+        vibe,
+        palette,
+        pattern,
+        slot,
+        hasAccess,
+        categoryPreference: explicitCategory,
+        screenType: explicitScreenType,
+        formFactor: explicitFormFactor,
+      })
 
-        if (explicitLibraryComponent) {
-          // Try to find by slug (could be "animated-gradient-text" or "magic/animated-gradient-text")
-          const [source, slug] = explicitLibraryComponent.includes('/')
-            ? explicitLibraryComponent.split('/')
-            : [undefined, explicitLibraryComponent]
-
-          // Use API route instead of direct import (server-only)
-          const response = await fetch(
-            `/api/library/components/by-slug?slug=${encodeURIComponent(slug)}${source ? `&source=${encodeURIComponent(source)}` : ''}`
-          )
-          const data = await response.json()
-          comp = data.component
-        }
-
-        // If no explicit component or not found, use selector via API route
-        if (!comp) {
-          // Use API route instead of direct import (server-only)
-          const response = await fetch('/api/library/components/select', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              componentType: component.type,
-              vibe,
-              palette,
-              pattern,
-              slot,
-              hasAccess,
-            }),
-          })
-          const data = await response.json()
-          comp = data.component
-        }
-
-        if (!cancelled) {
-          setLibraryComponent(comp)
-          setLoading(false)
-        }
-      } catch (error) {
-        if (!cancelled) {
-          console.warn('Failed to load library component:', error)
-          setLoading(false)
-        }
+      if (cancelled) return
+      if (!selection) {
+        setLibraryComponent(null)
+        setLoading(false)
+        return
       }
+
+      const loaded = await loadComponentImplementation(selection)
+      if (cancelled) return
+
+      setLibraryComponent(selection)
+      setImplementation(() => loaded)
+      setLoading(false)
     }
 
     loadComponent()
@@ -107,10 +98,22 @@ export function LibraryComponentRenderer({
     return () => {
       cancelled = true
     }
-  }, [component.type, component.props?.libraryComponent, vibe, palette, pattern, slot, hasAccess])
+  }, [
+    categoryPreference,
+    component.props?.categoryPreference,
+    component.props?.screenType,
+    component.type,
+    formFactor,
+    hasAccess,
+    palette,
+    pattern,
+    screenType,
+    slot,
+    vibe,
+  ])
 
   // If loading or no library component, render default
-  if (loading || !libraryComponent) {
+  if (loading || !libraryComponent || !implementation) {
     return defaultRender()
   }
 
@@ -125,6 +128,7 @@ export function LibraryComponentRenderer({
         vibe={vibe}
         className={className}
         style={style}
+        implementation={implementation}
       />
     )
   }
@@ -140,6 +144,22 @@ export function LibraryComponentRenderer({
         className={className}
         style={style}
         onClick={onClick}
+        implementation={implementation}
+      />
+    )
+  }
+
+  if (component.type === 'form') {
+    return (
+      <CardWrapper
+        key={component.content}
+        libraryComponent={libraryComponent}
+        dslComponent={component}
+        palette={palette}
+        vibe={vibe}
+        className={className}
+        style={style}
+        implementation={implementation}
       />
     )
   }

@@ -6,51 +6,42 @@ import type { Vibe } from '../dsl/types'
 import type { PatternFamily } from '../patterns/families'
 import type React from 'react'
 
+export type ComponentCategory = 'safe' | 'advanced'
+
+export type ComponentLibrary = 'shadcn' | 'aceternity' | 'magicui' | 'custom'
+
 export type ComponentSource = 'magic' | 'aceternity' | 'components'
 
 export type LibraryComponentType = 'background' | 'card' | 'button' | 'text' | 'widget'
 
-export interface ComponentMetadata {
-  name: string
-  slug: string
-  description: string
-  tags: string[]
-  category: string
-  type: LibraryComponentType
-  layout_role?: string
-  recommended_slots: string[]
-  interaction_profile?: string
-  preferred_size?: string
-  z_index_role?: string
-  usage_notes?: string
-  theme_requirements?: string[]
-  data_requirements?: Array<Record<string, unknown>>
-  domain_tags?: string[]
-  source: ComponentSource
-  client_only?: boolean
-  imports?: string[]
-  dependencies?: string[]
-  props?: Array<{
-    Prop?: string
-    'Prop name'?: string
-    Type: string
-    Default?: string
-    Description: string
-    Required?: string
-  }>
-}
-
 export interface LibraryComponent {
-  slug: string
+  id: string
   name: string
-  source: ComponentSource
+  library: ComponentLibrary
+  category: ComponentCategory
+  role: string
   type: LibraryComponentType
-  recommendedSlots: string[]
-  metadata: ComponentMetadata
-  component: React.ComponentType<any> | null // Lazy loaded, null until loaded
-  vibeCompatibility?: Vibe[]
-  patternCompatibility?: PatternFamily[]
-  filePath: string // Path to code.tsx file
+  /**
+   * Optional screen intent tags (e.g. onboarding, pricing)
+   */
+  screenTypes?: string[]
+  /**
+   * Form factor support for the component.
+   */
+  formFactor?: 'mobile' | 'web' | 'both'
+  /**
+   * Optional source indicator for backwards compatibility with existing
+   * component folders.
+   */
+  source?: ComponentSource
+  /**
+   * Concrete component implementation if already loaded.
+   */
+  component?: React.ComponentType<any>
+  /**
+   * Lazy loader used by the component loader to fetch the implementation.
+   */
+  load?: () => Promise<React.ComponentType<any>>
 }
 
 export interface ComponentSelectionContext {
@@ -65,6 +56,18 @@ export interface ComponentSelectionContext {
   pattern: PatternFamily
   slot?: string
   hasAccess: boolean
+  /**
+   * Target screen intent (e.g. onboarding, pricing, dashboard)
+   */
+  screenType?: string
+  /**
+   * Preferred category for this selection. Defaults to safe.
+   */
+  categoryPreference?: ComponentCategory
+  /**
+   * Form factor hint for the selector.
+   */
+  formFactor?: 'mobile' | 'web' | 'both'
 }
 
 

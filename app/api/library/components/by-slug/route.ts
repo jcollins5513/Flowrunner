@@ -1,38 +1,36 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getComponentBySlug } from '@/lib/library/component-registry'
-import type { ComponentSource } from '@/lib/library/component-types'
+import { getComponentById } from '@/lib/library/component-registry'
 
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams
     const slug = searchParams.get('slug')
-    const source = searchParams.get('source') as ComponentSource | null
-    
-    if (!slug) {
+    const id = searchParams.get('id') ?? slug
+
+    if (!id) {
       return NextResponse.json(
-        { error: 'Slug is required' },
+        { error: 'Component id is required' },
         { status: 400 }
       )
     }
-    
-    const component = await getComponentBySlug(slug, source || undefined)
-    
+
+    const component = getComponentById(id)
+
     if (!component) {
       return NextResponse.json({ component: null })
     }
-    
+
     // Return only serializable metadata
     return NextResponse.json({
       component: {
-        slug: component.slug,
         name: component.name,
-        source: component.source,
+        id: component.id,
+        library: component.library,
+        category: component.category,
         type: component.type,
-        recommendedSlots: component.recommendedSlots,
-        metadata: component.metadata,
-        filePath: component.filePath,
-        vibeCompatibility: component.vibeCompatibility,
-        patternCompatibility: component.patternCompatibility,
+        role: component.role,
+        screenTypes: component.screenTypes,
+        formFactor: component.formFactor,
       }
     })
   } catch (error) {

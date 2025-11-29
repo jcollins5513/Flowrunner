@@ -8,7 +8,7 @@
 
 import React, { useEffect, useState } from 'react'
 import type { LibraryComponent } from '../component-types'
-import { loadComponentCode } from '../component-loader'
+import { loadComponentImplementation } from '../component-loader'
 import type { Palette, Vibe } from '@/lib/dsl/types'
 import { cn } from '@/lib/utils'
 
@@ -41,7 +41,7 @@ export function BackgroundWrapper({
 
     const load = async () => {
       try {
-        const LoadedComponent = await loadComponentCode(libraryComponent)
+        const LoadedComponent = await loadComponentImplementation(libraryComponent)
         if (!cancelled) {
           setComponent(() => LoadedComponent)
         }

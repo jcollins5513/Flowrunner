@@ -8,7 +8,7 @@
 
 import React, { useEffect, useState } from 'react'
 import type { LibraryComponent } from '../component-types'
-import { loadComponentCode } from '../component-loader'
+import { loadComponentImplementation } from '../component-loader'
 import type { Component } from '@/lib/dsl/types'
 import type { Palette, Vibe } from '@/lib/dsl/types'
 import { cn } from '@/lib/utils'
@@ -21,6 +21,7 @@ export interface TextWrapperProps {
   className?: string
   style?: React.CSSProperties
   onError?: (error: Error) => void
+  implementation?: React.ComponentType<any> | null
 }
 
 export function TextWrapper({
@@ -31,9 +32,10 @@ export function TextWrapper({
   className,
   style,
   onError,
+  implementation,
 }: TextWrapperProps): React.ReactElement {
   const [Component, setComponent] = useState<React.ComponentType<any> | null>(
-    null
+    implementation ?? null
   )
   const [error, setError] = useState<Error | null>(null)
 
@@ -42,7 +44,7 @@ export function TextWrapper({
 
     const load = async () => {
       try {
-        const LoadedComponent = await loadComponentCode(libraryComponent)
+        const LoadedComponent = implementation ?? (await loadComponentImplementation(libraryComponent))
         if (!cancelled) {
           setComponent(() => LoadedComponent)
         }
@@ -55,12 +57,14 @@ export function TextWrapper({
       }
     }
 
-    load()
+    if (!Component) {
+      load()
+    }
 
     return () => {
       cancelled = true
     }
-  }, [libraryComponent, onError])
+  }, [Component, libraryComponent, onError, implementation])
 
   if (error) {
     // Fallback to plain text on error

@@ -334,6 +334,10 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
         palette: dsl.palette,
         pattern: dsl.pattern_family,
         hasAccess: hasLibraryAccess,
+        screenType:
+          (dsl.metadata as Record<string, unknown> | undefined)?.screenType as string | undefined ??
+          (dsl.metadata as Record<string, unknown> | undefined)?.screen_type as string | undefined,
+        formFactor: 'web',
       }
     : undefined
 

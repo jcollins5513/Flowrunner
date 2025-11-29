@@ -11,19 +11,18 @@ export async function POST(request: NextRequest) {
     if (!component) {
       return NextResponse.json({ component: null })
     }
-    
+
     // Return only serializable metadata, not the component itself
     return NextResponse.json({
       component: {
-        slug: component.slug,
         name: component.name,
-        source: component.source,
+        id: component.id,
+        library: component.library,
+        category: component.category,
         type: component.type,
-        recommendedSlots: component.recommendedSlots,
-        metadata: component.metadata,
-        filePath: component.filePath,
-        vibeCompatibility: component.vibeCompatibility,
-        patternCompatibility: component.patternCompatibility,
+        role: component.role,
+        screenTypes: component.screenTypes,
+        formFactor: component.formFactor,
       }
     })
   } catch (error) {

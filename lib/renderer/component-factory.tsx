@@ -14,6 +14,7 @@ import { EditableButton } from '@/components/editing/EditableButton'
 import { EditableText } from '@/components/editing/EditableText'
 import { EditableForm } from '@/components/editing/EditableForm'
 import { LibraryComponentRenderer } from '@/lib/library/wrappers/library-component-renderer'
+import type { ComponentCategory } from '@/lib/library/component-types'
 
 export const SUPPORTED_COMPONENT_TYPES: Component['type'][] = ['title', 'subtitle', 'button', 'form', 'text', 'image']
 
@@ -23,6 +24,9 @@ export interface LibraryContext {
   pattern: PatternFamily
   slot?: string
   hasAccess: boolean
+  screenType?: string
+  formFactor?: 'mobile' | 'web' | 'both'
+  categoryPreference?: ComponentCategory
 }
 
 export interface ComponentRendererProps {
@@ -112,15 +116,17 @@ export function renderComponent({
           <LibraryComponentRenderer
             component={component}
             vibe={libraryContext.vibe}
-            palette={libraryContext.palette}
-            pattern={libraryContext.pattern}
-            slot={libraryContext.slot}
-            hasAccess={libraryContext.hasAccess}
-            style={style}
-            className={className}
-            defaultRender={() => (
-              <Title key={component.content} content={component.content} {...commonProps} />
-            )}
+          palette={libraryContext.palette}
+          pattern={libraryContext.pattern}
+          slot={libraryContext.slot}
+          hasAccess={libraryContext.hasAccess}
+          screenType={libraryContext.screenType}
+          categoryPreference={libraryContext.categoryPreference}
+          style={style}
+          className={className}
+          defaultRender={() => (
+            <Title key={component.content} content={component.content} {...commonProps} />
+          )}
           />
         )
       }
@@ -149,6 +155,8 @@ export function renderComponent({
             pattern={libraryContext.pattern}
             slot={libraryContext.slot}
             hasAccess={libraryContext.hasAccess}
+            screenType={libraryContext.screenType}
+            categoryPreference={libraryContext.categoryPreference}
             style={style}
             className={className}
             defaultRender={() => (
@@ -185,15 +193,17 @@ export function renderComponent({
           <LibraryComponentRenderer
             component={component}
             vibe={libraryContext.vibe}
-            palette={libraryContext.palette}
-            pattern={libraryContext.pattern}
-            slot={libraryContext.slot}
-            hasAccess={libraryContext.hasAccess}
-            style={style}
-            className={className}
-            onClick={onClick}
-            defaultRender={() => (
-              <Button
+          palette={libraryContext.palette}
+          pattern={libraryContext.pattern}
+          slot={libraryContext.slot}
+          hasAccess={libraryContext.hasAccess}
+          screenType={libraryContext.screenType}
+          categoryPreference={libraryContext.categoryPreference}
+          style={style}
+          className={className}
+          onClick={onClick}
+          defaultRender={() => (
+            <Button
                 key={component.content}
                 content={component.content}
                 onClick={onClick}
@@ -243,6 +253,38 @@ export function renderComponent({
         )
       }
 
+      if (useLibraryComponent && libraryContext) {
+        return (
+          <LibraryComponentRenderer
+            component={component}
+            vibe={libraryContext.vibe}
+            palette={libraryContext.palette}
+            pattern={libraryContext.pattern}
+            slot={libraryContext.slot}
+            hasAccess={libraryContext.hasAccess}
+            screenType={libraryContext.screenType}
+            categoryPreference={libraryContext.categoryPreference}
+            style={style}
+            className={className}
+            defaultRender={() => (
+              <Form
+                key={component.content}
+                content={component.content}
+                description={component.props?.description as string | undefined}
+                fields={fields}
+                submitLabel={
+                  typeof component.props?.submitLabel === 'string'
+                    ? (component.props?.submitLabel as string)
+                    : 'Submit'
+                }
+                onSubmit={component.props?.onSubmit as ((data: Record<string, unknown>) => void | Promise<void>) | undefined}
+                {...commonProps}
+              />
+            )}
+          />
+        )
+      }
+
       return (
         <Form
           key={component.content}
@@ -282,6 +324,8 @@ export function renderComponent({
             pattern={libraryContext.pattern}
             slot={libraryContext.slot}
             hasAccess={libraryContext.hasAccess}
+            screenType={libraryContext.screenType}
+            categoryPreference={libraryContext.categoryPreference}
             style={style}
             className={className}
             defaultRender={() => (

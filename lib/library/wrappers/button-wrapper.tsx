@@ -8,7 +8,7 @@
 
 import React, { useEffect, useState } from 'react'
 import type { LibraryComponent } from '../component-types'
-import { loadComponentCode } from '../component-loader'
+import { loadComponentImplementation } from '../component-loader'
 import type { Component } from '@/lib/dsl/types'
 import type { Palette, Vibe } from '@/lib/dsl/types'
 import { cn } from '@/lib/utils'
@@ -22,6 +22,7 @@ export interface ButtonWrapperProps {
   style?: React.CSSProperties
   onClick?: React.MouseEventHandler<HTMLButtonElement>
   onError?: (error: Error) => void
+  implementation?: React.ComponentType<any> | null
 }
 
 export function ButtonWrapper({
@@ -33,9 +34,10 @@ export function ButtonWrapper({
   style,
   onClick,
   onError,
+  implementation,
 }: ButtonWrapperProps): React.ReactElement {
   const [Component, setComponent] = useState<React.ComponentType<any> | null>(
-    null
+    implementation ?? null
   )
   const [error, setError] = useState<Error | null>(null)
 
@@ -44,7 +46,7 @@ export function ButtonWrapper({
 
     const load = async () => {
       try {
-        const LoadedComponent = await loadComponentCode(libraryComponent)
+        const LoadedComponent = implementation ?? (await loadComponentImplementation(libraryComponent))
         if (!cancelled) {
           setComponent(() => LoadedComponent)
         }
@@ -57,12 +59,14 @@ export function ButtonWrapper({
       }
     }
 
-    load()
+    if (!Component) {
+      load()
+    }
 
     return () => {
       cancelled = true
     }
-  }, [libraryComponent, onError])
+  }, [Component, libraryComponent, onError, implementation])
 
   if (error) {
     // Fallback to plain button on error
