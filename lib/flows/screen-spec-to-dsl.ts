@@ -58,7 +58,8 @@ export function mapScreenSpecToComponents(
     }
 
     // Map rightActionButton to a button component (if slot available)
-    if (screenSpec.layout.topBar.rightActionButton) {
+    // Only access rightActionButton if topBar exists
+    if (screenSpec.layout.topBar?.rightActionButton) {
       const button = screenSpec.layout.topBar.rightActionButton
       const buttonComponent = componentMap.get('button')
       if (buttonComponent) {
