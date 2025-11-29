@@ -2,6 +2,9 @@ import type { ComponentCategory, LibraryComponent, LibraryComponentType } from '
 
 const HIGH_IMPACT_VIBES: string[] = ['bold', 'energetic', 'playful']
 
+// TODO: This registry currently only has 8 components but there are 100+ components available
+// in components/library/components/ and components/library/magic/components/
+// All components need to be registered here with proper id, category, role, type, screenTypes, etc.
 const registry: LibraryComponent[] = [
   {
     id: 'safe.hero.highlight',
@@ -13,7 +16,7 @@ const registry: LibraryComponent[] = [
     screenTypes: ['onboarding', 'marketing'],
     formFactor: 'both',
     source: 'components',
-    load: async () => (await import('@/components/library/components/hero-highlight/code')).HeroHighlightDemo,
+    load: async () => (await import('./component-adapters')).HeroHighlightAdapter,
   },
   {
     id: 'safe.text.generate',
@@ -25,7 +28,7 @@ const registry: LibraryComponent[] = [
     screenTypes: ['onboarding', 'pricing', 'dashboard'],
     formFactor: 'both',
     source: 'components',
-    load: async () => (await import('@/components/ui/text-generate-effect')).TextGenerateEffect,
+    load: async () => (await import('./component-adapters')).TextGenerateAdapter,
   },
   {
     id: 'safe.button.primary',
@@ -49,7 +52,7 @@ const registry: LibraryComponent[] = [
     screenTypes: ['onboarding', 'marketing'],
     formFactor: 'both',
     source: 'components',
-    load: async () => (await import('@/components/library/components/aurora-background/code')).AuroraBackgroundDemo,
+    load: async () => (await import('@/components/ui/aurora-background')).AuroraBackground,
   },
   {
     id: 'advanced.text.animated-gradient',

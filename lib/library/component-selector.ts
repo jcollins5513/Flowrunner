@@ -25,19 +25,7 @@ import {
 export async function selectLibraryComponent(
   context: ComponentSelectionContext
 ): Promise<LibraryComponent | null> {
-  console.log('[ComponentSelector] Starting selection:', {
-    componentType: context.componentType,
-    hasAccess: context.hasAccess,
-    vibe: context.vibe,
-    pattern: context.pattern,
-    slot: context.slot,
-    screenType: context.screenType,
-    formFactor: context.formFactor,
-    categoryPreference: context.categoryPreference,
-  })
-
   if (!context.hasAccess || context.componentType === 'image') {
-    console.log('[ComponentSelector] Skipped: hasAccess=', context.hasAccess, 'componentType=', context.componentType)
     return null
   }
 
@@ -45,20 +33,16 @@ export async function selectLibraryComponent(
   const typeMatches = matchType(context.componentType)
   const registry = getComponentRegistry()
 
-  console.log('[ComponentSelector] Registry size:', registry.length, 'Type matches:', typeMatches, 'Desired category:', desiredCategory)
-
   const candidates = registry.filter((component) =>
     typeMatches.includes(component.type)
   )
 
-  console.log('[ComponentSelector] Candidates after type filter:', candidates.length, candidates.map(c => c.id))
-
   if (candidates.length === 0) {
-    console.warn('[ComponentSelector] No candidates found after type filter')
     return null
   }
 
   const slotRole = normalizeSlotRole(context.slot)
+  
   const filteredByRole = slotRole
     ? candidates.filter((component) => component.role === slotRole || component.role === context.componentType)
     : candidates
@@ -77,6 +61,7 @@ export async function selectLibraryComponent(
     : filteredByScreenType
 
   const prioritized = prioritizeByCategory(filteredByFormFactor, desiredCategory)
+  
   if (!prioritized.length) {
     return null
   }

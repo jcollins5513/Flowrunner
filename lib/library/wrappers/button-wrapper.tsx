@@ -50,7 +50,7 @@ export function ButtonWrapper({
 
   useEffect(() => {
     // If we already have a component (from implementation prop), don't load
-    if (Component || implementation) {
+    if (implementation) {
       return
     }
 
@@ -76,7 +76,7 @@ export function ButtonWrapper({
     return () => {
       cancelled = true
     }
-  }, [Component, libraryComponent, onError, implementation])
+  }, [libraryComponent, onError, implementation])
 
   if (error) {
     // Fallback to plain button on error

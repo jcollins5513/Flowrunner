@@ -70,6 +70,14 @@ export function renderComponent({
     libraryContext.hasAccess &&
     (explicitLibraryComponent !== false) // Allow explicit opt-out via libraryComponent: false
 
+  console.log('[ComponentFactory] renderComponent:', {
+    componentType: component.type,
+    useLibraryComponent,
+    hasLibraryContext: !!libraryContext,
+    hasAccess: libraryContext?.hasAccess,
+    explicitLibraryComponent,
+  })
+
   // Helper to get component ID
   const getComponentId = () => {
     if (screenId && componentIndex >= 0) {

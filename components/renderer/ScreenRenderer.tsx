@@ -83,20 +83,25 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
 
   // Check library component access
   useEffect(() => {
+    console.log('[ScreenRenderer] Checking library access:', { enableLibraryComponents })
     if (!enableLibraryComponents) {
+      console.log('[ScreenRenderer] Library components disabled')
       setHasLibraryAccess(false)
       return
     }
 
     let cancelled = false
 
-    canUseLibraryComponents(userId || null)
+    // For now, allow access by default (userId will be added later)
+    canUseLibraryComponents(null)
       .then((hasAccess) => {
+        console.log('[ScreenRenderer] Library access result:', hasAccess)
         if (!cancelled) {
           setHasLibraryAccess(hasAccess)
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error('[ScreenRenderer] Error checking library access:', err)
         if (!cancelled) {
           setHasLibraryAccess(false)
         }
@@ -105,7 +110,7 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
     return () => {
       cancelled = true
     }
-  }, [userId, enableLibraryComponents])
+  }, [enableLibraryComponents])
 
   // Select background component if access is available
   useEffect(() => {
@@ -340,6 +345,12 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
         formFactor: 'web',
       }
     : undefined
+
+  console.log('[ScreenRenderer] Library context:', {
+    enabled: enableLibraryComponents,
+    hasAccess: hasLibraryAccess,
+    context: libraryContext,
+  })
 
   return (
     <div

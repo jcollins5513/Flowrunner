@@ -20,21 +20,50 @@ export async function loadComponentImplementation(
   const cacheKey = getCacheKey(component)
   const cached = componentCache.get(cacheKey)
   if (cached) {
-    return cached
+    // Validate cached component is a valid React component
+    if (typeof cached === 'function' || (typeof cached === 'object' && cached !== null && 'render' in cached)) {
+      return cached
+    }
+    // Invalid cached component, remove it
+    componentCache.delete(cacheKey)
   }
 
   if (component.component) {
-    componentCache.set(cacheKey, component.component)
-    return component.component
-  }
-
-  if (!component.load) {
+    // Validate component is a valid React component
+    const comp = component.component
+    if (typeof comp === 'function' || (typeof comp === 'object' && comp !== null && 'render' in comp)) {
+      componentCache.set(cacheKey, comp)
+      return comp
+    }
+    console.warn(`[ComponentLoader] Invalid component type for ${component.id}:`, typeof comp)
     return null
   }
 
-  const loaded = await component.load()
-  componentCache.set(cacheKey, loaded)
-  return loaded
+  if (!component.load) {
+    console.warn(`[ComponentLoader] No load function for component ${component.id}`)
+    return null
+  }
+
+  try {
+    const loaded = await component.load()
+    
+    // Validate loaded component is a valid React component
+    if (!loaded) {
+      console.warn(`[ComponentLoader] Load function returned null/undefined for ${component.id}`)
+      return null
+    }
+    
+    if (typeof loaded !== 'function' && (typeof loaded !== 'object' || loaded === null || !('render' in loaded))) {
+      console.error(`[ComponentLoader] Load function returned invalid component type for ${component.id}:`, typeof loaded, loaded)
+      return null
+    }
+    
+    componentCache.set(cacheKey, loaded)
+    return loaded
+  } catch (error) {
+    console.error(`[ComponentLoader] Error loading component ${component.id}:`, error)
+    return null
+  }
 }
 
 export async function preloadComponent(

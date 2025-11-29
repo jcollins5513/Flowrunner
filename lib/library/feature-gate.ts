@@ -9,7 +9,7 @@
  * Check if user has access to library components
  * 
  * TODO: Connect to subscription system
- * For now, returns false (no access) - can be overridden for testing
+ * For now, returns true for development - can be overridden for testing
  */
 export async function hasLibraryComponentAccess(
   userId?: string | null
@@ -20,11 +20,11 @@ export async function hasLibraryComponentAccess(
   // 2. Token balance (if applicable)
   // 3. Feature flags
   
-  // For development/testing, you can temporarily return true:
-  // return true
+  // For development/testing, return true to enable components:
+  return true
   
   // For production, default to false until subscription system is connected:
-  return false
+  // return false
 }
 
 /**
@@ -42,10 +42,18 @@ export function isLibraryComponentFeatureEnabled(): boolean {
 export async function canUseLibraryComponents(
   userId?: string | null
 ): Promise<boolean> {
-  if (!isLibraryComponentFeatureEnabled()) {
-    return false
-  }
-  return hasLibraryComponentAccess(userId)
+  // For development, enable if either flag is true or feature is enabled
+  const featureEnabled = isLibraryComponentFeatureEnabled()
+  const hasAccess = await hasLibraryComponentAccess(userId)
+  
+  console.log('[FeatureGate] canUseLibraryComponents:', {
+    featureEnabled,
+    hasAccess,
+    envVar: process.env.ENABLE_LIBRARY_COMPONENTS,
+  })
+  
+  // Allow if feature is explicitly enabled OR if has access (for dev)
+  return featureEnabled || hasAccess
 }
 
 

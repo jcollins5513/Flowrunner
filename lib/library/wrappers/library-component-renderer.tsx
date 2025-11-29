@@ -66,31 +66,44 @@ export function LibraryComponentRenderer({
     const explicitFormFactor = formFactor ?? 'web'
 
     const loadComponent = async () => {
-      const selection = await selectLibraryComponent({
-        componentType: component.type,
-        vibe,
-        palette,
-        pattern,
-        slot,
-        hasAccess,
-        categoryPreference: explicitCategory,
-        screenType: explicitScreenType,
-        formFactor: explicitFormFactor,
-      })
+      try {
+        const selection = await selectLibraryComponent({
+          componentType: component.type,
+          vibe,
+          palette,
+          pattern,
+          slot,
+          hasAccess,
+          categoryPreference: explicitCategory,
+          screenType: explicitScreenType,
+          formFactor: explicitFormFactor,
+        })
 
-      if (cancelled) return
-      if (!selection) {
-        setLibraryComponent(null)
+        if (cancelled) return
+        if (!selection) {
+          setLibraryComponent(null)
+          setLoading(false)
+          return
+        }
+
+        const loaded = await loadComponentImplementation(selection)
+        if (cancelled) return
+
+        if (!loaded) {
+          console.error('[LibraryComponentRenderer] Failed to load implementation for:', selection.id)
+        }
+
+        setLibraryComponent(selection)
+        setImplementation(() => loaded)
         setLoading(false)
-        return
+      } catch (error) {
+        if (!cancelled) {
+          console.error('[LibraryComponentRenderer] Error loading component:', error)
+          setLibraryComponent(null)
+          setImplementation(null)
+          setLoading(false)
+        }
       }
-
-      const loaded = await loadComponentImplementation(selection)
-      if (cancelled) return
-
-      setLibraryComponent(selection)
-      setImplementation(() => loaded)
-      setLoading(false)
     }
 
     loadComponent()

@@ -48,7 +48,7 @@ export function CardWrapper({
 
   useEffect(() => {
     // If we already have a component (from implementation prop), don't load
-    if (Component || implementation) {
+    if (implementation) {
       return
     }
 
@@ -74,7 +74,7 @@ export function CardWrapper({
     return () => {
       cancelled = true
     }
-  }, [Component, libraryComponent, onError, implementation])
+  }, [libraryComponent, onError, implementation])
 
   if (error || !Component) {
     // Fallback: render children without wrapper

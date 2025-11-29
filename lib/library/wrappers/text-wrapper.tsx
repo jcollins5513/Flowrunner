@@ -48,7 +48,7 @@ export function TextWrapper({
 
   useEffect(() => {
     // If we already have a component (from implementation prop), don't load
-    if (Component || implementation) {
+    if (implementation) {
       return
     }
 
@@ -74,7 +74,7 @@ export function TextWrapper({
     return () => {
       cancelled = true
     }
-  }, [Component, libraryComponent, onError, implementation])
+  }, [libraryComponent, onError, implementation])
 
   if (error) {
     // Fallback to plain text on error
@@ -87,6 +87,18 @@ export function TextWrapper({
 
   if (!Component) {
     // Loading state
+    return (
+      <div className={className} style={style}>
+        {dslComponent.content}
+      </div>
+    )
+  }
+
+  // Validate that Component is actually a function/class component
+  if (typeof Component !== 'function' && typeof Component !== 'object') {
+    if (process.env.NODE_ENV === 'development') {
+      console.error('[TextWrapper] Invalid component type:', typeof Component)
+    }
     return (
       <div className={className} style={style}>
         {dslComponent.content}
@@ -117,7 +129,10 @@ export function TextWrapper({
         {dslComponent.content}
       </Component>
     )
-  } catch {
+  } catch (err) {
+    if (process.env.NODE_ENV === 'development') {
+      console.error('[TextWrapper] Error rendering component with children:', err)
+    }
     // Try text prop
     try {
       return <Component {...props} text={dslComponent.content} />

@@ -9,6 +9,7 @@
 import React, { useEffect, useState } from 'react'
 import type { LibraryComponent } from '../component-types'
 import { loadComponentImplementation } from '../component-loader'
+import { getComponentById } from '../component-registry'
 import type { Palette, Vibe } from '@/lib/dsl/types'
 import { cn } from '@/lib/utils'
 
@@ -41,7 +42,21 @@ export function BackgroundWrapper({
 
     const load = async () => {
       try {
-        const LoadedComponent = await loadComponentImplementation(libraryComponent)
+        // If the component doesn't have a load function (e.g., came from API route),
+        // look it up from the registry to get the full component with load function
+        let fullComponent = libraryComponent
+        if (!fullComponent.load && fullComponent.id) {
+          const registryComponent = getComponentById(fullComponent.id)
+          if (registryComponent) {
+            fullComponent = registryComponent
+          }
+        }
+
+        if (!fullComponent.load) {
+          throw new Error(`No load function available for component ${fullComponent.id}`)
+        }
+
+        const LoadedComponent = await loadComponentImplementation(fullComponent)
         if (!cancelled) {
           setComponent(() => LoadedComponent)
         }
