@@ -48,8 +48,9 @@ function NewFlowPageContent() {
   const [questionAnswers, setQuestionAnswers] = useState<Record<string, string | string[]>>({})
   const [showQuestions, setShowQuestions] = useState(false)
   const [analyzing, setAnalyzing] = useState(false)
+  const [screenSpec, setScreenSpec] = useState<any>(null)
 
-  const analyzePrompt = async (prompt: string): Promise<{ sufficient: boolean; questions?: FollowUpQuestion[] }> => {
+  const analyzePrompt = async (prompt: string): Promise<{ sufficient: boolean; questions?: FollowUpQuestion[]; screenSpec?: any }> => {
     const response = await fetch('/api/flows/analyze-prompt', {
       method: 'POST',
       headers: {
@@ -76,7 +77,7 @@ function NewFlowPageContent() {
 
     // If we're showing questions, user is answering them - proceed with generation
     if (showQuestions && followUpQuestions.length > 0) {
-      await proceedWithGeneration()
+      await proceedWithGeneration(screenSpec) // Use state value when answering questions
       return
     }
 
@@ -86,6 +87,14 @@ function NewFlowPageContent() {
 
     try {
       const analysis = await analyzePrompt(formData.prompt)
+
+      // Store ScreenSpec if available
+      let currentScreenSpec = null
+      if (analysis.screenSpec) {
+        setScreenSpec(analysis.screenSpec)
+        currentScreenSpec = analysis.screenSpec // Store in local variable to pass directly
+        console.log('[DEBUG:NewFlow] ScreenSpec received:', analysis.screenSpec)
+      }
 
       if (!analysis.sufficient && analysis.questions && analysis.questions.length > 0) {
         // Show follow-up questions
@@ -97,7 +106,7 @@ function NewFlowPageContent() {
       }
 
       // Prompt is sufficient, proceed with generation
-      await proceedWithGeneration()
+      await proceedWithGeneration(currentScreenSpec)
     } catch (err) {
       console.error('Error analyzing prompt:', err)
       setError(err instanceof Error ? err.message : 'Failed to analyze prompt')
@@ -106,10 +115,13 @@ function NewFlowPageContent() {
     }
   }
 
-  const proceedWithGeneration = async () => {
+  const proceedWithGeneration = async (screenSpecToUse?: any) => {
     setLoading(true)
     setError(null)
     setProgress('Creating flow...')
+
+    // Use provided ScreenSpec or fall back to state
+    const effectiveScreenSpec = screenSpecToUse ?? screenSpec
 
     try {
       // Build enhanced prompt with question answers if available
@@ -164,6 +176,12 @@ function NewFlowPageContent() {
 
       // Step 2: Generate first screen
       setProgress('Generating your first screen...')
+      console.log('[DEBUG:NewFlow] Sending generate-first-screen request:', {
+        flowId,
+        promptPreview: enhancedPrompt.substring(0, 50),
+        hasScreenSpec: !!effectiveScreenSpec,
+        screenSpec: effectiveScreenSpec,
+      })
       const screenResponse = await fetch(`/api/flows/${flowId}/generate-first-screen`, {
         method: 'POST',
         headers: {
@@ -171,6 +189,7 @@ function NewFlowPageContent() {
         },
         body: JSON.stringify({
           prompt: enhancedPrompt,
+          screenSpec: effectiveScreenSpec, // Include ScreenSpec if available
         }),
       })
 

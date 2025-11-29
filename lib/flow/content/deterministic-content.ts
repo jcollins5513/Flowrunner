@@ -95,6 +95,10 @@ const slotToComponent = (slot: string): Component['type'] => {
 export const buildComponentsFromContext = (context: ComponentBuildContext): Component[] => {
   ensureRequiredSlots(context.pattern)
 
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/72637a11-5b8b-46bb-adcb-77d24d2ba474',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'deterministic-content.ts:95',message:'Building components from context',data:{originalPrompt:context.prompt,planName:context.plan.name,patternFamily:context.pattern.family},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+  // #endregion
+
   const slots = orderedSlots(context.pattern)
   const components: Component[] = []
   const { required } = context.pattern.componentSlots
@@ -148,11 +152,18 @@ export const buildComponentsFromContext = (context: ComponentBuildContext): Comp
     }
 
     if (component) {
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/72637a11-5b8b-46bb-adcb-77d24d2ba474',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'deterministic-content.ts:150',message:'Component built',data:{slot,componentType:component.type,componentContent:component.content?.substring(0,50)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+      // #endregion
       components.push(component)
     } else if (required.includes(slot)) {
       throw new Error(`Missing required component content for slot ${slot}`)
     }
   })
+
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/72637a11-5b8b-46bb-adcb-77d24d2ba474',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'deterministic-content.ts:157',message:'Components built complete',data:{totalComponents:components.length,componentTypes:components.map(c=>c.type)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+  // #endregion
 
   return components
 }

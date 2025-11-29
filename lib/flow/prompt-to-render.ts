@@ -53,11 +53,36 @@ const createDefaultOrchestrator = () =>
   })
 
 const resolvePattern = (plan: ScreenGenerationPlan): PatternDefinition => {
+  const timestamp = Date.now()
+  console.log(`[DEBUG:PatternResolution:${timestamp}] Resolving pattern:`, {
+    requestedFamily: plan.pattern.family,
+    requestedVariant: plan.pattern.variant,
+    screenId: plan.screenId,
+  })
+
   try {
-    return loadPattern(plan.pattern.family as PatternFamily, plan.pattern.variant as PatternVariant)
+    const pattern = loadPattern(plan.pattern.family as PatternFamily, plan.pattern.variant as PatternVariant)
+    console.log(`[DEBUG:PatternResolution:${timestamp}] Pattern resolved successfully:`, {
+      family: pattern.family,
+      variant: pattern.variant,
+      name: pattern.name,
+      requiredSlots: pattern.componentSlots.required,
+      optionalSlots: pattern.componentSlots.optional,
+    })
+    return pattern
   } catch (error) {
+    console.warn(`[DEBUG:PatternResolution:${timestamp}] Pattern resolution failed, falling back to variant 1:`, {
+      error: error instanceof Error ? error.message : String(error),
+      requestedFamily: plan.pattern.family,
+      requestedVariant: plan.pattern.variant,
+    })
     // Fallback to variant 1 if the requested variant cannot be validated
-    return loadPattern(plan.pattern.family as PatternFamily, 1 as PatternVariant)
+    const fallbackPattern = loadPattern(plan.pattern.family as PatternFamily, 1 as PatternVariant)
+    console.log(`[DEBUG:PatternResolution:${timestamp}] Fallback pattern loaded:`, {
+      family: fallbackPattern.family,
+      variant: fallbackPattern.variant,
+    })
+    return fallbackPattern
   }
 }
 
@@ -65,10 +90,26 @@ export const assembleScreenFromPrompt = async (
   prompt: string,
   options: PromptToRenderOptions = {}
 ): Promise<PromptToRenderResult> => {
+  const timestamp = Date.now()
+  console.log(`[DEBUG:PatternResolution:${timestamp}] Starting screen assembly from prompt:`, {
+    promptPreview: prompt.substring(0, 100),
+    screenIndex: options.screenIndex ?? 0,
+  })
+
   const pipeline = await runPromptToTemplatePipeline(prompt, options.interpreterOptions)
   const plan = pipeline.sequence[options.screenIndex ?? 0]
 
+  console.log(`[DEBUG:PatternResolution:${timestamp}] Plan selected from pipeline:`, {
+    planExists: !!plan,
+    planName: plan?.name,
+    planPattern: plan ? { family: plan.pattern.family, variant: plan.pattern.variant } : null,
+  })
+
   if (!plan) {
+    console.error(`[DEBUG:PatternResolution:${timestamp}] No plan found in sequence:`, {
+      sequenceLength: pipeline.sequence.length,
+      screenIndex: options.screenIndex ?? 0,
+    })
     throw new Error('No screen generation plan produced from prompt')
   }
 

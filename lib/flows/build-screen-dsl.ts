@@ -8,6 +8,8 @@ import type { HeroImageWithPalette } from '../dsl/types'
 import type { PatternDefinition } from '../patterns/schema'
 import { loadPattern } from '../patterns/loader'
 import { deterministicId } from '../utils/deterministic'
+import type { ScreenSpec } from '../specs/screen-spec'
+import { applyScreenSpecContentOverrides } from './screen-spec-to-dsl'
 
 // Supported component types - defined locally to avoid importing server-only modules
 const SUPPORTED_COMPONENT_TYPES: Component['type'][] = ['title', 'subtitle', 'button', 'form', 'text', 'image']
@@ -99,6 +101,13 @@ const buildComponentsForPattern = (
   context: ScreenContext,
   heroImage: HeroImageWithPalette
 ): Component[] => {
+  const timestamp = Date.now()
+  console.log(`[DEBUG:ComponentBuilding:${timestamp}] Building components for pattern:`, {
+    patternFamily: patternDefinition.family,
+    patternVariant: patternDefinition.variant,
+    planName: plan.name,
+  })
+
   ensureRequiredSlots(patternDefinition)
 
   const components: Component[] = []
@@ -107,7 +116,17 @@ const buildComponentsForPattern = (
   const cuesText = plan.textPlan.styleCues.map(humanize).filter(Boolean).join(' • ')
   const audience = describeAudience(context)
 
+  console.log(`[DEBUG:ComponentBuilding:${timestamp}] Component building context:`, {
+    slots: slots,
+    focus: focus,
+    cuesText: cuesText,
+    audience: audience,
+    tone: plan.textPlan.tone,
+    colorMood: plan.textPlan.colorMood,
+  })
+
   slots.forEach((slot) => {
+    console.log(`[DEBUG:ComponentBuilding:${timestamp}] Processing slot: ${slot}`)
     switch (slot) {
       case 'title': {
         if (!focus) {
@@ -202,7 +221,15 @@ const buildComponentsForPattern = (
         break
       }
       default:
+        console.warn(`[DEBUG:ComponentBuilding:${timestamp}] Unhandled slot type: ${slot}`)
         break
+    }
+
+    if (components.length > 0 && components[components.length - 1]?.type === slot) {
+      console.log(`[DEBUG:ComponentBuilding:${timestamp}] Component added for slot ${slot}:`, {
+        type: components[components.length - 1].type,
+        contentPreview: components[components.length - 1].content?.substring(0, 50),
+      })
     }
   })
 
@@ -211,8 +238,21 @@ const buildComponentsForPattern = (
   )
   requiredSlots.forEach((slot) => {
     if (!components.some((component) => component.type === slot)) {
+      console.error(`[DEBUG:ComponentBuilding:${timestamp}] Missing required slot: ${slot}`, {
+        existingComponents: components.map(c => c.type),
+        requiredSlots: requiredSlots,
+      })
       throw new Error(`Missing components for required slots: ${slot}`)
     }
+  })
+
+  console.log(`[DEBUG:ComponentBuilding:${timestamp}] Components built successfully:`, {
+    totalComponents: components.length,
+    componentTypes: components.map(c => c.type),
+    componentContents: components.map(c => ({
+      type: c.type,
+      contentPreview: c.content?.substring(0, 50),
+    })),
   })
 
   return components
@@ -225,11 +265,31 @@ export function buildScreenDSLFromPlan(
   plan: ScreenGenerationPlan,
   context: ScreenContext,
   heroImage: HeroImageWithPalette,
+  screenSpec?: ScreenSpec | null,
 ): ScreenDSL {
+  const timestamp = Date.now()
   const { pattern } = plan
   const { palette, vibe } = context
 
+  console.log(`[DEBUG:ComponentBuilding:${timestamp}] Building screen DSL from plan:`, {
+    planName: plan.name,
+    planScreenId: plan.screenId,
+    patternFamily: pattern.family,
+    patternVariant: pattern.variant,
+    contextPalette: palette,
+    contextVibe: vibe,
+  })
+
   const patternDefinition = loadPattern(pattern.family as PatternFamily, (pattern.variant as PatternVariant) || 1)
+  
+  console.log(`[DEBUG:ComponentBuilding:${timestamp}] Pattern definition loaded:`, {
+    family: patternDefinition.family,
+    variant: patternDefinition.variant,
+    name: patternDefinition.name,
+    requiredSlots: patternDefinition.componentSlots.required,
+    optionalSlots: patternDefinition.componentSlots.optional,
+    layoutPositions: Object.keys(patternDefinition.layout.positions),
+  })
 
   // Use generated palette if available, otherwise use context palette
   const paletteFromImage = heroImage.palette
@@ -247,11 +307,33 @@ export function buildScreenDSLFromPlan(
       ? vibe
       : 'modern'
 
-  const components = buildComponentsForPattern(patternDefinition, plan, context, heroImage)
+  let components = buildComponentsForPattern(patternDefinition, plan, context, heroImage)
+
+  console.log(`[DEBUG:ComponentBuilding:${timestamp}] Components after building:`, {
+    count: components.length,
+    types: components.map(c => c.type),
+  })
+
+  // Apply ScreenSpec content overrides if available
+  if (screenSpec) {
+    console.log(`[DEBUG:ComponentBuilding:${timestamp}] Applying ScreenSpec content overrides:`, {
+      screenName: screenSpec.screenName,
+      screenType: screenSpec.screenType,
+    })
+    components = applyScreenSpecContentOverrides(screenSpec, patternDefinition, components)
+    console.log(`[DEBUG:ComponentBuilding:${timestamp}] Components after ScreenSpec override:`, {
+      count: components.length,
+      types: components.map(c => c.type),
+      contents: components.map(c => ({
+        type: c.type,
+        contentPreview: c.content?.substring(0, 50),
+      })),
+    })
+  }
 
   // Ensure components array is never empty - add fallback title if needed
   if (components.length === 0) {
-    console.warn('No components generated from pattern, adding fallback title component')
+    console.warn(`[DEBUG:ComponentBuilding:${timestamp}] No components generated from pattern, adding fallback title component`)
     components.push({
       type: 'title',
       content: plan.name || 'Welcome',
@@ -320,7 +402,7 @@ export function buildScreenDSLFromPlan(
 
   const heroImageId = heroImage.imageId || deterministicId('hero', `${plan.screenId}-${heroImage.image.url}-${pattern.family}-${pattern.variant}`)
 
-  return {
+  const screenDSL = {
     hero_image: {
       id: String(heroImageId),
       url: heroImage.image.url,
@@ -337,4 +419,15 @@ export function buildScreenDSLFromPlan(
     pattern_variant: (pattern.variant as PatternVariant) || 1,
     components,
   }
+
+  console.log(`[DEBUG:ComponentBuilding:${timestamp}] Final screen DSL:`, {
+    patternFamily: screenDSL.pattern_family,
+    patternVariant: screenDSL.pattern_variant,
+    componentCount: screenDSL.components.length,
+    componentTypes: screenDSL.components.map(c => c.type),
+    palette: screenDSL.palette,
+    vibe: screenDSL.vibe,
+  })
+
+  return screenDSL
 }

@@ -262,12 +262,30 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
   }, [pattern, breakpoint])
 
   const componentMap = useMemo(() => {
+    const timestamp = Date.now()
+    console.log(`[DEBUG:ComponentRendering:${timestamp}] Building component map:`, {
+      totalComponents: dsl.components.length,
+      componentTypes: dsl.components.map(c => c.type),
+      patternFamily: dsl.pattern_family,
+      patternVariant: dsl.pattern_variant,
+    })
+
     const map = new Map<string, ScreenDSL['components'][0]>()
     dsl.components.forEach((comp) => {
       map.set(comp.type, comp)
+      console.log(`[DEBUG:ComponentRendering:${timestamp}] Mapped component:`, {
+        type: comp.type,
+        contentPreview: comp.content?.substring(0, 50),
+      })
     })
+
+    console.log(`[DEBUG:ComponentRendering:${timestamp}] Component map complete:`, {
+      mapSize: map.size,
+      mapKeys: Array.from(map.keys()),
+    })
+
     return map
-  }, [dsl.components])
+  }, [dsl.components, dsl.pattern_family, dsl.pattern_variant])
 
   // Create array for component indexing
   const componentMapArray = useMemo(() => {
@@ -402,8 +420,30 @@ const ScreenRendererContent: React.FC<ScreenRendererProps> = ({
 
         {Object.entries(pattern.layout.positions).map(([slotName, position], slotIndex) => {
           if (slotName === 'hero_image') return null
+          
+          const timestamp = Date.now()
+          console.log(`[DEBUG:ComponentRendering:${timestamp}] Rendering slot:`, {
+            slotName,
+            slotIndex,
+            patternFamily: dsl.pattern_family,
+            patternVariant: dsl.pattern_variant,
+          })
+
           const component = componentMap.get(slotName)
-          if (!component) return null
+          if (!component) {
+            console.warn(`[DEBUG:ComponentRendering:${timestamp}] Component not found for slot:`, {
+              slotName,
+              availableComponents: Array.from(componentMap.keys()),
+              allSlots: Object.keys(pattern.layout.positions),
+            })
+            return null
+          }
+
+          console.log(`[DEBUG:ComponentRendering:${timestamp}] Component found for slot:`, {
+            slotName,
+            componentType: component.type,
+            componentContentPreview: component.content?.substring(0, 50),
+          })
 
           // Find component index in DSL components array
           const componentIndex = dsl.components.findIndex((c) => c === component)

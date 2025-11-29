@@ -2,6 +2,12 @@
 import React from 'react'
 import { type Component, type Palette, type Vibe } from '../dsl/types'
 import { type PatternFamily } from '../patterns/families'
+// Design system adapters (base components)
+import { ButtonAdapter } from '@/lib/design-system/adapters/ButtonAdapter'
+import { TitleAdapter } from '@/lib/design-system/adapters/TitleAdapter'
+import { SubtitleAdapter } from '@/lib/design-system/adapters/SubtitleAdapter'
+import { TextAdapter } from '@/lib/design-system/adapters/TextAdapter'
+// Legacy components (kept for backward compatibility)
 import { Title } from '@/components/renderer/Title'
 import { Subtitle } from '@/components/renderer/Subtitle'
 import { Button } from '@/components/renderer/Button'
@@ -70,12 +76,17 @@ export function renderComponent({
     libraryContext.hasAccess &&
     (explicitLibraryComponent !== false) // Allow explicit opt-out via libraryComponent: false
 
-  console.log('[ComponentFactory] renderComponent:', {
+  const timestamp = Date.now()
+  console.log(`[DEBUG:ComponentFactory:${timestamp}] renderComponent called:`, {
     componentType: component.type,
+    componentContentPreview: component.content?.substring(0, 50),
     useLibraryComponent,
     hasLibraryContext: !!libraryContext,
     hasAccess: libraryContext?.hasAccess,
     explicitLibraryComponent,
+    screenId,
+    componentIndex,
+    editMode,
   })
 
   // Helper to get component ID
@@ -106,6 +117,11 @@ export function renderComponent({
 
   switch (component.type) {
     case 'title': {
+      console.log(`[DEBUG:ComponentFactory:${timestamp}] Rendering title component:`, {
+        content: component.content,
+        editMode,
+        useLibraryComponent,
+      })
       if (editMode) {
         return (
           <EditableTitle
@@ -118,8 +134,9 @@ export function renderComponent({
           />
         )
       }
-      // Try library component, fallback to default
+      // Try library component, fallback to design system, then legacy
         if (useLibraryComponent && libraryContext) {
+          console.log(`[DEBUG:ComponentFactory:${timestamp}] Using library component for title`)
           return (
             <LibraryComponentRenderer
               component={component}
@@ -134,12 +151,25 @@ export function renderComponent({
               style={style}
               className={className}
               defaultRender={() => (
-                <Title key={component.content} content={component.content} {...commonProps} />
+                <TitleAdapter
+                  key={component.content}
+                  content={component.content}
+                  tier={libraryContext.tierPreference || "safe"}
+                  {...commonProps}
+                />
               )}
             />
           )
         }
-      return <Title key={component.content} content={component.content} {...commonProps} />
+      console.log(`[DEBUG:ComponentFactory:${timestamp}] Using design system Title component`)
+      return (
+        <TitleAdapter
+          key={component.content}
+          content={component.content}
+          tier="safe"
+          {...commonProps}
+        />
+      )
     }
     case 'subtitle': {
       if (editMode) {
@@ -170,16 +200,38 @@ export function renderComponent({
             style={style}
             className={className}
             defaultRender={() => (
-              <Subtitle key={component.content} content={component.content} {...commonProps} />
+              <SubtitleAdapter
+                key={component.content}
+                content={component.content}
+                tier={libraryContext.tierPreference || "safe"}
+                {...commonProps}
+              />
             )}
           />
         )
       }
-      return <Subtitle key={component.content} content={component.content} {...commonProps} />
+      return (
+        <SubtitleAdapter
+          key={component.content}
+          content={component.content}
+          tier="safe"
+          {...commonProps}
+        />
+      )
     }
     case 'button': {
       const buttonVariant = component.props?.variant as 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link' | undefined
       const buttonSize = component.props?.size as 'default' | 'sm' | 'lg' | 'icon' | undefined
+      const buttonIcon = component.props?.icon as string | undefined
+      
+      console.log(`[DEBUG:ComponentFactory:${timestamp}] Rendering button component:`, {
+        content: component.content,
+        variant: buttonVariant,
+        size: buttonSize,
+        icon: buttonIcon,
+        editMode,
+        useLibraryComponent,
+      })
       
       if (editMode) {
         return (
@@ -196,6 +248,15 @@ export function renderComponent({
           />
         )
       }
+      
+      // Map shadcn variants to design system variants
+      const dsVariant = buttonVariant === "default" || buttonVariant === "primary" 
+        ? "primary" 
+        : buttonVariant === "secondary" 
+        ? "secondary" 
+        : "ghost";
+      
+      const dsSize = buttonSize === "sm" ? "sm" : buttonSize === "lg" ? "lg" : "md";
       
       // Try library component
         if (useLibraryComponent && libraryContext) {
@@ -214,12 +275,14 @@ export function renderComponent({
               className={className}
               onClick={onClick}
               defaultRender={() => (
-                <Button
+                <ButtonAdapter
                   key={component.content}
                   content={component.content}
                   onClick={onClick}
-                  variant={buttonVariant}
-                  size={buttonSize}
+                  variant={dsVariant}
+                  size={dsSize}
+                  icon={buttonIcon}
+                  tier={libraryContext.tierPreference || "safe"}
                   {...commonProps}
                 />
               )}
@@ -228,12 +291,14 @@ export function renderComponent({
         }
       
       return (
-        <Button
+        <ButtonAdapter
           key={component.content}
           content={component.content}
           onClick={onClick}
-          variant={buttonVariant}
-          size={buttonSize}
+          variant={dsVariant}
+          size={dsSize}
+          icon={buttonIcon}
+          tier="safe"
           {...commonProps}
         />
       )
@@ -314,6 +379,11 @@ export function renderComponent({
       )
     }
     case 'text': {
+      console.log(`[DEBUG:ComponentFactory:${timestamp}] Rendering text component:`, {
+        content: component.content,
+        editMode,
+        useLibraryComponent,
+      })
       if (editMode) {
         return (
           <EditableText
@@ -328,6 +398,7 @@ export function renderComponent({
       }
       // Try library component
       if (useLibraryComponent && libraryContext) {
+        console.log(`[DEBUG:ComponentFactory:${timestamp}] Using library component for text`)
         return (
           <LibraryComponentRenderer
             component={component}
@@ -342,12 +413,25 @@ export function renderComponent({
             style={style}
             className={className}
             defaultRender={() => (
-              <Text key={component.content} content={component.content} {...commonProps} />
+              <TextAdapter
+                key={component.content}
+                content={component.content}
+                tier={libraryContext.tierPreference || "safe"}
+                {...commonProps}
+              />
             )}
           />
         )
       }
-      return <Text key={component.content} content={component.content} {...commonProps} />
+      console.log(`[DEBUG:ComponentFactory:${timestamp}] Using design system Text component`)
+      return (
+        <TextAdapter
+          key={component.content}
+          content={component.content}
+          tier="safe"
+          {...commonProps}
+        />
+      )
     }
     case 'image':
       if (typeof component.props?.url === 'string') {
@@ -371,6 +455,10 @@ export function renderComponent({
         </div>
       )
     default:
+      console.warn(`[DEBUG:ComponentFactory:${timestamp}] Unknown component type:`, {
+        componentType: component.type,
+        componentContent: component.content,
+      })
       return (
         <div key="unknown" className={className} style={style}>
           Unknown component type: {component.type}

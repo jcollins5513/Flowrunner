@@ -111,7 +111,16 @@ export function LibraryComponentRenderer({
         }
 
         setLibraryComponent(selection.component)
-        setImplementation(() => loaded)
+        // #region agent log
+        fetch('http://127.0.0.1:7242/ingest/72637a11-5b8b-46bb-adcb-77d24d2ba474',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'library-component-renderer.tsx:114',message:'Setting implementation',data:{componentId:selection.component.id,loadedType:typeof loaded,isFunction:typeof loaded === 'function',loadedName:loaded?.name || loaded?.displayName || 'unknown'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+        // #endregion
+        // Use direct assignment instead of function form to avoid React evaluating it
+        if (typeof loaded === 'function') {
+          setImplementation(loaded)
+        } else {
+          console.error('[LibraryComponentRenderer] Loaded component is not a function:', typeof loaded)
+          setImplementation(null)
+        }
         setUpgradeOptions(selection.upgrades)
         setLoading(false)
       } catch (error) {
@@ -169,7 +178,7 @@ export function LibraryComponentRenderer({
         vibe={vibe}
         className={className}
         style={style}
-        implementation={implementation}
+        // Don't pass implementation prop - let TextWrapper load it directly to avoid RSC serialization issues
       />
     )
   }
@@ -185,7 +194,7 @@ export function LibraryComponentRenderer({
         className={className}
         style={style}
         onClick={onClick}
-        implementation={implementation}
+        // Don't pass implementation prop - let ButtonWrapper load it directly to avoid RSC serialization issues
       />
     )
   }

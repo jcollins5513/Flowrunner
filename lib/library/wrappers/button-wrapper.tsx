@@ -36,31 +36,24 @@ export function ButtonWrapper({
   onError,
   implementation,
 }: ButtonWrapperProps): React.ReactElement {
-  const [Component, setComponent] = useState<React.ComponentType<any> | null>(
-    implementation ?? null
-  )
+  const [Component, setComponent] = useState<React.ComponentType<any> | null>(null)
   const [error, setError] = useState<Error | null>(null)
 
-  // Sync Component state when implementation prop changes
+  // Always load component directly to avoid RSC serialization issues
+  // Don't rely on implementation prop as it gets serialized through RSC boundaries
   useEffect(() => {
-    if (implementation) {
-      setComponent(() => implementation)
-    }
-  }, [implementation])
-
-  useEffect(() => {
-    // If we already have a component (from implementation prop), don't load
-    if (implementation) {
-      return
-    }
-
     let cancelled = false
 
     const load = async () => {
       try {
         const LoadedComponent = await loadComponentImplementation(libraryComponent)
         if (!cancelled) {
-          setComponent(() => LoadedComponent)
+          if (typeof LoadedComponent === 'function') {
+            setComponent(LoadedComponent)
+          } else {
+            console.error('[ButtonWrapper] Loaded component is not a function:', typeof LoadedComponent)
+            setError(new Error('Loaded component is not a function'))
+          }
         }
       } catch (err) {
         if (!cancelled) {
@@ -76,7 +69,7 @@ export function ButtonWrapper({
     return () => {
       cancelled = true
     }
-  }, [libraryComponent, onError, implementation])
+  }, [libraryComponent, onError])
 
   if (error) {
     // Fallback to plain button on error
@@ -116,6 +109,19 @@ export function ButtonWrapper({
     className: cn(className),
     style: paletteStyle,
     onClick,
+  }
+
+  // Guard against JSX being stored instead of component function
+  if (typeof Component !== 'function') {
+    return (
+      <button
+        className={cn('px-4 py-2 rounded', className)}
+        style={style}
+        onClick={onClick}
+      >
+        {dslComponent.content}
+      </button>
+    )
   }
 
   // Try children first

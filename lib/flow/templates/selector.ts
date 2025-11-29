@@ -81,15 +81,58 @@ const scoreTemplate = (template: FlowTemplate, intent: Intent): number => {
 }
 
 export const selectTemplateForIntent = (intent: Intent, templates = listTemplates()): FlowTemplate => {
+  const timestamp = Date.now()
+  console.log(`[DEBUG:TemplateSelection:${timestamp}] Starting template selection:`, {
+    intentDomain: intent.domain,
+    intentTone: intent.tone,
+    intentStyleCues: intent.styleCues,
+    intentColorMood: intent.colorMood,
+    availableTemplatesCount: templates.length,
+  })
+
   if (!templates.length) {
+    console.error(`[DEBUG:TemplateSelection:${timestamp}] No templates available!`)
     throw new Error('No flow templates are registered')
   }
 
+  console.log(`[DEBUG:TemplateSelection:${timestamp}] Available templates:`, templates.map(t => ({
+    id: t.id,
+    domain: t.domain,
+    name: t.name,
+    screenCount: t.screens.length,
+  })))
+
   const ranked = templates
-    .map((template) => ({ template, score: scoreTemplate(template, intent) }))
+    .map((template) => {
+      const score = scoreTemplate(template, intent)
+      console.log(`[DEBUG:TemplateSelection:${timestamp}] Template scored:`, {
+        templateId: template.id,
+        templateDomain: template.domain,
+        score,
+        intentDomain: intent.domain,
+        domainMatch: template.domain === intent.domain,
+      })
+      return { template, score }
+    })
     .sort((a, b) => b.score - a.score)
 
-  return ranked[0]?.template ?? templates[0]
+  console.log(`[DEBUG:TemplateSelection:${timestamp}] Template rankings:`, ranked.map((r, i) => ({
+    rank: i + 1,
+    templateId: r.template.id,
+    templateDomain: r.template.domain,
+    score: r.score,
+  })))
+
+  const selected = ranked[0]?.template ?? templates[0]
+  console.log(`[DEBUG:TemplateSelection:${timestamp}] Selected template:`, {
+    templateId: selected.id,
+    templateDomain: selected.domain,
+    templateName: selected.name,
+    selectedScore: ranked[0]?.score,
+    wasFallback: !ranked[0],
+  })
+
+  return selected
 }
 
 const resolveTone = (screen: FlowTemplateScreen, intent: Intent): Intent['tone'] =>
@@ -197,20 +240,27 @@ export const mapTemplateToScreenSequence = (
   intent: Intent,
   customizationOptions: TemplateCustomizationOptions = {}
 ): ScreenGenerationPlan[] => {
+  const timestamp = Date.now()
+  console.log(`[DEBUG:TemplateSelection:${timestamp}] Mapping template to screen sequence:`, {
+    templateId: template.id,
+    templateScreenCount: template.screens.length,
+    customizationOptions: Object.keys(customizationOptions),
+  })
+
   const orderedScreens = orderScreens(
     template.screens,
     customizationOptions.screenOrder ?? template.customization?.screenOrder
   )
   const resolvedFieldValues = resolveTemplateFieldValues(template, customizationOptions.fieldValues)
 
-  return orderedScreens.map((screen, index) => {
+  const plans = orderedScreens.map((screen, index) => {
     const override = getScreenOverride(template, customizationOptions, screen.id)
     const resolvedScreen = applyScreenOverrides(screen, override)
     const tone = resolveTone(resolvedScreen, intent)
     const colorMood = resolveColorMood(resolvedScreen, intent)
     const styleCues = resolveStyleCues(resolvedScreen, intent)
 
-    return {
+    const plan = {
       order: index,
       templateId: template.id,
       screenId: resolvedScreen.id,
@@ -230,5 +280,26 @@ export const mapTemplateToScreenSequence = (
         aspectRatio: resolveHeroAspectRatio(resolvedScreen),
       },
     }
+
+    console.log(`[DEBUG:TemplateSelection:${timestamp}] Generated plan for screen ${index}:`, {
+      screenId: plan.screenId,
+      name: plan.name,
+      patternFamily: plan.pattern.family,
+      patternVariant: plan.pattern.variant,
+      tone: plan.textPlan.tone,
+      colorMood: plan.textPlan.colorMood,
+      imagePrompt: plan.heroPlan.imagePrompt?.substring(0, 50),
+      hasOverride: !!override,
+    })
+
+    return plan
   })
+
+  console.log(`[DEBUG:TemplateSelection:${timestamp}] Screen sequence complete:`, {
+    totalPlans: plans.length,
+    patternFamilies: plans.map(p => p.pattern.family),
+    patternVariants: plans.map(p => p.pattern.variant),
+  })
+
+  return plans
 }
