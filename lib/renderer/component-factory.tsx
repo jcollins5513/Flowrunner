@@ -122,6 +122,7 @@ export function renderComponent({
           hasAccess={libraryContext.hasAccess}
           screenType={libraryContext.screenType}
           categoryPreference={libraryContext.categoryPreference}
+          formFactor={libraryContext.formFactor}
           style={style}
           className={className}
           defaultRender={() => (
@@ -157,6 +158,7 @@ export function renderComponent({
             hasAccess={libraryContext.hasAccess}
             screenType={libraryContext.screenType}
             categoryPreference={libraryContext.categoryPreference}
+            formFactor={libraryContext.formFactor}
             style={style}
             className={className}
             defaultRender={() => (
@@ -199,6 +201,7 @@ export function renderComponent({
           hasAccess={libraryContext.hasAccess}
           screenType={libraryContext.screenType}
           categoryPreference={libraryContext.categoryPreference}
+          formFactor={libraryContext.formFactor}
           style={style}
           className={className}
           onClick={onClick}
@@ -264,6 +267,7 @@ export function renderComponent({
             hasAccess={libraryContext.hasAccess}
             screenType={libraryContext.screenType}
             categoryPreference={libraryContext.categoryPreference}
+            formFactor={libraryContext.formFactor}
             style={style}
             className={className}
             defaultRender={() => (
@@ -326,6 +330,7 @@ export function renderComponent({
             hasAccess={libraryContext.hasAccess}
             screenType={libraryContext.screenType}
             categoryPreference={libraryContext.categoryPreference}
+            formFactor={libraryContext.formFactor}
             style={style}
             className={className}
             defaultRender={() => (

@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { NextRequest, NextResponse } from 'next/server'
 import { selectBackgroundComponent } from '@/lib/library/component-selector'
 
 export async function POST(request: NextRequest) {

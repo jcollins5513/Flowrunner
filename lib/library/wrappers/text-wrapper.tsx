@@ -39,12 +39,24 @@ export function TextWrapper({
   )
   const [error, setError] = useState<Error | null>(null)
 
+  // Sync Component state when implementation prop changes
   useEffect(() => {
+    if (implementation) {
+      setComponent(() => implementation)
+    }
+  }, [implementation])
+
+  useEffect(() => {
+    // If we already have a component (from implementation prop), don't load
+    if (Component || implementation) {
+      return
+    }
+
     let cancelled = false
 
     const load = async () => {
       try {
-        const LoadedComponent = implementation ?? (await loadComponentImplementation(libraryComponent))
+        const LoadedComponent = await loadComponentImplementation(libraryComponent)
         if (!cancelled) {
           setComponent(() => LoadedComponent)
         }
@@ -57,9 +69,7 @@ export function TextWrapper({
       }
     }
 
-    if (!Component) {
-      load()
-    }
+    load()
 
     return () => {
       cancelled = true
