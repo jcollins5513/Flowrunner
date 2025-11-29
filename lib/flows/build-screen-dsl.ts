@@ -10,6 +10,8 @@ import { loadPattern } from '../patterns/loader'
 import { deterministicId } from '../utils/deterministic'
 import type { ScreenSpec } from '../specs/screen-spec'
 import { applyScreenSpecContentOverrides } from './screen-spec-to-dsl'
+import { fxPresetToAnimations, inferFXPresetFromPrompt } from '../fx/presets'
+import type { FXPreset } from '../specs/screen-spec'
 
 // Supported component types - defined locally to avoid importing server-only modules
 const SUPPORTED_COMPONENT_TYPES: Component['type'][] = ['title', 'subtitle', 'button', 'form', 'text', 'image']
@@ -315,12 +317,15 @@ export function buildScreenDSLFromPlan(
   })
 
   // Apply ScreenSpec content overrides if available
+  let fxPreset: FXPreset | undefined = undefined
   if (screenSpec) {
     console.log(`[DEBUG:ComponentBuilding:${timestamp}] Applying ScreenSpec content overrides:`, {
       screenName: screenSpec.screenName,
       screenType: screenSpec.screenType,
+      fxPreset: screenSpec.layout.fxPreset,
     })
     components = applyScreenSpecContentOverrides(screenSpec, patternDefinition, components)
+    fxPreset = screenSpec.layout.fxPreset
     console.log(`[DEBUG:ComponentBuilding:${timestamp}] Components after ScreenSpec override:`, {
       count: components.length,
       types: components.map(c => c.type),
@@ -329,6 +334,27 @@ export function buildScreenDSLFromPlan(
         contentPreview: c.content?.substring(0, 50),
       })),
     })
+  }
+
+  // Apply FX preset animations
+  let animations: Record<string, unknown> | undefined = undefined
+  if (fxPreset && fxPreset !== 'none') {
+    animations = fxPresetToAnimations(fxPreset)
+    console.log(`[DEBUG:ComponentBuilding:${timestamp}] Applied FX preset:`, {
+      preset: fxPreset,
+      animationKeys: Object.keys(animations),
+    })
+  } else if (screenSpec?.screenName) {
+    // Infer FX preset from screen name if not specified
+    const inferredPreset = inferFXPresetFromPrompt(screenSpec.screenName)
+    if (inferredPreset !== 'none') {
+      animations = fxPresetToAnimations(inferredPreset)
+      console.log(`[DEBUG:ComponentBuilding:${timestamp}] Inferred FX preset from screen name:`, {
+        preset: inferredPreset,
+        screenName: screenSpec.screenName,
+        animationKeys: Object.keys(animations),
+      })
+    }
   }
 
   // Ensure components array is never empty - add fallback title if needed
@@ -418,6 +444,7 @@ export function buildScreenDSLFromPlan(
     pattern_family: pattern.family as PatternFamily,
     pattern_variant: (pattern.variant as PatternVariant) || 1,
     components,
+    ...(animations && Object.keys(animations).length > 0 && { animations }),
   }
 
   console.log(`[DEBUG:ComponentBuilding:${timestamp}] Final screen DSL:`, {

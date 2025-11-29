@@ -29,21 +29,23 @@ export function mapScreenSpecToComponents(
     componentMap.set(comp.type, comp)
   })
 
-  // Map topBar to title component
-  if (screenSpec.layout.topBar) {
-    console.log(`[DEBUG:ScreenSpecToDSL:${timestamp}] Processing topBar:`, {
-      title: screenSpec.layout.topBar.title,
-      hasRightButton: !!screenSpec.layout.topBar.rightActionButton,
+  // Map topBar to title component, or use screenName if no topBar
+  const titleText = screenSpec.layout.topBar?.title || screenSpec.screenName
+  if (screenSpec.layout.topBar || screenSpec.screenName) {
+    console.log(`[DEBUG:ScreenSpecToDSL:${timestamp}] Processing title:`, {
+      title: titleText,
+      hasTopBar: !!screenSpec.layout.topBar,
+      hasRightButton: !!screenSpec.layout.topBar?.rightActionButton,
     })
     const titleComponent = componentMap.get('title')
     if (titleComponent) {
       console.log(`[DEBUG:ScreenSpecToDSL:${timestamp}] Overriding title component:`, {
         oldContent: titleComponent.content?.substring(0, 50),
-        newContent: screenSpec.layout.topBar.title,
+        newContent: titleText,
       })
       components.push({
         ...titleComponent,
-        content: screenSpec.layout.topBar.title,
+        content: titleText,
       })
     } else if (patternDefinition.componentSlots.required.includes('title') || 
                patternDefinition.componentSlots.optional.includes('title')) {
@@ -51,7 +53,7 @@ export function mapScreenSpecToComponents(
       console.log(`[DEBUG:ScreenSpecToDSL:${timestamp}] Creating new title component from ScreenSpec`)
       components.push({
         type: 'title',
-        content: screenSpec.layout.topBar.title,
+        content: titleText,
       })
     }
 
@@ -71,6 +73,19 @@ export function mapScreenSpecToComponents(
           },
         })
       }
+    }
+  } else {
+    // Even without topBar, try to override title with screenName if title slot exists
+    const titleComponent = componentMap.get('title')
+    if (titleComponent && screenSpec.screenName) {
+      console.log(`[DEBUG:ScreenSpecToDSL:${timestamp}] Overriding title with screenName (no topBar):`, {
+        oldContent: titleComponent.content?.substring(0, 50),
+        newContent: screenSpec.screenName,
+      })
+      components.push({
+        ...titleComponent,
+        content: screenSpec.screenName,
+      })
     }
   }
 

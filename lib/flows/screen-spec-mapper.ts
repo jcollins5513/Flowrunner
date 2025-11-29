@@ -15,6 +15,14 @@ export function mapScreenTypeToPatternFamily(screenType: ScreenSpec['screenType'
       return 'ACT_FORM_MINIMAL'
     case 'detail':
       return 'PRODUCT_DETAIL'
+    case 'landing':
+    case 'hero':
+      return 'HERO_CENTER_TEXT' // Hero/landing pages use centered hero
+    case 'gallery':
+    case 'photoLibrary':
+      return 'DASHBOARD_OVERVIEW' // Gallery/photo library uses grid/list view
+    case 'card':
+      return 'HERO_CENTER_TEXT' // Card-based screens can use hero or custom patterns
     case 'unknown':
     default:
       return 'HERO_CENTER_TEXT' // Default fallback

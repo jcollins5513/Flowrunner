@@ -91,8 +91,9 @@ export class OpenAIIntentProvider implements IntentProvider {
     }
 
     this.client = new OpenAI({ apiKey })
-    this.model = options.model ?? process.env.OPENAI_INTENT_MODEL ?? 'gpt-5-mini'
-    this.temperature = options.temperature ?? 0
+    this.model = options.model ?? process.env.OPENAI_INTENT_MODEL ?? 'gpt-4o-mini'
+    // Use 0.3 instead of 0 - some models don't support temperature=0
+    this.temperature = options.temperature ?? 0.3
     this.topP = options.topP ?? 1
     this.systemPrompt = options.systemPrompt ?? defaultSystemPrompt
   }

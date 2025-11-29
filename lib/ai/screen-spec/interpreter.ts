@@ -22,16 +22,18 @@ Your task:
 ScreenSpec Schema:
 {
   "screenName": string,
-  "screenType": "scanner" | "form" | "dashboard" | "detail" | "unknown",
+  "screenType": "scanner" | "form" | "dashboard" | "detail" | "landing" | "gallery" | "photoLibrary" | "card" | "hero" | "unknown",
   "layout": {
     "topBar"?: {
       "title": string,
       "rightActionButton"?: { "id": string, "label"?: string, "icon"?: string }
     },
     "main": {
-      "type": "cameraScanner" | "static" | "list" | "form",
+      "type": "cameraScanner" | "static" | "list" | "form" | "card" | "gallery" | "grid" | "hero" | "carousel",
       "hasScanFrame"?: boolean,
-      "overlayStyle"?: "rounded-frame" | "corners-only" | "none"
+      "overlayStyle"?: "rounded-frame" | "corners-only" | "none",
+      "cardCount"?: number,
+      "cardStyle"?: "revolving" | "stacked" | "grid" | "carousel"
     },
     "bottomCenterButton"?: {
       "id": string,
@@ -47,22 +49,47 @@ ScreenSpec Schema:
     "background"?: {
       "type": "animatedGradient" | "solid",
       "emphasis": "subtle" | "strong"
-    }
+    },
+    "fxPreset"?: "none" | "subtle-fade" | "slide-up" | "scale-in" | "parallax" | "glow" | "blur-reveal" | "particle-burst" | "gradient-shift" | "glassmorphism" | "neon" | "retro-scan" | "smooth-float" | "magnetic-hover" | "ripple" | "shimmer" | "morphing" | "cinematic"
   }
 }
 
 Examples:
 - "PDF scanner with camera enabled and export button" → screenType: "scanner", main.type: "cameraScanner", topBar with export button, bottomCenterButton with camera icon
-- "Photo library with toolbar" → screenType: "unknown", main.type: "list", topBar with title "Photo Library", rightActionButton with "Select" or "Edit" icon
+- "Photo library with toolbar" → screenType: "photoLibrary", main.type: "gallery", topBar with title "Photo Library", rightActionButton with "Select" or "Edit" icon
+- "Landing page with revolving cards in parallax background" → screenType: "landing", main.type: "card", main.cardStyle: "revolving", background.type: "animatedGradient", background.emphasis: "strong", fxPreset: "parallax"
 - "Login form with email and password" → screenType: "form", main.type: "form", bottomCenterButton with "Sign In" label
-- "Dashboard with charts and metrics" → screenType: "dashboard", main.type: "list", topBar with title "Dashboard"
+- "Dashboard with charts and metrics" → screenType: "dashboard", main.type: "grid", topBar with title "Dashboard"
+- "Hero section with CTA button" → screenType: "hero", main.type: "hero", topBar optional, bottomCenterButton with primary variant
 
 INFERENCE RULES:
+- If user mentions "landing page" or "hero", use screenType: "landing" or "hero", main.type: "hero" or "card"
+- If user mentions "revolving cards" or "rotating cards", use main.type: "card", main.cardStyle: "revolving"
+- If user mentions "parallax" or "animated background", use background.type: "animatedGradient", background.emphasis: "strong", fxPreset: "parallax"
+- If user mentions "photo library" or "gallery", use screenType: "photoLibrary" or "gallery", main.type: "gallery" or "grid"
 - If user mentions "toolbar" or "bar", infer topBar with appropriate action buttons
-- If user mentions "photo library" or "gallery", infer list type main layout
-- If user mentions "camera" or "scanner", infer cameraScanner type
+- If user mentions "camera" or "scanner", use screenType: "scanner", main.type: "cameraScanner"
 - If user mentions "button" or "action", infer bottomCenterButton or rightActionButton
+- If user mentions "cards" (plural), use main.type: "card" or "grid", infer cardCount if mentioned
+- FX PRESET INFERENCE:
+  * "parallax" → fxPreset: "parallax"
+  * "glow" or "neon" → fxPreset: "neon"
+  * "glass" or "frosted" → fxPreset: "glassmorphism"
+  * "blur" → fxPreset: "blur-reveal"
+  * "particle" → fxPreset: "particle-burst"
+  * "gradient shift" → fxPreset: "gradient-shift"
+  * "retro" or "vintage" → fxPreset: "retro-scan"
+  * "float" or "hover" → fxPreset: "smooth-float"
+  * "ripple" → fxPreset: "ripple"
+  * "shimmer" or "shine" → fxPreset: "shimmer"
+  * "morph" or "fluid" → fxPreset: "morphing"
+  * "cinematic" or "dramatic" → fxPreset: "cinematic"
+  * "slide" → fxPreset: "slide-up"
+  * "scale" → fxPreset: "scale-in"
+  * "fade" or "subtle" → fxPreset: "subtle-fade"
+  * Default for landing pages: fxPreset: "cinematic"
 - Always provide a meaningful screenName based on context
+- NEVER use "unknown" if you can infer a more specific type from context
 
 Return ONLY the JSON object, nothing else.`
 
