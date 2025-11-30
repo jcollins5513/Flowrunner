@@ -12,6 +12,7 @@ export type ButtonProps = {
   size?: ButtonSize;
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   iconLeft?: React.ReactNode;
   iconRight?: React.ReactNode;
   fullWidth?: boolean;
@@ -23,6 +24,7 @@ export function Button({
   size = "md",
   children,
   className = "",
+  style,
   iconLeft,
   iconRight,
   fullWidth,
@@ -54,6 +56,7 @@ export function Button({
     <button
       type="button"
       onClick={onClick}
+      style={style}
       className={`${base} ${sizeClass} ${widthClass} ${variantClass} ${motionClass} ${className}`}
     >
       {iconLeft && <span className="mr-2 flex items-center">{iconLeft}</span>}

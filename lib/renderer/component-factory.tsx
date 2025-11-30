@@ -250,7 +250,7 @@ export function renderComponent({
       }
       
       // Map shadcn variants to design system variants
-      const dsVariant = buttonVariant === "default" || buttonVariant === "primary" 
+      const dsVariant = buttonVariant === "default" 
         ? "primary" 
         : buttonVariant === "secondary" 
         ? "secondary" 

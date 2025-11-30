@@ -37,7 +37,7 @@ export function TextWrapper({
   const [Component, setComponent] = useState<React.ComponentType<any> | null>(null)
   const [error, setError] = useState<Error | null>(null)
   // Use ref to store the actual component function to prevent React from evaluating it
-  const componentRef = useRef<React.ComponentType<any> | null>>(null)
+  const componentRef = useRef<React.ComponentType<any> | null>(null)
 
   // Always load component directly to avoid RSC serialization issues
   // Don't rely on implementation prop as it gets serialized through RSC boundaries
@@ -134,7 +134,7 @@ export function TextWrapper({
   }
   
   // #region agent log
-  fetch('http://127.0.0.1:7242/ingest/72637a11-5b8b-46bb-adcb-77d24d2ba474',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'text-wrapper.tsx:108',message:'Rendering component in TextWrapper',data:{componentType:typeof Component,componentId:libraryComponent.id,componentName:Component?.name || Component?.displayName || Component?.type?.name || 'unknown',isFunction:typeof Component === 'function',isJSX:isValidElement(Component),hasType:!!Component?.type,componentToString:Component?.toString?.()?.substring(0,100)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+  fetch('http://127.0.0.1:7242/ingest/72637a11-5b8b-46bb-adcb-77d24d2ba474',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'text-wrapper.tsx:108',message:'Rendering component in TextWrapper',data:{componentType:typeof Component,componentId:libraryComponent.id,componentName:Component?.name || Component?.displayName || 'unknown',isFunction:typeof Component === 'function',isJSX:isValidElement(Component),componentToString:Component?.toString?.()?.substring(0,100)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
   // #endregion
 
   // Apply palette colors via CSS variables
