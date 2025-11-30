@@ -29,9 +29,6 @@ export function ButtonAdapter({
 }: ButtonAdapterProps) {
   const ButtonComponent = tier === "advanced" ? AdvancedButton : SafeButton;
   
-  // Map variant to design system variant
-  const dsVariant = variant === "primary" ? "primary" : variant === "secondary" ? "secondary" : "ghost";
-  
   // Map size
   const dsSize = size === "sm" ? "sm" : size === "lg" ? "lg" : "md";
 
@@ -40,7 +37,6 @@ export function ButtonAdapter({
 
   return (
     <ButtonComponent
-      variant={dsVariant}
       size={dsSize}
       onClick={onClick}
       className={className}
